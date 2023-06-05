@@ -1,51 +1,208 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:kd_utils/kd_utils.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-  });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   title: Text(widget.title),
-      // ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          Text(
+            "Find a course and start learning",
+            style: GoogleFonts.inter(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
             ),
-            // Text(
-            // PagesName.getPath(appRoutes.namedLocation(name)),
-            // ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          16.height,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: AppColor.softBorderColor),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              children: [
+                //1
+                GestureDetector(
+                  onTap: () {
+                    print("Tap");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Color(0xff6519BA),
+                            child: Icon(
+                              Icons.home,
+                              color: AppColor.white,
+                            )),
+                        10.width,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Find courses by school",
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "search by primary, secondary or tertiary institutions",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                        10.width,
+                        Icon(Icons.navigate_next_rounded)
+                      ],
+                    ),
+                  ),
+                ),
+                //2
+                GestureDetector(
+                  onTap: () {
+                    print("Tap");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Color(0xff6519BA),
+                            child: Icon(
+                              Icons.home,
+                              color: AppColor.white,
+                            )),
+                        10.width,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Find course by career",
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "Search using your career aspirations",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                        10.width,
+                        Icon(Icons.navigate_next_rounded)
+                      ],
+                    ),
+                  ),
+                ),
+                //3
+                GestureDetector(
+                  onTap: () {
+                    print("Tap");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Color(0xff6519BA),
+                            child: Icon(
+                              Icons.home,
+                              color: AppColor.white,
+                            )),
+                        10.width,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Find Course by interest",
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "Find out how to code, design and lots more",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                        10.width,
+                        Icon(Icons.navigate_next_rounded)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          16.height,
+          //
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: AppColor.softBorderColor),
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    print("Tap");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Color(0xff6519BA),
+                            child: Icon(
+                              Icons.home,
+                              color: AppColor.white,
+                            )),
+                        10.width,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Prepare for an Exam",
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "Find popular exam questions and more",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                        10.width,
+                        Icon(Icons.navigate_next_rounded)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
