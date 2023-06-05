@@ -1,0 +1,81 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:citycloud_school/style/assets.dart';
+import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/ui/botton_nav_bar/controller/nav_page_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:get/get.dart';
+
+class BottomNavBarPage extends StatefulWidget {
+  const BottomNavBarPage({super.key, required this.child});
+  final Widget child;
+
+  @override
+  State<BottomNavBarPage> createState() => _BottomNavBarPageState();
+}
+
+class _BottomNavBarPageState extends State<BottomNavBarPage> {
+  late NavPageController navPageController;
+
+  @override
+  void initState() {
+    Get.lazyPut(() => NavPageController());
+    navPageController = Get.find<NavPageController>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Center(
+          child: Image.asset(
+            AppAssets.logo,
+            height: 40,
+            width: 40,
+          ),
+        ),
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.notifications_outlined)),
+        ],
+      ),
+      body: widget.child,
+      bottomNavigationBar: GetBuilder(
+        init: navPageController,
+        builder: (controller) {
+          return SnakeNavigationBar.color(
+            selectedItemColor: Theme.of(context).colorScheme.primary,
+            snakeViewColor: Theme.of(context).colorScheme.primary,
+            snakeShape: SnakeShape(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)), height: 3, centered: false),
+            backgroundColor: AppColor.white,
+            currentIndex: controller.currentIndex,
+            onTap: (index) => controller.updatePage(index),
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(Icons.home_rounded),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.book_outlined),
+                activeIcon: Icon(Icons.book_rounded),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.edit_outlined),
+                activeIcon: Icon(Icons.edit_rounded),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.group_outlined),
+                activeIcon: Icon(Icons.group_rounded),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list_outlined),
+                activeIcon: Icon(Icons.list_rounded),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}

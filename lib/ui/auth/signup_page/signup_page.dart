@@ -90,7 +90,8 @@ class SignupPage extends StatelessWidget {
         child: Center(
           child: KBtn(
             onClick: () {
-              appRoutes.pushNamed(PagesName.emailVerificationPage, extra: "abc@email.com");
+              // appRoutes.pushNamed(PagesName.emailVerificationPage, extra: "abc@email.com");
+              appRoutes.goNamed(PagesName.homePage);
             },
             text: "Next",
             width: double.maxFinite,

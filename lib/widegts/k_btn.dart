@@ -47,7 +47,7 @@ class KBtn extends StatelessWidget {
         return ElevatedButton.icon(
           onPressed: onClick,
           style: btnStyle,
-          icon: SvgPicture.asset(AppAssets.googleIcon, height: 24, width: 24),
+          icon: SvgPicture.asset(AppAssets.svgIcons.googleIcon, height: 24, width: 24),
           label: Text(text),
         );
       case BtnType.facebook:
@@ -55,7 +55,7 @@ class KBtn extends StatelessWidget {
           onPressed: onClick,
           style: btnStyle,
           icon: SvgPicture.asset(
-            AppAssets.facebookIcon,
+            AppAssets.svgIcons.facebookIcon,
             height: 24,
             width: 24,
             color: AppColor.white,
@@ -66,7 +66,7 @@ class KBtn extends StatelessWidget {
         return ElevatedButton.icon(
           onPressed: onClick,
           style: btnStyle,
-          icon: SvgPicture.asset(AppAssets.appleIcon, height: 24, width: 24),
+          icon: SvgPicture.asset(AppAssets.svgIcons.appleIcon, height: 24, width: 24),
           label: Text(text),
         );
       default:
