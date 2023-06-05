@@ -28,7 +28,9 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.scaffoldBg,
       appBar: AppBar(
+        backgroundColor: AppColor.scaffoldBg,
         leading: Center(
           child: Image.asset(
             AppAssets.logo,
