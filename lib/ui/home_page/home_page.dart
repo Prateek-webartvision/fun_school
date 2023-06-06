@@ -4,7 +4,6 @@ import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -32,6 +31,7 @@ class _HomePageState extends State<HomePage> {
           16.height,
           Container(
             decoration: BoxDecoration(
+              color: AppColor.white,
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: AppColor.softBorderColor),
             ),
@@ -48,12 +48,13 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       children: [
                         CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Color(0xff6519BA),
-                            child: Icon(
-                              Icons.home,
-                              color: AppColor.white,
-                            )),
+                          radius: 20,
+                          backgroundColor: Color(0xff6519BA),
+                          child: Icon(
+                            Icons.home,
+                            color: AppColor.white,
+                          ),
+                        ),
                         10.width,
                         Expanded(
                           child: Column(
@@ -159,6 +160,7 @@ class _HomePageState extends State<HomePage> {
           //
           Container(
             decoration: BoxDecoration(
+              color: AppColor.white,
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: AppColor.softBorderColor),
             ),

@@ -1,19 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/exam_preparation_page/exam_preparation_page.dart';
-import 'package:citycloud_school/ui/find_courses_by_school_page/find_courses_by_school_page.dart';
-import 'package:citycloud_school/ui/profile_and_settings_page/profile_and_settings_page.dart';
-import 'package:citycloud_school/ui/school_communities_page/school_communities_page.dart';
-import 'package:citycloud_school/ui/study_page/study_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/auth/email_verification_page/email_verifi_page.dart';
 import '../ui/auth/signup_page/signup_page.dart';
+import '../ui/auth/splash_screen/splash_screen.dart';
 import '../ui/auth/start_page/start_page.dart';
 import '../ui/botton_nav_bar/bottom_nav_bar.dart';
+import '../ui/exam_preparation_page/exam_preparation_page.dart';
+import '../ui/find_courses_by_school_page/find_courses_by_school_page.dart';
 import '../ui/home_page/home_page.dart';
-import '../ui/auth/splash_screen/splash_screen.dart';
+import '../ui/profile_and_settings_page/profile_and_settings_page.dart';
+import '../ui/school_communities_page/school_communities_page.dart';
+import '../ui/study_page/study_page.dart';
+import '../ui/subject_details_page/subject_details_page.dart';
 import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
@@ -85,6 +86,10 @@ final GoRouter appRoutes = GoRouter(
               path: PagesName.findCoursesBySchool,
               name: PagesName.findCoursesBySchool,
               pageBuilder: (context, state) => MaterialPage(child: FindCoursesBySchool()),
+              routes: [
+                //details page
+                _subjectPage,
+              ],
             ),
           ],
         ),
@@ -130,3 +135,11 @@ final GoRouter appRoutes = GoRouter(
     ),
   ],
 );
+
+// subject details page
+GoRoute get _subjectPage => GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.subjectDetailsPage,
+      name: PagesName.subjectDetailsPage,
+      pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
+    );

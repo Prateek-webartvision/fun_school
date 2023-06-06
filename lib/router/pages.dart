@@ -12,6 +12,7 @@ class PagesName {
   static String profileAndSettings = "ProfileAndSettings";
 
   static String findCoursesBySchool = "FindCoursesBySchool";
+  static String subjectDetailsPage = "SubjectDetailsPage";
 
   static getPath(String v) {
     return "/${v.toLowerCase()}";
