@@ -2,12 +2,11 @@
 
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kd_utils/kd_utils.dart';
 
 import 'tab_pages/my_courses_tab.dart';
 import 'tab_pages/my_note_tab.dart';
+import 'tab_pages/my_study_plan_tab.dart';
 
 class StudyPage extends StatefulWidget {
   const StudyPage({super.key});
@@ -23,6 +22,12 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
   void initState() {
     pageTabController = TabController(length: 3, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageTabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,9 +78,7 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
               children: [
                 MyCoursesTab(),
                 MyNoteTab(),
-                Center(
-                  child: Text("Tab3"),
-                ),
+                MyStudyPlanTab(),
               ],
             ),
           )

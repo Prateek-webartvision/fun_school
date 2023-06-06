@@ -15,7 +15,7 @@ class MyNoteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: EdgeInsets.all(16),
       children: [
         Container(
           decoration: BoxDecoration(
