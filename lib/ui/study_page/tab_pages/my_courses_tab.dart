@@ -7,8 +7,8 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 
-class MyCourses extends StatelessWidget {
-  const MyCourses({
+class MyCoursesTab extends StatelessWidget {
+  const MyCoursesTab({
     super.key,
   });
 
