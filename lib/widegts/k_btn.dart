@@ -1,6 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:kd_utils/kd_utils.dart';
 
 import '../style/assets.dart';
 
@@ -76,5 +80,50 @@ class KBtn extends StatelessWidget {
           child: Text(text),
         );
     }
+  }
+}
+
+// Cerate plan btn
+
+class CreatePlanBtn extends StatelessWidget {
+  const CreatePlanBtn({
+    super.key,
+    this.text,
+    required this.onTap,
+  });
+  final String? text;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 44,
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Create Study Plan",
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            6.width,
+            Icon(
+              Icons.navigate_next_rounded,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

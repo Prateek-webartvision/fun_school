@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
+import '../../../widegts/k_btn.dart';
 
 class MyStudyPlanTab extends StatelessWidget {
   const MyStudyPlanTab({
@@ -17,34 +18,9 @@ class MyStudyPlanTab extends StatelessWidget {
       padding: EdgeInsets.all(16),
       children: [
         // create plan btn
-        Container(
-          height: 44,
-          width: double.maxFinite,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Create Study Plan",
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              6.width,
-              Icon(
-                Icons.navigate_next_rounded,
-                size: 20,
-              ),
-            ],
-          ),
-        ),
+        CreatePlanBtn(onTap: () {}),
         12.height,
-
+        // plans
         Container(
           height: 66,
           width: double.maxFinite,

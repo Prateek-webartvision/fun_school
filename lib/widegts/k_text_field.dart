@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kd_utils/kd_utils.dart';
 
 import '../style/color.dart';
 
@@ -71,6 +72,35 @@ class _KTextFieldState extends State<KTextField> {
           ),
         ),
       ],
+    );
+  }
+}
+
+//K Search field
+class KSearchField extends StatelessWidget {
+  const KSearchField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.white,
+        border: Border.all(color: AppColor.softBorderColor),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Row(
+        children: [
+          Icon(Icons.search_rounded),
+          12.width,
+          Text(
+            "Search",
+            style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xff656565)),
+          ),
+        ],
+      ),
     );
   }
 }

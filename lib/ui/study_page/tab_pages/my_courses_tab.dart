@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
+import '../../../widegts/k_text_field.dart';
 
 class MyCoursesTab extends StatelessWidget {
   const MyCoursesTab({
@@ -17,24 +18,7 @@ class MyCoursesTab extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(16),
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppColor.white,
-            border: Border.all(color: AppColor.softBorderColor),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: Row(
-            children: [
-              Icon(Icons.search_rounded),
-              12.width,
-              Text(
-                "Search",
-                style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xff656565)),
-              ),
-            ],
-          ),
-        ),
+        KSearchField(),
         12.height,
         Container(
           decoration: BoxDecoration(
