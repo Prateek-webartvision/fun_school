@@ -16,6 +16,7 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         title: Text("Welcome", style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,

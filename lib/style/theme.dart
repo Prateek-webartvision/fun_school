@@ -8,7 +8,7 @@ class AppTheme {
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColor.mainColor,
         ),
-        scaffoldBackgroundColor: AppColor.white,
+        scaffoldBackgroundColor: AppColor.scaffoldBg,
         textTheme: GoogleFonts.interTextTheme(),
       );
 }

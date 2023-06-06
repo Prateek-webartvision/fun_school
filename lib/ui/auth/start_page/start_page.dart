@@ -2,6 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
+import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,7 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme scheme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppBar(),
       body: Stack(
         children: [

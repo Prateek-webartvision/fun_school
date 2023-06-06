@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -38,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 //1
                 GestureDetector(
                   onTap: () {
-                    print("Tap");
+                    appRoutes.pushNamed(PagesName.findCoursesBySchool);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),
