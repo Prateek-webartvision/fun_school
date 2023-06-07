@@ -110,7 +110,7 @@ class CreatePlanBtn extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Create Study Plan",
+              text ?? "Create Study Plan",
               style: GoogleFonts.inter(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

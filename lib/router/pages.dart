@@ -18,6 +18,7 @@ class PagesName {
   static String courseByCareerDetailsPage = "CourseByCareerDetailsPage";
 
   static String findCourseByInterestPage = "FindCourseByInterestPage";
+  static String prepareForAnExamPage = "PrepareForAnExamPage";
 
   static getPath(String v) {
     return "/${v.toLowerCase()}";

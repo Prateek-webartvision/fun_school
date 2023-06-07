@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           16.height,
-          //
+          //Prepare For An Exam Page
           Container(
             decoration: BoxDecoration(
               color: AppColor.white,
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print("Tap");
+                    appRoutes.pushNamed(PagesName.prepareForAnExamPage);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),

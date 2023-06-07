@@ -2,6 +2,7 @@
 
 import 'package:citycloud_school/ui/find_course_by_career_page/find_course_by_career_page.dart';
 import 'package:citycloud_school/ui/find_course_by_interest_page/find_course_by_interest_page.dart';
+import 'package:citycloud_school/ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -123,6 +124,14 @@ final GoRouter appRoutes = GoRouter(
               path: PagesName.findCourseByInterestPage,
               name: PagesName.findCourseByInterestPage,
               pageBuilder: (context, state) => MaterialPage(child: FindCourseByInterestPage()),
+            ),
+
+            // Prepare For An Exam Page
+            GoRoute(
+              parentNavigatorKey: rootNavigator,
+              path: PagesName.prepareForAnExamPage,
+              name: PagesName.prepareForAnExamPage,
+              pageBuilder: (context, state) => MaterialPage(child: PrepareForAnExamPage()),
             ),
           ],
         ),
