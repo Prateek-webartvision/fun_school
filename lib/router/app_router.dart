@@ -27,6 +27,7 @@ final GoRouter appRoutes = GoRouter(
   initialLocation: PagesName.getPath(PagesName.splashScreen),
   navigatorKey: rootNavigator,
   routerNeglect: true,
+
   // routs
   routes: [
     // Splach Screen

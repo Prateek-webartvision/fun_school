@@ -5,9 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static ThemeData get light => ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColor.mainColor,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.mainColor),
         scaffoldBackgroundColor: AppColor.scaffoldBg,
         textTheme: GoogleFonts.interTextTheme(),
       );
