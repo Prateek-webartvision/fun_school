@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import '../../widegts/k_text_field.dart';
 
-class FindCoursesBySchool extends StatelessWidget {
-  const FindCoursesBySchool({super.key});
+class FindCoursesBySchoolPage extends StatelessWidget {
+  const FindCoursesBySchoolPage({super.key});
 
   @override
   Widget build(BuildContext context) {

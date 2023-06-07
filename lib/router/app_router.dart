@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/ui/find_course_by_career_page/find_course_by_career_page.dart';
+import 'package:citycloud_school/ui/find_course_by_interest_page/find_course_by_interest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,9 +86,9 @@ final GoRouter appRoutes = GoRouter(
             // find courses by school page
             GoRoute(
               parentNavigatorKey: rootNavigator,
-              path: PagesName.findCoursesBySchool,
-              name: PagesName.findCoursesBySchool,
-              pageBuilder: (context, state) => MaterialPage(child: FindCoursesBySchool()),
+              path: PagesName.findCoursesBySchoolPage,
+              name: PagesName.findCoursesBySchoolPage,
+              pageBuilder: (context, state) => MaterialPage(child: FindCoursesBySchoolPage()),
               routes: [
                 // Details page
                 GoRoute(
@@ -102,18 +103,26 @@ final GoRouter appRoutes = GoRouter(
             //find course by career page
             GoRoute(
               parentNavigatorKey: rootNavigator,
-              path: PagesName.findCourseByCareer,
-              name: PagesName.findCourseByCareer,
-              pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareer()),
+              path: PagesName.findCourseByCareerPage,
+              name: PagesName.findCourseByCareerPage,
+              pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareerPage()),
               routes: [
                 //details page
-                GoRoute(
-                  parentNavigatorKey: rootNavigator,
-                  path: PagesName.courseByCareerDetailsPage,
-                  name: PagesName.courseByCareerDetailsPage,
-                  pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
-                )
+                // GoRoute(
+                //   parentNavigatorKey: rootNavigator,
+                //   path: PagesName.courseByCareerDetailsPage,
+                //   name: PagesName.courseByCareerDetailsPage,
+                //   pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
+                // )
               ],
+            ),
+
+            // find course by interest page
+            GoRoute(
+              parentNavigatorKey: rootNavigator,
+              path: PagesName.findCourseByInterestPage,
+              name: PagesName.findCourseByInterestPage,
+              pageBuilder: (context, state) => MaterialPage(child: FindCourseByInterestPage()),
             ),
           ],
         ),
@@ -157,5 +166,6 @@ final GoRouter appRoutes = GoRouter(
         ),
       ],
     ),
+    //
   ],
 );

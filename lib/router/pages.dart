@@ -11,11 +11,13 @@ class PagesName {
   static String schoolCommunitiesPage = "SchoolCommunitiesPage";
   static String profileAndSettings = "ProfileAndSettings";
 
-  static String findCoursesBySchool = "FindCoursesBySchoolPage";
+  static String findCoursesBySchoolPage = "FindCoursesBySchoolPage";
   static String coursesBySchoolDetailsPage = "CoursesBySchoolDetailsPage";
 
-  static String findCourseByCareer = "FindCourseByCareerPage";
+  static String findCourseByCareerPage = "FindCourseByCareerPage";
   static String courseByCareerDetailsPage = "CourseByCareerDetailsPage";
+
+  static String findCourseByInterestPage = "FindCourseByInterestPage";
 
   static getPath(String v) {
     return "/${v.toLowerCase()}";

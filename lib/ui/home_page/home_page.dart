@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 //Find courses by school
                 GestureDetector(
                   onTap: () {
-                    appRoutes.pushNamed(PagesName.findCoursesBySchool);
+                    appRoutes.pushNamed(PagesName.findCoursesBySchoolPage);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 //Find course by career
                 GestureDetector(
                   onTap: () {
-                    appRoutes.pushNamed(PagesName.findCourseByCareer);
+                    appRoutes.pushNamed(PagesName.findCourseByCareerPage);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),
@@ -116,10 +116,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                //3
+                //Find Course by interest
                 GestureDetector(
                   onTap: () {
-                    print("Tap");
+                    appRoutes.pushNamed(PagesName.findCourseByInterestPage);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),
