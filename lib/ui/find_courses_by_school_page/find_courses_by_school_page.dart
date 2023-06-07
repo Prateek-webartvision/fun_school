@@ -67,8 +67,7 @@ class FindCoursesBySchool extends StatelessWidget {
                   icon: Icons.group,
                   selected: true,
                   onTap: () {
-                    appRoutes.pushNamed(PagesName.subjectDetailsPage);
-                    print(appRoutes.location);
+                    appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
                   },
                 ),
                 8.height,

@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
-                //1
+                //Find courses by school
                 GestureDetector(
                   onTap: () {
                     appRoutes.pushNamed(PagesName.findCoursesBySchool);
@@ -77,10 +77,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                //2
+
+                //Find course by career
                 GestureDetector(
                   onTap: () {
-                    print("Tap");
+                    appRoutes.pushNamed(PagesName.findCourseByCareer);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12),
