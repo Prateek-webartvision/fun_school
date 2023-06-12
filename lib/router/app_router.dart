@@ -156,15 +156,6 @@ final GoRouter appRoutes = GoRouter(
           pageBuilder: (context, state) {
             return NoTransitionPage(key: state.pageKey, child: ExamPreparationPage());
           },
-          //     routes: [
-          //       GoRoute(
-          //         path: "bst",
-          //         name: "bst",
-          //         pageBuilder: (context, state) {
-          //           return ModalBottomSheetRoute(builder: (context) => Container(), isScrollControlled: false);
-          //         },
-          //       )
-          // ]
         ),
         // school Communities Page
         GoRoute(
