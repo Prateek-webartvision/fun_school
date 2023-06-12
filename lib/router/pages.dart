@@ -12,13 +12,19 @@ class PagesName {
   static String profileAndSettings = "ProfileAndSettings";
 
   static String findCoursesBySchoolPage = "FindCoursesBySchoolPage";
+  //
   static String coursesBySchoolDetailsPage = "CoursesBySchoolDetailsPage";
 
   static String findCourseByCareerPage = "FindCourseByCareerPage";
+  //
   static String courseByCareerDetailsPage = "CourseByCareerDetailsPage";
 
   static String findCourseByInterestPage = "FindCourseByInterestPage";
+  //
   static String prepareForAnExamPage = "PrepareForAnExamPage";
+
+  static String topicSummaryPage = "topicSummaryPage";
+  static String detailExamPage = "detailExamPage";
 
   static getPath(String v) {
     return "/${v.toLowerCase()}";

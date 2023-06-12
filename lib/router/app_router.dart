@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/find_course_by_career_page/find_course_by_career_page.dart';
-import 'package:citycloud_school/ui/find_course_by_interest_page/find_course_by_interest_page.dart';
-import 'package:citycloud_school/ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
+import 'package:citycloud_school/ui/detail_exam_page/detail_exam_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,12 +10,16 @@ import '../ui/auth/splash_screen/splash_screen.dart';
 import '../ui/auth/start_page/start_page.dart';
 import '../ui/botton_nav_bar/bottom_nav_bar.dart';
 import '../ui/exam_preparation_page/exam_preparation_page.dart';
+import '../ui/find_course_by_career_page/find_course_by_career_page.dart';
+import '../ui/find_course_by_interest_page/find_course_by_interest_page.dart';
 import '../ui/find_courses_by_school_page/find_courses_by_school_page.dart';
 import '../ui/home_page/home_page.dart';
+import '../ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
 import '../ui/profile_and_settings_page/profile_and_settings_page.dart';
 import '../ui/school_communities_page/school_communities_page.dart';
 import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_page.dart';
+import '../ui/topic_summary_page/topic_summary_page.dart';
 import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
@@ -177,6 +179,21 @@ final GoRouter appRoutes = GoRouter(
         ),
       ],
     ),
-    //
+
+    // topic summary Page
+    GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.topicSummaryPage),
+      name: PagesName.topicSummaryPage,
+      pageBuilder: (context, state) => MaterialPage(child: TopicSummaryPage()),
+    ),
+
+    // Details exam page
+    GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.detailExamPage),
+      name: PagesName.detailExamPage,
+      pageBuilder: (context, state) => MaterialPage(child: DetailExamPage()),
+    ),
   ],
 );
