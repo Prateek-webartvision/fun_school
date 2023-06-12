@@ -16,7 +16,7 @@ class KBtn extends StatelessWidget {
   final Color? bgColor, fbColor;
   final double? borderRadius, width, height;
   final BtnType? btnType;
-  // final Tex
+  final BorderSide? borderSide;
 
   const KBtn({
     super.key,
@@ -28,6 +28,7 @@ class KBtn extends StatelessWidget {
     this.width,
     this.height,
     this.btnType = BtnType.normal,
+    this.borderSide,
   });
 
   @override
@@ -36,17 +37,18 @@ class KBtn extends StatelessWidget {
     ButtonStyle btnStyle = ButtonStyle(
       backgroundColor: MaterialStatePropertyAll(bgColor ?? theme.colorScheme.primary),
       foregroundColor: MaterialStatePropertyAll(fbColor ?? theme.colorScheme.onPrimary),
-      shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius ?? 4))),
+      shape: MaterialStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 4),
+          side: borderSide ?? BorderSide.none,
+        ),
+      ),
       fixedSize: MaterialStatePropertyAll(Size(width ?? double.nan, height ?? double.nan)),
     );
 
     switch (btnType) {
       case BtnType.normal:
-        return ElevatedButton(
-          style: btnStyle,
-          onPressed: onClick,
-          child: Text(text),
-        );
+        return _normalBtn(btnStyle);
       case BtnType.google:
         return ElevatedButton.icon(
           onPressed: onClick,
@@ -74,12 +76,16 @@ class KBtn extends StatelessWidget {
           label: Text(text),
         );
       default:
-        return ElevatedButton(
-          style: btnStyle,
-          onPressed: onClick,
-          child: Text(text),
-        );
+        return _normalBtn(btnStyle);
     }
+  }
+
+  Widget _normalBtn(ButtonStyle btnStyle) {
+    return ElevatedButton(
+      style: btnStyle,
+      onPressed: onClick,
+      child: Text(text),
+    );
   }
 }
 

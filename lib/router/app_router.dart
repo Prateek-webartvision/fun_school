@@ -22,6 +22,7 @@ import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
 final GlobalKey<NavigatorState> _shalNav = GlobalKey<NavigatorState>(debugLabel: "shell");
+final GlobalKey<ScaffoldMessengerState> scaffoldMenagerKey = GlobalKey<ScaffoldMessengerState>();
 
 final GoRouter appRoutes = GoRouter(
   initialLocation: PagesName.getPath(PagesName.splashScreen),
@@ -155,6 +156,15 @@ final GoRouter appRoutes = GoRouter(
           pageBuilder: (context, state) {
             return NoTransitionPage(key: state.pageKey, child: ExamPreparationPage());
           },
+          //     routes: [
+          //       GoRoute(
+          //         path: "bst",
+          //         name: "bst",
+          //         pageBuilder: (context, state) {
+          //           return ModalBottomSheetRoute(builder: (context) => Container(), isScrollControlled: false);
+          //         },
+          //       )
+          // ]
         ),
         // school Communities Page
         GoRoute(

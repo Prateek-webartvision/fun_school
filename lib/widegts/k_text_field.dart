@@ -14,12 +14,16 @@ class KTextField extends StatefulWidget {
     this.controller,
     this.textInputType,
     this.textInputAction,
+    this.enabled,
+    this.suffixIcon,
   });
   final String? hint;
   final bool isPassword;
   final TextEditingController? controller;
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
+  final bool? enabled;
+  final Icon? suffixIcon;
 
   @override
   State<KTextField> createState() => _KTextFieldState();
@@ -46,6 +50,7 @@ class _KTextFieldState extends State<KTextField> {
           ),
         ),
         TextField(
+          enabled: widget.enabled,
           controller: widget.controller,
           obscureText: (widget.isPassword) ? passHide : widget.isPassword,
           textInputAction: widget.textInputAction,
@@ -59,14 +64,16 @@ class _KTextFieldState extends State<KTextField> {
             disabledBorder: _border(),
             enabledBorder: _border(),
             errorBorder: _border(),
-            suffixIcon: (widget.isPassword)
-                ? GestureDetector(
-                    onTap: () {
-                      setState(() => passHide = !passHide);
-                    },
-                    child: Icon((passHide) ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                  )
-                : null,
+            suffixIcon: (widget.suffixIcon != null)
+                ? widget.suffixIcon
+                : (widget.isPassword)
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() => passHide = !passHide);
+                        },
+                        child: Icon((passHide) ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+                      )
+                    : null,
             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             isDense: true,
           ),
