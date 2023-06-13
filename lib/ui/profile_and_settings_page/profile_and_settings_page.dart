@@ -69,6 +69,48 @@ class ProfileAndSettings extends StatelessWidget {
             leadingIcon: Icons.lock,
             title: "Change Password",
           ),
+          10.height,
+          _MyTiles(
+            leadingIcon: Icons.download_for_offline_rounded,
+            title: "Download Setting",
+          ),
+          Divider(height: 0),
+          _MyTiles(
+            leadingIcon: Icons.filter_list,
+            title: "Adjust Display",
+          ),
+          Divider(height: 0),
+          _MyTiles(
+            leadingIcon: Icons.notifications_rounded,
+            title: "Push notifications",
+          ),
+          Divider(height: 0),
+          _MyTiles(
+            leadingIcon: Icons.date_range_rounded,
+            title: "Sync to my calendar",
+          ),
+          Divider(height: 0),
+          _MyTiles(
+            leadingIcon: Icons.help,
+            title: "Help Centre",
+          ),
+          Divider(height: 0),
+          _MyTiles(
+            leadingIcon: Icons.info,
+            title: "About",
+          ),
+          10.height,
+          _MyTiles(
+            color: Color(0xffFF0000),
+            leadingIcon: Icons.delete,
+            title: "Delete account",
+          ),
+          10.height,
+          _MyTiles(
+            // color: Color(0xffFF0000),
+            // leadingIcon: Icons.delete,
+            title: "Sign Out",
+          ),
         ],
       ),
     );
