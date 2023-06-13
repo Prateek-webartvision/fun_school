@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -158,7 +160,9 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
             12.width,
             Expanded(
                 child: KBtn(
-              onClick: () {},
+              onClick: () {
+                appRoutes.pushNamed(PagesName.resultPage);
+              },
               text: "Next",
               height: 44,
             )),

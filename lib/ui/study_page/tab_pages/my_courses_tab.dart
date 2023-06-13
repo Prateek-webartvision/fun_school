@@ -23,145 +23,156 @@ class MyCoursesTab extends StatelessWidget {
         KSearchField(),
         12.height,
         //maths
-        GestureDetector(
-          onTap: () {
-            appRoutes.pushNamed(PagesName.topicSummaryPage);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColor.white,
-              border: Border.all(color: AppColor.softBorderColor),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Column(
-              children: [
-                //top
-                Container(
-                  // color: Colors.green,
-                  height: 64,
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
+        Container(
+          decoration: BoxDecoration(
+            color: AppColor.white,
+            border: Border.all(color: AppColor.softBorderColor),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  appRoutes.pushNamed(PagesName.topicSummaryPage);
+                },
+                child: Column(
+                  children: [
+                    //top
+                    Container(
+                      // color: Colors.green,
+                      height: 64,
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Up next for you",
+                                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.theme.colorScheme.primary),
+                              ),
+                              2.height,
+                              Text(
+                                "Mathematics",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // time
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColor.scaffoldBg,
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(color: AppColor.textFeildBorderColor),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            child: Text(
+                              "1 hours",
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //progress bar
+                    Container(
+                      // color: Colors.green,
+                      height: 38,
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      child: Row(
                         children: [
                           Text(
-                            "Up next for you",
-                            style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.theme.colorScheme.primary),
-                          ),
-                          2.height,
-                          Text(
-                            "Mathematics",
+                            "Progress",
                             style: GoogleFonts.inter(
-                              fontSize: 16,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          16.width,
+                          Expanded(
+                            child: LinearProgressIndicator(
+                              value: 0.1,
+                              backgroundColor: AppColor.scaffoldBg,
+                              color: context.theme.colorScheme.primary,
+                              minHeight: 6,
+                            ),
+                          ),
+                          16.width,
+                          Text(
+                            "10%",
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
-                      // time
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColor.scaffoldBg,
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: AppColor.textFeildBorderColor),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        child: Text(
-                          "1 hours",
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                //progress bar
-                Container(
-                  // color: Colors.green,
-                  height: 38,
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Progress",
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+              ),
+
+              Divider(height: 0),
+              // option btn
+              Container(
+                // color: Colors.green,
+                height: 70,
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 103,
+                      height: 70,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.home, size: 20),
+                          Text(
+                            "Exam",
+                            style: GoogleFonts.inter(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
                       ),
-                      16.width,
-                      Expanded(
-                        child: LinearProgressIndicator(
-                          value: 0.1,
-                          backgroundColor: AppColor.scaffoldBg,
-                          color: context.theme.colorScheme.primary,
-                          minHeight: 6,
-                        ),
+                    ),
+                    SizedBox(
+                      width: 103,
+                      height: 70,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.local_fire_department_rounded, size: 20),
+                          Text(
+                            "Flash Card",
+                            style: GoogleFonts.inter(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
                       ),
-                      16.width,
-                      Text(
-                        "10%",
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(height: 0),
-                // option btn
-                Container(
-                  // color: Colors.green,
-                  height: 70,
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 103,
-                        height: 70,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.home, size: 20),
-                            Text(
-                              "Exam",
-                              style: GoogleFonts.inter(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 103,
-                        height: 70,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.local_fire_department_rounded, size: 20),
-                            Text(
-                              "Flash Card",
-                              style: GoogleFonts.inter(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 103,
-                        height: 70,
+                    ),
+                    SizedBox(
+                      width: 103,
+                      height: 70,
+                      child: GestureDetector(
+                        onTap: () {
+                          print("object 1");
+                          appRoutes.pushNamed(PagesName.startQuizPage);
+                        },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -176,11 +187,11 @@ class MyCoursesTab extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         //english

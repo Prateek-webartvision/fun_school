@@ -2,7 +2,9 @@
 
 import 'package:citycloud_school/ui/detail_exam_page/detail_exam_page.dart';
 import 'package:citycloud_school/ui/start_exam_pages/question_answer_page/question_answer_page.dart';
+import 'package:citycloud_school/ui/start_exam_pages/result_page/result_page.dart';
 import 'package:citycloud_school/ui/start_exam_pages/start_exam_page/start_exam_page.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -216,9 +218,31 @@ final GoRouter appRoutes = GoRouter(
                   key: state.pageKey,
                   child: QuestionAnswerPage(),
                 ),
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: rootNavigator,
+                    path: PagesName.resultPage,
+                    name: PagesName.resultPage,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: ResultPage(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ]),
+
+    // Start Quiz page
+    GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.startQuizPage),
+      name: PagesName.startQuizPage,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: StartQuizPage(),
+      ),
+    )
   ],
 );
