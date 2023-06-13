@@ -101,7 +101,7 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
 
           Expanded(
             child: ListView.separated(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               shrinkWrap: true,
               itemCount: questions.length,
               itemBuilder: (context, index) {

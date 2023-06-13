@@ -4,6 +4,8 @@ import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../router/app_router.dart';
+import '../../../router/pages.dart';
 import '../../../widegts/k_btn.dart';
 
 class StartQuizPage extends StatelessWidget {
@@ -53,7 +55,7 @@ class StartQuizPage extends StatelessWidget {
           height: 44,
           onClick: () {
             //
-            // appRoutes.pushNamed(PagesName.questionAnswerPage);
+            appRoutes.pushNamed(PagesName.quizQustionAnswerPage);
           },
           text: "Let’s Go ",
         ),

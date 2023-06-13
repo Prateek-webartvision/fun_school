@@ -4,6 +4,7 @@ import 'package:citycloud_school/ui/detail_exam_page/detail_exam_page.dart';
 import 'package:citycloud_school/ui/start_exam_pages/question_answer_page/question_answer_page.dart';
 import 'package:citycloud_school/ui/start_exam_pages/result_page/result_page.dart';
 import 'package:citycloud_school/ui/start_exam_pages/start_exam_page/start_exam_page.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -236,13 +237,23 @@ final GoRouter appRoutes = GoRouter(
 
     // Start Quiz page
     GoRoute(
-      parentNavigatorKey: rootNavigator,
-      path: PagesName.getPath(PagesName.startQuizPage),
-      name: PagesName.startQuizPage,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: StartQuizPage(),
-      ),
-    )
+        parentNavigatorKey: rootNavigator,
+        path: PagesName.getPath(PagesName.startQuizPage),
+        name: PagesName.startQuizPage,
+        pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              child: StartQuizPage(),
+            ),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: rootNavigator,
+            path: PagesName.quizQustionAnswerPage,
+            name: PagesName.quizQustionAnswerPage,
+            pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              child: QuizQustionQnswerPage(),
+            ),
+          )
+        ])
   ],
 );
