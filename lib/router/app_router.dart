@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/ui/detail_exam_page/detail_exam_page.dart';
+import 'package:citycloud_school/ui/start_exam_pages/question_answer_page/question_answer_page.dart';
+import 'package:citycloud_school/ui/start_exam_pages/start_exam_page/start_exam_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -190,10 +192,33 @@ final GoRouter appRoutes = GoRouter(
 
     // Details exam page
     GoRoute(
-      parentNavigatorKey: rootNavigator,
-      path: PagesName.getPath(PagesName.detailExamPage),
-      name: PagesName.detailExamPage,
-      pageBuilder: (context, state) => MaterialPage(child: DetailExamPage()),
-    ),
+        parentNavigatorKey: rootNavigator,
+        path: PagesName.getPath(PagesName.detailExamPage),
+        name: PagesName.detailExamPage,
+        pageBuilder: (context, state) => MaterialPage(child: DetailExamPage()),
+        routes: [
+          //start exam Page
+          GoRoute(
+            parentNavigatorKey: rootNavigator,
+            path: PagesName.startExamPage,
+            name: PagesName.startExamPage,
+            pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              child: StartExamPage(),
+            ),
+            routes: [
+              // Question answer page
+              GoRoute(
+                parentNavigatorKey: rootNavigator,
+                path: PagesName.questionAnswerPage,
+                name: PagesName.questionAnswerPage,
+                pageBuilder: (context, state) => MaterialPage(
+                  key: state.pageKey,
+                  child: QuestionAnswerPage(),
+                ),
+              ),
+            ],
+          ),
+        ]),
   ],
 );

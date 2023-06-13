@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/router/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -136,7 +137,8 @@ class _RealTabView extends StatelessWidget {
         _ExamTile(
           completeState: 1,
           onClick: () {
-            print("object ${appRoutes.location}");
+            appRoutes.pushNamed(PagesName.startExamPage);
+            // print("object ${appRoutes.location}");
           },
         ),
         12.height,
