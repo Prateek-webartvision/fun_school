@@ -1,6 +1,11 @@
-class AppAssets {
+class AppAssets extends Videos {
   static const String logo = "assets/logo/appLogo.jpg";
   static SvgAssets svgIcons = SvgAssets();
+  static Videos videos = AppAssets();
+}
+
+abstract class Videos {
+  String splash = "assets/videos/splash_video/splash.mp4";
 }
 
 class SvgAssets {

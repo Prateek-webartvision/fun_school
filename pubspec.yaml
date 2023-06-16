@@ -41,7 +41,9 @@ dependencies:
   kd_utils: ^0.0.6
   google_fonts: ^5.0.0
   flutter_svg: ^2.0.7
+  video_player: ^2.6.1
   flutter_snake_navigationbar: ^0.6.1
+  http: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,7 @@ flutter:
     - assets/logo/
     - assets/svg_icons/
     - assets/img/
+    - assets/videos/splash_video/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

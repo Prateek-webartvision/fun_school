@@ -2,9 +2,8 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
-import 'package:citycloud_school/style/assets.dart';
-import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,38 +13,42 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<double> fadeoutAnimation;
+  late VideoPlayerController videoPlayerController;
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
-    fadeoutAnimation = Tween<double>(begin: 0, end: 1).animate(animationController);
+    _videoController();
 
-    animationController.forward();
+    super.initState();
+  }
 
-    animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
+  _videoController() async {
+    videoPlayerController = VideoPlayerController.asset("assets/videos/splash_video/splash.mp4");
+    await videoPlayerController.initialize();
+
+    videoPlayerController.play();
+
+    videoPlayerController.addListener(() {
+      if (!videoPlayerController.value.isPlaying) {
         appRoutes.goNamed(PagesName.startPage);
       }
     });
+  }
 
-    super.initState();
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.black,
       body: Center(
-        child: FadeTransition(
-          opacity: fadeoutAnimation,
-          child: Image.asset(
-            AppAssets.logo,
-            height: 160,
-            width: 160,
-            fit: BoxFit.cover,
-          ),
+        child: AspectRatio(
+          aspectRatio: videoPlayerController.value.aspectRatio,
+          child: VideoPlayer(videoPlayerController),
         ),
       ),
     );
