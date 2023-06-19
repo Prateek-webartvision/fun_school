@@ -2,13 +2,20 @@
 
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/ui/profile_and_settings_page/profile_and_settings_page_state.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-class ProfileAndSettings extends StatelessWidget {
-  const ProfileAndSettings({super.key});
+import 'widgets/profile_option_tile.dart';
 
+class ProfileAndSettingsView extends StatefulWidget {
+  const ProfileAndSettingsView({super.key});
+
+  @override
+  State<ProfileAndSettingsView> createState() => _ProfileAndSettingsViewState();
+}
+
+class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,125 +60,62 @@ class ProfileAndSettings extends StatelessWidget {
             ),
           ),
           16.height,
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.email,
             title: "Email",
             tralingText: "john.doe@gmail.com",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.person,
             title: "Username",
             tralingText: "john.doe",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.lock,
             title: "Change Password",
           ),
           10.height,
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.download_for_offline_rounded,
             title: "Download Setting",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.filter_list,
             title: "Adjust Display",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.notifications_rounded,
             title: "Push notifications",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.date_range_rounded,
             title: "Sync to my calendar",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.help,
             title: "Help Centre",
           ),
           Divider(height: 0),
-          _MyTiles(
+          ProfileOptionTile(
             leadingIcon: Icons.info,
             title: "About",
           ),
           10.height,
-          _MyTiles(
+          ProfileOptionTile(
             color: Color(0xffFF0000),
             leadingIcon: Icons.delete,
             title: "Delete account",
           ),
           10.height,
-          _MyTiles(
-            // color: Color(0xffFF0000),
-            // leadingIcon: Icons.delete,
+          ProfileOptionTile(
             title: "Sign Out",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MyTiles extends StatelessWidget {
-  const _MyTiles({
-    super.key,
-    required this.title,
-    this.tralingText,
-    this.leadingIcon,
-    this.color,
-  });
-
-  final String title;
-  final String? tralingText;
-  final IconData? leadingIcon;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 44,
-      decoration: BoxDecoration(color: AppColor.white),
-      padding: EdgeInsets.all(12),
-      child: Row(
-        children: [
-          (leadingIcon != null)
-              ? Icon(
-                  // Icons.email,
-                  leadingIcon,
-                  color: color ?? context.theme.primaryColor,
-                  size: 18,
-                )
-              : 0.width,
-          (leadingIcon != null) ? 6.width : 0.width,
-          Expanded(
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: color,
-              ),
-            ),
-          ),
-          (tralingText != null) ? 10.width : 0.width,
-          (tralingText != null)
-              ? Expanded(
-                  child: Text(
-                    tralingText!,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                    textAlign: TextAlign.end,
-                  ),
-                )
-              : 0.width,
-          6.width,
-          Icon(
-            Icons.navigate_next_rounded,
-            size: 20,
+            onClick: logOut,
           ),
         ],
       ),

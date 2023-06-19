@@ -181,7 +181,7 @@ final GoRouter appRoutes = GoRouter(
           path: PagesName.getPath(PagesName.profileAndSettings),
           name: PagesName.profileAndSettings,
           pageBuilder: (context, state) {
-            return NoTransitionPage(key: state.pageKey, child: ProfileAndSettings());
+            return NoTransitionPage(key: state.pageKey, child: ProfileAndSettingsView());
           },
         ),
       ],

@@ -1,5 +1,6 @@
 class AppAssets extends Videos {
-  static const String logo = "assets/logo/appLogo.jpg";
+  // static const String logo = "assets/logo/appLogo.jpg";
+  static const String logo = "assets/logo/appLogo.png";
   static SvgAssets svgIcons = SvgAssets();
   static Videos videos = AppAssets();
 }

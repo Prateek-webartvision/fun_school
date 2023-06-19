@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'network/data/app_storage.dart';
 import 'router/app_router.dart';
 import 'style/theme.dart';
 
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(AppStorage.user.currentUser());
     return MaterialApp.router(
       scaffoldMessengerKey: scaffoldMenagerKey,
       title: 'Fun School',

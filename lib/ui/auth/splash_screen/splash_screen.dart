@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     videoPlayerController.addListener(() {
       if (!videoPlayerController.value.isPlaying) {
-        appRoutes.goNamed(PagesName.startPage);
+        if (AppStorage.user.currentUser() != null) {
+          appRoutes.goNamed(PagesName.homePage);
+        } else {
+          appRoutes.goNamed(PagesName.startPage);
+        }
       }
     });
   }
