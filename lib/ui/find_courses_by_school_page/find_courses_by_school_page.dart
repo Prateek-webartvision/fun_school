@@ -5,86 +5,145 @@ import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import '../../widegts/k_text_field.dart';
+import 'controller/find_courses_by_school_controller.dart';
+import 'widgets/collage_card.dart';
+import 'widgets/subject_card.dart';
 
-class FindCoursesBySchoolPage extends StatelessWidget {
+class FindCoursesBySchoolPage extends StatefulWidget {
   const FindCoursesBySchoolPage({super.key});
+
+  @override
+  State<FindCoursesBySchoolPage> createState() => _FindCoursesBySchoolPageState();
+}
+
+class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
+  FindCoursesBySchoolController findCoursesBySchoolController = FindCoursesBySchoolController();
+
+  @override
+  void initState() {
+    // Get.lazyPut(() => FindCoursesBySchoolController()..getCourses());
+    // findCoursesBySchoolController = Get.find<FindCoursesBySchoolController>();
+    findCoursesBySchoolController.getCourses();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    findCoursesBySchoolController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Courses by School",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
+        title: Text("Courses by School", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
         backgroundColor: AppColor.scaffoldBg,
       ),
-      body: ListView(
-        children: [
-          Container(
-            height: 114,
-            decoration: BoxDecoration(
-              color: AppColor.white,
-              border: Border(
-                top: BorderSide(color: AppColor.softBorderColor),
-                bottom: BorderSide(color: AppColor.softBorderColor),
-              ),
-            ),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              children: [
-                CollageCards(
-                  name: "Junior secondary school",
-                  icon: Icons.account_balance_sharp,
+      //
+      body: GetBuilder(
+        init: findCoursesBySchoolController,
+        builder: (controller) {
+          return NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 114,
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      border: Border(
+                        top: BorderSide(color: AppColor.softBorderColor),
+                        bottom: BorderSide(color: AppColor.softBorderColor),
+                      ),
+                    ),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      children: [
+                        CollageCard(
+                          name: "Junior secondary school",
+                          icon: Icons.account_balance_sharp,
+                          onSelect: (v) {
+                            print(v);
+                          },
+                        ),
+                        10.width,
+                        CollageCard(
+                          name: "Senior secondary school",
+                          icon: Icons.business_outlined,
+                          isSelected: true,
+                        ),
+                        10.width,
+                        CollageCard(
+                          name: "University",
+                          icon: Icons.temple_buddhist_outlined,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                10.width,
-                CollageCards(
-                  name: "Senior secondary school",
-                  icon: Icons.business_outlined,
-                  isSelected: true,
+
+                // stiky search bar
+                SliverPadding(
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                  sliver: SliverPersistentHeader(
+                    // pinned: true,
+                    delegate: MyHeaderDelegate(
+                      child: KSearchField(),
+                    ),
+                  ),
                 ),
-                10.width,
-                CollageCards(
-                  name: "University",
-                  icon: Icons.temple_buddhist_outlined,
-                ),
-              ],
-            ),
-          ),
-          16.height,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                KSearchField(),
-                12.height,
-                SubjectCard(
-                  name: "Mathematics",
-                  icon: Icons.group,
-                  selected: true,
-                  onTap: () {
-                    appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
-                  },
-                ),
-                8.height,
-                SubjectCard(name: "English", icon: Icons.group, selected: false),
-                8.height,
-                SubjectCard(name: "Physics", icon: Icons.group, selected: false),
-                8.height,
-                SubjectCard(name: "Chemistry", icon: Icons.group, selected: false),
-                8.height,
-                SubjectCard(name: "Biology", icon: Icons.group, selected: false),
-                8.height,
-                SubjectCard(name: "Economics", icon: Icons.group, selected: false),
-              ],
-            ),
-          ),
-          10.height,
-        ],
+              ];
+            },
+            body: (controller.apiState == ApiState.loading)
+                ? Center(child: CircularProgressIndicator())
+                : (controller.apiState == ApiState.error)
+                    ? Center(
+                        child: Text(controller.error.toString()),
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.all(16),
+                        itemCount: controller.coursesList!.length,
+                        itemBuilder: (context, index) {
+                          return SubjectCard(
+                            // name: "Mathematics",
+                            name: controller.coursesList![index].courseName!,
+                            icon: Icons.group,
+                            // selected: true,
+                            onTap: () {
+                              appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) => 8.height,
+                        // children: [
+                        //   SubjectCard(
+                        //     name: "Mathematics",
+                        //     icon: Icons.group,
+                        //     selected: true,
+                        //     onTap: () {
+                        //       appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                        //     },
+                        //   ),
+                        //   8.height,
+                        //   SubjectCard(name: "English", icon: Icons.group, selected: false),
+                        //   8.height,
+                        //   SubjectCard(name: "Physics", icon: Icons.group, selected: false),
+                        //   8.height,
+                        //   SubjectCard(name: "Chemistry", icon: Icons.group, selected: false),
+                        //   8.height,
+                        //   SubjectCard(name: "Biology", icon: Icons.group, selected: false),
+                        //   8.height,
+                        //   SubjectCard(name: "Economics", icon: Icons.group, selected: false),
+                        // ],
+                      ),
+          );
+        },
       ),
       floatingActionButton: KBtn(
         onClick: () async {},
@@ -97,146 +156,25 @@ class FindCoursesBySchoolPage extends StatelessWidget {
   }
 }
 
-class SubjectCard extends StatelessWidget {
-  const SubjectCard({
-    super.key,
-    required this.name,
-    required this.icon,
-    this.selected = false,
-    this.onTap,
-  });
-  final String name;
-  final IconData icon;
-  final bool selected;
+//
+class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
 
-  final Function()? onTap;
+  MyHeaderDelegate({required this.child});
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColor.white,
-          border: Border.all(color: AppColor.softBorderColor),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        padding: EdgeInsets.all(12),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: AppColor.mainColor,
-              child: Icon(
-                icon,
-                color: AppColor.white,
-              ),
-            ),
-            10.width,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "14 hours . Downloadable",
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                  ),
-                  Text(
-                    name,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                  4.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.play_circle_fill_rounded,
-                        color: Color(0xff6938EF),
-                        size: 18,
-                      ),
-                      6.width,
-                      Text(
-                        "Videos",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                      ),
-                      13.width,
-                      Icon(
-                        Icons.info_rounded,
-                        color: Color(0xff6938EF),
-                        size: 18,
-                      ),
-                      6.width,
-                      Text(
-                        "Quizzes",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            10.width,
-            Checkbox(
-              value: selected,
-              fillColor: MaterialStatePropertyAll(AppColor.pinkColor),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-              side: BorderSide(
-                color: AppColor.softBorderColor,
-                width: 1,
-              ),
-              onChanged: (value) {},
-            )
-          ],
-        ),
-      ),
-    );
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return child;
   }
-}
-
-class CollageCards extends StatelessWidget {
-  const CollageCards({
-    super.key,
-    required this.name,
-    required this.icon,
-    this.isSelected = false,
-  });
-  final String name;
-  final IconData icon;
-  final bool isSelected;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 130,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: (isSelected) ? Color(0xffF670C7).withOpacity(0.1) : Colors.white,
-        border: Border.all(color: (isSelected) ? Color(0xffF670C7) : AppColor.softBorderColor),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundColor: AppColor.mainColor,
-            radius: 15,
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 12,
-            ),
-          ),
-          6.height,
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
+  double get maxExtent => 44;
+
+  @override
+  double get minExtent => 44;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
