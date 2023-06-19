@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/repo/auth_repo/auth_repo.dart';
-import 'package:citycloud_school/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
+import 'login_page_state.dart';
 
 class LoginPageView extends StatefulWidget {
   const LoginPageView({super.key});
@@ -16,7 +15,7 @@ class LoginPageView extends StatefulWidget {
   State<LoginPageView> createState() => _LoginPageViewState();
 }
 
-class _LoginPageViewState extends State<LoginPageView> {
+class _LoginPageViewState extends LoginPageSate {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +28,6 @@ class _LoginPageViewState extends State<LoginPageView> {
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         children: [
           Text(
-            "${appRoutes.location}",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-          Text(
             "Quickly sign in with",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
@@ -42,14 +37,14 @@ class _LoginPageViewState extends State<LoginPageView> {
             bgColor: AppColor.white,
             fbColor: Colors.black,
             btnType: BtnType.google,
-            onClick: () {},
+            onClick: googleLogin,
           ),
           8.height,
           KBtn(
             text: "Continue with Facebook",
             bgColor: AppColor.facebookBlue,
             btnType: BtnType.facebook,
-            onClick: () {},
+            onClick: facebookLogin,
           ),
           8.height,
           KBtn(
@@ -57,7 +52,7 @@ class _LoginPageViewState extends State<LoginPageView> {
             bgColor: AppColor.white,
             fbColor: Colors.black,
             btnType: BtnType.apple,
-            onClick: () {},
+            onClick: appleLogin,
           ),
           12.height,
           Text(
@@ -66,14 +61,14 @@ class _LoginPageViewState extends State<LoginPageView> {
           ),
           12.height,
           KTextField(
-            // controller: emailController,
+            controller: emailController,
             hint: "Email Address",
             textInputType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
           8.height,
           KTextField(
-            // controller: passController,
+            controller: passController,
             hint: "Password",
             textInputType: TextInputType.emailAddress,
             isPassword: true,
@@ -90,11 +85,7 @@ class _LoginPageViewState extends State<LoginPageView> {
             // onClick: emailSignup,
             text: "Signin",
             width: double.maxFinite,
-            onClick: () {
-              AuthRepository.instance.signInWithEmailPassword(email: "test1", password: "password").then((value) {
-                print("object $value");
-              });
-            },
+            onClick: loginWithEmail,
           ),
         ),
       ),

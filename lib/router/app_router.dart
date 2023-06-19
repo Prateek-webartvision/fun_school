@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/auth/email_verification_page/email_verifi_page.dart';
-import '../ui/auth/login_page/login_page.dart';
+import '../ui/auth/login_page/login_page_view.dart';
 import '../ui/auth/signup_page/signup_page_view.dart';
 import '../ui/auth/splash_screen/splash_screen.dart';
 import '../ui/auth/start_page/start_page.dart';

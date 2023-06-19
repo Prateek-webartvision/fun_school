@@ -1,3 +1,4 @@
+import 'package:citycloud_school/models/user/user.model.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
@@ -28,19 +29,26 @@ class AuthRepository extends AuthRepo {
 
   // sign in
   @override
-  Future signInWithEmailPassword({required String email, required String password}) async {
+  Future<UserModel> signInWithEmailPassword({required String email, required String password}) async {
     final userData = <String, String>{};
     userData['email'] = email;
     userData['password'] = password;
 
     return await api.postApi(AppUrls.signInUrl, params: userData).then((value) {
       if (value["code"] == 200) {
-        return value["message"];
+        UserModel userModel = UserModel(
+          userName: value['username'],
+          about: value['about'],
+          userType: value['user_type'],
+          regDate: value['reg_date'],
+          status: value['status'],
+        );
+        return userModel;
       } else {
         throw value["message"];
       }
     }).onError((error, stackTrace) {
-      AppUtils.showSnack("$error");
+      throw error.toString();
     });
   }
 }
