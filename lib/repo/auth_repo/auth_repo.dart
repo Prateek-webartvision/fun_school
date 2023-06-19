@@ -1,14 +1,12 @@
-import 'package:citycloud_school/network/api/app_urls.dart';
+import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 
-import '../../network/app_api.dart';
 import 'a_auth_rapo.dart';
 
 class AuthRepository extends AuthRepo {
   static AuthRepository? _init;
   AuthRepository._();
   static AuthRepository get instance => _init ??= AuthRepository._();
-
-  final AppApi _api = AppApi();
 
   @override
   Future createAccountWithEmailPassword({required String username, required String email, required String password}) async {
@@ -17,22 +15,32 @@ class AuthRepository extends AuthRepo {
     userData['email'] = email;
     userData['password'] = password;
 
-    // await _api.postApi(AppUrls.registerUrl, params: userData);
+    return await api.postApi(AppUrls.registerUrl, params: userData).then((value) {
+      if (value["code"] == 200) {
+        return value["message"];
+      } else {
+        throw value["message"];
+      }
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack("$error");
+    });
+  }
 
-    // AppApi()
-    //     .postApi(
-    //       AppUrls.registerUrl,
-    //       params: {
-    //         "username": "kundan",
-    //         "email": "kd",
-    //         "password": "password",
-    //       },
-    //     )
-    //     .then((value) => print(value))
-    //     .onError(
-    //       (error, stackTrace) => print("error ${error.toString()}"),
-    //     );
-    print(userData);
-    // return "kundan";
+  // sign in
+  @override
+  Future signInWithEmailPassword({required String email, required String password}) async {
+    final userData = <String, String>{};
+    userData['email'] = email;
+    userData['password'] = password;
+
+    return await api.postApi(AppUrls.signInUrl, params: userData).then((value) {
+      if (value["code"] == 200) {
+        return value["message"];
+      } else {
+        throw value["message"];
+      }
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack("$error");
+    });
   }
 }

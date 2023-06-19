@@ -16,6 +16,7 @@ class KTextField extends StatefulWidget {
     this.textInputAction,
     this.enabled,
     this.suffixIcon,
+    this.errorText,
   });
   final String? hint;
   final bool isPassword;
@@ -24,6 +25,7 @@ class KTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final bool? enabled;
   final Icon? suffixIcon;
+  final String? errorText;
 
   @override
   State<KTextField> createState() => _KTextFieldState();
@@ -59,6 +61,7 @@ class _KTextFieldState extends State<KTextField> {
           cursorRadius: Radius.circular(8),
           cursorOpacityAnimates: true,
           decoration: InputDecoration(
+            errorText: widget.errorText,
             border: _border(),
             focusedBorder: _border(),
             disabledBorder: _border(),

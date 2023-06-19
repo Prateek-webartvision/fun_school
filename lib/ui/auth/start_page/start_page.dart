@@ -67,7 +67,9 @@ class StartPage extends StatelessWidget {
                     width: double.maxFinite,
                   ),
                   KBtn(
-                    onClick: () {},
+                    onClick: () {
+                      appRoutes.pushNamed(PagesName.loginPage);
+                    },
                     text: "Or log in",
                     width: double.maxFinite,
                     bgColor: scheme.onPrimary,

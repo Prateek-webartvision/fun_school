@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/auth/email_verification_page/email_verifi_page.dart';
-import '../ui/auth/signup_page/signup_page.dart';
+import '../ui/auth/login_page/login_page.dart';
+import '../ui/auth/signup_page/signup_page_view.dart';
 import '../ui/auth/splash_screen/splash_screen.dart';
 import '../ui/auth/start_page/start_page.dart';
 import '../ui/botton_nav_bar/bottom_nav_bar.dart';
@@ -57,8 +58,9 @@ final GoRouter appRoutes = GoRouter(
         GoRoute(
           path: PagesName.signupPage,
           name: PagesName.signupPage,
-          builder: (context, state) => SignupPage(),
+          builder: (context, state) => SignupPageView(),
         ),
+
         //Email verification page
         GoRoute(
           path: PagesName.emailVerificationPage,
@@ -66,12 +68,12 @@ final GoRouter appRoutes = GoRouter(
           builder: (context, state) => EmailVerificationPage(),
         ),
 
-        // //Login
-        // GoRoute(
-        //   path: PagesName.getPath(PagesName.loginPage),
-        //   name: PagesName.loginPage,
-        //   builder: (context, state) => LoginPage(),
-        // ),
+        //Login
+        GoRoute(
+          path: PagesName.loginPage,
+          name: PagesName.loginPage,
+          builder: (context, state) => LoginPageView(),
+        ),
       ],
     ),
 
