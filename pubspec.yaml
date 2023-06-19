@@ -38,7 +38,7 @@ dependencies:
   get: ^4.6.5
   intl: ^0.18.1
   go_router: ^8.0.2
-  kd_utils: ^0.0.6
+  kd_utils: ^0.0.7+3
   google_fonts: ^5.0.0
   flutter_svg: ^2.0.7
   video_player: ^2.6.1
