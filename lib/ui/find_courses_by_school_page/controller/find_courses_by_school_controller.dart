@@ -12,7 +12,8 @@ class FindCoursesBySchoolController extends GetxController {
   ApiState apiState = ApiState.loading;
   String? error;
   List<CoursesModel>? _coursesList;
-  List<CoursesModel>? coursesBySchool;
+  List<CoursesModel>? _coursesBySchool;
+  List<CoursesModel>? coursesBySearch;
 
   late SchoolSelectorController schoolSelectorController;
 
@@ -39,8 +40,17 @@ class FindCoursesBySchoolController extends GetxController {
         }
       }
     }
-    coursesBySchool = _sortData;
-    update();
+    _coursesBySchool = _sortData;
+    searchSort("");
+    // update();
+  }
+
+  searchSort(String value) {
+    if (_coursesBySchool != null) {
+      coursesBySearch = _coursesBySchool!.where((element) => element.courseName!.toLowerCase().contains(value.toString())).toList();
+      update();
+    }
+    // print("object");
   }
 
   // loading course data

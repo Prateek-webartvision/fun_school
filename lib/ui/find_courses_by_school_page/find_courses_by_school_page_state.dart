@@ -18,7 +18,7 @@ abstract class FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPag
 
   @override
   void dispose() {
-    if (findCoursesBySchoolController.coursesBySchool != null) {
+    if (findCoursesBySchoolController.coursesBySearch != null) {
       findCoursesBySchoolController.dispose();
     }
     super.dispose();

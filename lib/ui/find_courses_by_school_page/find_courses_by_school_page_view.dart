@@ -60,7 +60,9 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                   sliver: SliverPersistentHeader(
                     // pinned: true,
                     delegate: MyHeaderDelegate(
-                      child: KSearchField(),
+                      child: KSearchField(
+                        onSubmmit: (value) => controller.searchSort(value),
+                      ),
                     ),
                   ),
                 ),
@@ -74,11 +76,11 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                       )
                     : ListView.separated(
                         padding: EdgeInsets.all(16),
-                        itemCount: controller.coursesBySchool!.length,
+                        itemCount: controller.coursesBySearch!.length,
                         itemBuilder: (context, index) {
                           return SubjectCard(
                             // name: "Mathematics",
-                            name: controller.coursesBySchool![index].courseName!,
+                            name: controller.coursesBySearch![index].courseName!,
                             icon: Icons.group,
                             // selected: true,
                             onTap: () {
