@@ -6,6 +6,11 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../style/color.dart';
 
+OutlineInputBorder _border({bool showBorder = true}) => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(0),
+      borderSide: BorderSide(color: AppColor.textFeildBorderColor, width: (showBorder) ? 0.5 : 0),
+    );
+
 class KTextField extends StatefulWidget {
   const KTextField({
     super.key,
@@ -33,10 +38,6 @@ class KTextField extends StatefulWidget {
 
 class _KTextFieldState extends State<KTextField> {
   bool passHide = true;
-  OutlineInputBorder _border() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(0),
-        borderSide: BorderSide(color: AppColor.textFeildBorderColor, width: .5),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +110,29 @@ class KSearchField extends StatelessWidget {
             "Search",
             style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xff656565)),
           ),
+          // Expanded(
+          //   child: TextField(
+          //     // enabled: widget.enabled,
+          //     // controller: widget.controller,
+          //     // obscureText: (widget.isPassword) ? passHide : widget.isPassword,
+          //     // textInputAction: widget.textInputAction,
+          //     // keyboardType: widget.textInputType,
+          //     cursorColor: AppColor.textFeildColor,
+          //     cursorRadius: Radius.circular(8),
+          //     cursorOpacityAnimates: true,
+          //     decoration: InputDecoration(
+          //       // errorText: widget.errorText,
+          //       border: _border(),
+          //       focusedBorder: _border(),
+          //       disabledBorder: _border(),
+          //       enabledBorder: _border(),
+          //       errorBorder: _border(),
+
+          //       contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          //       isDense: true,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

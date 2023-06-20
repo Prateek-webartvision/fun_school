@@ -8,34 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import '../../widegts/k_text_field.dart';
-import 'controller/find_courses_by_school_controller.dart';
-import 'widgets/collage_card.dart';
+import 'find_courses_by_school_page_state.dart';
+import 'widgets/my_header_delegate.dart';
+import 'widgets/school_selector.dart';
 import 'widgets/subject_card.dart';
 
-class FindCoursesBySchoolPage extends StatefulWidget {
-  const FindCoursesBySchoolPage({super.key});
+class FindCoursesBySchoolPageView extends StatefulWidget {
+  const FindCoursesBySchoolPageView({super.key});
 
   @override
-  State<FindCoursesBySchoolPage> createState() => _FindCoursesBySchoolPageState();
+  State<FindCoursesBySchoolPageView> createState() => _FindCoursesBySchoolPageViewState();
 }
 
-class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
-  FindCoursesBySchoolController findCoursesBySchoolController = FindCoursesBySchoolController();
-
-  @override
-  void initState() {
-    // Get.lazyPut(() => FindCoursesBySchoolController()..getCourses());
-    // findCoursesBySchoolController = Get.find<FindCoursesBySchoolController>();
-    findCoursesBySchoolController.getCourses();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    findCoursesBySchoolController.dispose();
-    super.dispose();
-  }
-
+class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +36,7 @@ class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
+                // school selector
                 SliverToBoxAdapter(
                   child: Container(
                     height: 114,
@@ -61,29 +47,8 @@ class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
                         bottom: BorderSide(color: AppColor.softBorderColor),
                       ),
                     ),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      children: [
-                        CollageCard(
-                          name: "Junior secondary school",
-                          icon: Icons.account_balance_sharp,
-                          onSelect: (v) {
-                            print(v);
-                          },
-                        ),
-                        10.width,
-                        CollageCard(
-                          name: "Senior secondary school",
-                          icon: Icons.business_outlined,
-                          isSelected: true,
-                        ),
-                        10.width,
-                        CollageCard(
-                          name: "University",
-                          icon: Icons.temple_buddhist_outlined,
-                        ),
-                      ],
+                    child: SchoolSelector(
+                      controller: controller.schoolSelectorController,
                     ),
                   ),
                 ),
@@ -108,11 +73,11 @@ class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
                       )
                     : ListView.separated(
                         padding: EdgeInsets.all(16),
-                        itemCount: controller.coursesList!.length,
+                        itemCount: controller.coursesBySchool!.length,
                         itemBuilder: (context, index) {
                           return SubjectCard(
                             // name: "Mathematics",
-                            name: controller.coursesList![index].courseName!,
+                            name: controller.coursesBySchool![index].courseName!,
                             icon: Icons.group,
                             // selected: true,
                             onTap: () {
@@ -121,26 +86,6 @@ class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
                           );
                         },
                         separatorBuilder: (context, index) => 8.height,
-                        // children: [
-                        //   SubjectCard(
-                        //     name: "Mathematics",
-                        //     icon: Icons.group,
-                        //     selected: true,
-                        //     onTap: () {
-                        //       appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
-                        //     },
-                        //   ),
-                        //   8.height,
-                        //   SubjectCard(name: "English", icon: Icons.group, selected: false),
-                        //   8.height,
-                        //   SubjectCard(name: "Physics", icon: Icons.group, selected: false),
-                        //   8.height,
-                        //   SubjectCard(name: "Chemistry", icon: Icons.group, selected: false),
-                        //   8.height,
-                        //   SubjectCard(name: "Biology", icon: Icons.group, selected: false),
-                        //   8.height,
-                        //   SubjectCard(name: "Economics", icon: Icons.group, selected: false),
-                        // ],
                       ),
           );
         },
@@ -153,28 +98,5 @@ class _FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPage> {
         bgColor: Color(0xff6938EF),
       ),
     );
-  }
-}
-
-//
-class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-
-  MyHeaderDelegate({required this.child});
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return child;
-  }
-
-  @override
-  double get maxExtent => 44;
-
-  @override
-  double get minExtent => 44;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }

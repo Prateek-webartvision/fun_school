@@ -16,12 +16,13 @@ class CollageCard extends StatelessWidget {
   final String name;
   final IconData icon;
   final bool isSelected;
-  final Function(bool v)? onSelect;
+  final Function()? onSelect;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (onSelect != null) ? () => onSelect!(isSelected) : null,
+      // onTap: (onSelect != null) ? () => onSelect!(isSelected) : null,
+      onTap: onSelect,
       child: Container(
         width: 130,
         padding: EdgeInsets.all(10),
