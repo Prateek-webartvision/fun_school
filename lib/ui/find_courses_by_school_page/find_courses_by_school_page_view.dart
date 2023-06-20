@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/router/pages.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
+
+import '../../router/app_router.dart';
+import '../../router/pages.dart';
+import '../../style/color.dart';
+import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/my_header_delegate.dart';

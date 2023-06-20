@@ -2,6 +2,7 @@ import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/network/exception/k_exceptions.dart';
 import 'package:citycloud_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -13,9 +14,10 @@ class FindCoursesBySchoolController extends GetxController {
   List<CoursesModel>? _coursesList;
   List<CoursesModel>? coursesBySchool;
 
-  SchoolSelectorController schoolSelectorController = SchoolSelectorController(schoolSeletedIndex: 0);
+  late SchoolSelectorController schoolSelectorController;
 
   FindCoursesBySchoolController() {
+    schoolSelectorController = SchoolSelectorController(schoolSeletedIndex: 0);
     _initLoadDate();
   }
 
@@ -59,8 +61,12 @@ class FindCoursesBySchoolController extends GetxController {
       if (error is KInternetException) {
         AppUtils.showSnack(error.message.toString());
         this.error = error.message.toString();
+      }
+      if (error is FlutterError) {
+        /// this error comw due to call api after disposing controller
+        AppUtils.showSnack("gotcha");
       } else {
-        AppUtils.showSnack(error.toString());
+        AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();
       }
       update();
