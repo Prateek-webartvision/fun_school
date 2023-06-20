@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -95,7 +97,11 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
         },
       ),
       floatingActionButton: KBtn(
-        onClick: () async {},
+        onClick: () {
+          AppUtils.showloadingOverlay(() async {
+            await StudyPlanRepository.buyStudyPlan(1);
+          });
+        },
         text: "Add to Study Plan",
         width: MediaQuery.of(context).size.width - 32,
         height: 44,

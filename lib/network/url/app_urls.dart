@@ -6,4 +6,5 @@ class AppUrls {
   static const String signInUrl = "$_apis/login.php";
 
   static const String coursesAndDetailsUrl = "$_apis/course_details.php";
+  static const String addStudyPlanUrl = "$_apis/add_study_plan.php";
 }

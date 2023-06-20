@@ -12,14 +12,11 @@ class PagesName {
   static String profileAndSettings = "ProfileAndSettings";
 
   static String findCoursesBySchoolPage = "FindCoursesBySchoolPage";
-  //
+  static String findCourseByCareerPage = "FindCourseByCareerPage";
+  static String findCourseByInterestPage = "FindCourseByInterestPage";
+
   static String coursesBySchoolDetailsPage = "CoursesBySchoolDetailsPage";
 
-  static String findCourseByCareerPage = "FindCourseByCareerPage";
-  //
-  static String courseByCareerDetailsPage = "CourseByCareerDetailsPage";
-
-  static String findCourseByInterestPage = "FindCourseByInterestPage";
   //
   static String prepareForAnExamPage = "PrepareForAnExamPage";
 

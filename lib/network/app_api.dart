@@ -15,6 +15,7 @@ class AppApi extends ApiService {
   Future getApi(String url, {Map<String, String>? params, Map<String, dynamic>? body}) async {
     Uri uri = Uri.parse(url);
     late Uri finalUri;
+
     if (params != null) {
       finalUri = Uri(scheme: uri.scheme, host: uri.host, path: uri.path, queryParameters: params);
     } else {
