@@ -1,11 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/detail_exam_page/detail_exam_page.dart';
-import 'package:citycloud_school/ui/start_exam_pages/question_answer_page/question_answer_page.dart';
-import 'package:citycloud_school/ui/start_exam_pages/result_page/result_page.dart';
-import 'package:citycloud_school/ui/start_exam_pages/start_exam_page/start_exam_page.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +9,7 @@ import '../ui/auth/signup_page/signup_page_view.dart';
 import '../ui/auth/splash_screen/splash_screen.dart';
 import '../ui/auth/start_page/start_page.dart';
 import '../ui/botton_nav_bar/bottom_nav_bar.dart';
+import '../ui/detail_exam_page/detail_exam_page.dart';
 import '../ui/exam_preparation_page/exam_preparation_page.dart';
 import '../ui/find_course_by_career_page/find_course_by_career_page.dart';
 import '../ui/find_course_by_interest_page/find_course_by_interest_page.dart';
@@ -23,6 +18,11 @@ import '../ui/home_page/home_page.dart';
 import '../ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
 import '../ui/profile_and_settings_page/profile_and_settings_page.dart';
 import '../ui/school_communities_page/school_communities_page.dart';
+import '../ui/start_exam_pages/question_answer_page/question_answer_page.dart';
+import '../ui/start_exam_pages/result_page/result_page.dart';
+import '../ui/start_exam_pages/start_exam_page/start_exam_page.dart';
+import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
+import '../ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
 import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_page.dart';
 import '../ui/topic_summary_page/topic_summary_page.dart';
@@ -103,12 +103,12 @@ final GoRouter appRoutes = GoRouter(
               pageBuilder: (context, state) => MaterialPage(child: FindCoursesBySchoolPageView()),
               routes: [
                 // Details page
-                GoRoute(
-                  parentNavigatorKey: rootNavigator,
-                  path: PagesName.coursesBySchoolDetailsPage,
-                  name: PagesName.coursesBySchoolDetailsPage,
-                  pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
-                ),
+                // GoRoute(
+                //   parentNavigatorKey: rootNavigator,
+                //   path: PagesName.coursesBySchoolDetailsPage,
+                //   name: PagesName.coursesBySchoolDetailsPage,
+                //   pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
+                // ),
               ],
             ),
 
@@ -118,15 +118,6 @@ final GoRouter appRoutes = GoRouter(
               path: PagesName.findCourseByCareerPage,
               name: PagesName.findCourseByCareerPage,
               pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareerPage()),
-              routes: [
-                //details page
-                // GoRoute(
-                //   parentNavigatorKey: rootNavigator,
-                //   path: PagesName.courseByCareerDetailsPage,
-                //   name: PagesName.courseByCareerDetailsPage,
-                //   pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
-                // )
-              ],
             ),
 
             // find course by interest page
@@ -187,6 +178,14 @@ final GoRouter appRoutes = GoRouter(
       ],
     ),
 
+    // courses Details Page
+    GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.coursesBySchoolDetailsPage),
+      name: PagesName.coursesBySchoolDetailsPage,
+      pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
+    ),
+
     // topic summary Page
     GoRoute(
       parentNavigatorKey: rootNavigator,
@@ -239,23 +238,24 @@ final GoRouter appRoutes = GoRouter(
 
     // Start Quiz page
     GoRoute(
-        parentNavigatorKey: rootNavigator,
-        path: PagesName.getPath(PagesName.startQuizPage),
-        name: PagesName.startQuizPage,
-        pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: StartQuizPage(),
-            ),
-        routes: [
-          GoRoute(
-            parentNavigatorKey: rootNavigator,
-            path: PagesName.quizQustionAnswerPage,
-            name: PagesName.quizQustionAnswerPage,
-            pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: QuizQustionQnswerPage(),
-            ),
-          )
-        ])
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.startQuizPage),
+      name: PagesName.startQuizPage,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: StartQuizPage(),
+      ),
+      routes: [
+        GoRoute(
+          parentNavigatorKey: rootNavigator,
+          path: PagesName.quizQustionAnswerPage,
+          name: PagesName.quizQustionAnswerPage,
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: QuizQustionQnswerPage(),
+          ),
+        )
+      ],
+    )
   ],
 );

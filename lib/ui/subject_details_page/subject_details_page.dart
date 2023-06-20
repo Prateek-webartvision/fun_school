@@ -42,7 +42,7 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> with TickerProv
       ),
       body: Column(
         children: [
-          // Text()
+          // Text("Kundan ${appRoutes.location}"),
           _HeadTitle(controller: pageTabController),
 
           //body

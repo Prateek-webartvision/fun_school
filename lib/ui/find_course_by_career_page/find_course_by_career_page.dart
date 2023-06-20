@@ -5,6 +5,9 @@ import 'package:citycloud_school/widegts/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../router/app_router.dart';
+import '../../router/pages.dart';
+
 class FindCourseByCareerPage extends StatelessWidget {
   const FindCourseByCareerPage({super.key});
 
@@ -82,7 +85,11 @@ class FindCourseByCareerPage extends StatelessWidget {
                   ],
                 ),
                 12.height,
-                _SubjectCard(name: "English", icon: Icons.group),
+                GestureDetector(
+                    onTap: () {
+                      appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                    },
+                    child: _SubjectCard(name: "English", icon: Icons.group)),
                 8.height,
                 _SubjectCard(name: "Literature", icon: Icons.book, iconBg: Color(0xffEF6F38)),
                 8.height,

@@ -83,6 +83,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                             name: controller.coursesBySearch![index].courseName!,
                             icon: Icons.group,
                             // selected: true,
+                            // work on it
                             onTap: () {
                               appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
                             },

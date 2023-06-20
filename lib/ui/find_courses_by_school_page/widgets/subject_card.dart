@@ -5,24 +5,29 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 
-class SubjectCard extends StatelessWidget {
+class SubjectCard extends StatefulWidget {
   const SubjectCard({
     super.key,
     required this.name,
     required this.icon,
-    this.selected = false,
+    // this.selected = false,
     this.onTap,
   });
   final String name;
   final IconData icon;
-  final bool selected;
 
   final Function()? onTap;
 
   @override
+  State<SubjectCard> createState() => _SubjectCardState();
+}
+
+class _SubjectCardState extends State<SubjectCard> {
+  bool selected = false;
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         decoration: BoxDecoration(
           color: AppColor.white,
@@ -36,7 +41,7 @@ class SubjectCard extends StatelessWidget {
               radius: 20,
               backgroundColor: AppColor.mainColor,
               child: Icon(
-                icon,
+                widget.icon,
                 color: AppColor.white,
               ),
             ),
@@ -50,7 +55,7 @@ class SubjectCard extends StatelessWidget {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    name,
+                    widget.name,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   4.height,
@@ -92,7 +97,11 @@ class SubjectCard extends StatelessWidget {
                 color: AppColor.softBorderColor,
                 width: 1,
               ),
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selected = value!;
+                });
+              },
             )
           ],
         ),
