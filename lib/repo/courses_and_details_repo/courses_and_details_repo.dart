@@ -6,6 +6,7 @@ class CoursesAndDetailsRepository {
 
   static Future<dynamic> getCoursesAndDetails() async {
     return await _api.getApi(AppUrls.coursesAndDetailsUrl).then((value) {
+      // print("$value");
       return value;
     }).onError((error, stackTrace) {
       throw error!;

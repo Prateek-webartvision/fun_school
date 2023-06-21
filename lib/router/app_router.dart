@@ -117,7 +117,7 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.findCourseByCareerPage,
               name: PagesName.findCourseByCareerPage,
-              pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareerPage()),
+              pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareerView()),
             ),
 
             // find course by interest page

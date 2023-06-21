@@ -26,12 +26,12 @@ class CoursesModel {
   CoursesModel.fromJson(Map<String, dynamic> json) {
     courseId = json['course_id'];
     courseName = json['course_name'];
-    courseDescription = json['course_description'];
-    courseCoverImage = json['course_cover_image'];
-    courseSchool = json['course_school'];
+    // courseDescription = json['course_description'];
+    // courseCoverImage = json['course_cover_image'];
+    // courseSchool = json['course_school'];
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
-    status = json['status'];
-    dateAdded = json['date_added'];
+    // status = json['status'];
+    // dateAdded = json['date_added'];
   }
 }

@@ -3,17 +3,23 @@
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/widegts/k_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
+import 'find_course_by_career_state.dart';
 import 'widgets/select_intreset.dart';
 import 'widgets/subject_card.dart';
 import 'widgets/teg_selector.dart';
 
-class FindCourseByCareerPage extends StatelessWidget {
-  const FindCourseByCareerPage({super.key});
+class FindCourseByCareerView extends StatefulWidget {
+  const FindCourseByCareerView({super.key});
+  @override
+  State<FindCourseByCareerView> createState() => _FindCourseByCareerViewState();
+}
 
+class _FindCourseByCareerViewState extends FindCouresByCareerState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,79 +34,96 @@ class FindCourseByCareerPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          //head
-          Container(
-            height: 126,
-            decoration: BoxDecoration(
-              color: AppColor.white,
-            ),
-            padding: EdgeInsets.all(16),
-            child: Column(
+      body: GetBuilder(
+        init: findCourseByCareerController,
+        builder: (controller) {
+          if (controller.apiState == ApiState.loading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (controller.apiState == ApiState.error) {
+            return Center(
+              child: Text(controller.error.toString()),
+            );
+          } else {
+            // on success
+            return Column(
               children: [
-                KSearchField(),
-                12.height,
-                Row(
-                  children: [
-                    TagSelector(title: "Art", selected: true),
-                    12.width,
-                    TagSelector(title: "Science"),
-                    12.width,
-                    TagSelector(title: "Social Science"),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          //list
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(16),
-              children: [
-                SelectIntreset(),
-                12.height,
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "School Level",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                //head
+                Container(
+                  height: 126,
+                  decoration: BoxDecoration(color: AppColor.white),
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      KSearchField(onSubmmit: searchSubmmit),
+                      12.height,
+                      // career tags
+                      TagSelector(
+                        currentIndex: controller.currentCareerTagIndex,
+                        tagSet: controller.careerSet,
+                        onChanged: (index) => controller.changeCareerTag(index),
                       ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Junior secondary school",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        6.width,
-                        GestureDetector(onTap: () {}, child: Icon(Icons.arrow_drop_down))
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                12.height,
-                GestureDetector(
-                    onTap: () {
-                      appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
-                    },
-                    child: SubjectCard(name: "English", icon: Icons.group)),
-                8.height,
-                SubjectCard(name: "Literature", icon: Icons.book, iconBg: Color(0xffEF6F38)),
-                8.height,
-                SubjectCard(name: "Literature", icon: Icons.home_work_rounded, iconBg: AppColor.facebookBlue),
+
+                //list
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.all(16),
+                    children: [
+                      SelectIntreset(),
+                      12.height,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "School Level",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Junior secondary school",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              6.width,
+                              GestureDetector(onTap: () {}, child: Icon(Icons.arrow_drop_down))
+                            ],
+                          ),
+                        ],
+                      ),
+                      12.height,
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.filterList!.length,
+                        itemBuilder: (context, index) {
+                          return SubjectCard(
+                            name: "${controller.filterList?[index].courseName}",
+                            icon: Icons.book,
+                            onTap: () {
+                              appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                            },
+                            // iconBg: Color(0xffEF6F38),
+                          );
+                        },
+                        separatorBuilder: (context, index) => 8.height,
+                      ),
+                    ],
+                  ),
+                )
               ],
-            ),
-          )
-        ],
+            );
+          }
+        },
       ),
     );
   }

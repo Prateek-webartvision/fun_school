@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+import 'controller/find_course_by_career_controller.dart';
+import 'find_course_by_career_page.dart';
+
+abstract class FindCouresByCareerState extends State<FindCourseByCareerView> {
+  late FindCourseByCareerController findCourseByCareerController;
+
+  @override
+  void initState() {
+    findCourseByCareerController = FindCourseByCareerController();
+    super.initState();
+  }
+
+  searchSubmmit(String query) {
+    findCourseByCareerController.searchFilter(query: query);
+  }
+
+  @override
+  void dispose() {
+    if (findCourseByCareerController.filterList != null) {
+      findCourseByCareerController.dispose();
+    }
+    super.dispose();
+  }
+}

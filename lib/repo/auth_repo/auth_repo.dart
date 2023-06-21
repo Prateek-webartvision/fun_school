@@ -37,7 +37,9 @@ class AuthRepository extends AuthRepo {
     return await api.postApi(AppUrls.signInUrl, params: userData).then((value) {
       if (value["code"] == 200) {
         UserModel userModel = UserModel(
+          userid: value['user_id'],
           userName: value['username'],
+          userEmail: value['email'],
           about: value['about'],
           userType: value['user_type'],
           regDate: value['reg_date'],
