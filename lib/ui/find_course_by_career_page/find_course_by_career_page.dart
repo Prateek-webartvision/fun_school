@@ -107,22 +107,31 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                         ],
                       ),
                       12.height,
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.filterList!.length,
-                        itemBuilder: (context, index) {
-                          return SubjectCard(
-                            name: "${controller.filterList?[index].courseName}",
-                            icon: Icons.book,
-                            onTap: () {
-                              appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
-                            },
-                            // iconBg: Color(0xffEF6F38),
-                          );
-                        },
-                        separatorBuilder: (context, index) => 8.height,
-                      ),
+                      (controller.filterList.isEmpty)
+                          ? Column(
+                              children: [
+                                40.height,
+                                Center(
+                                  child: Text("No Data found or Change filters"),
+                                ),
+                              ],
+                            )
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.filterList.length,
+                              itemBuilder: (context, index) {
+                                return SubjectCard(
+                                  name: "${controller.filterList[index].courseName}",
+                                  icon: Icons.book,
+                                  onTap: () {
+                                    appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                                  },
+                                  // iconBg: Color(0xffEF6F38),
+                                );
+                              },
+                              separatorBuilder: (context, index) => 8.height,
+                            ),
                     ],
                   ),
                 )

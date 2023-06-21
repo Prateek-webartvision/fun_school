@@ -36,6 +36,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
       body: GetBuilder(
         init: findCoursesBySchoolController,
         builder: (controller) {
+          print(controller.coursesBySearch);
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [

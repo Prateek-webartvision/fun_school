@@ -28,7 +28,7 @@ class CoursesModel {
     courseName = json['course_name'];
     // courseDescription = json['course_description'];
     // courseCoverImage = json['course_cover_image'];
-    // courseSchool = json['course_school'];
+    courseSchool = json['course_school'];
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
     // status = json['status'];

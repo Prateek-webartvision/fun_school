@@ -25,6 +25,8 @@ class FindCourseByCareerController extends GetxController {
   late Set<String> interestSet;
   String? seletedInterest;
 
+  // school set
+
   FindCourseByCareerController() {
     _initLoad();
   }

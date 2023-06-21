@@ -11,7 +11,7 @@ import 'school_selector_controller.dart';
 class FindCoursesBySchoolController extends GetxController {
   ApiState apiState = ApiState.loading;
   String? error;
-  List<CoursesModel>? _coursesList;
+  List<CoursesModel> _coursesList = [];
   List<CoursesModel>? _coursesBySchool;
   List<CoursesModel>? coursesBySearch;
 
@@ -24,7 +24,9 @@ class FindCoursesBySchoolController extends GetxController {
 
   _initLoadDate() async {
     await _getCourses();
+
     _sortBySchool(schoolSelectorController.selectionKey);
+
     schoolSelectorController.addListener(() {
       _sortBySchool(schoolSelectorController.selectionKey);
     });
@@ -33,13 +35,14 @@ class FindCoursesBySchoolController extends GetxController {
   // sort by school
   _sortBySchool(String sortby) async {
     List<CoursesModel> _sortData = [];
-    if (_coursesList != null) {
-      for (var element in _coursesList!) {
+    if (_coursesList.isNotEmpty) {
+      for (var element in _coursesList) {
         if (element.courseSchool == sortby) {
           _sortData.add(element);
         }
       }
     }
+    // print(_sortData);
     _coursesBySchool = _sortData;
     searchSort("");
     // update();
@@ -56,16 +59,13 @@ class FindCoursesBySchoolController extends GetxController {
   // loading course data
   _getCourses() async {
     apiState = ApiState.loading;
-    update();
+    List<CoursesModel> _data = [];
+
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
-      List<CoursesModel> _data = [];
       for (var element in v) {
         _data.add(CoursesModel.fromJson(element));
       }
-      _coursesList = _data;
-      error = null;
-      update();
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       if (error is KInternetException) {
@@ -79,8 +79,9 @@ class FindCoursesBySchoolController extends GetxController {
         AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();
       }
-      update();
     });
+    _coursesList = _data;
+    update();
   }
 
   @override
