@@ -25,7 +25,8 @@ class FindCourseByCareerController extends GetxController {
   late Set<String> interestSet;
   String? seletedInterest;
 
-  // school set
+  // school level
+  String? schoolLevel;
 
   FindCourseByCareerController() {
     _initLoad();
@@ -86,6 +87,7 @@ class FindCourseByCareerController extends GetxController {
   changeCareerTag(int v) {
     currentCareerTagIndex = v;
     seletedInterest = null;
+    schoolLevel = null;
     filterList = _finterAllQuerys(
       data: _coursesList!,
       careerTag: careerSet.elementAt(currentCareerTagIndex!),
@@ -104,6 +106,19 @@ class FindCourseByCareerController extends GetxController {
       careerTag: careerSet.elementAt(currentCareerTagIndex!),
       query: searchText,
       interest: seletedInterest,
+    );
+    update();
+  }
+
+  //change school lavel
+  changeSchoolLavel(String? level) {
+    schoolLevel = level;
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      query: searchText,
+      careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      interest: seletedInterest,
+      school: schoolLevel,
     );
     update();
   }
@@ -167,6 +182,12 @@ class FindCourseByCareerController extends GetxController {
     if (interest != null) {
       List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseInterest!.toLowerCase().contains(interest.toLowerCase())).toList();
       careerfilteredData = tempList;
+    }
+
+    if (schoolLevel != null) {
+      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseSchool!.toLowerCase().contains(schoolLevel!.toLowerCase())).toList();
+      careerfilteredData = tempList;
+      // print(tempList);
     }
 
     return careerfilteredData;
