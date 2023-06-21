@@ -10,14 +10,20 @@ import '../../../uitls/app_utils.dart';
 class FindCourseByCareerController extends GetxController {
   ApiState apiState = ApiState.loading;
   String? error;
+
   List<CoursesModel>? _coursesList;
-  List<CoursesModel>? filterList;
+  List<CoursesModel> filterList = [];
+
+  // search text;
+  String searchText = "";
 
   // coreer tag
   late Set<String> careerSet;
   int? currentCareerTagIndex;
+
   // interest tag
   late Set<String> interestSet;
+  String? seletedInterest;
 
   FindCourseByCareerController() {
     _initLoad();
@@ -41,54 +47,62 @@ class FindCourseByCareerController extends GetxController {
     }
   }
 
+  // get sets off career
   _getCareerSets() {
-    // get sets off career
     if (_coursesList != null) {
       Set<String> tempSet = {};
       for (var element in _coursesList!) {
         tempSet.add(element.courseCareer!);
       }
       careerSet = tempSet;
+
       if (careerSet.isNotEmpty) {
         currentCareerTagIndex = 0;
       }
-      searchFilter();
+      filterList = _finterAllQuerys(
+        data: _coursesList!,
+        careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      );
+
       update();
     }
   }
 
   // filter by search
   searchFilter({String? query = ""}) {
-    List<CoursesModel> careerData;
-    if (currentCareerTagIndex != null) {
-      careerData = _filterCareer(careerSet.elementAt(currentCareerTagIndex!));
-    } else {
-      careerData = _coursesList!;
-    }
-
-    List<CoursesModel> tempList = careerData.where((element) => element.courseName!.toLowerCase().contains(query!.toLowerCase().trim())).toList();
-    filterList = tempList;
+    searchText = query!;
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      query: searchText,
+      careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      interest: seletedInterest,
+    );
     update();
-    // return tempList;
-  }
-
-  // filter by career
-  List<CoursesModel> _filterCareer(String career) {
-    List<CoursesModel> tempList = [];
-    if (_coursesList != null) {
-      for (var element in _coursesList!) {
-        if (element.courseCareer == career) {
-          tempList.add(element);
-        }
-      }
-    }
-    return tempList;
   }
 
   // change career tag
   changeCareerTag(int v) {
     currentCareerTagIndex = v;
-    searchFilter();
+    seletedInterest = null;
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      interest: seletedInterest,
+      query: searchText,
+      school: null,
+    );
+    update();
+  }
+
+  // chnage Interest tag
+  changeInterestTag(String? interest) {
+    seletedInterest = interest;
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      query: searchText,
+      interest: seletedInterest,
+    );
     update();
   }
 
@@ -121,5 +135,38 @@ class FindCourseByCareerController extends GetxController {
       }
       update();
     });
+  }
+
+  // helper Fun for query
+  List<CoursesModel> _finterAllQuerys({
+    required List<CoursesModel> data,
+    String query = "",
+    String? careerTag,
+    String? interest,
+    String? school,
+  }) {
+    List<CoursesModel> careerfilteredData = [];
+
+    if (careerTag != null) {
+      List<CoursesModel> tempList = [];
+      for (var element in data) {
+        if (element.courseCareer == careerTag) {
+          tempList.add(element);
+        }
+      }
+      careerfilteredData = tempList;
+    }
+
+    if (query.isNotEmpty) {
+      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseName!.toLowerCase().contains(query.toLowerCase().trim())).toList();
+      careerfilteredData = tempList;
+    }
+
+    if (interest != null) {
+      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseInterest!.toLowerCase().contains(interest.toLowerCase())).toList();
+      careerfilteredData = tempList;
+    }
+
+    return careerfilteredData;
   }
 }

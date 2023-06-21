@@ -71,7 +71,13 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                   child: ListView(
                     padding: EdgeInsets.all(16),
                     children: [
-                      SelectIntreset(),
+                      SelectIntreset(
+                        initInterest: controller.seletedInterest,
+                        interestList: controller.interestSet.toList(),
+                        onItemClick: (interest) {
+                          controller.changeInterestTag(interest);
+                        },
+                      ),
                       12.height,
                       Row(
                         children: [

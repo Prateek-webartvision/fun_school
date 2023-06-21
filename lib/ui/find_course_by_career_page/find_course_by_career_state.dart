@@ -18,9 +18,8 @@ abstract class FindCouresByCareerState extends State<FindCourseByCareerView> {
 
   @override
   void dispose() {
-    if (findCourseByCareerController.filterList != null) {
-      findCourseByCareerController.dispose();
-    }
+    findCourseByCareerController.dispose();
+
     super.dispose();
   }
 }
