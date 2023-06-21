@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/style/assets.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/profile_and_settings_page/profile_and_settings_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../style/assets.dart';
+import '../../style/color.dart';
+import 'profile_and_settings_page_state.dart';
 import 'widgets/profile_option_tile.dart';
 
 class ProfileAndSettingsView extends StatefulWidget {
@@ -36,10 +36,6 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
                     borderRadius: BorderRadius.circular(48),
                     border: Border.all(color: AppColor.softBorderColor, width: 2),
                     boxShadow: [
-                      // BoxShadow(
-                      //   color: Color(0x1A101828),
-                      //   offset: Offset(1, 3),
-                      // ),
                       BoxShadow(
                         color: Color(0x0F101828),
                         offset: Offset(1, 2),
@@ -53,7 +49,8 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
                 ),
                 12.height,
                 Text(
-                  "John Doe",
+                  // "John Doe",
+                  "${currentUser?.userName}",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 )
               ],
@@ -63,19 +60,23 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
           ProfileOptionTile(
             leadingIcon: Icons.email,
             title: "Email",
-            tralingText: "john.doe@gmail.com",
+            // tralingText: "john.doe@gmail.com",
+            tralingText: currentUser?.userEmail ?? "NA",
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.person,
             title: "Username",
-            tralingText: "john.doe",
+            // tralingText: "john.doe",
+            tralingText: "${currentUser?.userName}",
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.lock,
             title: "Change Password",
           ),
+
+          //
           10.height,
           ProfileOptionTile(
             leadingIcon: Icons.download_for_offline_rounded,

@@ -16,7 +16,7 @@ import '../ui/find_course_by_interest_page/find_course_by_interest_page.dart';
 import '../ui/find_courses_by_school_page/find_courses_by_school_page_view.dart';
 import '../ui/home_page/home_page.dart';
 import '../ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
-import '../ui/profile_and_settings_page/profile_and_settings_page.dart';
+import '../ui/profile_and_settings_page/profile_and_settings_page_view.dart';
 import '../ui/school_communities_page/school_communities_page.dart';
 import '../ui/start_exam_pages/question_answer_page/question_answer_page.dart';
 import '../ui/start_exam_pages/result_page/result_page.dart';

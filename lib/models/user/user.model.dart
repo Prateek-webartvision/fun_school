@@ -1,5 +1,8 @@
 class UserModel {
+  String? userid;
   String? userName;
+  String? userEmail;
+  String? userProfile;
   String? about;
   String? userType;
   String? regDate;
@@ -42,7 +45,6 @@ class UserModel {
     userData["user_type"] = userType;
     userData["reg_date"] = regDate;
     userData["status"] = status;
-
     return userData;
   }
 }
