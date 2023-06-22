@@ -36,7 +36,6 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
       body: GetBuilder(
         init: findCoursesBySchoolController,
         builder: (controller) {
-          print(controller.coursesBySearch);
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
@@ -88,7 +87,10 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                             // selected: true,
                             // work on it
                             onTap: () {
-                              appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                              appRoutes.pushNamed(
+                                PagesName.coursesBySchoolDetailsPage,
+                                extra: controller.coursesBySearch![index],
+                              );
                             },
                           );
                         },

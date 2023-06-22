@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +25,7 @@ import '../ui/start_exam_pages/start_exam_page/start_exam_page.dart';
 import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
 import '../ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
 import '../ui/study_page/study_page.dart';
-import '../ui/subject_details_page/subject_details_page.dart';
+import '../ui/subject_details_page/subject_details_view.dart';
 import '../ui/topic_summary_page/topic_summary_page.dart';
 import 'pages.dart';
 
@@ -180,11 +181,13 @@ final GoRouter appRoutes = GoRouter(
 
     // courses Details Page
     GoRoute(
-      parentNavigatorKey: rootNavigator,
-      path: PagesName.getPath(PagesName.coursesBySchoolDetailsPage),
-      name: PagesName.coursesBySchoolDetailsPage,
-      pageBuilder: (context, state) => MaterialPage(child: SubjectDetailsPage()),
-    ),
+        parentNavigatorKey: rootNavigator,
+        path: PagesName.getPath(PagesName.coursesBySchoolDetailsPage),
+        name: PagesName.coursesBySchoolDetailsPage,
+        pageBuilder: (context, state) {
+          CoursesModel? obj = state.extra as CoursesModel?;
+          return MaterialPage(child: SubjectDetailsView(courseData: obj));
+        }),
 
     // topic summary Page
     GoRoute(

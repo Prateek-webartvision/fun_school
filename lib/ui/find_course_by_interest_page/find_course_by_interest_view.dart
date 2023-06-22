@@ -1,15 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/ui/find_course_by_career_page/widgets/select_intreset.dart';
-import 'package:citycloud_school/ui/find_course_by_interest_page/find_course_by_interest_state.dart';
-import 'package:citycloud_school/ui/find_course_by_interest_page/widgets/proficiency_level_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
 import '../../widegts/k_text_field.dart';
+import '../find_course_by_career_page/widgets/select_intreset.dart';
 import '../find_course_by_career_page/widgets/subject_card.dart';
+import 'find_course_by_interest_state.dart';
+import 'widgets/proficiency_level_dropdown.dart';
 
 class FindCourseByInterestView extends StatefulWidget {
   const FindCourseByInterestView({super.key});
@@ -108,6 +108,9 @@ class _FindCourseByInterestViewState extends FindCourseByInterestState {
                         return SubjectCard(
                           name: controller.filterList[index].courseName!,
                           icon: Icons.group,
+                          onTap: () {
+                            print("cart");
+                          },
                         );
                       },
                       separatorBuilder: (context, index) => 8.height,

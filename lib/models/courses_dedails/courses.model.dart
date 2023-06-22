@@ -1,3 +1,5 @@
+import 'subject.model.dart';
+
 class CoursesModel {
   int? courseId;
   String? courseName;
@@ -7,7 +9,7 @@ class CoursesModel {
   String? courseCareer;
   String? courseInterest;
   String? courseProficiency;
-  // String? courseSubjects;
+  List<CoursesSubject>? courseSubjects;
   // String? courseEnrollment;
   String? status;
   String? dateAdded;
@@ -21,6 +23,7 @@ class CoursesModel {
     this.courseCareer,
     this.courseInterest,
     this.courseProficiency,
+    this.courseSubjects,
     this.status,
     this.dateAdded,
   });
@@ -34,6 +37,13 @@ class CoursesModel {
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
     courseProficiency = json['course_proficiency'];
+    if (json['course_subjects'] != null) {
+      List<CoursesSubject> courseSubjects = [];
+      for (var element in json['course_subjects']) {
+        courseSubjects.add(CoursesSubject.fromJson(element));
+      }
+      this.courseSubjects = courseSubjects;
+    }
     // status = json['status'];
     // dateAdded = json['date_added'];
   }

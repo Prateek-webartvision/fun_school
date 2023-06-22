@@ -1,70 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import 'tab_pages/algebra_tab.dart';
+import '../../../style/color.dart';
 
-class SubjectDetailsPage extends StatefulWidget {
-  const SubjectDetailsPage({super.key});
+class HeadTitle extends StatelessWidget {
+  const HeadTitle({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.tabs,
+  });
 
-  @override
-  State<SubjectDetailsPage> createState() => _SubjectDetailsPageState();
-}
-
-class _SubjectDetailsPageState extends State<SubjectDetailsPage> with TickerProviderStateMixin {
-  late TabController pageTabController;
-
-  @override
-  void initState() {
-    pageTabController = TabController(length: 3, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    pageTabController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.scaffoldBg,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.more_horiz_rounded),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Text("Kundan ${appRoutes.location}"),
-          _HeadTitle(controller: pageTabController),
-
-          //body
-          Expanded(
-            child: TabBarView(
-              controller: pageTabController,
-              children: [
-                AlgebraTab(),
-                AlgebraTab(),
-                AlgebraTab(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeadTitle extends StatelessWidget {
-  const _HeadTitle({required this.controller});
   final TabController controller;
+  final List<String> tabs;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +39,8 @@ class _HeadTitle extends StatelessWidget {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    "Mathematics",
+                    // "Mathematics",
+                    title,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   4.height,
@@ -165,14 +117,20 @@ class _HeadTitle extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
             dividerColor: Colors.transparent,
             unselectedLabelColor: AppColor.unSelectedTapColor,
-            tabs: [
-              Tab(text: "Algebra"),
-              Tab(text: "Ratios"),
-              Tab(text: "Trigonometry"),
-            ],
+            tabs: tabs
+                .map((e) => Tab(
+                      text: e,
+                    ))
+                .toList(),
           ),
         ),
       ],
     );
   }
 }
+
+// [
+              // Tab(text: "Algebra"),
+              // Tab(text: "Ratios"),
+              // Tab(text: "Trigonometry"),
+            // ],
