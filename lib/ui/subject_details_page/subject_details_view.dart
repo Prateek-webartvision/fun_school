@@ -3,7 +3,6 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'subject_details_state.dart';
 import 'tab_pages/algebra_tab.dart';
@@ -34,38 +33,38 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
           ? Center(
               child: Text("Subjects not found"),
             )
-          : GetBuilder(
-              init: subjectDetailsPageController,
-              builder: (controller) {
-                return Column(
-                  children: [
-                    HeadTitle(
-                      title: widget.courseData!.courseName!,
-                      controller: pageTabController,
-                      tabs: controller.subjects.map((e) => e.subjectName!).toList(),
-                    ),
+          : Column(
+              children: [
+                HeadTitle(
+                  title: widget.courseData!.courseName!,
+                  controller: pageTabController,
+                  tabs: subjects.map((e) => e.subjectName!).toList(),
+                ),
 
-                    // body
-                    Expanded(
-                      child: (controller.subjects.isEmpty)
-                          ? Container(
-                              width: double.maxFinite,
-                              alignment: Alignment.center,
-                              // color: Colors.green,
-                              child: Text("No Subjects found"),
-                            )
-                          : TabBarView(
-                              controller: pageTabController,
-                              children: controller.subjects
-                                  .map((e) => Center(
-                                        child: AlgebraTab(),
-                                      ))
-                                  .toList(),
-                            ),
-                    ),
-                  ],
-                );
-              },
+                // body
+                Expanded(
+                  child: (subjects.isEmpty)
+                      ? Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          // color: Colors.green,
+                          child: Text("No Subjects found"),
+                        )
+                      : TabBarView(
+                          controller: pageTabController,
+                          children: subjects
+                              .asMap()
+                              .map(
+                                (i, value) => MapEntry(
+                                  i,
+                                  AlgebraTab(subject: subjects[i]),
+                                ),
+                              )
+                              .values
+                              .toList(),
+                        ),
+                ),
+              ],
             ),
     );
   }

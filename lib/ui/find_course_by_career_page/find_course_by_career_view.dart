@@ -127,7 +127,11 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                   name: "${controller.filterList[index].courseName}",
                                   icon: Icons.book,
                                   onTap: () {
-                                    appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                                    // appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
+                                    appRoutes.pushNamed(
+                                      PagesName.coursesBySchoolDetailsPage,
+                                      extra: controller.filterList[index],
+                                    );
                                   },
                                   // iconBg: Color(0xffEF6F38),
                                 );

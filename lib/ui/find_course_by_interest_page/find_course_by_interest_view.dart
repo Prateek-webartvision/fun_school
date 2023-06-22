@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../router/app_router.dart';
+import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../widegts/k_text_field.dart';
 import '../find_course_by_career_page/widgets/select_intreset.dart';
@@ -109,7 +111,10 @@ class _FindCourseByInterestViewState extends FindCourseByInterestState {
                           name: controller.filterList[index].courseName!,
                           icon: Icons.group,
                           onTap: () {
-                            print("cart");
+                            appRoutes.pushNamed(
+                              PagesName.coursesBySchoolDetailsPage,
+                              extra: controller.filterList[index],
+                            );
                           },
                         );
                       },
