@@ -10,6 +10,7 @@ import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../find_courses_by_school_page/controller/school_selector_controller.dart';
 import 'find_course_by_career_state.dart';
+import 'widgets/school_dropdown.dart';
 import 'widgets/select_intreset.dart';
 import 'widgets/subject_card.dart';
 import 'widgets/teg_selector.dart';
@@ -144,61 +145,3 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
     );
   }
 }
-
-class SchoolDropdown extends StatelessWidget {
-  const SchoolDropdown({
-    super.key,
-    required this.controller,
-    this.selectedScholl,
-    required this.onItemClick,
-  });
-  final SchoolSelectorController controller;
-  final String? selectedScholl;
-  final Function(String? lavel) onItemClick;
-
-  @override
-  Widget build(BuildContext context) {
-    // print(controller.schools);
-
-    return DropdownButton<String>(
-      value: selectedScholl,
-      hint: Text("Select School Level"),
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      style: TextStyle(fontSize: 14, color: Colors.black),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      borderRadius: BorderRadius.circular(4),
-      alignment: Alignment.center,
-      dropdownColor: AppColor.white,
-      underline: SizedBox(),
-      isDense: true,
-      onChanged: onItemClick,
-      //
-      items: controller.schools.map((value) {
-        return DropdownMenuItem(
-          value: value['key'].toString(),
-          child: Text(value['name'].toString()),
-        );
-      }).toList(),
-    );
-
-    //
-
-    // return Row(
-    //   mainAxisSize: MainAxisSize.min,
-    //   children: [
-    //     Text(
-    //       "Junior secondary school",
-    //       style: TextStyle(
-    //         fontSize: 14,
-    //         fontWeight: FontWeight.w500,
-    //       ),
-    //     ),
-    //     6.width,
-    //     GestureDetector(onTap: () {}, child: Icon(Icons.arrow_drop_down))
-    //   ],
-    // );
-  }
-}
-
-List<String> v = ["dsad", "dsad"];

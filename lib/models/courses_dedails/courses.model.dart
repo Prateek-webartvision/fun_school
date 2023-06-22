@@ -6,6 +6,7 @@ class CoursesModel {
   String? courseSchool;
   String? courseCareer;
   String? courseInterest;
+  String? courseProficiency;
   // String? courseSubjects;
   // String? courseEnrollment;
   String? status;
@@ -19,6 +20,7 @@ class CoursesModel {
     this.courseSchool,
     this.courseCareer,
     this.courseInterest,
+    this.courseProficiency,
     this.status,
     this.dateAdded,
   });
@@ -31,6 +33,7 @@ class CoursesModel {
     courseSchool = json['course_school'];
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
+    courseProficiency = json['course_proficiency'];
     // status = json['status'];
     // dateAdded = json['date_added'];
   }

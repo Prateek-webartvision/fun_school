@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../style/color.dart';
 
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-
 class SelectIntreset extends StatelessWidget {
   const SelectIntreset({
     super.key,

@@ -12,7 +12,7 @@ import '../ui/botton_nav_bar/bottom_nav_bar.dart';
 import '../ui/detail_exam_page/detail_exam_page.dart';
 import '../ui/exam_preparation_page/exam_preparation_page.dart';
 import '../ui/find_course_by_career_page/find_course_by_career_view.dart';
-import '../ui/find_course_by_interest_page/find_course_by_interest_page.dart';
+import '../ui/find_course_by_interest_page/find_course_by_interest_view.dart';
 import '../ui/find_courses_by_school_page/find_courses_by_school_page_view.dart';
 import '../ui/home_page/home_page.dart';
 import '../ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
@@ -125,7 +125,7 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.findCourseByInterestPage,
               name: PagesName.findCourseByInterestPage,
-              pageBuilder: (context, state) => MaterialPage(child: FindCourseByInterestPage()),
+              pageBuilder: (context, state) => MaterialPage(child: FindCourseByInterestView()),
             ),
 
             // Prepare For An Exam Page
