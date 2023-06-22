@@ -7,8 +7,8 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 import '../../../style/color.dart';
 
-class AlgebraTab extends StatelessWidget {
-  const AlgebraTab({
+class ChaptersTab extends StatelessWidget {
+  const ChaptersTab({
     super.key,
     this.subject,
   });

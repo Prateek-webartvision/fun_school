@@ -4,6 +4,7 @@ class CoursesSubject {
   String? dateAdded;
   List? userNotes;
   List<SubjectContent>? subjectContent;
+  Set<String> _titleSet = {};
 
   CoursesSubject({
     this.id,
@@ -13,6 +14,7 @@ class CoursesSubject {
     this.subjectContent,
   });
 
+//working
   CoursesSubject.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     subjectName = json['subject_name'];
@@ -23,7 +25,21 @@ class CoursesSubject {
       List<SubjectContent> subjectContent = [];
       for (var element in json["subject_content"]) {
         subjectContent.add(SubjectContent.fromJson(element));
+        _titleSet.add(element["title"]);
       }
+
+      for (var element in _titleSet) {
+        List<SubjectContent> title1 = [];
+
+        for (var e in subjectContent) {
+          if (element == e.title) {
+            title1.add(e);
+          }
+        }
+        print("sv $title1");
+      }
+      // print(_titleSet);
+
       this.subjectContent = subjectContent;
     }
   }
@@ -47,7 +63,7 @@ class SubjectContent {
   });
 
   SubjectContent.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['subject_content_id'];
     title = json['title'];
     subTitle = json['sub_title'];
     contentType = json['content_type'];
