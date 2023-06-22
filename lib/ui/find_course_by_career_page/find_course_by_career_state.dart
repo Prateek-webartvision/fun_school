@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'controller/find_course_by_career_controller.dart';
-import 'find_course_by_career_page.dart';
+import 'find_course_by_career_view.dart';
 
 abstract class FindCouresByCareerState extends State<FindCourseByCareerView> {
   late FindCourseByCareerController findCourseByCareerController;
