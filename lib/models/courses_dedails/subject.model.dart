@@ -3,8 +3,7 @@ class CoursesSubject {
   String? subjectName;
   String? dateAdded;
   List? userNotes;
-  List<SubjectContent>? subjectContent;
-  Set<String> _titleSet = {};
+  List<List<SubjectContent>>? subjectContent;
 
   CoursesSubject({
     this.id,
@@ -22,23 +21,26 @@ class CoursesSubject {
     //usernmode
     //content
     if (json["subject_content"] != null) {
-      List<SubjectContent> subjectContent = [];
+      Set<String> _titleSet = {};
+      List<SubjectContent> _tempDate = [];
       for (var element in json["subject_content"]) {
-        subjectContent.add(SubjectContent.fromJson(element));
+        _tempDate.add(SubjectContent.fromJson(element));
         _titleSet.add(element["title"]);
       }
 
+      List<List<SubjectContent>> subjectContent = [];
       for (var element in _titleSet) {
         List<SubjectContent> title1 = [];
 
-        for (var e in subjectContent) {
+        for (var e in _tempDate) {
           if (element == e.title) {
             title1.add(e);
           }
         }
-        print("sv $title1");
+        subjectContent.add(title1);
       }
-      // print(_titleSet);
+
+      // print(subjectContent);
 
       this.subjectContent = subjectContent;
     }
@@ -71,8 +73,8 @@ class SubjectContent {
     dateAdded = json['date_added'];
   }
 
-  @override
-  String toString() {
-    return "$title";
-  }
+  // @override
+  // String toString() {
+  //   return "$title";
+  // }
 }
