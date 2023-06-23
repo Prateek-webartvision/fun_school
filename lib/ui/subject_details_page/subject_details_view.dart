@@ -57,7 +57,9 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                               .map(
                                 (i, value) => MapEntry(
                                   i,
-                                  ChaptersTab(subject: subjects[i]),
+                                  ChaptersTab(
+                                    subject: subjects[i],
+                                  ),
                                 ),
                               )
                               .values

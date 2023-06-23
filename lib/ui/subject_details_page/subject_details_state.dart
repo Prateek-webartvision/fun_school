@@ -15,6 +15,10 @@ abstract class SubjectDetailsState extends State<SubjectDetailsView> with Ticker
       subjects = [];
     }
     pageTabController = TabController(length: subjects.length, vsync: this);
+
+    // pageTabController.addListener(() {
+    //   print(pageTabController.index);
+    // });
     super.initState();
   }
 

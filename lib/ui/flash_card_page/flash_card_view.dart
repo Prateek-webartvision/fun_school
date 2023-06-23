@@ -98,17 +98,24 @@ class _FlashCardViewState extends FlashCardState {
                   cardsCount: controller.subjectContents.length,
                   initialIndex: controller.initCard,
                   padding: EdgeInsets.all(0),
-                  // isLoop: false,
+                  isLoop: false,
                   allowedSwipeDirection: AllowedSwipeDirection.symmetric(horizontal: true),
                   backCardOffset: Offset(0, 0),
                   scale: 1,
                   onSwipe: (previousIndex, currentIndex, direction) {
-                    print(currentIndex);
-                    // controller.updateCurrentCard(currentIndex?);
-                    return false;
+                    print(direction);
+                    if (currentIndex != null) {
+                      controller.updateCurrentCard(currentIndex);
+                    }
+                    // return currentIndex != null;
+                    return true;
+                  },
+                  onEnd: () {
+                    controller.isCardEnd(true);
                   },
                   cardBuilder: (context, index) {
                     return _fCard();
+                    // return Text("data $index");
                   },
                 ),
               ),
@@ -226,28 +233,30 @@ class _FlashCardViewState extends FlashCardState {
           //   ],
           // ),
           //
-          bottomNavigationBar: SizedBox(
-            height: 40,
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Tap the card to flip it",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+          bottomNavigationBar: (controller.cardEnd)
+              ? null
+              : SizedBox(
+                  height: 40,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Tap the card to flip it",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0.85, 0),
+                        child: Icon(Icons.play_circle_fill_rounded),
+                      )
+                    ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment(0.85, 0),
-                  child: Icon(Icons.play_circle_fill_rounded),
-                )
-              ],
-            ),
-          ),
         );
       },
     );
