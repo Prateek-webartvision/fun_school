@@ -2,7 +2,6 @@
 
 import 'package:citycloud_school/router/pages.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -53,7 +52,7 @@ class MyCoursesTab extends StatelessWidget {
                             children: [
                               Text(
                                 "Up next for you",
-                                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.theme.colorScheme.primary),
+                                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.appTheme.colorScheme.primary),
                               ),
                               2.height,
                               Text(
@@ -103,7 +102,7 @@ class MyCoursesTab extends StatelessWidget {
                             child: LinearProgressIndicator(
                               value: 0.1,
                               backgroundColor: AppColor.scaffoldBg,
-                              color: context.theme.colorScheme.primary,
+                              color: context.appTheme.colorScheme.primary,
                               minHeight: 6,
                             ),
                           ),
@@ -270,7 +269,7 @@ class MyCoursesTab extends StatelessWidget {
                       child: LinearProgressIndicator(
                         value: 0.1,
                         backgroundColor: AppColor.scaffoldBg,
-                        color: context.theme.colorScheme.primary,
+                        color: context.appTheme.colorScheme.primary,
                         minHeight: 6,
                       ),
                     ),

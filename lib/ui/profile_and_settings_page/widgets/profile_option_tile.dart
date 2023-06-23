@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
@@ -34,7 +33,7 @@ class ProfileOptionTile extends StatelessWidget {
                 ? Icon(
                     // Icons.email,
                     leadingIcon,
-                    color: color ?? context.theme.primaryColor,
+                    color: color ?? context.appTheme.primaryColor,
                     size: 18,
                   )
                 : 0.width,

@@ -3,7 +3,6 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 class FlashCardPage extends StatelessWidget {
@@ -13,7 +12,7 @@ class FlashCardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: context.theme.scaffoldBackgroundColor,
+        backgroundColor: context.appTheme.scaffoldBackgroundColor,
         leading: GestureDetector(
           onTap: () => appRoutes.pop(),
           child: Icon(Icons.close),

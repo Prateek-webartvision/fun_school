@@ -2,7 +2,6 @@
 
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -68,7 +67,7 @@ class ExamPrepTab extends StatelessWidget {
                         Icon(
                           Icons.timelapse_rounded,
                           size: 15,
-                          color: context.theme.colorScheme.primary,
+                          color: context.appTheme.colorScheme.primary,
                         ),
                         5.width,
                         Text(

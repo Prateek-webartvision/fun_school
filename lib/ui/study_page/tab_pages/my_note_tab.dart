@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -99,7 +98,7 @@ class MyNoteTab extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.note_rounded,
-                                color: context.theme.colorScheme.primary,
+                                color: context.appTheme.colorScheme.primary,
                               ),
                               12.width,
                               Expanded(
@@ -144,7 +143,7 @@ class MyNoteTab extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.note_rounded,
-                                color: context.theme.colorScheme.primary,
+                                color: context.appTheme.colorScheme.primary,
                               ),
                               12.width,
                               Expanded(
@@ -189,7 +188,7 @@ class MyNoteTab extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.note_rounded,
-                                color: context.theme.colorScheme.primary,
+                                color: context.appTheme.colorScheme.primary,
                               ),
                               12.width,
                               Expanded(
