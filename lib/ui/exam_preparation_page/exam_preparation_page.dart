@@ -80,10 +80,10 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> with TickerPr
                 ExamPrepTab(),
                 FindAnExamTab(),
                 Center(
-                  child: Text("ui not found in figna design"),
+                  child: Text("coming soon"),
                 ),
                 Center(
-                  child: Text("My Assessment"),
+                  child: Text("coming soon"),
                 )
               ],
             ),

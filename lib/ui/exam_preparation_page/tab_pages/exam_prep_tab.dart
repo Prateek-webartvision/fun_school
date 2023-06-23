@@ -215,7 +215,10 @@ class _CreateExamSheetState extends State<_CreateExamSheet> {
               Expanded(
                 child: KBtn(
                   height: 44,
-                  onClick: () {},
+                  onClick: () {
+                    AppUtils.closeBottomSheet();
+                    AppUtils.showSnack("coming soon");
+                  },
                   text: "Cancel",
                   bgColor: AppColor.white,
                   fbColor: Colors.black,
@@ -225,7 +228,10 @@ class _CreateExamSheetState extends State<_CreateExamSheet> {
               12.width,
               Expanded(
                   child: KBtn(
-                onClick: () {},
+                onClick: () {
+                  AppUtils.closeBottomSheet();
+                  AppUtils.showSnack("coming soon");
+                },
                 text: "Create",
                 height: 44,
               )),

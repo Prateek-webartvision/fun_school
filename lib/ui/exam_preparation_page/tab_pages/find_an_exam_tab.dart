@@ -2,6 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -50,7 +51,9 @@ class _Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
+      onTap: () {
+        AppUtils.showSnack("coming soon");
+      },
       child: Container(
         decoration: BoxDecoration(
           color: AppColor.white,

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -74,7 +75,9 @@ class PrepareForAnExamPage extends StatelessWidget {
                     ),
                     12.height,
                     CreatePlanBtn(
-                      onTap: () {},
+                      onTap: () {
+                        AppUtils.showSnack("coming soon");
+                      },
                       text: "Browse Course",
                     )
                   ],
@@ -95,35 +98,40 @@ class _Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColor.white,
-        border: Border.all(color: AppColor.softBorderColor),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: color,
-            child: const Icon(Icons.edit_document, color: AppColor.white),
-          ),
-          10.width,
-          Expanded(
-              child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: () {
+        AppUtils.showSnack("coming soon");
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          border: Border.all(color: AppColor.softBorderColor),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: color,
+              child: const Icon(Icons.edit_document, color: AppColor.white),
             ),
-          )),
-          10.width,
-          const Icon(
-            Icons.navigate_next_rounded,
-            size: 20,
-          )
-        ],
+            10.width,
+            Expanded(
+                child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            )),
+            10.width,
+            const Icon(
+              Icons.navigate_next_rounded,
+              size: 20,
+            )
+          ],
+        ),
       ),
     );
   }

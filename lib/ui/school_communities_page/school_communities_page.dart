@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class SchoolCommunitiesPage extends StatelessWidget {
@@ -7,7 +9,7 @@ class SchoolCommunitiesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("School and communities page"),
+        child: Text("Coming soon"),
       ),
     );
   }

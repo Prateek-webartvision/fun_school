@@ -22,6 +22,10 @@ class AppUtils {
     ));
   }
 
+  static closeBottomSheet() {
+    rootNavigator.currentState!.pop();
+  }
+
   // snack bar
   static showSnack(String message) {
     if (scaffoldMenagerKey.currentState != null) {
