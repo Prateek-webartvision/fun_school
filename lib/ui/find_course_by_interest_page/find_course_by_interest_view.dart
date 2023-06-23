@@ -112,7 +112,7 @@ class _FindCourseByInterestViewState extends FindCourseByInterestState {
                           icon: Icons.group,
                           onTap: () {
                             appRoutes.pushNamed(
-                              PagesName.coursesBySchoolDetailsPage,
+                              PagesName.subjectDetailsPage,
                               extra: controller.filterList[index],
                             );
                           },

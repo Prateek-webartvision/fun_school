@@ -15,7 +15,7 @@ class PagesName {
   static String findCourseByCareerPage = "FindCourseByCareerPage";
   static String findCourseByInterestPage = "FindCourseByInterestPage";
 
-  static String coursesBySchoolDetailsPage = "CoursesBySchoolDetailsPage";
+  static String subjectDetailsPage = "SubjectDetailsPage";
 
   //
   static String prepareForAnExamPage = "PrepareForAnExamPage";

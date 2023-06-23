@@ -129,7 +129,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                   onTap: () {
                                     // appRoutes.pushNamed(PagesName.coursesBySchoolDetailsPage);
                                     appRoutes.pushNamed(
-                                      PagesName.coursesBySchoolDetailsPage,
+                                      PagesName.subjectDetailsPage,
                                       extra: controller.filterList[index],
                                     );
                                   },

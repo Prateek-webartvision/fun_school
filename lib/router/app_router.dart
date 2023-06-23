@@ -173,8 +173,8 @@ final GoRouter appRoutes = GoRouter(
     // courses Details Page
     GoRoute(
         parentNavigatorKey: rootNavigator,
-        path: PagesName.getPath(PagesName.coursesBySchoolDetailsPage),
-        name: PagesName.coursesBySchoolDetailsPage,
+        path: PagesName.getPath(PagesName.subjectDetailsPage),
+        name: PagesName.subjectDetailsPage,
         pageBuilder: (context, state) {
           CoursesModel? obj = state.extra as CoursesModel?;
           return MaterialPage(child: SubjectDetailsView(courseData: obj));
