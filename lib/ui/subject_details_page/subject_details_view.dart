@@ -5,7 +5,7 @@ import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 
 import 'subject_details_state.dart';
-import 'tab_pages/algebra_tab.dart';
+import 'tab_pages/chapter_tab.dart';
 import 'widgets/head_title.dart';
 
 class SubjectDetailsView extends StatefulWidget {
