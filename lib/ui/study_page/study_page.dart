@@ -30,7 +30,9 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     pageTabController.dispose();
-    myCoursesController.dispose();
+    if (myCoursesController.myCourses != null) {
+      myCoursesController.dispose();
+    }
     super.dispose();
   }
 
