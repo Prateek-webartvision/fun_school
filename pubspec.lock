@@ -164,10 +164,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: cf6a8762c2861edd4be7f773e6a3c1b43eca7dfee75fe041524b8843497cc2a4
+      sha256: "2cb236ba3f923043fdbe14a6a3a796b8c250e85658e28caee3e86c0c275847e5"
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.0"
+    version: "8.2.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -220,10 +220,10 @@ packages:
     dependency: "direct main"
     description:
       name: kd_utils
-      sha256: d69040eae6e510d893d06980213a977bf9efc24b0489d34add52f084beece628
+      sha256: c4f89e53fe214308263d4294283f09c1115da297a6be0213e73080c71092a96a
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0+2"
+    version: "0.1.0+4"
   lints:
     dependency: transitive
     description:

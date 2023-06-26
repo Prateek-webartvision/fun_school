@@ -53,7 +53,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                   },
                 ),
               ),
-            )
+            ),
           ];
         },
         body: ListView.separated(
@@ -66,6 +66,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
               animation: stateController,
               builder: (context, child) {
                 return ChapterTile(
+                  flashCard: widget.subject!.flashCard!,
                   title: chapter.first.title!,
                   subjects: chapter,
                   state: stateController.state,

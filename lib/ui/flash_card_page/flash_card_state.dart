@@ -7,7 +7,7 @@ abstract class FlashCardState extends State<FlashCardView> {
   late FlashCardPageController flashCardPageController;
   @override
   void initState() {
-    flashCardPageController = FlashCardPageController(subjectContents: widget.subjects);
+    flashCardPageController = FlashCardPageController(flashCards: widget.flashCards);
     super.initState();
   }
 

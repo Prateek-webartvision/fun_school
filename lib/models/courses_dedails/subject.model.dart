@@ -4,6 +4,7 @@ class CoursesSubject {
   String? dateAdded;
   List? userNotes;
   List<List<SubjectContent>>? subjectContent;
+  List<ContentFlashCard>? flashCard;
 
   CoursesSubject({
     this.id,
@@ -11,6 +12,7 @@ class CoursesSubject {
     this.dateAdded,
     this.userNotes,
     this.subjectContent,
+    this.flashCard,
   });
 
 //working
@@ -21,18 +23,20 @@ class CoursesSubject {
     //usernmode
     //content
     if (json["subject_content"] != null) {
-      Set<String> _titleSet = {};
-      List<SubjectContent> _tempDate = [];
+      Set<String> titleSet = {};
+      List<SubjectContent> tempDate = [];
+
+      // get list of subject contant
       for (var element in json["subject_content"]) {
-        _tempDate.add(SubjectContent.fromJson(element));
-        _titleSet.add(element["title"]);
+        tempDate.add(SubjectContent.fromJson(element));
+        titleSet.add(element["title"]);
       }
 
+      // fillter list from title to get list of sub-titles
       List<List<SubjectContent>> subjectContent = [];
-      for (var element in _titleSet) {
+      for (var element in titleSet) {
         List<SubjectContent> title1 = [];
-
-        for (var e in _tempDate) {
+        for (var e in tempDate) {
           if (element == e.title) {
             title1.add(e);
           }
@@ -40,9 +44,33 @@ class CoursesSubject {
         subjectContent.add(title1);
       }
 
-      // print(subjectContent);
+      // // filter flash card by sub-title from subject
+      // if (json['flashcards'] != null) {
+      //   for (var element in tempDate) {
+      //     List data = [];
+      //     for (var e1 in json['flashcards']) {
+      //       ContentFlashCard flashCard = ContentFlashCard.fromJson(e1);
+      //       // print(flashCard.subTitle);
+      //       if (element.subTitle == flashCard.subTitle) {
+      //         data.add(flashCard);
+      //         // print("${element.subTitle} = ${flashCard.subTitle}");
+      //       }
+      //     }
+      //     print(data);
+      //   }
+      // }
 
       this.subjectContent = subjectContent;
+    }
+
+    // get flash cards
+    if (json['flashcards'] != null) {
+      List<ContentFlashCard> data = [];
+      for (var e1 in json['flashcards']) {
+        ContentFlashCard flashCard = ContentFlashCard.fromJson(e1);
+        data.add(flashCard);
+      }
+      flashCard = data;
     }
   }
 }
@@ -72,9 +100,20 @@ class SubjectContent {
     contentData = json['content_data'];
     dateAdded = json['date_added'];
   }
+}
 
-  // @override
-  // String toString() {
-  //   return "$title";
-  // }
+class ContentFlashCard {
+  int? flashcardId;
+  String? subTitle;
+  String? flashcardImageLink;
+  String? flashcardContent;
+  String? dateAdded;
+
+  ContentFlashCard.fromJson(Map<String, dynamic> json) {
+    flashcardId = json['flashcard_id'];
+    subTitle = json['sub_title'];
+    flashcardImageLink = json['flashcard_image_link'];
+    flashcardContent = json['flashcard_content'];
+    dateAdded = json['date_added'];
+  }
 }
