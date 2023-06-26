@@ -7,15 +7,6 @@ class CoursesSubject {
   List<ContentFlashCard>? flashCard;
   List<ContentVideo>? videos;
 
-  // CoursesSubject({
-  //   this.id,
-  //   this.subjectName,
-  //   this.dateAdded,
-  //   this.userNotes,
-  //   this.subjectContent,
-  //   this.flashCard,
-  // });
-
 //working
   CoursesSubject.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -10,7 +10,7 @@ class CoursesModel {
   String? courseInterest;
   String? courseProficiency;
   List<CoursesSubject>? courseSubjects;
-  // String? courseEnrollment;
+  List<CoursesEnrollment>? courseEnrollment;
   String? status;
   String? dateAdded;
 
@@ -31,8 +31,8 @@ class CoursesModel {
   CoursesModel.fromJson(Map<String, dynamic> json) {
     courseId = json['course_id'];
     courseName = json['course_name'];
-    // courseDescription = json['course_description'];
-    // courseCoverImage = json['course_cover_image'];
+    courseDescription = json['course_description'];
+    courseCoverImage = json['course_cover_image'];
     courseSchool = json['course_school'];
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
@@ -44,7 +44,32 @@ class CoursesModel {
       }
       this.courseSubjects = courseSubjects;
     }
-    // status = json['status'];
-    // dateAdded = json['date_added'];
+
+    if (json['course_enrollment'] != null) {
+      List<CoursesEnrollment> courseEnrollment = [];
+      for (var element in json['course_enrollment']) {
+        courseEnrollment.add(CoursesEnrollment.fromJson(element));
+      }
+      this.courseEnrollment = courseEnrollment;
+    }
+
+    status = json['status'];
+    dateAdded = json['date_added'];
+  }
+}
+
+class CoursesEnrollment {
+  int? courseEnrollmentId;
+  String? userId;
+  String? username;
+  String? progress;
+  String? dateAdded;
+
+  CoursesEnrollment.fromJson(Map<String, dynamic> json) {
+    courseEnrollmentId = json[' course_enrollment_id'];
+    userId = json[' user_id'];
+    username = json[' username'];
+    progress = json[' progress'];
+    dateAdded = json[' date_added'];
   }
 }
