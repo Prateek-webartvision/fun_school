@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/ui/subject_video_list_page/subject_video_list_page.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -17,14 +18,20 @@ class ChapterTile extends StatelessWidget {
     required this.subjects,
     required this.state,
     required this.flashCard,
+    required this.videos,
   });
   final String title;
   final List<SubjectContent> subjects;
   final List<ContentFlashCard> flashCard;
+  final List<ContentVideo> videos;
   final SubjectState state;
 
   getFlashCards(String subTitle) {
     return flashCard.where((element) => element.subTitle!.contains(subTitle)).toList();
+  }
+
+  getVideos(String subTitle) {
+    return videos.where((element) => element.subTitle!.contains(subTitle)).toList();
   }
 
   @override
@@ -103,7 +110,19 @@ class ChapterTile extends StatelessWidget {
                   }
                   // for video
                   if (state == SubjectState.video) {
-                    print("video");
+                    final videos = getVideos(subjects[index].subTitle!);
+
+                    if (videos.isEmpty) {
+                      AppUtils.showSnack("No Videos");
+                    } else {
+                      rootNavigator.currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => SubjectVideoListPage(
+                            videos: videos,
+                          ),
+                        ),
+                      );
+                    }
                   }
                   // if (widget.state == SubjectState.quiz) {
                   //   print("quiz");

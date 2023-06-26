@@ -5,15 +5,16 @@ class CoursesSubject {
   List? userNotes;
   List<List<SubjectContent>>? subjectContent;
   List<ContentFlashCard>? flashCard;
+  List<ContentVideo>? videos;
 
-  CoursesSubject({
-    this.id,
-    this.subjectName,
-    this.dateAdded,
-    this.userNotes,
-    this.subjectContent,
-    this.flashCard,
-  });
+  // CoursesSubject({
+  //   this.id,
+  //   this.subjectName,
+  //   this.dateAdded,
+  //   this.userNotes,
+  //   this.subjectContent,
+  //   this.flashCard,
+  // });
 
 //working
   CoursesSubject.fromJson(Map<String, dynamic> json) {
@@ -43,23 +44,6 @@ class CoursesSubject {
         }
         subjectContent.add(title1);
       }
-
-      // // filter flash card by sub-title from subject
-      // if (json['flashcards'] != null) {
-      //   for (var element in tempDate) {
-      //     List data = [];
-      //     for (var e1 in json['flashcards']) {
-      //       ContentFlashCard flashCard = ContentFlashCard.fromJson(e1);
-      //       // print(flashCard.subTitle);
-      //       if (element.subTitle == flashCard.subTitle) {
-      //         data.add(flashCard);
-      //         // print("${element.subTitle} = ${flashCard.subTitle}");
-      //       }
-      //     }
-      //     print(data);
-      //   }
-      // }
-
       this.subjectContent = subjectContent;
     }
 
@@ -71,6 +55,15 @@ class CoursesSubject {
         data.add(flashCard);
       }
       flashCard = data;
+    }
+
+    // get video deta
+    if (json['video'] != null) {
+      List<ContentVideo> videos = [];
+      for (var element in json['video']) {
+        videos.add(ContentVideo.fronJson(element));
+      }
+      this.videos = videos;
     }
   }
 }
@@ -114,6 +107,20 @@ class ContentFlashCard {
     subTitle = json['sub_title'];
     flashcardImageLink = json['flashcard_image_link'];
     flashcardContent = json['flashcard_content'];
+    dateAdded = json['date_added'];
+  }
+}
+
+class ContentVideo {
+  int? videoId;
+  String? subTitle;
+  String? videoLink;
+  String? dateAdded;
+
+  ContentVideo.fronJson(Map<String, dynamic> json) {
+    videoId = json['video_id'];
+    subTitle = json['sub_title'];
+    videoLink = json['video_link'];
     dateAdded = json['date_added'];
   }
 }

@@ -66,9 +66,10 @@ class _ChaptersTabState extends State<ChaptersTab> {
               animation: stateController,
               builder: (context, child) {
                 return ChapterTile(
-                  flashCard: widget.subject!.flashCard!,
                   title: chapter.first.title!,
                   subjects: chapter,
+                  flashCard: widget.subject!.flashCard!,
+                  videos: widget.subject!.videos!,
                   state: stateController.state,
                 );
               },
