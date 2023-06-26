@@ -66,10 +66,10 @@ class CoursesEnrollment {
   String? dateAdded;
 
   CoursesEnrollment.fromJson(Map<String, dynamic> json) {
-    courseEnrollmentId = json[' course_enrollment_id'];
-    userId = json[' user_id'];
-    username = json[' username'];
-    progress = json[' progress'];
-    dateAdded = json[' date_added'];
+    courseEnrollmentId = json['course_enrollment_id'];
+    userId = json['user_id'];
+    username = json['username'];
+    progress = json['progress'];
+    dateAdded = json['date_added'];
   }
 }
