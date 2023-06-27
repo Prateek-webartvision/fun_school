@@ -1,4 +1,5 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -23,22 +24,18 @@ class MyCoursesController extends GetxController {
   }
 
   _sortCoursesForUser() {
-    // print(_allCourses);
-    var nonNullCourses = _allCourses.where((element) => element.courseEnrollment!.isNotEmpty).toList();
+    List<CoursesModel> myCourses = [];
 
-    // for (var element in nonNullCourses) {
-    //   for (var e in element.courseEnrollment!) {
-    //     print("id = ${e.userId}");
-    //   }
-    // }
-    var myCourses = nonNullCourses.where((element) {
-      final bool;
-      for (var e in element.courseEnrollment!) {
-        "Kundan $e";
+    for (var courses in _allCourses) {
+      for (var enroll in courses.courseEnrollment!) {
+        // checking current user is enrolled or not
+        if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
+          myCourses.add(courses);
+        }
       }
-      return true;
-    });
-    this.myCourses = nonNullCourses;
+    }
+
+    this.myCourses = myCourses;
   }
 
   _loadAllCourses() async {

@@ -42,6 +42,8 @@ class MyCoursesTab extends StatelessWidget {
                   sliver: SliverList.separated(
                     itemCount: controller.myCourses!.length,
                     itemBuilder: (context, index) {
+                      // print(controller.myCourses![index].courseEnrollment);
+
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColor.white,
