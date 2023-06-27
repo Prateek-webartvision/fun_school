@@ -38,6 +38,19 @@ class MyCoursesController extends GetxController {
     this.myCourses = myCourses;
   }
 
+// get my enrollment
+  CoursesEnrollment getMyEnrollment(int index) {
+    final cs = myCourses![index].courseEnrollment!;
+    late CoursesEnrollment myRnroll;
+    for (var element in cs) {
+      if (int.parse(element.userId!) == AppStorage.user.currentUser()!.userid) {
+        myRnroll = element;
+      }
+    }
+
+    return myRnroll;
+  }
+
   _loadAllCourses() async {
     apiState = ApiState.loading;
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {

@@ -42,8 +42,6 @@ class MyCoursesTab extends StatelessWidget {
                   sliver: SliverList.separated(
                     itemCount: controller.myCourses!.length,
                     itemBuilder: (context, index) {
-                      // print(controller.myCourses![index].courseEnrollment);
-
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColor.white,
@@ -123,7 +121,8 @@ class MyCoursesTab extends StatelessWidget {
                                         16.width,
                                         Expanded(
                                           child: LinearProgressIndicator(
-                                            value: 0.1,
+                                            // value: 0.1,
+                                            value: double.parse(controller.getMyEnrollment(index).progress!) / 100,
                                             backgroundColor: AppColor.scaffoldBg,
                                             color: context.appTheme.colorScheme.primary,
                                             minHeight: 6,
@@ -131,7 +130,9 @@ class MyCoursesTab extends StatelessWidget {
                                         ),
                                         16.width,
                                         Text(
-                                          "10%",
+                                          // "10%",
+                                          // "${controller.getMyEnrollment(index).progress}%",
+                                          "${int.parse(controller.getMyEnrollment(index).progress!)}%",
                                           style: GoogleFonts.inter(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w600,
