@@ -15,9 +15,13 @@ class TakeNoteSheet extends StatefulWidget {
     super.key,
     required this.subjectId,
     required this.noteTitle,
+    required this.contentTitle,
+    required this.subTitle,
   });
   final int subjectId;
   final String noteTitle;
+  final String contentTitle;
+  final String subTitle;
 
   @override
   State<TakeNoteSheet> createState() => _TakeNoteSheetState();
@@ -42,9 +46,16 @@ class _TakeNoteSheetState extends State<TakeNoteSheet> {
     } else {
       AppUtils.showloadingOverlay(() async {
         rootNavigator.currentState!.focusNode.unfocus();
-        var res = await QuickOptionRepository.addNote(noteTitle: widget.noteTitle, subjectId: widget.subjectId, note: noteText.text.trim());
+        var res = await QuickOptionRepository.addNote(
+          noteTitle: widget.noteTitle,
+          subjectId: widget.subjectId,
+          contentTitle: widget.contentTitle,
+          subtitle: widget.subTitle,
+          note: noteText.text.trim(),
+        );
         if (res != null) {
-          print(res);
+          rootNavigator.currentState!.pop();
+          AppUtils.showSnack(res);
         }
       });
     }

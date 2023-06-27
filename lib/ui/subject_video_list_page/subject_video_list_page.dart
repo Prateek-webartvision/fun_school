@@ -17,11 +17,11 @@ class SubjectVideoListPage extends StatefulWidget {
     super.key,
     required this.videos,
     this.subjectId,
-    // this.subTitle,
+    required this.contentTitle,
   });
   final List<ContentVideo> videos;
   final int? subjectId;
-  // final String? subTitle;
+  final String contentTitle;
 
   @override
   State<SubjectVideoListPage> createState() => _SubjectVideoListPageState();
@@ -45,7 +45,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   }
 
   // more option click
-  onMoreOptionClick() async {
+  onMoreOptionClick({required String subTitle}) async {
     AppUtils.showModelSheet(
       child: MoreMenuSheet(),
       isScrolled: false,
@@ -53,6 +53,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
       if (value == "note") {
         scaffoldKey.currentState!.showBottomSheet(
           (context) => TakeNoteSheet(
+            contentTitle: widget.contentTitle,
+            subTitle: subTitle,
             subjectId: widget.subjectId!,
             // Todo pass note title here
             noteTitle: 'Text sub title',
@@ -184,7 +186,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                   children: [
                                     // more option widget
                                     GestureDetector(
-                                      onTap: onMoreOptionClick,
+                                      onTap: () => onMoreOptionClick(subTitle: controller.videos[controller.currentVideo].subTitle!),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [

@@ -122,6 +122,7 @@ class ChapterTile extends StatelessWidget {
                           builder: (context) => SubjectVideoListPage(
                             videos: videos,
                             subjectId: subjectId,
+                            contentTitle: subjects[index].title!,
                           ),
                         ),
                       );
