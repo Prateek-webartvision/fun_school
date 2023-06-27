@@ -8,7 +8,7 @@ import '../controller/subject_state_controller.dart';
 import '../widgets/chapter_tile.dart';
 import '../widgets/subject_state_selector.dart';
 
-enum SubjectState { video, quiz, flashcard }
+enum SubjectState { videos, quiz, flashcard }
 
 class ChaptersTab extends StatefulWidget {
   const ChaptersTab({
@@ -26,7 +26,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
 
   @override
   void initState() {
-    stateController = SubjectStateController(state: SubjectState.flashcard);
+    stateController = SubjectStateController(state: SubjectState.videos);
     super.initState();
   }
 

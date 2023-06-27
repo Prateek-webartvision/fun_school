@@ -109,7 +109,7 @@ class ChapterTile extends StatelessWidget {
                     }
                   }
                   // for video
-                  if (state == SubjectState.video) {
+                  if (state == SubjectState.videos) {
                     final videos = getVideos(subjects[index].subTitle!);
 
                     if (videos.isEmpty) {
