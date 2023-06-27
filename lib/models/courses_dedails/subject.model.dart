@@ -1,5 +1,5 @@
 class CoursesSubject {
-  int? id;
+  int? subjectId;
   String? subjectName;
   String? dateAdded;
   List? userNotes;
@@ -9,7 +9,7 @@ class CoursesSubject {
 
 //working
   CoursesSubject.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    subjectId = json['subject_id'];
     subjectName = json['subject_name'];
     dateAdded = json['date_added'];
     //usernmode

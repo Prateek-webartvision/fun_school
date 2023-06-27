@@ -2,19 +2,26 @@
 
 import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
 
 import 'controller/subject_video_list_page_controller.dart';
+import 'widgets/more_option_sheets.dart';
+import 'widgets/take_note_sheet.dart';
 
 class SubjectVideoListPage extends StatefulWidget {
   const SubjectVideoListPage({
     super.key,
     required this.videos,
+    this.subjectId,
+    // this.subTitle,
   });
   final List<ContentVideo> videos;
+  final int? subjectId;
+  // final String? subTitle;
 
   @override
   State<SubjectVideoListPage> createState() => _SubjectVideoListPageState();
@@ -22,6 +29,7 @@ class SubjectVideoListPage extends StatefulWidget {
 
 class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   late SubjectVideoListPageController subjectVideoListPageController;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,9 +44,33 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
     super.dispose();
   }
 
+  // more option click
+  onMoreOptionClick() async {
+    AppUtils.showModelSheet(
+      child: MoreMenuSheet(),
+      isScrolled: false,
+    ).then((value) {
+      if (value == "note") {
+        scaffoldKey.currentState!.showBottomSheet(
+          (context) => TakeNoteSheet(
+            subjectId: widget.subjectId!,
+            // Todo pass note title here
+            noteTitle: 'Text sub title',
+          ),
+          enableDrag: true,
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.black.withOpacity(0.2),
@@ -139,15 +171,54 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                 : SizedBox(),
                           ),
                         ),
+                        // botom bar with mode option btn
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: VideoProgressIndicator(
-                            controller.videoPlayerController,
-                            allowScrubbing: true,
-                            colors: VideoProgressColors(
-                              playedColor: AppColor.mainColor,
-                              backgroundColor: AppColor.white.withOpacity(0.8),
-                            ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 14),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    // more option widget
+                                    GestureDetector(
+                                      onTap: onMoreOptionClick,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            height: 32,
+                                            width: 32,
+                                            decoration: BoxDecoration(
+                                              color: AppColor.white,
+                                              borderRadius: BorderRadius.circular(32),
+                                              border: Border.all(color: AppColor.softBorderColor),
+                                            ),
+                                            child: Icon(Icons.more_horiz_rounded),
+                                          ),
+                                          4.height,
+                                          Text(
+                                            "Menu",
+                                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              2.height,
+                              VideoProgressIndicator(
+                                controller.videoPlayerController,
+                                allowScrubbing: true,
+                                colors: VideoProgressColors(
+                                  playedColor: AppColor.mainColor,
+                                  backgroundColor: AppColor.white.withOpacity(0.8),
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ],
@@ -155,6 +226,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                   ),
                 ),
               ),
+              // bottom next
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,

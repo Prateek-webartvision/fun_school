@@ -19,12 +19,14 @@ class ChapterTile extends StatelessWidget {
     required this.state,
     required this.flashCard,
     required this.videos,
+    this.subjectId,
   });
   final String title;
   final List<SubjectContent> subjects;
   final List<ContentFlashCard> flashCard;
   final List<ContentVideo> videos;
   final SubjectState state;
+  final int? subjectId;
 
   getFlashCards(String subTitle) {
     return flashCard.where((element) => element.subTitle!.contains(subTitle)).toList();
@@ -119,6 +121,7 @@ class ChapterTile extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => SubjectVideoListPage(
                             videos: videos,
+                            subjectId: subjectId,
                           ),
                         ),
                       );

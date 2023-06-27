@@ -6,20 +6,22 @@ import '../router/app_router.dart';
 
 class AppUtils {
   // bottom sheet
-  static showModelSheet({
+  static Future showModelSheet({
     required Widget child,
     required bool isScrolled,
     ShapeBorder? shape,
     Color? bgColor,
     Clip? clip,
-  }) {
-    rootNavigator.currentState!.push(ModalBottomSheetRoute(
-      builder: (context) => child,
-      isScrollControlled: isScrolled,
-      shape: shape,
-      backgroundColor: bgColor,
-      clipBehavior: clip ?? Clip.hardEdge,
-    ));
+  }) async {
+    return await rootNavigator.currentState!.push(
+      ModalBottomSheetRoute(
+        builder: (context) => child,
+        isScrollControlled: isScrolled,
+        shape: shape,
+        backgroundColor: bgColor,
+        clipBehavior: clip ?? Clip.hardEdge,
+      ),
+    );
   }
 
   static closeBottomSheet() {

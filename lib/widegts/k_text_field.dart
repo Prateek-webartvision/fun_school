@@ -16,6 +16,7 @@ class KTextField extends StatefulWidget {
     this.enabled,
     this.suffixIcon,
     this.errorText,
+    this.maxLine = 1,
   });
   final String? hint;
   final bool isPassword;
@@ -25,6 +26,7 @@ class KTextField extends StatefulWidget {
   final bool? enabled;
   final Icon? suffixIcon;
   final String? errorText;
+  final int maxLine;
 
   @override
   State<KTextField> createState() => _KTextFieldState();
@@ -47,6 +49,7 @@ class _KTextFieldState extends State<KTextField> {
           ),
         ),
         TextField(
+          maxLines: widget.maxLine,
           enabled: widget.enabled,
           controller: widget.controller,
           obscureText: (widget.isPassword) ? passHide : widget.isPassword,
