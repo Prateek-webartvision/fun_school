@@ -128,9 +128,6 @@ class ChapterTile extends StatelessWidget {
                       );
                     }
                   }
-                  // if (widget.state == SubjectState.quiz) {
-                  //   print("quiz");
-                  // }
                 },
                 child: Row(
                   children: [

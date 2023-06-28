@@ -9,7 +9,8 @@ import '../../../router/pages.dart';
 import '../../../widegts/k_btn.dart';
 
 class StartQuizPage extends StatelessWidget {
-  const StartQuizPage({super.key});
+  const StartQuizPage({super.key, required this.title});
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class StartQuizPage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Text(title.toString()),
           Container(height: 55),
           Container(
             // height: 24,

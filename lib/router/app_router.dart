@@ -235,10 +235,12 @@ final GoRouter appRoutes = GoRouter(
       parentNavigatorKey: rootNavigator,
       path: PagesName.getPath(PagesName.startQuizPage),
       name: PagesName.startQuizPage,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: StartQuizPage(),
-      ),
+      pageBuilder: (context, state) {
+        return MaterialPage(
+          key: state.pageKey,
+          child: StartQuizPage(title: state.queryParameters['title']),
+        );
+      },
       routes: [
         GoRoute(
           parentNavigatorKey: rootNavigator,
