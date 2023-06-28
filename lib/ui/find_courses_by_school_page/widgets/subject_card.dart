@@ -1,33 +1,33 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 
-class SubjectCard extends StatefulWidget {
+class SubjectCard extends StatelessWidget {
   const SubjectCard({
     super.key,
     required this.name,
     required this.icon,
     // this.selected = false,
     this.onTap,
+    this.selectedSubject,
+    this.onItemSelected,
   });
+
   final String name;
   final IconData icon;
+  final CoursesModel? selectedSubject;
 
   final Function()? onTap;
+  final Function()? onItemSelected;
 
-  @override
-  State<SubjectCard> createState() => _SubjectCardState();
-}
-
-class _SubjectCardState extends State<SubjectCard> {
-  bool selected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: AppColor.white,
@@ -41,7 +41,7 @@ class _SubjectCardState extends State<SubjectCard> {
               radius: 20,
               backgroundColor: AppColor.mainColor,
               child: Icon(
-                widget.icon,
+                icon,
                 color: AppColor.white,
               ),
             ),
@@ -55,7 +55,7 @@ class _SubjectCardState extends State<SubjectCard> {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    widget.name,
+                    name,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   4.height,
@@ -89,20 +89,27 @@ class _SubjectCardState extends State<SubjectCard> {
               ),
             ),
             10.width,
-            Checkbox(
-              value: selected,
-              fillColor: MaterialStatePropertyAll(AppColor.pinkColor),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-              side: BorderSide(
-                color: AppColor.softBorderColor,
-                width: 1,
+            // Text("${selectedSubject?.courseName ?? "Kundan"}"),
+            GestureDetector(
+              onTap: onItemSelected,
+              child: Container(
+                height: 20,
+                width: 20,
+                decoration: BoxDecoration(
+                  color: (name == (selectedSubject?.courseName ?? "")) ? AppColor.pinkColor : null,
+                  border: Border.all(color: AppColor.softBorderColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                alignment: Alignment.center,
+                child: (name == (selectedSubject?.courseName ?? ""))
+                    ? Icon(
+                        Icons.check,
+                        size: 16,
+                        color: AppColor.white,
+                      )
+                    : 0.height,
               ),
-              onChanged: (value) {
-                setState(() {
-                  selected = value!;
-                });
-              },
-            )
+            ),
           ],
         ),
       ),

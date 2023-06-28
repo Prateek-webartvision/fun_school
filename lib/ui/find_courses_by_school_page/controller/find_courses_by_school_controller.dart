@@ -3,6 +3,7 @@ import 'package:citycloud_school/network/exception/k_exceptions.dart';
 import 'package:citycloud_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -11,9 +12,12 @@ import 'school_selector_controller.dart';
 class FindCoursesBySchoolController extends GetxController {
   ApiState apiState = ApiState.loading;
   String? error;
+
   List<CoursesModel> _coursesList = [];
   List<CoursesModel>? _coursesBySchool;
   List<CoursesModel>? coursesBySearch;
+
+  CoursesModel? selectedSubject;
 
   late SchoolSelectorController schoolSelectorController;
 
@@ -22,9 +26,13 @@ class FindCoursesBySchoolController extends GetxController {
     _initLoadDate();
   }
 
+  changeCourseSelection(CoursesModel selectedSubject) {
+    this.selectedSubject = selectedSubject;
+    update();
+  }
+
   _initLoadDate() async {
     await _getCourses();
-
     _sortBySchool(schoolSelectorController.selectionKey);
 
     schoolSelectorController.addListener(() {

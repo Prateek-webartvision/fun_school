@@ -84,13 +84,15 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                             // name: "Mathematics",
                             name: controller.coursesBySearch![index].courseName!,
                             icon: Icons.group,
-                            // selected: true,
-                            // work on it
+                            selectedSubject: controller.selectedSubject,
                             onTap: () {
                               appRoutes.pushNamed(
                                 PagesName.subjectDetailsPage,
                                 extra: controller.coursesBySearch![index],
                               );
+                            },
+                            onItemSelected: () {
+                              controller.changeCourseSelection(controller.coursesBySearch![index]);
                             },
                           );
                         },
@@ -101,9 +103,14 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
       ),
       floatingActionButton: KBtn(
         onClick: () {
-          AppUtils.showloadingOverlay(() async {
-            await StudyPlanRepository.buyStudyPlan(1);
-          });
+          if (findCoursesBySchoolController.selectedSubject == null) {
+            AppUtils.showSnack("Please Select Subject");
+          } else {
+            AppUtils.showloadingOverlay(() async {
+              //Todo this must be changed
+              await StudyPlanRepository.buyStudyPlan(findCoursesBySchoolController.selectedSubject!.courseId!);
+            });
+          }
         },
         text: "Add to Study Plan",
         width: MediaQuery.of(context).size.width - 32,
