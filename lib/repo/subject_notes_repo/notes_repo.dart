@@ -4,7 +4,7 @@ import 'package:citycloud_school/uitls/app_utils.dart';
 import '../../network/app_api.dart';
 import '../../network/url/app_urls.dart';
 
-class QuickOptionRepository {
+class NotesRepository {
   static final _api = AppApi();
 
   static addNote({
@@ -29,6 +29,15 @@ class QuickOptionRepository {
       }
     }).onError((error, stackTrace) {
       AppUtils.showSnack(error.toString());
+    });
+  }
+
+  // get notes
+  static getAllNotes() async {
+    await _api.getApi(AppUrls.getAllNotes).then((value) {
+      print(value);
+    }).onError((error, stackTrace) {
+      print(error.toString());
     });
   }
 }

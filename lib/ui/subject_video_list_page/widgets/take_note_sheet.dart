@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/repo/quick_options_repo/quick_options_repo.dart';
+import 'package:citycloud_school/repo/subject_notes_repo/notes_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:citycloud_school/widegts/k_text_field.dart';
@@ -46,7 +46,7 @@ class _TakeNoteSheetState extends State<TakeNoteSheet> {
     } else {
       AppUtils.showloadingOverlay(() async {
         rootNavigator.currentState!.focusNode.unfocus();
-        var res = await QuickOptionRepository.addNote(
+        var res = await NotesRepository.addNote(
           noteTitle: widget.noteTitle,
           subjectId: widget.subjectId,
           contentTitle: widget.contentTitle,

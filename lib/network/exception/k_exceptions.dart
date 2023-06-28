@@ -6,7 +6,7 @@ abstract class KException {
 
   @override
   String toString() {
-    return "ErrorCode $errorCode, errorMessage $errorMessage";
+    return errorMessage;
   }
 }
 
