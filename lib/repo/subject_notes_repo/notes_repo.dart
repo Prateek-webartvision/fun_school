@@ -1,4 +1,5 @@
 import 'package:citycloud_school/network/data/app_storage.dart';
+import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
 import '../../network/app_api.dart';
@@ -33,11 +34,21 @@ class NotesRepository {
   }
 
   // get notes
-  static getAllNotes() async {
-    await _api.getApi(AppUrls.getAllNotes).then((value) {
-      print(value);
+  static Future<List<NotesModel>> getAllNotes() async {
+    return await _api.getApi(AppUrls.getAllNotes).then((value) {
+      List<NotesModel> myNotes = [];
+      if (value != null) {
+        for (var element in value) {
+          final note = NotesModel.fromJson(element);
+          if (int.parse(note.userId!) == AppStorage.user.currentUser()!.userid!) {
+            myNotes.add(note);
+          }
+        }
+      }
+      return myNotes;
     }).onError((error, stackTrace) {
-      print(error.toString());
+      // AppUtils.showSnack(error.toString());
+      throw error.toString();
     });
   }
 }

@@ -1,41 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../style/color.dart';
+import 'study_page_state.dart';
 import 'tab_pages/my_courses_tab.dart';
 import 'tab_pages/my_note_tab.dart';
 import 'tab_pages/my_study_plan_tab.dart';
 
 class StudyPage extends StatefulWidget {
   const StudyPage({super.key});
-
   @override
   State<StudyPage> createState() => _StudyPageState();
 }
 
-class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
-  late TabController pageTabController;
-  late MyCoursesController myCoursesController;
-
-  @override
-  void initState() {
-    pageTabController = TabController(length: 3, vsync: this);
-    myCoursesController = MyCoursesController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    pageTabController.dispose();
-    if (myCoursesController.myCourses != null) {
-      myCoursesController.dispose();
-    }
-    super.dispose();
-  }
-
+class _StudyPageState extends StudyPageState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +63,7 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
               controller: pageTabController,
               children: [
                 MyCoursesTab(myCoursesController: myCoursesController),
-                MyNoteTab(),
+                MyNoteTab(myNotesController: myNotesController),
                 MyStudyPlanTab(),
               ],
             ),

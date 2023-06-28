@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -9,214 +11,160 @@ import '../../../style/color.dart';
 class MyNoteTab extends StatelessWidget {
   const MyNoteTab({
     super.key,
+    required this.myNotesController,
   });
+  final MyNotesController myNotesController;
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(16),
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppColor.white,
-            border: Border.all(color: AppColor.softBorderColor),
-            borderRadius: BorderRadius.circular(4),
+    return GetBuilder(
+      init: myNotesController,
+      builder: (controller) {
+        if (controller.apiState == ApiState.loading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (controller.apiState == ApiState.error) {
+          return Center(child: Text(controller.error.toString()));
+        } else {
+          return ListView.separated(
+            padding: EdgeInsets.all(16),
+            itemCount: controller.myNotes!.length,
+            itemBuilder: (context, index) {
+              return NoteTile(
+                title: controller.myNotes![index].first.title.toString(),
+                notes: controller.myNotes![index],
+              );
+            },
+            separatorBuilder: (context, index) => 10.height,
+          );
+        }
+      },
+    );
+  }
+}
+
+class NoteTile extends StatelessWidget {
+  const NoteTile({
+    super.key,
+    required this.title,
+    required this.notes,
+  });
+  final String title;
+  final List<NotesModel> notes;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.white,
+        border: Border.all(color: AppColor.softBorderColor),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Column(
+        children: [
+          Container(
+            // color: Colors.green,
+            height: 44,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // add Title
+                    Text(
+                      // "Alegbra Foundations",
+                      title,
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                // notes count
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.scaffoldBg,
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: AppColor.textFeildBorderColor),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "${notes.length} Notes",
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              Container(
-                // color: Colors.green,
-                height: 44,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // notes
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ListView.separated(
+              itemCount: notes.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Text(
-                        //   "Up next for you",
-                        //   style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.theme.colorScheme.primary),
-                        // ),
-                        // 2.height,
-                        Text(
-                          "Alegbra Foundations",
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      // "Overview and history algebra",
+                      notes[index].subtitle!,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                    // notes count
+                    4.height,
                     Container(
                       decoration: BoxDecoration(
-                        color: AppColor.scaffoldBg,
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColor.textFeildBorderColor),
+                        color: AppColor.white,
+                        border: Border.all(color: AppColor.softBorderColor),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      child: Text(
-                        "3 Notes",
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.note_rounded,
+                            color: context.appTheme.colorScheme.primary,
+                          ),
+                          12.width,
+                          Expanded(
+                            child: Text(
+                              // "“Sample Note”",
+                              notes[index].notes!,
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          12.width,
+                          Icon(Icons.copy_rounded),
+                          12.width,
+                          Icon(Icons.notes_rounded)
+                        ],
                       ),
                     )
                   ],
-                ),
-              ),
-              // notes
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  children: [
-                    // note 1
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Overview and history algebra",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        4.height,
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColor.white,
-                            border: Border.all(color: AppColor.softBorderColor),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.note_rounded,
-                                color: context.appTheme.colorScheme.primary,
-                              ),
-                              12.width,
-                              Expanded(
-                                child: Text(
-                                  "“Sample Note”",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              12.width,
-                              Icon(Icons.copy_rounded),
-                              12.width,
-                              Icon(Icons.notes_rounded)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    12.height,
-                    // note 2
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Introduction to variables",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        4.height,
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColor.white,
-                            border: Border.all(color: AppColor.softBorderColor),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.note_rounded,
-                                color: context.appTheme.colorScheme.primary,
-                              ),
-                              12.width,
-                              Expanded(
-                                child: Text(
-                                  "“Sample Note”",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              12.width,
-                              Icon(Icons.copy_rounded),
-                              12.width,
-                              Icon(Icons.notes_rounded)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    12.height,
-                    // note 3
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Substitution and evaluating expressions",
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        4.height,
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColor.white,
-                            border: Border.all(color: AppColor.softBorderColor),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.note_rounded,
-                                color: context.appTheme.colorScheme.primary,
-                              ),
-                              12.width,
-                              Expanded(
-                                child: Text(
-                                  "“Sample Note”",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              12.width,
-                              Icon(Icons.copy_rounded),
-                              12.width,
-                              Icon(Icons.notes_rounded)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              12.height,
-            ],
+                );
+              },
+              separatorBuilder: (context, index) => 12.height,
+            ),
           ),
-        ),
-      ],
+          12.height,
+        ],
+      ),
     );
   }
 }
