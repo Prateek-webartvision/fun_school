@@ -125,9 +125,12 @@ class _FlashCardViewState extends FlashCardState {
                   onEnd: () {
                     controller.isCardEnd(true);
                   },
-                  cardBuilder: (context, index) {
+                  cardBuilder: (BuildContext context, int index, int horizontalOffsetPercentage, int verticalOffsetPercentage) {
                     return _fCard(controller.flashCards[index]);
                   },
+                  // cardBuilder: (context, index) {
+                  //   return _fCard(controller.flashCards[index]);
+                  // },
                 ),
               ),
             ],
