@@ -1,4 +1,5 @@
 import 'package:citycloud_school/models/user/user.model.dart';
+import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
@@ -51,6 +52,26 @@ class AuthRepository extends AuthRepo {
       }
     }).onError((error, stackTrace) {
       throw error.toString();
+    });
+  }
+
+  @override
+  Future changePassword({required String oldPassword, required String newPassword, required String conformNewPassword}) async {
+    final data = <String, String>{};
+
+    data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    data["old_password"] = oldPassword;
+    data["new_password"] = newPassword;
+    data["new_password_repeat"] = conformNewPassword;
+
+    await api.postApi(AppUrls.changePassword, params: data).then((value) {
+      // if (value['code'] == 200) {
+      // } else {
+      // return value
+      print(value);
+      AppUtils.showSnack(value["message"]);
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack(error.toString());
     });
   }
 }

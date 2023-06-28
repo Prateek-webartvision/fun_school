@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class NavPageController extends GetxController {
   int currentIndex = 0;
 
-  updatePage(int index) {
+  updatePage({required int index}) {
     if (currentIndex != index) {
       currentIndex = index;
       update();

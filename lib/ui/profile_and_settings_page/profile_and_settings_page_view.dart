@@ -74,6 +74,7 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
           ProfileOptionTile(
             leadingIcon: Icons.lock,
             title: "Change Password",
+            onClick: changePassword,
           ),
 
           //

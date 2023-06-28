@@ -9,4 +9,7 @@ abstract class AuthRepo {
 
   // signin method
   Future<dynamic> signInWithEmailPassword({required String email, required String password});
+
+  // change old password
+  Future<dynamic> changePassword({required String oldPassword, required String newPassword, required String conformNewPassword});
 }

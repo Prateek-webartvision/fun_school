@@ -52,7 +52,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
             snakeShape: SnakeShape(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)), height: 3, centered: false),
             backgroundColor: AppColor.white,
             currentIndex: controller.currentIndex,
-            onTap: (index) => controller.updatePage(index),
+            onTap: (index) => controller.updatePage(index: index),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
