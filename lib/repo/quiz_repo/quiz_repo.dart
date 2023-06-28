@@ -5,7 +5,7 @@ import '../../network/app_api.dart';
 class QuizRepository {
   static final _api = AppApi();
 
-  Future getQuiz({required String subjectId}) async {
+  static Future getQuiz({String? title = ""}) async {
     print(AppUrls.getQuizs);
   }
 }

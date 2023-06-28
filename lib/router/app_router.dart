@@ -23,7 +23,7 @@ import '../ui/start_exam_pages/question_answer_page/question_answer_page.dart';
 import '../ui/start_exam_pages/result_page/result_page.dart';
 import '../ui/start_exam_pages/start_exam_page/start_exam_page.dart';
 import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
-import '../ui/start_quiz_pages/start_quiz_page/start_quiz_page.dart';
+import '../ui/start_quiz_pages/start_quiz_view.dart';
 import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_view.dart';
 import '../ui/topic_summary_page/topic_summary_page.dart';
@@ -238,7 +238,7 @@ final GoRouter appRoutes = GoRouter(
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: StartQuizPage(title: state.queryParameters['title']),
+          child: StartQuizView(title: state.queryParameters['title']),
         );
       },
       routes: [
