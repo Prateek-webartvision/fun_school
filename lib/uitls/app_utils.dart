@@ -17,6 +17,7 @@ class AppUtils {
       ModalBottomSheetRoute(
         builder: (context) => child,
         isScrollControlled: isScrolled,
+        elevation: 100,
         shape: shape,
         backgroundColor: bgColor,
         clipBehavior: clip ?? Clip.hardEdge,

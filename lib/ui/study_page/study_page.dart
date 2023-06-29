@@ -64,7 +64,7 @@ class _StudyPageState extends StudyPageState {
               children: [
                 MyCoursesTab(myCoursesController: myCoursesController),
                 MyNoteTab(myNotesController: myNotesController),
-                MyStudyPlanTab(),
+                MyStudyPlanTab(myStudyPlanController: myStudyPlanController),
               ],
             ),
           )
