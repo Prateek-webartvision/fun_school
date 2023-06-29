@@ -9,8 +9,13 @@ abstract class StartQuizState extends State<StartQuizView> {
 
   @override
   void initState() {
-    Get.lazyPut(() => QuizController());
-    quizController = Get.find<QuizController>();
+    quizController = QuizController(title: widget.title ?? "");
+    Get.lazyPut(() => quizController);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

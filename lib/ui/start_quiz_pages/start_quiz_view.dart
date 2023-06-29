@@ -11,7 +11,10 @@ import '../../widegts/k_btn.dart';
 import 'start_quiz_state.dart';
 
 class StartQuizView extends StatefulWidget {
-  const StartQuizView({super.key, required this.title});
+  const StartQuizView({
+    super.key,
+    required this.title,
+  });
   final String? title;
 
   @override
@@ -30,49 +33,62 @@ class _StartQuizViewState extends StartQuizState {
       body: GetBuilder(
         init: quizController,
         builder: (controller) {
-          return Column(
-            children: [
-              Text(widget.title.toString()),
-              Container(height: 55),
-              Container(
-                // height: 24,
-                decoration: BoxDecoration(
-                  // color: AppColor.scaffoldBg,
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: Colors.white),
+          if (controller.apiState == ApiState.loading) {
+            return Center(child: CircularProgressIndicator(color: AppColor.white));
+          } else if (controller.apiState == ApiState.error) {
+            return Center(child: Text(controller.error, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white)));
+          } else if (controller.quizs!.isEmpty) {
+            return Center(child: Text("No Quiz found", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white)));
+          } else {
+            return Column(
+              children: [
+                Container(height: 55),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: Colors.white),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "${controller.quizs!.length} Question",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                  ),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: Text(
-                  "11 Question",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                20.height,
+                Text(
+                  "Ready to practice?",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
                 ),
-              ),
-              18.height,
-              Text(
-                "Ready to practice?",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
-              ),
-              Text(
-                "Okay. show us what you can do!",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
-              ),
-            ],
-          );
+                Text(
+                  "Okay. show us what you can do!",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
+                ),
+              ],
+            );
+          }
         },
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.only(bottom: 20),
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: KBtn(
-          bgColor: AppColor.white,
-          fbColor: Colors.black,
-          height: 44,
-          onClick: () {
-            //
-            appRoutes.pushNamed(PagesName.quizQustionAnswerPage);
-          },
-          text: "Let’s Go ",
-        ),
+      bottomNavigationBar: GetBuilder(
+        init: quizController,
+        builder: (controller) {
+          if (controller.apiState != ApiState.success || controller.quizs!.isEmpty) {
+            return SizedBox();
+          } else {
+            return Container(
+              margin: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: KBtn(
+                bgColor: AppColor.white,
+                fbColor: Colors.black,
+                height: 44,
+                onClick: () {
+                  appRoutes.pushNamed(PagesName.quizQustionAnswerPage);
+                },
+                text: "Let’s Go ",
+              ),
+            );
+          }
+        },
       ),
     );
   }

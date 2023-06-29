@@ -214,21 +214,21 @@ final GoRouter appRoutes = GoRouter(
                   key: state.pageKey,
                   child: QuestionAnswerPage(),
                 ),
-                routes: [
-                  GoRoute(
-                    parentNavigatorKey: rootNavigator,
-                    path: PagesName.resultPage,
-                    name: PagesName.resultPage,
-                    pageBuilder: (context, state) => MaterialPage(
-                      key: state.pageKey,
-                      child: ResultPage(),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
         ]),
+
+    // result page
+    GoRoute(
+      parentNavigatorKey: rootNavigator,
+      path: PagesName.getPath(PagesName.resultPage),
+      name: PagesName.resultPage,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: ResultPage(),
+      ),
+    ),
 
     // Start Quiz page
     GoRoute(
