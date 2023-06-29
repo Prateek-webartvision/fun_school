@@ -3,6 +3,7 @@
 import 'package:citycloud_school/ui/subject_video_list_page/subject_video_list_page.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../models/courses_dedails/subject.model.dart';
@@ -61,7 +62,7 @@ class ChapterTile extends StatelessWidget {
                   children: [
                     Text(
                       // "Solving equations & inequalities",
-                      title,
+                      (state == SubjectState.quiz) ? "start quiz".capitalize! : title,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -132,7 +133,11 @@ class ChapterTile extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.play_circle_fill_rounded,
+                      (state == SubjectState.videos)
+                          ? Icons.play_circle_fill_rounded
+                          : (state == SubjectState.flashcard)
+                              ? Icons.card_giftcard
+                              : Icons.info_rounded,
                       color: AppColor.mainColor,
                       size: 20,
                     ),

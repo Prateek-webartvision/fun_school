@@ -3,6 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/controller/quiz_controller.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -233,6 +234,8 @@ class QuizQustionQnswerPage extends StatelessWidget {
                             //todo have to work on result page
                             appRoutes.pushNamed(PagesName.resultPage);
                           }
+                        } else {
+                          AppUtils.showSnack("Please select your answer first");
                         }
                       },
                       text: "Next",

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
+import '../widgets/note_dailog.dart';
 
 class MyNoteTab extends StatelessWidget {
   const MyNoteTab({
@@ -124,36 +125,48 @@ class NoteTile extends StatelessWidget {
                       ),
                     ),
                     4.height,
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColor.white,
-                        border: Border.all(color: AppColor.softBorderColor),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.note_rounded,
-                            color: context.appTheme.colorScheme.primary,
-                          ),
-                          12.width,
-                          Expanded(
-                            child: Text(
-                              // "“Sample Note”",
-                              notes[index].notes!,
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return NoteDailog(noteData: notes[index]);
+                          },
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          border: Border.all(color: AppColor.softBorderColor),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.note_rounded,
+                              color: context.appTheme.colorScheme.primary,
+                            ),
+                            12.width,
+                            Expanded(
+                              child: Text(
+                                // "“Sample Note”",
+                                notes[index].notes!,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                          12.width,
-                          Icon(Icons.copy_rounded),
-                          12.width,
-                          Icon(Icons.notes_rounded)
-                        ],
+                            12.width,
+                            Icon(Icons.copy_rounded),
+                            12.width,
+                            Icon(Icons.notes_rounded)
+                          ],
+                        ),
                       ),
                     )
                   ],
