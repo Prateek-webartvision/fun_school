@@ -5,7 +5,6 @@ import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/controller/quiz_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
