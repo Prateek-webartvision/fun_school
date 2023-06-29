@@ -108,7 +108,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
           } else {
             AppUtils.showloadingOverlay(() async {
               //Todo this must be changed
-              await StudyPlanRepository.buyStudyPlan(findCoursesBySchoolController.selectedSubject!.courseId!);
+              await StudyPlanRepository.buyStudyPlan(courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!);
             });
           }
         },
