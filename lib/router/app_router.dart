@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -250,7 +252,19 @@ final GoRouter appRoutes = GoRouter(
             key: state.pageKey,
             child: QuizQustionQnswerPage(),
           ),
-        )
+        ),
+
+        //quiz result page
+        GoRoute(
+          parentNavigatorKey: rootNavigator,
+          path: PagesName.quizResultPage,
+          name: PagesName.quizResultPage,
+          // List<QuizModel> data =  state.extra as List<QuizModel>;
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: QuizResultPage(quizWithAns: state.extra as List<QuizModel>),
+          ),
+        ),
       ],
     )
   ],

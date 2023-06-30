@@ -55,21 +55,30 @@ class ChapterTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
+                Expanded(
+                  child: RichText(
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
                       // "Solving equations & inequalities",
-                      (state == SubjectState.quiz) ? "start quiz".capitalize! : title,
+                      text: title,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.black,
                       ),
+                      children: (state == SubjectState.quiz)
+                          ? [
+                              TextSpan(text: " "),
+                              TextSpan(
+                                text: "( start quiz )".capitalize,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ]
+                          : null,
                     ),
-                  ],
+                  ),
                 ),
+
                 // time
                 Container(
                   decoration: BoxDecoration(

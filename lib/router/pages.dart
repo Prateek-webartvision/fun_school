@@ -25,8 +25,10 @@ class PagesName {
   static String startExamPage = "startExamPage";
   static String questionAnswerPage = "QuestionAnswerPage";
   static String resultPage = "resultPage";
+
   static String startQuizPage = "startQuizPage";
   static String quizQustionAnswerPage = "quizQustionAnswerPage";
+  static String quizResultPage = "quizResultPage";
 
   static getPath(String v) {
     return "/${v.toLowerCase()}";

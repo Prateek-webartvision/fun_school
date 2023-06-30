@@ -232,7 +232,8 @@ class QuizQustionQnswerPage extends StatelessWidget {
                             // time to show result
                             popBack2Times();
                             //todo have to work on result page
-                            appRoutes.pushNamed(PagesName.resultPage);
+                            // appRoutes.pushNamed(PagesName.resultPage);
+                            appRoutes.pushNamed(PagesName.quizResultPage, extra: controller.quizs!);
                           }
                         } else {
                           AppUtils.showSnack("Please select your answer first");
@@ -272,51 +273,37 @@ class AnsOptions extends StatelessWidget {
         return GestureDetector(
           onTap: () => onItemClick(options[index]),
           child: Container(
+            constraints: BoxConstraints(minHeight: 60),
             decoration: BoxDecoration(
-              color: (seletedAns == options[index]) ? Colors.grey : AppColor.white,
-              border: Border.all(color: AppColor.softBorderColor),
+              color: AppColor.white,
+              border: Border.all(color: (seletedAns == options[index]) ? AppColor.pinkColor : AppColor.softBorderColor),
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.all(6),
-            child: Text("${String.fromCharCode(char + index).capitalize}. ${options[index]}"),
+            padding: EdgeInsets.all(8),
+            child: RichText(
+              text: TextSpan(
+                text: "${String.fromCharCode(char + index).capitalize}.",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(text: " "),
+                  TextSpan(
+                    text: options[index],
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // child: Text("${String.fromCharCode(char + index).capitalize}. ${options[index]}"),
           ),
         );
       },
       separatorBuilder: (context, index) => 8.height,
-    );
-  }
-}
-
-class _AnsTile extends StatelessWidget {
-  const _AnsTile({
-    super.key,
-    required this.text,
-  });
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        4.width,
-        Container(
-          width: 100,
-          height: 24,
-          decoration: BoxDecoration(
-            // color: Colors.green,
-            border: Border(
-              bottom: BorderSide(color: Colors.black, width: 1.5),
-            ),
-          ),
-        )
-      ],
     );
   }
 }
