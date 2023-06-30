@@ -1,3 +1,5 @@
+import 'package:citycloud_school/repo/enroll_courses_repo/enroll_course_repo.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/courses_dedails/subject.model.dart';
@@ -20,6 +22,14 @@ abstract class SubjectDetailsState extends State<SubjectDetailsView> with Ticker
     //   print(pageTabController.index);
     // });
     super.initState();
+  }
+
+  onEnrollClick() {
+    AppUtils.showloadingOverlay(
+      () async {
+        await EnrollCoursesRepository.enrollCourse(widget.courseData!.courseId);
+      },
+    );
   }
 
   @override

@@ -39,6 +39,7 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                   title: widget.courseData!.courseName!,
                   controller: pageTabController,
                   tabs: subjects.map((e) => e.subjectName!).toList(),
+                  onEnrollClick: onEnrollClick,
                 ),
 
                 // body

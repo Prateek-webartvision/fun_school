@@ -11,11 +11,13 @@ class HeadTitle extends StatelessWidget {
     required this.controller,
     required this.title,
     required this.tabs,
+    this.onEnrollClick,
   });
 
   final TabController controller;
   final List<String> tabs;
   final String title;
+  final Function()? onEnrollClick;
 
   @override
   Widget build(BuildContext context) {
@@ -73,31 +75,34 @@ class HeadTitle extends StatelessWidget {
                 ],
               ),
               // subject add btn
-              Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: AppColor.white,
-                  borderRadius: BorderRadius.circular(48),
-                  border: Border.all(color: AppColor.softBorderColor),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x0F101828),
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    ),
-                    BoxShadow(
-                      color: Color(0x1A101828),
-                      offset: Offset(0, 1),
-                      blurRadius: 3,
-                    ),
-                  ],
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.add_rounded,
-                  color: AppColor.mainColor,
-                  size: 24,
+              GestureDetector(
+                onTap: onEnrollClick,
+                child: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(48),
+                    border: Border.all(color: AppColor.softBorderColor),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x0F101828),
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      ),
+                      BoxShadow(
+                        color: Color(0x1A101828),
+                        offset: Offset(0, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.add_rounded,
+                    color: AppColor.mainColor,
+                    size: 24,
+                  ),
                 ),
               ),
             ],
