@@ -18,7 +18,9 @@ abstract class FindCourseByInterestState extends State<FindCourseByInterestView>
 
   @override
   void dispose() {
-    findCourseByInterestController.dispose();
+    if (findCourseByInterestController.filterList.isNotEmpty) {
+      findCourseByInterestController.dispose();
+    }
     super.dispose();
   }
 }

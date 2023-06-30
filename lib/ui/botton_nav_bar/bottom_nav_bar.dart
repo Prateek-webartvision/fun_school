@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/network/notification_services/notification_services.dart';
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/botton_nav_bar/controller/nav_page_controller.dart';
@@ -39,7 +40,11 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           ),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications_outlined)),
+          IconButton(
+              onPressed: () {
+                AppNotficationServices.instance.showNotifaction();
+              },
+              icon: Icon(Icons.notifications_outlined)),
         ],
       ),
       body: widget.child,

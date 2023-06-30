@@ -91,7 +91,7 @@ class FindCourseByInterestController extends GetxController {
       }
       if (error is FlutterError) {
         /// this error comw due to call api after disposing controller
-        AppUtils.showSnack("gotcha");
+        AppUtils.showSnack("Got Error");
       } else {
         AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();

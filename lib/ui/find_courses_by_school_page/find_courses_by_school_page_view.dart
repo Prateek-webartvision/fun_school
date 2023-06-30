@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
@@ -14,6 +14,7 @@ import '../../widegts/k_text_field.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/my_header_delegate.dart';
 import 'widgets/school_selector.dart';
+import 'widgets/select_study_plan_sheet.dart';
 import 'widgets/subject_card.dart';
 
 class FindCoursesBySchoolPageView extends StatefulWidget {
@@ -101,21 +102,37 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
           );
         },
       ),
-      floatingActionButton: KBtn(
-        onClick: () {
-          if (findCoursesBySchoolController.selectedSubject == null) {
-            AppUtils.showSnack("Please Select Subject");
-          } else {
-            AppUtils.showloadingOverlay(() async {
-              //Todo this must be changed
-              await StudyPlanRepository.buyStudyPlan(courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!);
-            });
-          }
-        },
-        text: "Add to Study Plan",
-        width: MediaQuery.of(context).size.width - 32,
-        height: 44,
-        bgColor: Color(0xff6938EF),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+        child: KBtn(
+          onClick: () async {
+            if (findCoursesBySchoolController.selectedSubject == null) {
+              AppUtils.showSnack("Please Select Subject");
+            } else {
+              var res = await AppUtils.showModelSheet(
+                child: MyStudyPlanSheet(),
+                isScrolled: true,
+                bgColor: AppColor.white,
+                clip: Clip.hardEdge,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+              );
+              if (res != null) {
+                // print("res :$res");
+                AppUtils.showloadingOverlay(() async {
+                  //Todo this must be changed
+                  await StudyPlanRepository.buyStudyPlan(
+                    courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!,
+                    studyPlan: res,
+                  );
+                });
+              }
+            }
+          },
+          text: "Add to Study Plan",
+          width: MediaQuery.of(context).size.width - 32,
+          height: 44,
+          bgColor: Color(0xff6938EF),
+        ),
       ),
     );
   }
