@@ -78,8 +78,9 @@ class HeadTitle extends StatelessWidget {
               GestureDetector(
                 onTap: onEnrollClick,
                 child: Container(
-                  height: 48,
-                  width: 48,
+                  height: 40,
+                  // width: 48,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
                     color: AppColor.white,
                     borderRadius: BorderRadius.circular(48),
@@ -98,10 +99,16 @@ class HeadTitle extends StatelessWidget {
                     ],
                   ),
                   alignment: Alignment.center,
-                  child: Icon(
-                    Icons.add_rounded,
-                    color: AppColor.mainColor,
-                    size: 24,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.add_rounded,
+                        color: AppColor.mainColor,
+                        size: 24,
+                      ),
+                      6.width,
+                      Text("Enroll")
+                    ],
                   ),
                 ),
               ),

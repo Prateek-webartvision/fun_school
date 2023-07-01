@@ -1,8 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../style/color.dart';
 import '../model/quiz_model.dart';
@@ -30,6 +35,25 @@ class _QuizResultPageState extends QuizResultState {
             corretAns: correctAns,
             worngAns: worngAns,
             grade: grade,
+            onShare: () async {
+              var r = await rootBundle.load("assets/logo/appLogo.png");
+              final l = r.buffer.asUint8List();
+
+              final ff = await getTemporaryDirectory();
+              File file = await File(ff.path + "/image.png").create();
+              file.writeAsBytesSync(l);
+
+              print(file.path);
+              // Share.share("Test share text");
+              // Share;
+              final box = context.findRenderObject() as RenderBox?;
+              Share.shareXFiles(
+                [XFile(file.path)],
+                text: "Result",
+                subject: 'Look what I made!',
+                sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+              );
+            },
           ),
           // ans tils
           Expanded(
@@ -244,25 +268,28 @@ class ResultHead extends StatelessWidget {
           ),
           12.height,
           // share btn
-          Container(
-            height: 44,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: AppColor.white,
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            // padding: EdgeInsets.s,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.share_outlined),
-                6.45.width,
-                Text(
-                  "Share Result",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                ),
-              ],
+          GestureDetector(
+            onTap: onShare,
+            child: Container(
+              height: 44,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: AppColor.white,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              // padding: EdgeInsets.s,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.share_outlined),
+                  6.45.width,
+                  Text(
+                    "Share Result",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
           )
         ],

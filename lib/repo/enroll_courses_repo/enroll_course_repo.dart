@@ -14,8 +14,6 @@ class EnrollCoursesRepository {
     data['course_id'] = courseId.toString();
 
     await _api.postApi(AppUrls.enrollCourse, params: data).then((value) {
-      // if(value['code'] != )
-      // print(value);
       AppUtils.showSnack(value['message']);
     }).onError((error, stackTrace) {
       AppUtils.showSnack(error.toString());

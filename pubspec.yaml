@@ -48,6 +48,8 @@ dependencies:
 
   #
   flutter_card_swiper: ^6.0.0
+  share_plus: ^7.0.2
+  path_provider: ^2.0.15
 
   # local notification
   flutter_local_notifications: ^14.1.1
