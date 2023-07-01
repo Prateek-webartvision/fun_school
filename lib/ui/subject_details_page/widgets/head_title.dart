@@ -76,7 +76,9 @@ class HeadTitle extends StatelessWidget {
               ),
               // subject add btn
               GestureDetector(
-                onTap: onEnrollClick,
+                onTap: () {
+                  onEnrollClick!();
+                },
                 child: Container(
                   height: 40,
                   // width: 48,

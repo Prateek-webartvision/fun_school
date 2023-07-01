@@ -52,7 +52,7 @@ class QuizQustionQnswerPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // bar
-                        LinearProgressIndicator(value: (controller.currentQuizIndex + 1 / controller.quizs!.length), minHeight: 6),
+                        LinearProgressIndicator(value: (controller.currentQuizIndex + 1) / controller.quizs!.length, minHeight: 6),
                         14.height,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

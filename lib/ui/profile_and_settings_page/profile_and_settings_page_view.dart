@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -82,37 +83,44 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
           ProfileOptionTile(
             leadingIcon: Icons.download_for_offline_rounded,
             title: "Download Setting",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.filter_list,
             title: "Adjust Display",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.notifications_rounded,
             title: "Push notifications",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.date_range_rounded,
             title: "Sync to my calendar",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.help,
             title: "Help Centre",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.info,
             title: "About",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           10.height,
           ProfileOptionTile(
             color: Color(0xffFF0000),
             leadingIcon: Icons.delete,
             title: "Delete account",
+            onClick: () => AppUtils.showSnack("coming soon"),
           ),
           10.height,
           ProfileOptionTile(

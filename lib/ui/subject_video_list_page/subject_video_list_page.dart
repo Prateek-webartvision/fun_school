@@ -109,7 +109,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                               : CircularProgressIndicator(),
                         ),
                         Visibility(
-                          visible: controller.isShowingPlaySeekBar,
+                          // visible: controller.isShowingPlaySeekBar,
+                          visible: true,
                           child: Align(
                             alignment: Alignment.center,
                             child: (controller.isVideoLoaded)
@@ -126,17 +127,21 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                             Icon(
                                               Icons.keyboard_double_arrow_left_rounded,
                                               color: Colors.white,
-                                              size: 30,
+                                              size: 40,
                                             ),
                                             4.width,
                                             Text(
                                               "10",
-                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      16.width,
+                                      20.width,
                                       GestureDetector(
                                         onTap: () {
                                           controller.playPouse();
@@ -144,10 +149,10 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                         child: Icon(
                                           (controller.isplaying) ? Icons.play_circle_fill_rounded : Icons.pause_circle_filled_rounded,
                                           color: Colors.white,
-                                          size: 30,
+                                          size: 40,
                                         ),
                                       ),
-                                      16.width,
+                                      20.width,
                                       // forwrod seek
                                       GestureDetector(
                                         onTap: () {
@@ -157,13 +162,17 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                           children: [
                                             Text(
                                               "10",
-                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                             4.width,
                                             Icon(
                                               Icons.keyboard_double_arrow_right_rounded,
                                               color: Colors.white,
-                                              size: 30,
+                                              size: 40,
                                             ),
                                           ],
                                         ),
@@ -212,12 +221,15 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                 ),
                               ),
                               2.height,
-                              VideoProgressIndicator(
-                                controller.videoPlayerController,
-                                allowScrubbing: true,
-                                colors: VideoProgressColors(
-                                  playedColor: AppColor.mainColor,
-                                  backgroundColor: AppColor.white.withOpacity(0.8),
+                              SizedBox(
+                                height: 12,
+                                child: VideoProgressIndicator(
+                                  controller.videoPlayerController,
+                                  allowScrubbing: true,
+                                  colors: VideoProgressColors(
+                                    playedColor: AppColor.mainColor,
+                                    backgroundColor: AppColor.white.withOpacity(0.8),
+                                  ),
                                 ),
                               ),
                             ],

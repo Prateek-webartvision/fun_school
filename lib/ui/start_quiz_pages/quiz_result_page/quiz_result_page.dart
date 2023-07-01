@@ -3,10 +3,12 @@
 import 'dart:io';
 
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_state.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../style/color.dart';
@@ -23,6 +25,8 @@ class QuizResultPage extends StatefulWidget {
 class _QuizResultPageState extends QuizResultState {
   @override
   Widget build(BuildContext context) {
+    ScreenshotController screenshotController = ScreenshotController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
@@ -35,24 +39,22 @@ class _QuizResultPageState extends QuizResultState {
             corretAns: correctAns,
             worngAns: worngAns,
             grade: grade,
-            onShare: () async {
-              var r = await rootBundle.load("assets/logo/appLogo.png");
-              final l = r.buffer.asUint8List();
+            onShare: (widget) async {
+              final ss = await screenshotController.captureFromWidget(widget);
 
-              final ff = await getTemporaryDirectory();
-              File file = await File(ff.path + "/image.png").create();
-              file.writeAsBytesSync(l);
+              final tempDir = await getTemporaryDirectory();
+              File file = await File("${tempDir.path}/result.jpg").create();
 
-              print(file.path);
-              // Share.share("Test share text");
-              // Share;
-              final box = context.findRenderObject() as RenderBox?;
-              Share.shareXFiles(
-                [XFile(file.path)],
-                text: "Result",
-                subject: 'Look what I made!',
-                sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
-              );
+              file.writeAsBytesSync(ss);
+
+              AppUtils.showloadingOverlay(() async {
+                final res = await Share.shareXFiles(
+                  [XFile(file.path)],
+                  text: "Result",
+                  subject: 'Result',
+                );
+                print(res);
+              });
             },
           ),
           // ans tils
@@ -70,16 +72,8 @@ class _QuizResultPageState extends QuizResultState {
                 );
               },
               separatorBuilder: (context, index) => 10.height,
-              // children: [
-              //   _AnsTile(isCorrect: true),
-              //   10.height,
-              //   _AnsTile(isCorrect: true),
-              //   10.height,
-              //   _AnsTile(isCorrect: false),
-              // ],
             ),
           ),
-          // Text(widget.quizWithAns.toString()),
         ],
       ),
     );
@@ -92,12 +86,12 @@ class ResultHead extends StatelessWidget {
     required this.corretAns,
     required this.worngAns,
     required this.grade,
-    this.onShare,
+    required this.onShare,
   });
   final int corretAns;
   final int worngAns;
   final int grade;
-  final Function()? onShare;
+  final Function(Widget widget) onShare;
 
   String get passMessage => "Congratulations! You passed!";
   String get failMessage => "Sorry! You failed! You can retake the quiz";
@@ -116,6 +110,57 @@ class ResultHead extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // pass message
+          head(),
+          // share btn
+          GestureDetector(
+            onTap: () => onShare(
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Fun School",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                    8.height,
+                    head(),
+                  ],
+                ),
+              ),
+            ),
+            child: Container(
+              height: 44,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: AppColor.white,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              // padding: EdgeInsets.s,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.share_outlined),
+                  6.45.width,
+                  Text(
+                    "Share Result",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget head() => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -132,10 +177,7 @@ class ResultHead extends StatelessWidget {
                   children: [
                     Text(
                       (grade >= 75) ? passMessage : failMessage,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
                       // overflow: TextOverflow.ellipsis,
                     ),
                     4.height,
@@ -168,6 +210,7 @@ class ResultHead extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
                   ),
                   Text(
@@ -200,6 +243,7 @@ class ResultHead extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -221,6 +265,7 @@ class ResultHead extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -267,35 +312,8 @@ class ResultHead extends StatelessWidget {
             ],
           ),
           12.height,
-          // share btn
-          GestureDetector(
-            onTap: onShare,
-            child: Container(
-              height: 44,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                color: AppColor.white,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              // padding: EdgeInsets.s,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.share_outlined),
-                  6.45.width,
-                  Text(
-                    "Share Result",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ),
-          )
         ],
-      ),
-    );
-  }
+      );
 }
 
 //

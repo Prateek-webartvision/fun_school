@@ -7,7 +7,7 @@ class QuizRepository {
   static final _api = AppApi();
 
   static Future<List<QuizModel>> getQuiz({required String title}) async {
-    return await _api.getApi(AppUrls.getQuizs, params: {"title": title}).then((value) {
+    return await _api.getApi(AppUrls.getQuizs, params: {"title": title, "type": "mock_test"}).then((value) {
       if (value != null) {
         var quizList = <QuizModel>[];
         for (var element in value) {
