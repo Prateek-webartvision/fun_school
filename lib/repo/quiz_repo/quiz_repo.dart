@@ -1,34 +1,40 @@
 import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
 
 import '../../network/app_api.dart';
 
+class QuizType {
+  static String quiz = "quiz";
+  static String mockTest = "mock_test";
+}
+
 class QuizRepository {
   static final _api = AppApi();
 
-  static Future<List<QuizModel>> getQuiz({required String title}) async {
-    return await _api.getApi(AppUrls.getQuizs, params: {"title": title, "type": "mock_test"}).then((value) {
+  static Future getQuiz({required String title, required String quizType}) async {
+    return await _api.getApi(AppUrls.getQuizs, params: {"title": title, "type": quizType}).then((value) {
       if (value != null) {
-        var quizList = <QuizModel>[];
-        for (var element in value) {
-          final quiz = QuizModel.fromJson(element);
-          quizList.add(quiz);
+        if (quizType == QuizType.mockTest) {
+          var quizList = <MockQuizModel>[];
+          for (var element in value) {
+            final quiz = MockQuizModel.fromJson(element);
+            quizList.add(quiz);
+          }
+          return quizList;
+        } else {
+          var quizList = <QuizModel>[];
+          for (var element in value) {
+            final quiz = QuizModel.fromJson(element);
+            quizList.add(quiz);
+          }
+          return quizList;
         }
-        return quizList;
       } else {
-        return <QuizModel>[];
+        return <MockQuizModel>[];
       }
     }).onError((error, stackTrace) {
       throw error.toString();
     });
   }
 }
-
-
-    // int c = "a".codeUnitAt(0);
-      // int end = "z".codeUnitAt(0);
-      // while (c <= end) {
-      //   print(String.fromCharCode(c));
-      //   c++;
-      // }
-      // print(c);

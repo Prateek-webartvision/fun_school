@@ -1,7 +1,8 @@
-import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
+
+import '../../../repo/quiz_repo/quiz_repo.dart';
 
 class QuizController extends GetxController {
   ApiState apiState = ApiState.loading;
@@ -14,11 +15,6 @@ class QuizController extends GetxController {
 
   int currentQuizIndex = 0;
 
-  setAns(QuizModel q, String ans) {
-    q.selectAns(ans);
-    update();
-  }
-
   goToNextQuitions() {
     currentQuizIndex++;
     update();
@@ -26,8 +22,8 @@ class QuizController extends GetxController {
 
   loadQuiz(String? title) async {
     apiState = ApiState.loading;
-    await QuizRepository.getQuiz(title: title ?? "").then((value) {
-      quizs = value;
+    await QuizRepository.getQuiz(title: title ?? "", quizType: QuizType.quiz).then((value) {
+      quizs = value as List<QuizModel>;
       apiState = ApiState.success;
     }).onError((error, stackTrace) {
       this.error = error.toString();

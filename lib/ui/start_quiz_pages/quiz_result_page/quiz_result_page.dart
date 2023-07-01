@@ -12,11 +12,11 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../style/color.dart';
-import '../model/quiz_model.dart';
+import '../model/mock_quiz_model.dart';
 
 class QuizResultPage extends StatefulWidget {
   const QuizResultPage({super.key, required this.quizWithAns});
-  final List<QuizModel> quizWithAns;
+  final List<MockQuizModel> quizWithAns;
 
   @override
   State<QuizResultPage> createState() => _QuizResultPageState();

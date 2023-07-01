@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -250,7 +250,7 @@ final GoRouter appRoutes = GoRouter(
           name: PagesName.quizQustionAnswerPage,
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
-            child: QuizQustionQnswerPage(),
+            child: QuizQustionQnswerPage(extraController: state.extra),
           ),
         ),
 
@@ -262,7 +262,7 @@ final GoRouter appRoutes = GoRouter(
           // List<QuizModel> data =  state.extra as List<QuizModel>;
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
-            child: QuizResultPage(quizWithAns: state.extra as List<QuizModel>),
+            child: QuizResultPage(quizWithAns: state.extra as List<MockQuizModel>),
           ),
         ),
       ],
