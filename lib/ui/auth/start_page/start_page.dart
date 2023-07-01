@@ -20,11 +20,15 @@ class StartPage extends StatelessWidget {
         children: [
           // phone
           Align(
-              alignment: Alignment(0, -.80),
+              // alignment: Alignment(0, -.80),
+              alignment: Alignment(0, -1),
               child: Container(
-                color: Colors.pink,
                 height: 415,
-                width: 301,
+                // width: 301,
+                decoration: BoxDecoration(
+                  color: Colors.pink,
+                  image: DecorationImage(image: AssetImage("assets/logo/start_page_image.jpg"), fit: BoxFit.cover, alignment: Alignment.topCenter),
+                ),
               )),
           Align(
             alignment: Alignment(0, -0.1),
