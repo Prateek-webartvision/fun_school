@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_state.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +14,10 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../style/color.dart';
-import '../model/mock_quiz_model.dart';
 
 class QuizResultPage extends StatefulWidget {
   const QuizResultPage({super.key, required this.quizWithAns});
-  final List<MockQuizModel> quizWithAns;
+  final dynamic quizWithAns;
 
   @override
   State<QuizResultPage> createState() => _QuizResultPageState();
@@ -57,23 +58,42 @@ class _QuizResultPageState extends QuizResultState {
               });
             },
           ),
-          // ans tils
+          //     // ans tils
           Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.all(16),
-              itemCount: widget.quizWithAns.length,
-              itemBuilder: (context, index) {
-                final data = widget.quizWithAns[index];
-                return _AnsTile(
-                  currentQuestions: index,
-                  totalQuestions: widget.quizWithAns.length,
-                  quations: data.question!,
-                  isCorrect: (data.correctAnswer == data.seletedAmswer),
-                );
-              },
-              separatorBuilder: (context, index) => 10.height,
-            ),
-          ),
+              child: (widget.quizWithAns is List<MockQuizModel>)
+                  ? ListView.separated(
+                      padding: EdgeInsets.all(16),
+                      itemCount: widget.quizWithAns.length,
+                      itemBuilder: (context, index) {
+                        final data = widget.quizWithAns[index];
+                        return _AnsTile(
+                          currentQuestions: index,
+                          totalQuestions: widget.quizWithAns.length,
+                          quations: data.question!,
+                          isCorrect: (data.correctAnswer == data.seletedAmswer),
+                        );
+                      },
+                      separatorBuilder: (context, index) => 10.height,
+                    )
+                  // Quiz
+                  : ListView.separated(
+                      padding: EdgeInsets.all(16),
+                      itemCount: widget.quizWithAns.length,
+                      itemBuilder: (context, index) {
+                        QuizModel data = widget.quizWithAns[index];
+                        // chacking correct ans
+                        var res = data.quizData!.where((element) => element.correctAnswer == element.selectedAns);
+
+                        return _AnsTile(
+                          currentQuestions: index,
+                          totalQuestions: widget.quizWithAns.length,
+                          quations: data.questionTitle!,
+                          // isCorrect: false,
+                          isCorrect: (data.quizData!.length == res.length),
+                        );
+                      },
+                      separatorBuilder: (context, index) => 10.height,
+                    )),
         ],
       ),
     );

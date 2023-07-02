@@ -20,6 +20,12 @@ class QuizController extends GetxController {
     update();
   }
 
+  changeAns({required int quizDataIndex, required String selectedAns}) {
+    quizs![currentQuizIndex].quizData![quizDataIndex].copyWith(selectedAns: selectedAns);
+    update();
+    // print("object $selectedAns");
+  }
+
   loadQuiz(String? title) async {
     apiState = ApiState.loading;
     await QuizRepository.getQuiz(title: title ?? "", quizType: QuizType.quiz).then((value) {
