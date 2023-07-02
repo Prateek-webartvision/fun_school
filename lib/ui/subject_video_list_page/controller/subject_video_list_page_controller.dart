@@ -26,7 +26,13 @@ class SubjectVideoListPageController extends GetxController {
       update();
     }
 
-    videoPlayerController = VideoPlayerController.network(videoLink);
+    // videoPlayerController = VideoPlayerController.network(videoLink);
+
+    videoPlayerController = VideoPlayerController.contentUri(
+      Uri.parse(videoLink),
+      videoPlayerOptions: VideoPlayerOptions(),
+    );
+
     await videoPlayerController.initialize().then((value) {
       isVideoLoaded = true;
       videoPlayerController.play();
