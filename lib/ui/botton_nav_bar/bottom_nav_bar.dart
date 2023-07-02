@@ -56,29 +56,18 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
             snakeViewColor: Theme.of(context).colorScheme.primary,
             snakeShape: SnakeShape(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)), height: 3, centered: false),
             backgroundColor: AppColor.white,
+            selectedLabelStyle: TextStyle(fontSize: 10),
+            unselectedLabelStyle: TextStyle(fontSize: 10),
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
             currentIndex: controller.currentIndex,
             onTap: (index) => controller.updatePage(index: index),
             items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home_rounded),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.book_outlined),
-                activeIcon: Icon(Icons.book_rounded),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.edit_outlined),
-                activeIcon: Icon(Icons.edit_rounded),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.group_outlined),
-                activeIcon: Icon(Icons.group_rounded),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list_outlined),
-                activeIcon: Icon(Icons.list_rounded),
-              ),
+              BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home_rounded), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.book_outlined), activeIcon: Icon(Icons.book_rounded), label: "Study"),
+              BottomNavigationBarItem(icon: Icon(Icons.edit_outlined), activeIcon: Icon(Icons.edit_rounded), label: "Exam"),
+              BottomNavigationBarItem(icon: Icon(Icons.group_outlined), activeIcon: Icon(Icons.group_rounded), label: "Community"),
+              BottomNavigationBarItem(icon: Icon(Icons.list_outlined), activeIcon: Icon(Icons.list_rounded), label: "Settings"),
             ],
           );
         },

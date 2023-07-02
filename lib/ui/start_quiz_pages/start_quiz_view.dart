@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -31,97 +32,84 @@ class _StartQuizViewState extends StartQuizState {
         foregroundColor: AppColor.white,
       ),
       body: GetBuilder(
-          init: quizController,
-          builder: (cnt) {
-            return GetBuilder(
-              init: mockQuizController,
-              builder: (controller) {
-                if (controller.apiState == ApiState.loading || cnt.apiState == ApiState.loading) {
-                  return Center(child: CircularProgressIndicator(color: AppColor.white));
-                } else if (controller.apiState == ApiState.error) {
-                  return Center(child: Text(controller.error, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white)));
-                } else {
-                  return Column(
-                    children: [
-                      Container(height: 55),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.white),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        child: Text(
-                          "${controller.quizs!.length + cnt.quizs!.length} Question",
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
-                        ),
+        init: quizController,
+        builder: (cnt) {
+          return GetBuilder(
+            init: mockQuizController,
+            builder: (controller) {
+              if (controller.apiState == ApiState.loading || cnt.apiState == ApiState.loading) {
+                return Center(child: CircularProgressIndicator(color: AppColor.white));
+              } else if (controller.apiState == ApiState.error) {
+                return Center(child: Text(controller.error, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white)));
+              } else {
+                return Column(
+                  children: [
+                    Container(height: 55),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(color: Colors.white),
                       ),
-                      20.height,
-                      Text(
-                        "Ready to practice?",
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      child: Text(
+                        "${controller.quizs!.length + cnt.quizs!.length} Question",
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
                       ),
-                      Text(
-                        "Okay. show us what you can do!",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
-                      ),
-                      // 100.height,
-                      Spacer(),
-                      Container(
-                        width: double.maxFinite,
-                        margin: EdgeInsets.only(bottom: 20),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: KBtn(
-                          bgColor: AppColor.white,
-                          fbColor: Colors.black,
-                          height: 44,
-                          onClick: () {
+                    ),
+                    20.height,
+                    Text(
+                      "Ready to practice?",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
+                    ),
+                    Text(
+                      "Okay. show us what you can do!",
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
+                    ),
+                    // 100.height,
+                    Spacer(),
+                    Container(
+                      width: double.maxFinite,
+                      margin: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: KBtn(
+                        bgColor: AppColor.white,
+                        fbColor: Colors.black,
+                        height: 44,
+                        onClick: () {
+                          if (controller.quizs!.isEmpty) {
+                            AppUtils.showSnack("No quiz show");
+                          } else {
                             appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: controller);
-                          },
-                          text: "Start Mock Test (${controller.quizs!.length} Question)",
-                        ),
+                          }
+                        },
+                        text: "Start Mock Test (${controller.quizs!.length} Question)",
                       ),
-                      Container(
-                        width: double.maxFinite,
-                        margin: EdgeInsets.only(bottom: 20),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: KBtn(
-                          bgColor: AppColor.white,
-                          fbColor: Colors.black,
-                          height: 44,
-                          onClick: () {
+                    ),
+                    Container(
+                      width: double.maxFinite,
+                      margin: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: KBtn(
+                        bgColor: AppColor.white,
+                        fbColor: Colors.black,
+                        height: 44,
+                        onClick: () {
+                          if (cnt.quizs!.isEmpty) {
+                            AppUtils.showSnack("No quiz show");
+                          } else {
                             appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: cnt);
-                          },
-                          text: "Start Quiz (${cnt.quizs!.length} Question) ",
-                        ),
+                          }
+                        },
+                        text: "Start Quiz (${cnt.quizs!.length} Question) ",
                       ),
-                    ],
-                  );
-                }
-              },
-            );
-          }),
-      // bottomNavigationBar: GetBuilder(
-      //   init: mockQuizController,
-      //   builder: (controller) {
-      //     if (controller.apiState != ApiState.success || controller.quizs!.isEmpty) {
-      //       return SizedBox();
-      //     } else {
-      //       return Container(
-      //         margin: EdgeInsets.only(bottom: 20),
-      //         padding: EdgeInsets.symmetric(horizontal: 16),
-      //         child: KBtn(
-      //           bgColor: AppColor.white,
-      //           fbColor: Colors.black,
-      //           height: 44,
-      //           onClick: () {
-      //             appRoutes.pushNamed(PagesName.quizQustionAnswerPage);
-      //           },
-      //           text: "Let’s Go ",
-      //         ),
-      //       );
-      //     }
-      //   },
-      // ),
+                    ),
+                  ],
+                );
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

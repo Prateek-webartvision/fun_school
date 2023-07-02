@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/router/pages.dart';
+import 'package:citycloud_school/ui/flash_card_page/flash_card_view.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,8 +60,6 @@ class MyCoursesTab extends StatelessWidget {
                                 children: [
                                   //top
                                   Container(
-                                    // color: Colors.green,
-                                    // height: 64,
                                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,38 +154,62 @@ class MyCoursesTab extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  SizedBox(
-                                    width: 103,
-                                    height: 70,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.home, size: 20),
-                                        Text(
-                                          "Exam",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        )
-                                      ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      AppUtils.showSnack("Coming soon");
+                                    },
+                                    child: SizedBox(
+                                      width: 103,
+                                      height: 70,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.home, size: 20),
+                                          Text(
+                                            "Exam",
+                                            style: GoogleFonts.inter(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 103,
-                                    height: 70,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.local_fire_department_rounded, size: 20),
-                                        Text(
-                                          "Flash Card",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
+
+                                  // flash cards
+                                  GestureDetector(
+                                    onTap: () {
+                                      // going to flash card
+                                      // controller.getCourseFlashCard(index: index);
+                                      if (controller.getCourseFlashCard(index: index).isEmpty) {
+                                        AppUtils.showSnack("No FlashCards");
+                                      } else {
+                                        rootNavigator.currentState!.push(
+                                          MaterialPageRoute(
+                                            builder: (context) => FlashCardView(
+                                              flashCards: controller.getCourseFlashCard(index: index),
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                        );
+                                      }
+                                    },
+                                    child: SizedBox(
+                                      width: 103,
+                                      height: 70,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.local_fire_department_rounded, size: 20),
+                                          Text(
+                                            "Flash Card",
+                                            style: GoogleFonts.inter(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(

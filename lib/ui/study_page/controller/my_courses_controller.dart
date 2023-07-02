@@ -1,4 +1,5 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -49,6 +50,20 @@ class MyCoursesController extends GetxController {
     }
 
     return myRnroll;
+  }
+
+  // get my courses
+  List<ContentFlashCard> getCourseFlashCard({required int index}) {
+    // print("object $index");
+    List<ContentFlashCard> flashcards = [];
+    if (myCourses != null || myCourses!.isNotEmpty) {
+      for (var element in myCourses![index].courseSubjects!) {
+        if (element.flashCard!.isNotEmpty) {
+          flashcards.addAll(element.flashCard!);
+        }
+      }
+    }
+    return flashcards;
   }
 
   _loadAllCourses() async {
