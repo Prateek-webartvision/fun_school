@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349106499456",
+    "project_id": "fun-school-8808d",
+    "storage_bucket": "fun-school-8808d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349106499456:android:9074a253dd56fdcf559b65",
+        "android_client_info": {
+          "package_name": "com.webartvision.citycloud_school.citycloud_school"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349106499456-mb04g3uhhbai26q4a7ssooms39ohm46b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoWCX3V4qp3fI9DAKtclagpMr44xeCgp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349106499456-mb04g3uhhbai26q4a7ssooms39ohm46b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
