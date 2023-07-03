@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -16,8 +18,10 @@ class ChaptersTab extends StatefulWidget {
   const ChaptersTab({
     super.key,
     this.subject,
+    this.enrollmentData,
   });
   final CoursesSubject? subject;
+  final List<CoursesEnrollment>? enrollmentData;
 
   @override
   State<ChaptersTab> createState() => _ChaptersTabState();
@@ -71,7 +75,12 @@ class _ChaptersTabState extends State<ChaptersTab> {
                   onTap: () {
                     if (stateController.state == SubjectState.quiz) {
                       // print(widget.subject.dateAdded);
-                      appRoutes.pushNamed(PagesName.startQuizPage, queryParameters: {"title": chapter.first.title});
+
+                      if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
+                        appRoutes.pushNamed(PagesName.startQuizPage, queryParameters: {"title": chapter.first.title});
+                      } else {
+                        AppUtils.showSnack("First Enroll The Course");
+                      }
                     }
                   },
                   child: ChapterTile(
@@ -81,6 +90,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                     flashCard: widget.subject!.flashCard!,
                     videos: widget.subject!.videos!,
                     state: stateController.state,
+                    enrollmentData: widget.enrollmentData,
                   ),
                 );
               },

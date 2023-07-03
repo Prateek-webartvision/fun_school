@@ -72,7 +72,10 @@ class FindCourseByInterestController extends GetxController {
   // loading course data
   _getCourses() async {
     apiState = ApiState.loading;
-    update();
+    await loadWithLoading();
+  }
+
+  loadWithLoading() async {
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
       List<CoursesModel> data = [];
@@ -82,7 +85,6 @@ class FindCourseByInterestController extends GetxController {
       // print(v);
       _coursesList = data;
       error = null;
-      update();
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       if (error is KInternetException) {
@@ -96,8 +98,8 @@ class FindCourseByInterestController extends GetxController {
         AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();
       }
-      update();
     });
+    update();
   }
 
   // helper Fun for query
@@ -108,16 +110,6 @@ class FindCourseByInterestController extends GetxController {
     String? proficiencyLevel,
   }) {
     List<CoursesModel> careerfilteredData = data;
-
-    // if (careerTag != null) {
-    //   List<CoursesModel> tempList = [];
-    //   for (var element in data) {
-    //     if (element.courseCareer == careerTag) {
-    //       tempList.add(element);
-    //     }
-    //   }
-    //   careerfilteredData = tempList;
-    // }
 
     // search filter
     if (query.isNotEmpty) {

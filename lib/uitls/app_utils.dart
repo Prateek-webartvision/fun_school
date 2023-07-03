@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/courses_dedails/courses.model.dart';
+import '../network/data/app_storage.dart';
 import '../router/app_router.dart';
 
 class AppUtils {
@@ -63,5 +65,15 @@ class AppUtils {
 
     await futureFun();
     _entry.remove();
+  }
+
+  static bool isCourseEnroledByMe({required List<CoursesEnrollment> enrolls}) {
+    // print()
+    var isEnrolled = enrolls.where((element) => int.parse(element.userId!) == AppStorage.user.currentUser()!.userid!);
+    if (isEnrolled.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

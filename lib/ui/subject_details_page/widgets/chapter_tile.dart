@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../models/courses_dedails/courses.model.dart';
 import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 import '../../../router/app_router.dart';
@@ -22,6 +23,7 @@ class ChapterTile extends StatelessWidget {
     required this.flashCard,
     required this.videos,
     this.subjectId,
+    this.enrollmentData,
   });
   final String title;
   final List<SubjectContent> subjects;
@@ -29,6 +31,7 @@ class ChapterTile extends StatelessWidget {
   final List<ContentVideo> videos;
   final SubjectState state;
   final int? subjectId;
+  final List<CoursesEnrollment>? enrollmentData;
 
   getFlashCards(String subTitle) {
     return flashCard.where((element) => element.subTitle!.contains(subTitle)).toList();
@@ -108,36 +111,40 @@ class ChapterTile extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  // Flash card
-                  if (state == SubjectState.flashcard) {
-                    final flashCards = getFlashCards(subjects[index].subTitle!);
-                    if (flashCards.isEmpty) {
-                      AppUtils.showSnack("No Flash card");
-                    } else {
-                      rootNavigator.currentState!.push(
-                        MaterialPageRoute(
-                          builder: (context) => FlashCardView(flashCards: flashCards),
-                        ),
-                      );
-                    }
-                  }
-                  // for video
-                  if (state == SubjectState.videos) {
-                    final videos = getVideos(subjects[index].subTitle!);
-
-                    if (videos.isEmpty) {
-                      AppUtils.showSnack("No Videos");
-                    } else {
-                      rootNavigator.currentState!.push(
-                        MaterialPageRoute(
-                          builder: (context) => SubjectVideoListPage(
-                            videos: videos,
-                            subjectId: subjectId,
-                            contentTitle: subjects[index].title!,
+                  if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
+                    // Flash card
+                    if (state == SubjectState.flashcard) {
+                      final flashCards = getFlashCards(subjects[index].subTitle!);
+                      if (flashCards.isEmpty) {
+                        AppUtils.showSnack("No Flash card");
+                      } else {
+                        rootNavigator.currentState!.push(
+                          MaterialPageRoute(
+                            builder: (context) => FlashCardView(flashCards: flashCards),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     }
+                    // for video
+                    if (state == SubjectState.videos) {
+                      final videos = getVideos(subjects[index].subTitle!);
+
+                      if (videos.isEmpty) {
+                        AppUtils.showSnack("No Videos");
+                      } else {
+                        rootNavigator.currentState!.push(
+                          MaterialPageRoute(
+                            builder: (context) => SubjectVideoListPage(
+                              videos: videos,
+                              subjectId: subjectId,
+                              contentTitle: subjects[index].title!,
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  } else {
+                    AppUtils.showSnack("First Enroll The Course");
                   }
                 },
                 child: Row(

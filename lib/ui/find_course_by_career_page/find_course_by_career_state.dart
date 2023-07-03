@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'controller/find_course_by_career_controller.dart';
 import 'find_course_by_career_view.dart';
@@ -9,6 +10,7 @@ abstract class FindCouresByCareerState extends State<FindCourseByCareerView> {
   @override
   void initState() {
     findCourseByCareerController = FindCourseByCareerController();
+    Get.lazyPut(() => findCourseByCareerController);
     super.initState();
   }
 
@@ -19,7 +21,6 @@ abstract class FindCouresByCareerState extends State<FindCourseByCareerView> {
   @override
   void dispose() {
     findCourseByCareerController.dispose();
-
     super.dispose();
   }
 }

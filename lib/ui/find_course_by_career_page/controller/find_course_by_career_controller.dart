@@ -126,7 +126,10 @@ class FindCourseByCareerController extends GetxController {
   // loading course data
   _getCourses() async {
     apiState = ApiState.loading;
-    update();
+    await loadWithLoading();
+  }
+
+  loadWithLoading() async {
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
       List<CoursesModel> data = [];
@@ -136,7 +139,6 @@ class FindCourseByCareerController extends GetxController {
       // print(v);
       _coursesList = data;
       error = null;
-      update();
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       if (error is KInternetException) {
@@ -150,8 +152,8 @@ class FindCourseByCareerController extends GetxController {
         AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();
       }
-      update();
     });
+    update();
   }
 
   // helper Fun for query

@@ -67,8 +67,12 @@ class FindCoursesBySchoolController extends GetxController {
   // loading course data
   _getCourses() async {
     apiState = ApiState.loading;
-    List<CoursesModel> _data = [];
+    await loadWithLoading();
+  }
 
+  loadWithLoading() async {
+    print("loading");
+    List<CoursesModel> _data = [];
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
       for (var element in v) {

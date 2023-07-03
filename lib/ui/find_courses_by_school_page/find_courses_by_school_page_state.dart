@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'controller/find_courses_by_school_controller.dart';
 import 'find_courses_by_school_page_view.dart';
@@ -8,11 +9,9 @@ abstract class FindCoursesBySchoolPageState extends State<FindCoursesBySchoolPag
 
   @override
   void initState() {
-    try {
-      findCoursesBySchoolController = FindCoursesBySchoolController();
-    } catch (e) {
-      print(e.toString());
-    }
+    findCoursesBySchoolController = FindCoursesBySchoolController();
+    Get.lazyPut(() => findCoursesBySchoolController);
+
     super.initState();
   }
 
