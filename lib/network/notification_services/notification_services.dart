@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -34,7 +33,9 @@ class AppNotficationServices {
       ),
     );
     FirebaseMessaging.onMessage.listen((event) async {
-      await _localNotifications.initialize(_initializationSettings);
+      await _localNotifications.initialize(
+        _initializationSettings,
+      );
       _localNotifications.show(
         1,
         event.notification!.title,

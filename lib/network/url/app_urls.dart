@@ -19,4 +19,6 @@ class AppUrls {
   static const String addStudyPlanByContent = "$_apis/add_study_plan_content.php";
 
   static const String enrollCourse = "$_apis/enroll_for_course.php";
+
+  static const String getFlashcardByCourses = "$_apis/fetch_flashcard_per_course.php";
 }

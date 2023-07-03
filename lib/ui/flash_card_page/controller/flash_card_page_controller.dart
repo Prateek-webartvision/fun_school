@@ -3,7 +3,7 @@ import 'package:get/state_manager.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 
 class FlashCardPageController extends GetxController {
-  List<ContentFlashCard> flashCards;
+  List<FlashCardModel> flashCards;
   final int initCard;
   late int currentCard;
   late bool cardEnd;

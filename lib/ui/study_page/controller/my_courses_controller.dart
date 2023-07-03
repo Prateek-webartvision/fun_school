@@ -53,9 +53,9 @@ class MyCoursesController extends GetxController {
   }
 
   // get my courses
-  List<ContentFlashCard> getCourseFlashCard({required int index}) {
+  List<FlashCardModel> getCourseFlashCard({required int index}) {
     // print("object $index");
-    List<ContentFlashCard> flashcards = [];
+    List<FlashCardModel> flashcards = [];
     if (myCourses != null || myCourses!.isNotEmpty) {
       for (var element in myCourses![index].courseSubjects!) {
         if (element.flashCard!.isNotEmpty) {

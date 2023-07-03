@@ -4,7 +4,7 @@ class CoursesSubject {
   String? dateAdded;
   List? userNotes;
   List<List<SubjectContent>>? subjectContent;
-  List<ContentFlashCard>? flashCard;
+  List<FlashCardModel>? flashCard;
   List<ContentVideo>? videos;
 
 //working
@@ -40,9 +40,9 @@ class CoursesSubject {
 
     // get flash cards
     if (json['flashcards'] != null) {
-      List<ContentFlashCard> data = [];
+      List<FlashCardModel> data = [];
       for (var e1 in json['flashcards']) {
-        ContentFlashCard flashCard = ContentFlashCard.fromJson(e1);
+        FlashCardModel flashCard = FlashCardModel.fromJson(e1);
         data.add(flashCard);
       }
       flashCard = data;
@@ -86,14 +86,14 @@ class SubjectContent {
   }
 }
 
-class ContentFlashCard {
+class FlashCardModel {
   int? flashcardId;
   String? subTitle;
   String? flashcardImageLink;
   String? flashcardContent;
   String? dateAdded;
 
-  ContentFlashCard.fromJson(Map<String, dynamic> json) {
+  FlashCardModel.fromJson(Map<String, dynamic> json) {
     flashcardId = json['flashcard_id'];
     subTitle = json['sub_title'];
     flashcardImageLink = json['flashcard_image_link'];

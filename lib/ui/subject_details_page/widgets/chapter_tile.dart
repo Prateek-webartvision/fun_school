@@ -24,7 +24,7 @@ class ChapterTile extends StatelessWidget {
   });
   final String title;
   final List<SubjectContent> subjects;
-  final List<ContentFlashCard> flashCard;
+  final List<FlashCardModel> flashCard;
   final List<ContentVideo> videos;
   final SubjectState state;
   final int? subjectId;

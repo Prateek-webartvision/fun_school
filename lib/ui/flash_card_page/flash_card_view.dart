@@ -15,7 +15,7 @@ class FlashCardView extends StatefulWidget {
     super.key,
     required this.flashCards,
   });
-  final List<ContentFlashCard> flashCards;
+  final List<FlashCardModel> flashCards;
 
   @override
   State<FlashCardView> createState() => _FlashCardViewState();
@@ -166,7 +166,7 @@ class _FlashCardViewState extends FlashCardState {
     );
   }
 
-  Widget _fCard(ContentFlashCard flashCard) => Container(
+  Widget _fCard(FlashCardModel flashCard) => Container(
         height: 532,
         width: double.maxFinite,
         decoration: BoxDecoration(
