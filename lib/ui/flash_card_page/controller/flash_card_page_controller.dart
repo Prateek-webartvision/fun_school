@@ -1,6 +1,6 @@
 import 'package:get/state_manager.dart';
 
-import '../../../models/courses_dedails/subject.model.dart';
+import '../../../models/courses_dedails/flashcard.model.dart';
 
 class FlashCardPageController extends GetxController {
   List<FlashCardModel> flashCards;
@@ -8,6 +8,7 @@ class FlashCardPageController extends GetxController {
   late int currentCard;
   late bool cardEnd;
   int understand = 0, dontUnderstand = 0;
+  bool isFlashcardFinished = false;
 
   FlashCardPageController({
     required this.flashCards,
@@ -17,8 +18,12 @@ class FlashCardPageController extends GetxController {
     cardEnd = false;
   }
 
-  updateCurrentCard(int index) {
-    currentCard = index;
+  updateCurrentCard(int? index) {
+    if (index != null) {
+      currentCard = index;
+    } else {
+      isFlashcardFinished = true;
+    }
     update();
   }
 

@@ -21,4 +21,5 @@ class AppUrls {
   static const String enrollCourse = "$_apis/enroll_for_course.php";
 
   static const String getFlashcardByCourses = "$_apis/fetch_flashcard_per_course.php";
+  static const String addFlashcardResult = "$_apis/add_flashcard_result.php";
 }

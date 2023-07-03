@@ -7,7 +7,8 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../models/courses_dedails/subject.model.dart';
+import '../../models/courses_dedails/flashcard.model.dart';
+import '../../repo/flascard_repo/flashcard_repo.dart';
 import 'flash_card_state.dart';
 
 class FlashCardView extends StatefulWidget {
@@ -96,6 +97,7 @@ class _FlashCardViewState extends FlashCardState {
 
               24.height,
               // swipeble card
+              // Text(controller.isFlashcardFinished.toString()),
               SizedBox(
                 height: 532,
                 width: double.maxFinite,
@@ -110,16 +112,17 @@ class _FlashCardViewState extends FlashCardState {
                   onSwipe: (previousIndex, currentIndex, direction) {
                     // right swipe
                     if (direction == CardSwiperDirection.right) {
+                      FlashCardRepository.updateFlashCardResult(flashCardId: controller.flashCards[previousIndex].flashcardId!, result: true);
                       controller.chnageUnderstand(1);
                     }
                     // left swipe
                     if (direction == CardSwiperDirection.left) {
+                      FlashCardRepository.updateFlashCardResult(flashCardId: controller.flashCards[previousIndex].flashcardId!, result: false);
                       controller.chnageDontUnderstand(1);
                     }
-                    if (currentIndex != null) {
-                      controller.updateCurrentCard(currentIndex);
-                    }
-                    // return currentIndex != null;
+
+                    controller.updateCurrentCard(currentIndex);
+
                     return true;
                   },
                   onEnd: () {

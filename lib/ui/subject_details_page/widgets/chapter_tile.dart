@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';

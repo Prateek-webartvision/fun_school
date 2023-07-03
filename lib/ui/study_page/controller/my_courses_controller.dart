@@ -1,10 +1,10 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
-import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
 import '../../../uitls/app_utils.dart';

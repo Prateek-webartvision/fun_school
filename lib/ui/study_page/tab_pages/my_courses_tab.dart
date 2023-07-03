@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/repo/flascard_repo/flashcard_repo.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/flash_card_page/flash_card_view.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
@@ -180,19 +181,21 @@ class MyCoursesTab extends StatelessWidget {
                                   // flash cards
                                   GestureDetector(
                                     onTap: () {
-                                      // going to flash card
-                                      // controller.getCourseFlashCard(index: index);
-                                      if (controller.getCourseFlashCard(index: index).isEmpty) {
-                                        AppUtils.showSnack("No FlashCards");
-                                      } else {
-                                        rootNavigator.currentState!.push(
-                                          MaterialPageRoute(
-                                            builder: (context) => FlashCardView(
-                                              flashCards: controller.getCourseFlashCard(index: index),
+                                      AppUtils.showloadingOverlay(() async {
+                                        final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
+
+                                        if (flashcard != null && flashcard.isNotEmpty) {
+                                          rootNavigator.currentState!.push(
+                                            MaterialPageRoute(
+                                              builder: (context) => FlashCardView(
+                                                flashCards: controller.getCourseFlashCard(index: index),
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      }
+                                          );
+                                        } else {
+                                          AppUtils.showSnack("No FlashCards");
+                                        }
+                                      });
                                     },
                                     child: SizedBox(
                                       width: 103,
