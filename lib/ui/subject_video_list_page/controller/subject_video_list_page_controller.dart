@@ -26,8 +26,6 @@ class SubjectVideoListPageController extends GetxController {
       update();
     }
 
-    // videoPlayerController = VideoPlayerController.network(videoLink);
-
     videoPlayerController = VideoPlayerController.contentUri(
       Uri.parse(videoLink),
       videoPlayerOptions: VideoPlayerOptions(),
@@ -37,20 +35,24 @@ class SubjectVideoListPageController extends GetxController {
       isVideoLoaded = true;
       videoPlayerController.play();
       isplaying = true;
-      playBar();
+      isShowingPlaySeekBar = true;
       update();
     });
   }
 
-  playBar() async {
-    isShowingPlaySeekBar = true;
+  playBar() {
+    if (isShowingPlaySeekBar) {
+      isShowingPlaySeekBar = false;
+    } else {
+      isShowingPlaySeekBar = true;
+      _seekbarTimer();
+    }
     update();
-    await Future.delayed(
-      const Duration(seconds: 5),
-      () {
-        isShowingPlaySeekBar = false;
-      },
-    );
+  }
+
+  _seekbarTimer() async {
+    await Future.delayed(const Duration(seconds: 5));
+    isShowingPlaySeekBar = false;
     update();
   }
 

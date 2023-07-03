@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'controller/subject_video_list_page_controller.dart';
 import 'widgets/more_option_sheets.dart';
@@ -35,12 +36,14 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   void initState() {
     subjectVideoListPageController = SubjectVideoListPageController(videos: widget.videos);
     // _loadVideoData();
+    WakelockPlus.enable();
     super.initState();
   }
 
   @override
   void dispose() {
     subjectVideoListPageController.dispose();
+    WakelockPlus.disable();
     super.dispose();
   }
 
@@ -109,8 +112,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                               : CircularProgressIndicator(),
                         ),
                         Visibility(
-                          // visible: controller.isShowingPlaySeekBar,
-                          visible: true,
+                          visible: controller.isShowingPlaySeekBar,
+                          // visible: true,
                           child: Align(
                             alignment: Alignment.center,
                             child: (controller.isVideoLoaded)
