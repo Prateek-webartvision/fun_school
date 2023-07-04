@@ -185,11 +185,10 @@ class MyCoursesTab extends StatelessWidget {
                                         final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
 
                                         if (flashcard != null && flashcard.isNotEmpty) {
+                                          // print(flashcard);
                                           rootNavigator.currentState!.push(
                                             MaterialPageRoute(
-                                              builder: (context) => FlashCardView(
-                                                flashCards: controller.getCourseFlashCard(index: index),
-                                              ),
+                                              builder: (context) => FlashCardView(flashCards: flashcard),
                                             ),
                                           );
                                         } else {
@@ -220,8 +219,8 @@ class MyCoursesTab extends StatelessWidget {
                                     height: 70,
                                     child: GestureDetector(
                                       onTap: () {
-                                        print("object 1");
-                                        appRoutes.pushNamed(PagesName.startQuizPage);
+                                        // print("object ${controller.myCourses![index].courseId!}");
+                                        appRoutes.pushNamed(PagesName.startQuizPage, extra: controller.myCourses![index].courseId!);
                                       },
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,

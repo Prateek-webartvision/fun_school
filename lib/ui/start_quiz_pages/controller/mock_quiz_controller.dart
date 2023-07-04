@@ -8,8 +8,8 @@ class MockQuizController extends GetxController {
   String error = '';
   List<MockQuizModel>? quizs;
 
-  MockQuizController({required String title}) {
-    loadQuiz(title);
+  MockQuizController({String? title, int? courseID}) {
+    loadQuiz(title: title, courseId: courseID);
   }
 
   int currentQuizIndex = 0;
@@ -24,9 +24,9 @@ class MockQuizController extends GetxController {
     update();
   }
 
-  loadQuiz(String? title) async {
+  loadQuiz({String? title, int? courseId}) async {
     apiState = ApiState.loading;
-    await QuizRepository.getQuiz(title: title ?? "", quizType: QuizType.mockTest).then((value) {
+    await QuizRepository.getQuiz(title: title, courseId: courseId, quizType: QuizType.mockTest).then((value) {
       quizs = value as List<MockQuizModel>;
       apiState = ApiState.success;
     }).onError((error, stackTrace) {

@@ -45,17 +45,14 @@ dependencies:
   video_player: ^2.6.1
   google_fonts: ^5.1.0
   flutter_snake_navigationbar: ^0.6.1
-
   #
   flutter_card_swiper: ^6.0.0
   wakelock_plus: ^1.0.0+3
   share_plus: ^7.0.2
   screenshot: ^2.1.0
   path_provider: ^2.0.15
-
   # local notification
   flutter_local_notifications: ^14.1.1
-
   # firebase
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4

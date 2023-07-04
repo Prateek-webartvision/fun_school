@@ -239,7 +239,7 @@ final GoRouter appRoutes = GoRouter(
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: StartQuizView(title: state.queryParameters['title']),
+          child: StartQuizView(title: state.queryParameters['title'], courseID: state.extra),
         );
       },
       routes: [

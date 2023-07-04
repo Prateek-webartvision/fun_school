@@ -12,8 +12,20 @@ class QuizType {
 class QuizRepository {
   static final _api = AppApi();
 
-  static Future getQuiz({required String title, required String quizType}) async {
-    return await _api.getApi(AppUrls.getQuizs, params: {"title": title, "type": quizType}).then((value) {
+  static Future getQuiz({
+    String? title,
+    required String quizType,
+    int? courseId,
+  }) async {
+    Map<String, String> data = {"type": quizType};
+    if (title != null) {
+      data["title"] = title;
+    }
+    if (courseId != null) {
+      data['course_id'] = courseId.toString();
+    }
+
+    return await _api.getApi(AppUrls.getQuizs, params: data).then((value) {
       if (value != null) {
         if (quizType == QuizType.mockTest) {
           var quizList = <MockQuizModel>[];

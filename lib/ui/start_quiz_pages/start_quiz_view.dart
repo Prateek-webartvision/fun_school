@@ -15,8 +15,10 @@ class StartQuizView extends StatefulWidget {
   const StartQuizView({
     super.key,
     required this.title,
+    this.courseID,
   });
   final String? title;
+  final dynamic courseID;
 
   @override
   State<StartQuizView> createState() => _StartQuizViewState();

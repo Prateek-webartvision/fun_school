@@ -1,6 +1,7 @@
 import 'package:get/state_manager.dart';
 
 import '../../../models/courses_dedails/flashcard.model.dart';
+import '../../../repo/flascard_repo/flashcard_repo.dart';
 
 class FlashCardPageController extends GetxController {
   List<FlashCardModel> flashCards;
@@ -28,12 +29,18 @@ class FlashCardPageController extends GetxController {
   }
 
   chnageUnderstand(int i) {
-    understand += i;
+    var flash = flashCards[i];
+    flash.copyWith(flashcardResult: true);
+    FlashCardRepository.updateFlashCardResult(flashCardId: flash.flashcardId!, result: true);
+    understand += 1;
     update();
   }
 
   chnageDontUnderstand(int i) {
-    dontUnderstand += i;
+    var flash = flashCards[i];
+    flash.copyWith(flashcardResult: false);
+    FlashCardRepository.updateFlashCardResult(flashCardId: flash.flashcardId!, result: false);
+    dontUnderstand += 1;
     update();
   }
 
