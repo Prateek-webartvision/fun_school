@@ -79,12 +79,8 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> with TickerPr
               children: [
                 ExamPrepTab(),
                 FindAnExamTab(),
-                Center(
-                  child: Text("coming soon"),
-                ),
-                Center(
-                  child: Text("coming soon"),
-                )
+                Center(child: Text("coming soon")),
+                Center(child: Text("coming soon")),
               ],
             ),
           )

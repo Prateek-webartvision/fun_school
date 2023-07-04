@@ -12,6 +12,7 @@ class AppUrls {
   static const String getAllNotes = "$_apis/fetch_subject_notes.php";
 
   static const String getQuizs = "$_apis/fetch_quiz.php";
+  static const String addQuizScore = "$_apis/add_quiz_score.php";
 
   static const String addStudyPlan = "$_apis/add_study_plan.php";
   static const String getStudyPlans = "$_apis/fetch_study_plan.php";
