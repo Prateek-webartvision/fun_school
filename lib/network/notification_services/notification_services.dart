@@ -1,6 +1,32 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+Future<void> firebaseBGMessages(
+  RemoteMessage message,
+  // required InitializationSettings initializationSettings,
+  // required FlutterLocalNotificationsPlugin localNotifications,
+) async {
+  AppNotficationServices.instance.showNotifaction(title: message.notification?.title, message: message.notification?.body);
+  // await localNotifications.initialize(initializationSettings);
+  // localNotifications.show(
+  //   2,
+  //   message.notification!.title,
+  //   message.notification!.body,
+  //   const NotificationDetails(
+  //     android: AndroidNotificationDetails(
+  //       "kundan",
+  //       "kundan noti",
+  //       playSound: true,
+  //       groupKey: "com.android.example.WORK_EMAIL",
+  //       channelDescription: "kd",
+  //       importance: Importance.max,
+  //       setAsGroupSummary: true,
+  //       showProgress: true,
+  //     ),
+  //   ),
+  // );
+}
+
 class AppNotficationServices {
   static AppNotficationServices? _init;
 
@@ -21,25 +47,19 @@ class AppNotficationServices {
   late FlutterLocalNotificationsPlugin _localNotifications;
   late InitializationSettings _initializationSettings;
 
-  Future<void> _firebaseNoficationServices() async {
+  Future _firebaseNoficationServices() async {
     await _firebaseMessaging.requestPermission();
     // final fcmToken = await _firebaseMessaging.getToken();
 
-    FirebaseMessaging.onBackgroundMessage(
-      (message) => firebaseBGMessages(
-        message: message,
-        initializationSettings: _initializationSettings,
-        localNotifications: _localNotifications,
-      ),
-    );
+    FirebaseMessaging.onBackgroundMessage(firebaseBGMessages);
+
     FirebaseMessaging.onMessage.listen((event) async {
-      await _localNotifications.initialize(
-        _initializationSettings,
-      );
+      await _localNotifications.initialize(_initializationSettings);
+
       _localNotifications.show(
         1,
-        event.notification!.title,
-        event.notification!.body,
+        event.notification?.title,
+        event.notification?.body,
         const NotificationDetails(
           android: AndroidNotificationDetails(
             "kundan",
@@ -56,12 +76,15 @@ class AppNotficationServices {
     });
   }
 
-  showNotifaction() async {
+  showNotifaction({
+    String? title,
+    String? message,
+  }) async {
     await _localNotifications.initialize(_initializationSettings);
     _localNotifications.show(
       3,
-      "abc",
-      "message 3",
+      title,
+      message,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           "kundan",
@@ -76,29 +99,4 @@ class AppNotficationServices {
       ),
     );
   }
-}
-
-Future firebaseBGMessages({
-  required RemoteMessage message,
-  required InitializationSettings initializationSettings,
-  required FlutterLocalNotificationsPlugin localNotifications,
-}) async {
-  await localNotifications.initialize(initializationSettings);
-  localNotifications.show(
-    2,
-    message.notification!.title,
-    message.notification!.body,
-    const NotificationDetails(
-      android: AndroidNotificationDetails(
-        "kundan",
-        "kundan noti",
-        playSound: true,
-        groupKey: "com.android.example.WORK_EMAIL",
-        channelDescription: "kd",
-        importance: Importance.max,
-        setAsGroupSummary: true,
-        showProgress: true,
-      ),
-    ),
-  );
 }
