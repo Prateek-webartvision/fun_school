@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../style/assets.dart';
 import '../../style/color.dart';
@@ -107,13 +109,23 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
           ProfileOptionTile(
             leadingIcon: Icons.help,
             title: "Help Centre",
-            onClick: () => AppUtils.showSnack("coming soon"),
+            // onClick: () => AppUtils.showSnack("coming soon"),
+            onClick: () async => await launchUrl(
+              Uri.parse(AppUrls.helpCenter),
+              mode: LaunchMode.externalApplication,
+            ),
           ),
           Divider(height: 0),
           ProfileOptionTile(
             leadingIcon: Icons.info,
             title: "About",
-            onClick: () => AppUtils.showSnack("coming soon"),
+            // onClick: () => AppUtils.showSnack("coming soon"),
+            onClick: () async {
+              await launchUrl(
+                Uri.parse(AppUrls.about),
+                mode: LaunchMode.externalApplication,
+              );
+            },
           ),
           10.height,
           ProfileOptionTile(
