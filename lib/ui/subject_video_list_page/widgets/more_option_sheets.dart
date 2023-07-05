@@ -3,16 +3,25 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:video_player/video_player.dart';
 
+import '../../../router/pages.dart';
 import '../../../style/color.dart';
 import '../../../uitls/app_utils.dart';
 
-class MoreMenuSheet extends StatelessWidget {
-  const MoreMenuSheet({super.key});
+class MoreMenuSheet extends StatefulWidget {
+  const MoreMenuSheet({super.key, required this.playerController});
+  final VideoPlayerController playerController;
 
   @override
+  State<MoreMenuSheet> createState() => _MoreMenuSheetState();
+}
+
+class _MoreMenuSheetState extends State<MoreMenuSheet> {
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.white,
       width: double.maxFinite,
       // height: 200,
       child: Column(
@@ -111,9 +120,15 @@ class MoreMenuSheet extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     AppUtils.closeBottomSheet();
-                    AppUtils.showSnack("Coming soon");
+                    if (widget.playerController.value.isPlaying) {
+                      widget.playerController.pause();
+                    }
+                    await appRoutes.pushNamed(PagesName.chatGptPage);
+                    if (!widget.playerController.value.isPlaying) {
+                      widget.playerController.play();
+                    }
                   },
                   child: SizedBox(
                     width: 114,

@@ -50,7 +50,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   // more option click
   onMoreOptionClick({required String subTitle}) async {
     AppUtils.showModelSheet(
-      child: MoreMenuSheet(),
+      child: MoreMenuSheet(playerController: subjectVideoListPageController.videoPlayerController),
       isScrolled: false,
     ).then((value) {
       if (value == "note") {

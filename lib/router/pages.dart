@@ -30,6 +30,8 @@ class PagesName {
   static String quizQustionAnswerPage = "quizQustionAnswerPage";
   static String quizResultPage = "quizResultPage";
 
+  static String chatGptPage = "chatGptPage";
+
   static getPath(String v) {
     return "/${v.toLowerCase()}";
   }

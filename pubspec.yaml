@@ -59,6 +59,7 @@ dependencies:
 
   #
   url_launcher: ^6.1.11
+  chat_gpt_sdk: ^2.2.2
 
 dev_dependencies:
   flutter_test:

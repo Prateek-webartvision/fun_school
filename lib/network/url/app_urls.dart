@@ -2,6 +2,8 @@ class AppUrls {
   static const String domain = "https://app.citycloudschool.co.ke";
   static const String _apis = "$domain/api_docs/apis";
 
+  static String chatGPTKey = "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";
+
   static const String helpCenter = "$domain/help.php";
   static const String about = "$domain/about.php";
 
