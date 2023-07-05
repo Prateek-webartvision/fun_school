@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/ui/chat/controller/chat_gpt_controller.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kd_utils/kd_utils.dart';
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 
 class ChatGptPage extends StatefulWidget {
   const ChatGptPage({super.key});
@@ -16,26 +16,14 @@ class ChatGptPage extends StatefulWidget {
 }
 
 class _ChatGptPageState extends State<ChatGptPage> {
-  List<AppChatModel> demoChat = [
-    AppChatModel(isAi: false, message: "Hey!", data: DateTime.now()),
-    AppChatModel(isAi: true, message: "Hey there! Can I help you", data: DateTime.now()),
-  ];
-
   TextEditingController messageTextController = TextEditingController();
-  late OpenAI openAI;
+  late ChatGptController chatGptController;
+
   @override
   void initState() {
-    openAI = OpenAI.instance.build(token: AppUrls.chatGPTKey);
-    // openAI = a
-    // chatRequest();
+    chatGptController = ChatGptController();
+    Get.lazyPut(() => chatGptController);
     super.initState();
-  }
-
-  chatRequest() async {
-    final request = CompleteText(prompt: 'What is human life expectancy in the United States?', model: TextDavinci3Model(), maxTokens: 200);
-
-    final response = await openAI.onCompletion(request: request);
-    print(response);
   }
 
   @override
@@ -50,10 +38,10 @@ class _ChatGptPageState extends State<ChatGptPage> {
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.all(16),
-              itemCount: demoChat.length,
+              itemCount: chatGptController.demoChat.length,
               itemBuilder: (context, index) {
                 return MessageBoxWidget(
-                  chat: demoChat[index],
+                  chat: chatGptController.demoChat[index],
                 );
               },
               separatorBuilder: (context, index) => 10.height,
@@ -77,12 +65,13 @@ class _ChatGptPageState extends State<ChatGptPage> {
                       if (messageTextController.text.isEmpty) {
                         AppUtils.showSnack("write message");
                       } else {
-                        demoChat.add(AppChatModel(isAi: false, message: messageTextController.text, data: DateTime.now()));
+                        chatGptController.sendRequest(text: messageTextController.text);
                         messageTextController.clear();
-                        setState(() {});
-                        await Future.delayed(Duration(milliseconds: 600));
-                        demoChat.add(AppChatModel(isAi: true, message: "demo ai message", data: DateTime.now()));
-                        setState(() {});
+                        // chatGptController.demoChat.add(AppChatModel(isAi: false, message: messageTextController.text, data: DateTime.now()));
+                        // setState(() {});
+                        // await Future.delayed(Duration(milliseconds: 600));
+                        // chatGptController.demoChat.add(AppChatModel(isAi: true, message: "demo ai message", data: DateTime.now()));
+                        // setState(() {});
                       }
                     },
                     child: Icon(Icons.send)),
@@ -146,12 +135,4 @@ class MessageBoxWidget extends StatelessWidget {
       ],
     );
   }
-}
-
-class AppChatModel {
-  final bool isAi;
-  final String message;
-  final DateTime data;
-
-  AppChatModel({required this.isAi, required this.message, required this.data});
 }
