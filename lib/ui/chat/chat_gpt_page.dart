@@ -29,61 +29,84 @@ class _ChatGptPageState extends State<ChatGptPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.scaffoldBg,
       appBar: AppBar(
+        backgroundColor: AppColor.scaffoldBg,
         centerTitle: true,
         title: const Text("Fun School"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.all(16),
-              itemCount: chatGptController.demoChat.length,
-              itemBuilder: (context, index) {
-                return MessageBoxWidget(
-                  chat: chatGptController.demoChat[index],
-                );
-              },
-              separatorBuilder: (context, index) => 10.height,
-            ),
-          ),
-          Container(
-            // height: 100,
-            color: AppColor.scaffoldBg,
-            // color: Colors.green,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: TextField(
-              controller: messageTextController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                isDense: true,
-                hintText: "Write your message here",
-                // isCollapsed: true,
-                suffixIcon: GestureDetector(
-                    onTap: () async {
-                      if (messageTextController.text.isEmpty) {
-                        AppUtils.showSnack("write message");
-                      } else {
-                        chatGptController.sendRequest(text: messageTextController.text);
-                        messageTextController.clear();
-                        // chatGptController.demoChat.add(AppChatModel(isAi: false, message: messageTextController.text, data: DateTime.now()));
-                        // setState(() {});
-                        // await Future.delayed(Duration(milliseconds: 600));
-                        // chatGptController.demoChat.add(AppChatModel(isAi: true, message: "demo ai message", data: DateTime.now()));
-                        // setState(() {});
-                      }
-                    },
-                    child: Icon(Icons.send)),
-                border: _border(),
-                focusedBorder: _border(),
-                disabledBorder: _border(),
-                enabledBorder: _border(),
-                errorBorder: _border(),
+      body: GetBuilder(
+        init: chatGptController,
+        builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                // height: 76,
+                decoration: BoxDecoration(color: Colors.white),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(),
+                    Text(
+                      "Welcome!",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      "This is the beginning Of your BOT AI for your school!",
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+              Expanded(
+                child: ListView.separated(
+                  controller: controller.scrollController,
+                  padding: EdgeInsets.all(16),
+                  itemCount: controller.demoChat.length,
+                  itemBuilder: (context, index) {
+                    return MessageBoxWidget(
+                      chat: controller.demoChat[index],
+                    );
+                  },
+                  separatorBuilder: (context, index) => 10.height,
+                ),
+              ),
+              (controller.apiState == ApiState.loading) ? Text("Loading...") : 0.height,
+              Container(
+                // height: 100,
+                color: AppColor.scaffoldBg,
+                // color: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: TextField(
+                  controller: messageTextController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    isDense: true,
+                    hintText: "Write your message here",
+                    // isCollapsed: true,
+                    suffixIcon: GestureDetector(
+                        onTap: () async {
+                          if (messageTextController.text.isEmpty) {
+                            AppUtils.showSnack("write message");
+                          } else {
+                            chatGptController.sendRequest(text: messageTextController.text);
+                            messageTextController.clear();
+                          }
+                        },
+                        child: Icon(Icons.send)),
+                    border: _border(),
+                    focusedBorder: _border(),
+                    disabledBorder: _border(),
+                    enabledBorder: _border(),
+                    errorBorder: _border(),
+                  ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
