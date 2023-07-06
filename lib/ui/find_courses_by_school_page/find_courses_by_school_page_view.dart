@@ -11,6 +11,7 @@ import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
+import '../study_page/model/study_plan_model.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/my_header_delegate.dart';
 import 'widgets/school_selector.dart';
@@ -109,22 +110,40 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
             if (findCoursesBySchoolController.selectedSubject == null) {
               AppUtils.showSnack("Please Select Subject");
             } else {
-              var res = await AppUtils.showModelSheet(
-                child: MyStudyPlanSheet(),
-                isScrolled: true,
-                bgColor: AppColor.white,
-                clip: Clip.hardEdge,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
-              );
-              if (res != null) {
-                // print("res :$res");
-                AppUtils.showloadingOverlay(() async {
-                  //Todo this must be changed
-                  await StudyPlanRepository.buyStudyPlan(
-                    courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!,
-                    studyPlan: res,
-                  );
+              // get my studys plan
+              List<StudyPlanModel>? myStudyPlan;
+              await AppUtils.showloadingOverlay(() async {
+                await StudyPlanRepository.getStudyPlans().then((value) {
+                  myStudyPlan = value;
+                }).onError((error, stackTrace) {
+                  AppUtils.showSnack(error.toString());
                 });
+              });
+
+              // show study plans list
+              if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
+                var res = await AppUtils.showModelSheet(
+                  child: MyStudyPlanSheet(
+                    myStudyPlan: myStudyPlan!,
+                  ),
+                  isScrolled: true,
+                  bgColor: AppColor.white,
+                  clip: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+                );
+
+                if (res != null) {
+                  // print("res :$res");
+                  AppUtils.showloadingOverlay(() async {
+                    //Todo this must be changed
+                    await StudyPlanRepository.buyStudyPlan(
+                      courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!,
+                      studyPlan: res,
+                    );
+                  });
+                }
+              } else {
+                AppUtils.showSnack("You dont have Study Plan, Create one");
               }
             }
           },
