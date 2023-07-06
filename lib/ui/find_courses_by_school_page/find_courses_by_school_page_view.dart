@@ -85,7 +85,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                           return SubjectCard(
                             // name: "Mathematics",
                             name: controller.coursesBySearch![index].courseName!,
-                            icon: Icons.group,
+                            icon: Icons.book_rounded,
                             selectedSubject: controller.selectedSubject,
                             onTap: () {
                               appRoutes.pushNamed(

@@ -37,11 +37,14 @@ class NotesRepository {
   static Future<List<NotesModel>> getAllNotes() async {
     return await _api.getApi(AppUrls.getAllNotes).then((value) {
       List<NotesModel> myNotes = [];
+
       if (value != null) {
         for (var element in value) {
           final note = NotesModel.fromJson(element);
-          if (int.parse(note.userId!) == AppStorage.user.currentUser()!.userid!) {
-            myNotes.add(note);
+          if (note.userId != null) {
+            if (int.parse(note.userId!) == AppStorage.user.currentUser()!.userid!) {
+              myNotes.add(note);
+            }
           }
         }
       }

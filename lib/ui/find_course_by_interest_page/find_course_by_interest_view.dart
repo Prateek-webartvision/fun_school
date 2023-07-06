@@ -109,7 +109,7 @@ class _FindCourseByInterestViewState extends FindCourseByInterestState {
                       itemBuilder: (context, index) {
                         return SubjectCard(
                           name: controller.filterList[index].courseName!,
-                          icon: Icons.group,
+                          icon: Icons.book_rounded,
                           onTap: () {
                             appRoutes.pushNamed(
                               PagesName.subjectDetailsPage,

@@ -47,6 +47,7 @@ class NotesModel {
   String? username;
   String? subjectid;
   String? subjectName;
+  String? courseName;
   String? title;
   String? subtitle;
   String? notes;
@@ -58,6 +59,7 @@ class NotesModel {
     username = json['username'];
     subjectid = json['subject_id'];
     subjectName = json['subject_name'];
+    courseName = json['course_name'];
     title = json['title'];
     subtitle = json['subtitle'];
     notes = json['notes'];
