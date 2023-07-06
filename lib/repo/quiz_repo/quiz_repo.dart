@@ -26,10 +26,14 @@ class QuizRepository {
       data['course_id'] = courseId.toString();
     }
 
+    print(data);
+
     return await _api.getApi(AppUrls.getQuizs, params: data).then((value) {
+      print("ca;;");
       if (value != null) {
         if (quizType == QuizType.mockTest) {
           var quizList = <MockQuizModel>[];
+
           for (var element in value) {
             final quiz = MockQuizModel.fromJson(element);
             quizList.add(quiz);

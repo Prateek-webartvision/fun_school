@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                           radius: 20,
                           backgroundColor: Color(0xff6519BA),
                           child: Icon(
-                            Icons.home,
+                            Icons.apartment_rounded,
                             color: AppColor.white,
                           ),
                         ),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                             radius: 20,
                             backgroundColor: Color(0xff6519BA),
                             child: Icon(
-                              Icons.home,
+                              Icons.business_center_outlined,
                               color: AppColor.white,
                             )),
                         10.width,
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                             radius: 20,
                             backgroundColor: Color(0xff6519BA),
                             child: Icon(
-                              Icons.home,
+                              Icons.bolt_rounded,
                               color: AppColor.white,
                             )),
                         10.width,
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                             radius: 20,
                             backgroundColor: Color(0xff6519BA),
                             child: Icon(
-                              Icons.home,
+                              Icons.design_services_rounded,
                               color: AppColor.white,
                             )),
                         10.width,

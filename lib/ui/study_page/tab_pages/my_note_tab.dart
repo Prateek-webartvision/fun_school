@@ -31,7 +31,7 @@ class MyNoteTab extends StatelessWidget {
             itemCount: controller.myNotes!.length,
             itemBuilder: (context, index) {
               return NoteTile(
-                title: controller.myNotes![index].first.title.toString(),
+                title: controller.myNotes![index].first.subjectName.toString(),
                 notes: controller.myNotes![index],
               );
             },
