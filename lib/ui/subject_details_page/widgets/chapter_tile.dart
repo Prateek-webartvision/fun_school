@@ -11,7 +11,6 @@ import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
-import '../../flash_card_page/flash_card_view.dart';
 import '../tab_pages/chapter_tab.dart';
 
 class ChapterTile extends StatelessWidget {
@@ -24,8 +23,10 @@ class ChapterTile extends StatelessWidget {
     required this.videos,
     this.subjectId,
     this.enrollmentData,
+    required this.courseId,
   });
   final String title;
+  final String courseId;
   final List<SubjectContent> subjects;
   final List<FlashCardModel> flashCard;
   final List<ContentVideo> videos;
@@ -74,7 +75,7 @@ class ChapterTile extends StatelessWidget {
                           ? [
                               TextSpan(text: " "),
                               TextSpan(
-                                text: "( start quiz )".capitalize,
+                                text: "( start mock test )".capitalize,
                                 style: TextStyle(fontSize: 12),
                               ),
                             ]
@@ -112,19 +113,6 @@ class ChapterTile extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
-                    // Flash card
-                    if (state == SubjectState.flashcard) {
-                      final flashCards = getFlashCards(subjects[index].subTitle!);
-                      if (flashCards.isEmpty) {
-                        AppUtils.showSnack("No Flash card");
-                      } else {
-                        rootNavigator.currentState!.push(
-                          MaterialPageRoute(
-                            builder: (context) => FlashCardView(flashCards: flashCards),
-                          ),
-                        );
-                      }
-                    }
                     // for video
                     if (state == SubjectState.videos) {
                       final videos = getVideos(subjects[index].subTitle!);
@@ -138,6 +126,7 @@ class ChapterTile extends StatelessWidget {
                               videos: videos,
                               subjectId: subjectId,
                               contentTitle: subjects[index].title!,
+                              courseID: courseId,
                             ),
                           ),
                         );

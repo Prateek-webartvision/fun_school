@@ -70,6 +70,7 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                                     (i, value) => MapEntry(
                                       i,
                                       ChaptersTab(
+                                        courseID: widget.courseData!.courseId!.toString(),
                                         subject: subjects[i],
                                         enrollmentData: widget.courseData!.courseEnrollment,
                                       ),

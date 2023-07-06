@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../models/courses_dedails/subject.model.dart';
+import '../../../repo/flascard_repo/flashcard_repo.dart';
+import '../../flash_card_page/flash_card_view.dart';
 import '../controller/subject_state_controller.dart';
 import '../widgets/chapter_tile.dart';
 import '../widgets/subject_state_selector.dart';
@@ -19,7 +21,9 @@ class ChaptersTab extends StatefulWidget {
     super.key,
     this.subject,
     this.enrollmentData,
+    required this.courseID,
   });
+  final String courseID;
   final CoursesSubject? subject;
   final List<CoursesEnrollment>? enrollmentData;
 
@@ -73,6 +77,22 @@ class _ChaptersTabState extends State<ChaptersTab> {
               builder: (context, child) {
                 return GestureDetector(
                   onTap: () {
+                    // Flash card
+                    if (stateController.state == SubjectState.flashcard) {
+                      AppUtils.showloadingOverlay(() async {
+                        final flashcard = await FlashCardRepository.getFlashCards(courseId: int.parse(widget.courseID));
+                        if (flashcard != null && flashcard.isNotEmpty) {
+                          rootNavigator.currentState!.push(
+                            MaterialPageRoute(
+                              builder: (context) => FlashCardView(flashCards: flashcard),
+                            ),
+                          );
+                        } else {
+                          AppUtils.showSnack("No Flash card");
+                        }
+                      });
+                    }
+                    // quiz
                     if (stateController.state == SubjectState.quiz) {
                       // print(widget.subject.dateAdded);
 
@@ -84,6 +104,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                     }
                   },
                   child: ChapterTile(
+                    courseId: widget.courseID,
                     subjectId: widget.subject?.subjectId,
                     title: chapter.first.title!,
                     subjects: chapter,

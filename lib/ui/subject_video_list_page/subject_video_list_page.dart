@@ -19,10 +19,12 @@ class SubjectVideoListPage extends StatefulWidget {
     required this.videos,
     this.subjectId,
     required this.contentTitle,
+    required this.courseID,
   });
   final List<ContentVideo> videos;
   final int? subjectId;
   final String contentTitle;
+  final String courseID;
 
   @override
   State<SubjectVideoListPage> createState() => _SubjectVideoListPageState();
@@ -56,6 +58,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
       if (value == "note") {
         scaffoldKey.currentState!.showBottomSheet(
           (context) => TakeNoteSheet(
+            courseId: widget.courseID,
             contentTitle: widget.contentTitle,
             subTitle: subTitle,
             subjectId: widget.subjectId!,

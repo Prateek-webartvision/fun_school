@@ -29,4 +29,5 @@ class AppUrls {
 
   static const String getFlashcardByCourses = "$_apis/fetch_flashcard_per_course.php";
   static const String addFlashcardResult = "$_apis/add_flashcard_result.php";
+  static const String getFlashcardResultByUser = "$_apis/fetch_flashcard_result.php";
 }

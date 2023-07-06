@@ -17,7 +17,9 @@ class TakeNoteSheet extends StatefulWidget {
     required this.noteTitle,
     required this.contentTitle,
     required this.subTitle,
+    required this.courseId,
   });
+  final String courseId;
   final int subjectId;
   final String noteTitle;
   final String contentTitle;
@@ -47,10 +49,10 @@ class _TakeNoteSheetState extends State<TakeNoteSheet> {
       AppUtils.showloadingOverlay(() async {
         rootNavigator.currentState!.focusNode.unfocus();
         var res = await NotesRepository.addNote(
-          noteTitle: widget.noteTitle,
+          courseId: widget.courseId,
           subjectId: widget.subjectId,
-          contentTitle: widget.contentTitle,
           subtitle: widget.subTitle,
+          contentTitle: widget.contentTitle,
           note: noteText.text.trim(),
         );
         if (res != null) {
