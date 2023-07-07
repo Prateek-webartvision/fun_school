@@ -79,7 +79,7 @@ class _FlashCardViewState extends FlashCardState {
                               ? Text((controller.flashCards[controller.currentCard].flashcardResult == null)
                                   ? ""
                                   : (controller.flashCards[controller.currentCard].flashcardResult == true)
-                                      ? "Understand"
+                                      ? "Understood"
                                       : "Not Understood")
                               : SizedBox(),
                           Container(
@@ -269,7 +269,7 @@ class _CardResult extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                (card[index].flashcardResult == true) ? "Understand" : "Not Understood",
+                (card[index].flashcardResult == true) ? "Understood" : "Not Understood",
                 style: TextStyle(color: (card[index].flashcardResult == true) ? Colors.green : Colors.red),
               ),
               Text("ID: ${card[index].flashcardId!.toString()}"),

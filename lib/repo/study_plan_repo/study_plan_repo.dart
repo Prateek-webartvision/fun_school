@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
@@ -11,8 +13,10 @@ class StudyPlanRepository {
   static buyStudyPlan({required List<String> courseTitle, required String studyPlan}) async {
     Map<String, String> data = {};
     data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
-    data["course"] = courseTitle.toString();
+    data["course"] = jsonEncode(courseTitle);
     data["plan"] = studyPlan;
+
+    // print(data);
     //todo
     await _api.postApi(AppUrls.addStudyPlanByContent, params: data).then((value) {
       // print("$value");
