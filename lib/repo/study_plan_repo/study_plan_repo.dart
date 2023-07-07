@@ -8,12 +8,12 @@ import '../../ui/study_page/model/study_plan_model.dart';
 class StudyPlanRepository {
   static final _api = AppApi();
 
-  static buyStudyPlan({required String courseTitle, required String studyPlan}) async {
+  static buyStudyPlan({required List<String> courseTitle, required String studyPlan}) async {
     Map<String, String> data = {};
     data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
-    data["course"] = courseTitle;
+    data["course"] = courseTitle.toString();
     data["plan"] = studyPlan;
-
+    //todo
     await _api.postApi(AppUrls.addStudyPlanByContent, params: data).then((value) {
       // print("$value");
       // success

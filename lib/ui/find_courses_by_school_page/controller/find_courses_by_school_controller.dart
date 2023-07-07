@@ -17,7 +17,7 @@ class FindCoursesBySchoolController extends GetxController {
   List<CoursesModel>? _coursesBySchool;
   List<CoursesModel>? coursesBySearch;
 
-  CoursesModel? selectedSubject;
+  List<CoursesModel> selectedSubject = [];
 
   late SchoolSelectorController schoolSelectorController;
 
@@ -27,7 +27,12 @@ class FindCoursesBySchoolController extends GetxController {
   }
 
   changeCourseSelection(CoursesModel selectedSubject) {
-    this.selectedSubject = selectedSubject;
+    // this.selectedSubject = selectedSubject;
+    if (this.selectedSubject.contains(selectedSubject)) {
+      this.selectedSubject.remove(selectedSubject);
+    } else {
+      this.selectedSubject.add(selectedSubject);
+    }
     update();
   }
 

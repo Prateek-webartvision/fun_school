@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -9,6 +8,7 @@ import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
+import '../../uitls/app_utils.dart';
 import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
 import '../study_page/model/study_plan_model.dart';
@@ -84,7 +84,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                         itemBuilder: (context, index) {
                           return SubjectCard(
                             // name: "Mathematics",
-                            name: controller.coursesBySearch![index].courseName!,
+                            currentItem: controller.coursesBySearch![index],
                             icon: Icons.book_rounded,
                             selectedSubject: controller.selectedSubject,
                             onTap: () {
@@ -107,7 +107,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
         padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
         child: KBtn(
           onClick: () async {
-            if (findCoursesBySchoolController.selectedSubject == null) {
+            if (findCoursesBySchoolController.selectedSubject.isEmpty) {
               AppUtils.showSnack("Please Select Subject");
             } else {
               // get my studys plan
@@ -134,10 +134,12 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
 
                 if (res != null) {
                   // print("res :$res");
+                  final selectedCourses = findCoursesBySchoolController.selectedSubject;
+                  final listCourses = selectedCourses.map((e) => e.courseName!).toList();
                   AppUtils.showloadingOverlay(() async {
                     //Todo this must be changed
                     await StudyPlanRepository.buyStudyPlan(
-                      courseTitle: findCoursesBySchoolController.selectedSubject!.courseName!,
+                      courseTitle: listCourses,
                       studyPlan: res,
                     );
                   });

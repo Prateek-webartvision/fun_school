@@ -73,6 +73,7 @@ class _MyStudyPlanSheetState extends State<MyStudyPlanSheet> {
                 child: ListView.separated(
                   padding: EdgeInsets.all(16),
                   itemCount: widget.myStudyPlan.length,
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {

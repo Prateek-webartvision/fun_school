@@ -9,17 +9,16 @@ import '../../../style/color.dart';
 class SubjectCard extends StatelessWidget {
   const SubjectCard({
     super.key,
-    required this.name,
+    required this.selectedSubject,
     required this.icon,
-    // this.selected = false,
-    this.onTap,
-    this.selectedSubject,
     this.onItemSelected,
+    this.onTap,
+    required this.currentItem,
   });
 
-  final String name;
   final IconData icon;
-  final CoursesModel? selectedSubject;
+  final CoursesModel currentItem;
+  final List<CoursesModel> selectedSubject;
 
   final Function()? onTap;
   final Function()? onItemSelected;
@@ -55,7 +54,8 @@ class SubjectCard extends StatelessWidget {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    name,
+                    // name,
+                    currentItem.courseName!.toString(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   4.height,
@@ -89,26 +89,27 @@ class SubjectCard extends StatelessWidget {
               ),
             ),
             10.width,
-            // Text("${selectedSubject?.courseName ?? "Kundan"}"),
             GestureDetector(
               onTap: onItemSelected,
               child: Container(
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                  color: (name == (selectedSubject?.courseName ?? "")) ? AppColor.pinkColor : null,
-                  border: Border.all(color: AppColor.softBorderColor),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                alignment: Alignment.center,
-                child: (name == (selectedSubject?.courseName ?? ""))
-                    ? Icon(
-                        Icons.check,
-                        size: 16,
-                        color: AppColor.white,
-                      )
-                    : 0.height,
-              ),
+                  height: 20,
+                  width: 20,
+                  decoration: BoxDecoration(
+                    color: (selectedSubject.contains(currentItem)) ? AppColor.pinkColor : null,
+                    border: Border.all(color: AppColor.softBorderColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  alignment: Alignment.center,
+                  child:
+                      // (name == (selectedSubject?.courseName ?? ""))
+                      // ?
+                      Icon(
+                    Icons.check,
+                    size: 16,
+                    color: AppColor.white,
+                  )
+                  // : 0.height,
+                  ),
             ),
           ],
         ),
