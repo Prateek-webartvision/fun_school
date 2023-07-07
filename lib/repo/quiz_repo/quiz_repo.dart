@@ -61,13 +61,17 @@ class QuizRepository {
     required String title,
     required String subjectid,
     required String score,
+    required String courseID,
   }) async {
     Map<String, String> data = {};
     data['user_id'] = AppStorage.user.currentUser()!.userid.toString();
     data['type'] = type;
+    data['course_id'] = courseID;
     data['title'] = title;
     data['subject_id'] = subjectid;
     data['score'] = score;
+
+    print(data);
 
     await _api.postApi(AppUrls.addQuizScore, params: data).then((value) {
       print(value);

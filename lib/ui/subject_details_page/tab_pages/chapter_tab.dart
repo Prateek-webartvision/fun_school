@@ -97,7 +97,13 @@ class _ChaptersTabState extends State<ChaptersTab> {
                       // print(widget.subject.dateAdded);
 
                       if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
-                        appRoutes.pushNamed(PagesName.startQuizPage, queryParameters: {"title": chapter.first.title});
+                        appRoutes.pushNamed(
+                          PagesName.startQuizPage,
+                          queryParameters: {
+                            "title": chapter.first.title,
+                          },
+                          extra: widget.courseID,
+                        );
                       } else {
                         AppUtils.showSnack("First Enroll The Course");
                       }

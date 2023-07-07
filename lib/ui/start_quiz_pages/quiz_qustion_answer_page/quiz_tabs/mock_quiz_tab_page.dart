@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../../router/pages.dart';
 import '../../../../style/color.dart';
 import '../../../../uitls/app_utils.dart';
@@ -16,9 +17,11 @@ class MockQuizTabPage extends StatelessWidget {
   const MockQuizTabPage({
     super.key,
     required this.mockQuizController,
+    required this.courseID,
   });
 
   final MockQuizController mockQuizController;
+  final String courseID;
 
   @override
   Widget build(BuildContext context) {
@@ -219,9 +222,14 @@ class MockQuizTabPage extends StatelessWidget {
                             // time to show result
                             appRoutes.pop();
                             appRoutes.pop();
-                            //todo have to work on result page
+
+                            final data = {
+                              "type": QuizType.mockTest,
+                              "data": controller.quizs!,
+                              "courseId": courseID,
+                            };
                             // appRoutes.pushNamed(PagesName.resultPage);
-                            appRoutes.pushNamed(PagesName.quizResultPage, extra: controller.quizs!);
+                            appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
                           }
                         } else {
                           AppUtils.showSnack("Please select your answer first");

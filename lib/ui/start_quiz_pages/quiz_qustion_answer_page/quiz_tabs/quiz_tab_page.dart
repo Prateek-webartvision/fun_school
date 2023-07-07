@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../../router/app_router.dart';
 import '../../../../router/pages.dart';
 import '../../../../style/color.dart';
@@ -16,8 +17,10 @@ class QuizTabPage extends StatelessWidget {
   const QuizTabPage({
     super.key,
     required this.quizController,
+    required this.courseID,
   });
   final QuizController quizController;
+  final String courseID;
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +199,13 @@ class QuizTabPage extends StatelessWidget {
                         } else {
                           appRoutes.pop();
                           appRoutes.pop();
-                          appRoutes.pushNamed(PagesName.quizResultPage, extra: controller.quizs);
+                          // final data = {"type": QuizType.quiz, "data": controller.quizs};
+                          final data = {
+                            "type": QuizType.quiz,
+                            "data": controller.quizs!,
+                            "courseId": courseID,
+                          };
+                          appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
                         }
                       },
                       text: "Next",

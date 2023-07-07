@@ -1,3 +1,4 @@
+import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +12,41 @@ abstract class QuizResultState extends State<QuizResultPage> {
 
   @override
   void initState() {
-    late final ans;
+    late final ({int correct, int grade, int wrong}) ans;
+    late final String title;
+    late final String subjectID;
+
     if (widget.quizWithAns is List<MockQuizModel>) {
       ans = getMockAns();
+      var ss = widget.quizWithAns as List<MockQuizModel>;
+      title = ss.first.title!;
+      subjectID = ss.first.subjectId!;
     } else {
       ans = getQuizAns();
+      var ss = widget.quizWithAns as List<QuizModel>;
+      title = ss.first.title!;
+      subjectID = ss.first.subjectId!;
     }
     correctAns = ans.correct;
     worngAns = ans.wrong;
     grade = ans.grade;
+
+    _setQuizScore(
+      title: title,
+      subjectId: subjectID,
+      drage: ans.grade.toString(),
+    );
     super.initState();
+  }
+
+  _setQuizScore({required String title, required String subjectId, required String drage}) async {
+    QuizRepository.addQuizScore(
+      type: widget.type,
+      courseID: widget.courseId,
+      title: title,
+      subjectid: subjectId,
+      score: grade.toString(),
+    );
   }
 
   // geting correct or worng ans for mock quiz

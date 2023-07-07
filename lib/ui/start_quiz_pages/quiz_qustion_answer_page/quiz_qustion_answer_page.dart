@@ -9,8 +9,9 @@ import 'quiz_tabs/mock_quiz_tab_page.dart';
 import 'quiz_tabs/quiz_tab_page.dart';
 
 class QuizQustionQnswerPage extends StatelessWidget {
-  const QuizQustionQnswerPage({super.key, this.extraController});
+  const QuizQustionQnswerPage({super.key, this.extraController, required this.courseID});
   final dynamic extraController;
+  final int courseID;
 
   popBack2Times() {
     appRoutes.pop();
@@ -38,9 +39,12 @@ class QuizQustionQnswerPage extends StatelessWidget {
               body: (extraController is MockQuizController)
                   ? MockQuizTabPage(
                       mockQuizController: extraController,
+                      courseID: courseID.toString(),
                     )
                   : QuizTabPage(
+                      //ToDO
                       quizController: extraController,
+                      courseID: courseID.toString(),
                     ),
               //
             )

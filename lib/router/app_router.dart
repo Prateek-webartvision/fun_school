@@ -240,7 +240,10 @@ final GoRouter appRoutes = GoRouter(
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: StartQuizView(title: state.queryParameters['title'], courseID: state.extra),
+          child: StartQuizView(
+            title: state.queryParameters['title'],
+            courseID: int.parse(state.extra.toString()),
+          ),
         );
       },
       routes: [
@@ -248,10 +251,13 @@ final GoRouter appRoutes = GoRouter(
           parentNavigatorKey: rootNavigator,
           path: PagesName.quizQustionAnswerPage,
           name: PagesName.quizQustionAnswerPage,
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: QuizQustionQnswerPage(extraController: state.extra),
-          ),
+          pageBuilder: (context, state) {
+            Map data = state.extra as Map;
+            return MaterialPage(
+              key: state.pageKey,
+              child: QuizQustionQnswerPage(extraController: data['controller'], courseID: data["courseId"]),
+            );
+          },
         ),
 
         //quiz result page
@@ -259,11 +265,17 @@ final GoRouter appRoutes = GoRouter(
           parentNavigatorKey: rootNavigator,
           path: PagesName.quizResultPage,
           name: PagesName.quizResultPage,
-          // List<QuizModel> data =  state.extra as List<QuizModel>;
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: QuizResultPage(quizWithAns: state.extra),
-          ),
+          pageBuilder: (context, state) {
+            Map data = state.extra as Map;
+            return MaterialPage(
+              key: state.pageKey,
+              child: QuizResultPage(
+                quizWithAns: data['data'],
+                type: data["type"],
+                courseId: data["courseId"],
+              ),
+            );
+          },
         ),
       ],
     ),
