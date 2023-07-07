@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../repo/quiz_repo/quiz_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../widegts/k_btn.dart';
@@ -27,6 +28,7 @@ class StartQuizView extends StatefulWidget {
 class _StartQuizViewState extends StartQuizState {
   @override
   Widget build(BuildContext context) {
+    print(QuizRepository.getAllQuizResults(title: widget.title!));
     return Scaffold(
       backgroundColor: AppColor.pinkColor,
       appBar: AppBar(
@@ -67,7 +69,55 @@ class _StartQuizViewState extends StartQuizState {
                       "Okay. show us what you can do!",
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
                     ),
-                    // 100.height,
+                    100.height,
+
+                    // lost Result
+
+                    FutureBuilder(
+                      future: QuizRepository.getAllQuizResults(title: widget.title!),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return SizedBox();
+                        } else {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              if (snapshot.data![index].quizType! == QuizType.quiz) {
+                                return Center(
+                                  child: Text(
+                                    "Last Quiz score: ${snapshot.data![index].quizScore}%",
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                  ),
+                                );
+                              } else {
+                                return Center(
+                                  child: Text(
+                                    "Last mock test score: ${snapshot.data![index].quizScore}%",
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                  ),
+                                );
+                              }
+                            },
+                            separatorBuilder: (context, index) => 4.height,
+                            itemCount: snapshot.data!.length,
+                          );
+                        }
+                        // Text("data ${snapshot.data}");
+                      },
+                    ),
+                    // Column(
+                    //   children: [
+                    //     Text(
+                    //       "Last mock test score: 50%",
+                    //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                    //     ),
+                    //     Text(
+                    //       "Last quiz score: 50%",
+                    //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                    //     ),
+                    //   ],
+                    // ),
+
                     Spacer(),
                     Container(
                       width: double.maxFinite,

@@ -2,6 +2,7 @@ import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 
 import '../../network/app_api.dart';
 
@@ -78,5 +79,44 @@ class QuizRepository {
     }).onError((error, stackTrace) {
       print(error);
     });
+  }
+
+  static Future<List<QuizResultModel>?> getAllQuizResults({required String title}) async {
+    List<QuizResultModel> res = [];
+    await _api.postApi(AppUrls.fetchQuizScore, params: {
+      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+    }).then((value) {
+      if (value != null) {
+        for (var el in value) {
+          final results = QuizResultModel.fromJson(el);
+          if (results.title == title) {
+            res.add(results);
+          }
+        }
+      }
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack(error.toString());
+    });
+    return res;
+  }
+}
+
+class QuizResultModel {
+  int? quizScoreId;
+  String? subjectId;
+  String? title;
+  String? quizType;
+  String? quizScore;
+  String? numberOfTrials;
+  String? dateAdded;
+
+  QuizResultModel.fromJson(Map<String, dynamic> json) {
+    quizScoreId = json['quiz_score_id'];
+    subjectId = json['subject_id'];
+    title = json['title'];
+    quizType = json['quiz_type'];
+    quizScore = json['quiz_score'];
+    numberOfTrials = json['number_of_trials'];
+    dateAdded = json['date_added'];
   }
 }
