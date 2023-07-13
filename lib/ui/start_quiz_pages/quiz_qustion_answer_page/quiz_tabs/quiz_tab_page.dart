@@ -17,10 +17,12 @@ class QuizTabPage extends StatelessWidget {
   const QuizTabPage({
     super.key,
     required this.quizController,
-    required this.courseID,
+    required this.subjectId,
+    required this.courseId,
   });
   final QuizController quizController;
-  final String courseID;
+  final String subjectId;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +205,8 @@ class QuizTabPage extends StatelessWidget {
                           final data = {
                             "type": QuizType.quiz,
                             "data": controller.quizs!,
-                            "courseId": courseID,
+                            "courseId": courseId,
+                            "subjectId": subjectId,
                           };
                           appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
                         }

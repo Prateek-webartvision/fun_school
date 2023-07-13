@@ -238,11 +238,13 @@ final GoRouter appRoutes = GoRouter(
       path: PagesName.getPath(PagesName.startQuizPage),
       name: PagesName.startQuizPage,
       pageBuilder: (context, state) {
+        Map data = state.extra as Map;
         return MaterialPage(
           key: state.pageKey,
           child: StartQuizView(
             title: state.queryParameters['title'],
-            courseID: int.parse(state.extra.toString()),
+            subjectId: int.parse(data['subjectId'].toString()),
+            courseId: data['courseId'].toString(),
           ),
         );
       },
@@ -255,7 +257,11 @@ final GoRouter appRoutes = GoRouter(
             Map data = state.extra as Map;
             return MaterialPage(
               key: state.pageKey,
-              child: QuizQustionQnswerPage(extraController: data['controller'], courseID: data["courseId"]),
+              child: QuizQustionQnswerPage(
+                extraController: data['controller'],
+                subjectId: data["subjectId"],
+                courseId: data['courseId'],
+              ),
             );
           },
         ),
@@ -267,11 +273,13 @@ final GoRouter appRoutes = GoRouter(
           name: PagesName.quizResultPage,
           pageBuilder: (context, state) {
             Map data = state.extra as Map;
+
             return MaterialPage(
               key: state.pageKey,
               child: QuizResultPage(
                 quizWithAns: data['data'],
                 type: data["type"],
+                subjectId: data['subjectId'],
                 courseId: data["courseId"],
               ),
             );

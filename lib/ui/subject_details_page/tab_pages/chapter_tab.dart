@@ -72,6 +72,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                             }
                           });
                         } else if (state == SubjectState.quiz) {
+                          //Quiz
                           if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
                             // print("yes");
                             appRoutes.pushNamed(
@@ -80,7 +81,10 @@ class _ChaptersTabState extends State<ChaptersTab> {
                                 // "title": chapter.first.title,
                                 "title": "",
                               },
-                              extra: widget.courseID,
+                              extra: {
+                                "subjectId": widget.subject!.subjectId!,
+                                "courseId": widget.courseID,
+                              },
                             );
                           } else {
                             AppUtils.showSnack("First Enroll The Course");

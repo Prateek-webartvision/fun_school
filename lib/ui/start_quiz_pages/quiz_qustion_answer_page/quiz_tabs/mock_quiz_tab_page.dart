@@ -17,11 +17,13 @@ class MockQuizTabPage extends StatelessWidget {
   const MockQuizTabPage({
     super.key,
     required this.mockQuizController,
-    required this.courseID,
+    required this.subjectId,
+    required this.courseId,
   });
 
   final MockQuizController mockQuizController;
-  final String courseID;
+  final String subjectId;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -226,8 +228,10 @@ class MockQuizTabPage extends StatelessWidget {
                             final data = {
                               "type": QuizType.mockTest,
                               "data": controller.quizs!,
-                              "courseId": courseID,
+                              "courseId": courseId,
+                              "subjectId": subjectId,
                             };
+
                             // appRoutes.pushNamed(PagesName.resultPage);
                             appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
                           }

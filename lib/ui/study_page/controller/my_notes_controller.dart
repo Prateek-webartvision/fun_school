@@ -5,7 +5,7 @@ import '../../../repo/subject_notes_repo/notes_repo.dart';
 
 class MyNotesController extends GetxController {
   List<NotesModel> _notes = [];
-  List<List<NotesModel>>? myNotes;
+  List? myNotes;
   ApiState apiState = ApiState.loading;
   String? error;
 
@@ -16,15 +16,38 @@ class MyNotesController extends GetxController {
   _initData() async {
     await _loadData();
 
-    Set bySubjectId = _notes.map((e) => e.subjectid).toSet();
+    // List<List<NotesModel>> temp = [];
 
-    List<List<NotesModel>> temp = [];
-    for (var ss in bySubjectId) {
-      var tt = _notes.where((element) => element.subjectid!.contains(ss)).toList();
-      temp.add(tt);
+    List temp1 = [];
+
+    Set byCourse = _notes.map((e) => e.courseName).toSet();
+    for (var courseName in byCourse) {
+      final course = _notes.where((element) => element.courseName! == courseName).toList();
+
+      List subjectList = [];
+
+      // subject list
+      Set bySubject = course.map((e) => e.subjectName).toSet();
+      for (var subject in bySubject) {
+        final subj = course.where((element) => element.subjectName! == subject).toList();
+
+        List titleList = [];
+
+        //   // title List
+        Set bytitle = subj.map((e) => e.title).toSet();
+        for (var title in bytitle) {
+          var res = subj.where((element) => element.title! == title).toList();
+          titleList.add({"title": title, "data": res});
+        }
+
+        subjectList.add({"subject": subject, "data": titleList});
+      }
+
+      temp1.add({"courseName": courseName, "data": subjectList});
     }
+    print(temp1);
 
-    myNotes = temp;
+    myNotes = temp1;
     update();
   }
 
@@ -40,6 +63,8 @@ class MyNotesController extends GetxController {
     update();
   }
 }
+
+// class NotFilterModel
 
 class NotesModel {
   int? notesId;

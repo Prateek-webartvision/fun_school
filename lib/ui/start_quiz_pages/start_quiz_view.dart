@@ -16,10 +16,12 @@ class StartQuizView extends StatefulWidget {
   const StartQuizView({
     super.key,
     required this.title,
-    required this.courseID,
+    required this.subjectId,
+    required this.courseId,
   });
   final String? title;
-  final int courseID;
+  final int subjectId;
+  final String courseId;
 
   @override
   State<StartQuizView> createState() => _StartQuizViewState();
@@ -130,7 +132,7 @@ class _StartQuizViewState extends StartQuizState {
                           if (controller.quizs!.isEmpty) {
                             AppUtils.showSnack("No quiz show");
                           } else {
-                            final data = {"controller": controller, "courseId": widget.courseID};
+                            final data = {"controller": controller, "courseId": widget.courseId, "subjectId": widget.subjectId};
                             appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
                           }
                         },
@@ -149,7 +151,7 @@ class _StartQuizViewState extends StartQuizState {
                           if (cnt.quizs!.isEmpty) {
                             AppUtils.showSnack("No quiz show");
                           } else {
-                            final data = {"controller": cnt, "courseId": widget.courseID};
+                            final data = {"controller": cnt, "courseId": widget.courseId, "subjectId": widget.subjectId};
                             appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
                           }
                         },

@@ -4,6 +4,7 @@ import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.da
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
@@ -26,17 +27,23 @@ class MyNoteTab extends StatelessWidget {
         } else if (controller.apiState == ApiState.error) {
           return Center(child: Text(controller.error.toString()));
         } else {
-          return ListView.separated(
-            padding: EdgeInsets.all(16),
-            itemCount: controller.myNotes!.length,
-            itemBuilder: (context, index) {
-              return NoteTile(
-                title: (controller.myNotes![index].first.courseName!.isNotEmpty) ? controller.myNotes![index].first.courseName! : "N/A",
-                notes: controller.myNotes![index],
-              );
-            },
-            separatorBuilder: (context, index) => 10.height,
-          );
+          if (controller.myNotes!.isEmpty) {
+            return Center(child: Text("Notes not found"));
+          } else {
+            // print(controller.myNotes);
+            return ListView.separated(
+              padding: EdgeInsets.all(16),
+              itemCount: controller.myNotes!.length,
+              itemBuilder: (context, index) {
+                final item = controller.myNotes![index];
+                return NoteTile(
+                  title: item['courseName'],
+                  notes: item['data'],
+                );
+              },
+              separatorBuilder: (context, index) => 10.height,
+            );
+          }
         }
       },
     );
@@ -50,7 +57,7 @@ class NoteTile extends StatelessWidget {
     required this.notes,
   });
   final String title;
-  final List<NotesModel> notes;
+  final List notes;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +71,7 @@ class NoteTile extends StatelessWidget {
         children: [
           Container(
             // color: Colors.green,
-            height: 44,
+            // height: 44,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,76 +112,198 @@ class NoteTile extends StatelessWidget {
               ],
             ),
           ),
+
           // notes
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListView.separated(
-              itemCount: notes.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      // "Overview and history algebra",
-                      notes[index].subtitle!,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
+          ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            itemCount: notes.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = notes[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // "Overview and history algebra",
+                    item['subject'],
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
-                    4.height,
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return NoteDailog(noteData: notes[index]);
-                          },
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColor.white,
-                          border: Border.all(color: AppColor.softBorderColor),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.note_rounded,
-                              color: context.appTheme.colorScheme.primary,
+                  ),
+                  3.height,
+                  // title
+                  ListView.separated(
+                    // padding: EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: item['data'].length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final item2 = item['data'][index];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item2['title'],
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
                             ),
-                            12.width,
-                            Expanded(
-                              child: Text(
-                                // "“Sample Note”",
-                                notes[index].notes!,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
+                          ),
+                          3.height,
+                          GroupedListView(
+                            shrinkWrap: true,
+                            // padding: EdgeInsets.symmetric(horizontal: 16),
+                            physics: NeverScrollableScrollPhysics(),
+                            elements: item2['data'] as List<NotesModel>,
+                            groupBy: (element) => element.subtitle!,
+
+                            groupSeparatorBuilder: (value) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  1.height,
+                                  Text(
+                                    value,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  1.height,
+                                ],
+                              );
+                            },
+                            itemBuilder: (context, element) {
+                              return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return NoteDailog(noteData: element);
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    border: Border.all(color: AppColor.softBorderColor),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.note_rounded,
+                                        color: context.appTheme.colorScheme.primary,
+                                      ),
+                                      12.width,
+                                      Expanded(
+                                        child: Text(
+                                          // "“Sample Note”",
+                                          // notes[index].notes!,
+                                          element.notes ?? "",
+                                          style: GoogleFonts.inter(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      12.width,
+                                      Icon(Icons.copy_rounded),
+                                      12.width,
+                                      Icon(Icons.notes_rounded)
+                                    ],
+                                  ),
                                 ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            12.width,
-                            Icon(Icons.copy_rounded),
-                            12.width,
-                            Icon(Icons.notes_rounded)
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => 12.height,
-            ),
+                              );
+                            },
+                            separator: 8.height,
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) => 4.height,
+                  ),
+                ],
+              );
+            },
+            separatorBuilder: (context, index) => 0.height,
           ),
+
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12),
+          //   child: ListView.separated(
+          //     itemCount: notes.length,
+          //     shrinkWrap: true,
+          //     physics: NeverScrollableScrollPhysics(),
+          //     itemBuilder: (context, index) {
+          //       return Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             // "Overview and history algebra",
+          //             notes[index].subtitle!,
+          //             style: GoogleFonts.inter(
+          //               fontSize: 14,
+          //               fontWeight: FontWeight.w400,
+          //             ),
+          //           ),
+          //           4.height,
+          //           GestureDetector(
+          //             onTap: () {
+          //               showDialog(
+          //                 context: context,
+          //                 builder: (context) {
+          //                   return NoteDailog(noteData: notes[index]);
+          //                 },
+          //               );
+          //             },
+          //             child: Container(
+          //               decoration: BoxDecoration(
+          //                 color: AppColor.white,
+          //                 border: Border.all(color: AppColor.softBorderColor),
+          //                 borderRadius: BorderRadius.circular(4),
+          //               ),
+          //               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          //               child: Row(
+          //                 crossAxisAlignment: CrossAxisAlignment.start,
+          //                 children: [
+          //                   Icon(
+          //                     Icons.note_rounded,
+          //                     color: context.appTheme.colorScheme.primary,
+          //                   ),
+          //                   12.width,
+          //                   Expanded(
+          //                     child: Text(
+          //                       // "“Sample Note”",
+          //                       notes[index].notes!,
+          //                       style: GoogleFonts.inter(
+          //                         fontSize: 14,
+          //                         fontWeight: FontWeight.w400,
+          //                       ),
+          //                       maxLines: 2,
+          //                       overflow: TextOverflow.ellipsis,
+          //                     ),
+          //                   ),
+          //                   12.width,
+          //                   Icon(Icons.copy_rounded),
+          //                   12.width,
+          //                   Icon(Icons.notes_rounded)
+          //                 ],
+          //               ),
+          //             ),
+          //           )
+          //         ],
+          //       );
+          //     },
+          //     separatorBuilder: (context, index) => 12.height,
+          //   ),
+          // ),
           12.height,
         ],
       ),

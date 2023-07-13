@@ -12,10 +12,12 @@ class QuizQustionQnswerPage extends StatelessWidget {
   const QuizQustionQnswerPage({
     super.key,
     this.extraController,
-    required this.courseID,
+    required this.subjectId,
+    required this.courseId,
   });
   final dynamic extraController;
-  final int courseID;
+  final int subjectId;
+  final String courseId;
 
   popBack2Times() {
     appRoutes.pop();
@@ -43,12 +45,13 @@ class QuizQustionQnswerPage extends StatelessWidget {
               body: (extraController is MockQuizController)
                   ? MockQuizTabPage(
                       mockQuizController: extraController,
-                      courseID: courseID.toString(),
+                      subjectId: subjectId.toString(),
+                      courseId: courseId,
                     )
                   : QuizTabPage(
-                      //ToDO
                       quizController: extraController,
-                      courseID: courseID.toString(),
+                      subjectId: subjectId.toString(),
+                      courseId: courseId,
                     ),
             )
           // No quiz controller found

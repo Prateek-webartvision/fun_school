@@ -12,39 +12,39 @@ abstract class QuizResultState extends State<QuizResultPage> {
 
   @override
   void initState() {
-    late final ({int correct, int grade, int wrong}) ans;
-    late final String title;
-    late final String subjectID;
+    late ({int correct, int grade, int wrong})? ans;
+    late String? title;
+    // late String subjectID;
 
     if (widget.quizWithAns is List<MockQuizModel>) {
       ans = getMockAns();
       var ss = widget.quizWithAns as List<MockQuizModel>;
       title = ss.first.title!;
-      subjectID = ss.first.subjectId!;
+      //   subjectID = ss.first.subjectId!;
     } else {
       ans = getQuizAns();
       var ss = widget.quizWithAns as List<QuizModel>;
       title = ss.first.title!;
-      subjectID = ss.first.subjectId!;
+      //   subjectID = ss.first.subjectId!;
     }
+
     correctAns = ans.correct;
     worngAns = ans.wrong;
     grade = ans.grade;
 
     _setQuizScore(
       title: title,
-      subjectId: subjectID,
       drage: ans.grade.toString(),
     );
     super.initState();
   }
 
-  _setQuizScore({required String title, required String subjectId, required String drage}) async {
+  _setQuizScore({required String title, required String drage}) async {
     QuizRepository.addQuizScore(
       type: widget.type,
       courseID: widget.courseId,
       title: title,
-      subjectid: subjectId,
+      subjectid: widget.subjectId,
       score: grade.toString(),
     );
   }

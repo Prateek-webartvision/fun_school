@@ -11,8 +11,8 @@ abstract class StartQuizState extends State<StartQuizView> {
 
   @override
   void initState() {
-    quizController = QuizController(title: widget.title, courseID: widget.courseID);
-    mockQuizController = MockQuizController(title: widget.title, courseID: widget.courseID);
+    quizController = QuizController(title: widget.title, courseID: widget.subjectId);
+    mockQuizController = MockQuizController(title: widget.title, courseID: widget.subjectId);
 
     Get.lazyPut(() => mockQuizController);
     Get.lazyPut(() => quizController);

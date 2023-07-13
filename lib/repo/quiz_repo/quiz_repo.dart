@@ -24,13 +24,10 @@ class QuizRepository {
       data["title"] = title;
     }
     if (courseId != null) {
-      data['course_id'] = courseId.toString();
+      data['subject_id'] = courseId.toString();
     }
 
-    print(data);
-
     return await _api.getApi(AppUrls.getQuizs, params: data).then((value) {
-      print("ca;;");
       if (value != null) {
         if (quizType == QuizType.mockTest) {
           var quizList = <MockQuizModel>[];

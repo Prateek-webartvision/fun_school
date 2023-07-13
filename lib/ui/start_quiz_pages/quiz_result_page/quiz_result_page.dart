@@ -19,10 +19,12 @@ class QuizResultPage extends StatefulWidget {
     super.key,
     required this.quizWithAns,
     required this.type,
+    required this.subjectId,
     required this.courseId,
   });
   final dynamic quizWithAns;
   final String type;
+  final String subjectId;
   final String courseId;
 
   @override
@@ -63,7 +65,7 @@ class _QuizResultPageState extends QuizResultState {
               });
             },
           ),
-          //     // ans tils
+          //     //     // ans tils
           Expanded(
             child: (widget.quizWithAns is List<MockQuizModel>)
                 ? ListView.separated(
