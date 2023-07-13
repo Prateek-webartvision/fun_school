@@ -183,7 +183,7 @@ class _MoreMenuSheetState extends State<MoreMenuSheet> {
                         ),
                         4.height,
                         Text(
-                          "Topic",
+                          "Augmented reality",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,

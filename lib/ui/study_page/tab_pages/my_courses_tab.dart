@@ -148,100 +148,100 @@ class MyCoursesTab extends StatelessWidget {
                             ),
                           ),
 
-                          Divider(height: 0),
-                          // option btn
-                          Container(
-                            // color: Colors.green,
-                            height: 70,
-                            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    AppUtils.showSnack("Coming soon");
-                                  },
-                                  child: SizedBox(
-                                    width: 103,
-                                    height: 70,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.home, size: 20),
-                                        Text(
-                                          "Exam",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                          // Divider(height: 0),
+                          // // option btn
+                          // Container(
+                          //   // color: Colors.green,
+                          //   height: 70,
+                          //   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     children: [
+                          //       GestureDetector(
+                          //         onTap: () {
+                          //           AppUtils.showSnack("Coming soon");
+                          //         },
+                          //         child: SizedBox(
+                          //           width: 103,
+                          //           height: 70,
+                          //           child: Column(
+                          //             mainAxisAlignment: MainAxisAlignment.center,
+                          //             children: [
+                          //               Icon(Icons.home, size: 20),
+                          //               Text(
+                          //                 "Exam",
+                          //                 style: GoogleFonts.inter(
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w400,
+                          //                 ),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
 
-                                // flash cards
-                                GestureDetector(
-                                  onTap: () {
-                                    AppUtils.showloadingOverlay(() async {
-                                      final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
+                          //       // flash cards
+                          //       GestureDetector(
+                          //         onTap: () {
+                          //           AppUtils.showloadingOverlay(() async {
+                          //             final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
 
-                                      if (flashcard != null && flashcard.isNotEmpty) {
-                                        // print(flashcard);
-                                        rootNavigator.currentState!.push(
-                                          MaterialPageRoute(
-                                            builder: (context) => FlashCardView(flashCards: flashcard),
-                                          ),
-                                        );
-                                      } else {
-                                        AppUtils.showSnack("No FlashCards");
-                                      }
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    width: 103,
-                                    height: 70,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.local_fire_department_rounded, size: 20),
-                                        Text(
-                                          "Flash Card",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                // quiz btn
-                                SizedBox(
-                                  width: 103,
-                                  height: 70,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      appRoutes.pushNamed(PagesName.startQuizPage, extra: controller.myCourses![index].courseId!);
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.quiz_outlined, size: 20),
-                                        Text(
-                                          "Quiz",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          //             if (flashcard != null && flashcard.isNotEmpty) {
+                          //               // print(flashcard);
+                          //               rootNavigator.currentState!.push(
+                          //                 MaterialPageRoute(
+                          //                   builder: (context) => FlashCardView(flashCards: flashcard),
+                          //                 ),
+                          //               );
+                          //             } else {
+                          //               AppUtils.showSnack("No FlashCards");
+                          //             }
+                          //           });
+                          //         },
+                          //         child: SizedBox(
+                          //           width: 103,
+                          //           height: 70,
+                          //           child: Column(
+                          //             mainAxisAlignment: MainAxisAlignment.center,
+                          //             children: [
+                          //               Icon(Icons.local_fire_department_rounded, size: 20),
+                          //               Text(
+                          //                 "Flash Card",
+                          //                 style: GoogleFonts.inter(
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w400,
+                          //                 ),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       // quiz btn
+                          //       SizedBox(
+                          //         width: 103,
+                          //         height: 70,
+                          //         child: GestureDetector(
+                          //           onTap: () {
+                          //             appRoutes.pushNamed(PagesName.startQuizPage, extra: controller.myCourses![index].courseId!);
+                          //           },
+                          //           child: Column(
+                          //             mainAxisAlignment: MainAxisAlignment.center,
+                          //             children: [
+                          //               Icon(Icons.quiz_outlined, size: 20),
+                          //               Text(
+                          //                 "Quiz",
+                          //                 style: GoogleFonts.inter(
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w400,
+                          //                 ),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     );

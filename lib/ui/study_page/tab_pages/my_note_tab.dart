@@ -129,7 +129,7 @@ class NoteTile extends StatelessWidget {
                     item['subject'],
                     style: GoogleFonts.inter(
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   3.height,
@@ -146,12 +146,9 @@ class NoteTile extends StatelessWidget {
                         children: [
                           Text(
                             item2['title'],
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
                           ),
-                          3.height,
+                          // 3.height,
                           GroupedListView(
                             shrinkWrap: true,
                             // padding: EdgeInsets.symmetric(horizontal: 16),
@@ -166,10 +163,7 @@ class NoteTile extends StatelessWidget {
                                   1.height,
                                   Text(
                                     value,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
                                   ),
                                   1.height,
                                 ],
