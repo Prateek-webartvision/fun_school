@@ -10,7 +10,8 @@ import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
 import '../../../uitls/app_utils.dart';
 
 class MyCoursesController extends GetxController {
-  late List<CoursesModel> _allCourses;
+  List<CoursesModel>? _allCourses;
+
   List<CoursesModel>? myCourses;
   ApiState apiState = ApiState.loading;
   String? error;
@@ -27,11 +28,13 @@ class MyCoursesController extends GetxController {
   _sortCoursesForUser() {
     List<CoursesModel> myCourses = [];
 
-    for (var courses in _allCourses) {
-      for (var enroll in courses.courseEnrollment!) {
-        // checking current user is enrolled or not
-        if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
-          myCourses.add(courses);
+    if (_allCourses != null) {
+      for (var courses in _allCourses!) {
+        for (var enroll in courses.courseEnrollment!) {
+          // checking current user is enrolled or not
+          if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
+            myCourses.add(courses);
+          }
         }
       }
     }
@@ -69,6 +72,7 @@ class MyCoursesController extends GetxController {
   _loadAllCourses() async {
     apiState = ApiState.loading;
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
+      // print(v);
       apiState = ApiState.success;
       List<CoursesModel> _data = [];
       for (var element in v) {
@@ -85,10 +89,11 @@ class MyCoursesController extends GetxController {
         /// this error comw due to call api after disposing controller
         AppUtils.showSnack("gotcha");
       } else {
-        AppUtils.showSnack(error.runtimeType.toString());
+        AppUtils.showSnack(error.toString());
         this.error = error.toString();
       }
     });
+
     update();
   }
 }

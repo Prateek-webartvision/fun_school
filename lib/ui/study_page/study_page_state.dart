@@ -1,5 +1,6 @@
 import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:kd_utils/kd_utils.dart';
 import 'controller/my_courses_controller.dart';
 import 'controller/my_study_plan_controller.dart';
 import 'study_page.dart';
@@ -22,13 +23,13 @@ abstract class StudyPageState extends State<StudyPage> with TickerProviderStateM
   @override
   void dispose() {
     pageTabController.dispose();
-    if (myCoursesController.myCourses != null) {
+    if (myCoursesController.apiState != ApiState.loading) {
       myCoursesController.dispose();
     }
-    if (myNotesController.myNotes != null) {
+    if (myNotesController.apiState != ApiState.loading) {
       myNotesController.dispose();
     }
-    if (myStudyPlanController.studyPlans != null) {
+    if (myStudyPlanController.apiState != ApiState.loading) {
       myStudyPlanController.dispose();
     }
     super.dispose();
