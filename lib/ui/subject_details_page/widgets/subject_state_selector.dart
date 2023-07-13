@@ -115,7 +115,7 @@ class SubjectStateSlector extends StatelessWidget {
                   ),
                   4.height,
                   Text(
-                    "Quiz",
+                    "Mock Test",
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
