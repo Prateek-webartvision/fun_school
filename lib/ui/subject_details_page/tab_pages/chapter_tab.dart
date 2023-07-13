@@ -57,7 +57,38 @@ class _ChaptersTabState extends State<ChaptersTab> {
                     return SubjectStateSlector(
                       state: stateController.state,
                       onChange: (state) {
-                        stateController.updateState(state);
+                        if (state == SubjectState.flashcard) {
+                          // flashcard
+                          AppUtils.showloadingOverlay(() async {
+                            final flashcard = await FlashCardRepository.getFlashCards(courseId: int.parse(widget.courseID));
+                            if (flashcard != null && flashcard.isNotEmpty) {
+                              rootNavigator.currentState!.push(
+                                MaterialPageRoute(
+                                  builder: (context) => FlashCardView(flashCards: flashcard),
+                                ),
+                              );
+                            } else {
+                              AppUtils.showSnack("No Flash card");
+                            }
+                          });
+                        } else if (state == SubjectState.quiz) {
+                          if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
+                            // print("yes");
+                            appRoutes.pushNamed(
+                              PagesName.startQuizPage,
+                              queryParameters: {
+                                // "title": chapter.first.title,
+                                "title": "",
+                              },
+                              extra: widget.courseID,
+                            );
+                          } else {
+                            AppUtils.showSnack("First Enroll The Course");
+                          }
+                          // }
+                        } else {
+                          stateController.updateState(state);
+                        }
                       },
                     );
                   },
@@ -77,37 +108,22 @@ class _ChaptersTabState extends State<ChaptersTab> {
               builder: (context, child) {
                 return GestureDetector(
                   onTap: () {
-                    // Flash card
-                    if (stateController.state == SubjectState.flashcard) {
-                      AppUtils.showloadingOverlay(() async {
-                        final flashcard = await FlashCardRepository.getFlashCards(courseId: int.parse(widget.courseID));
-                        if (flashcard != null && flashcard.isNotEmpty) {
-                          rootNavigator.currentState!.push(
-                            MaterialPageRoute(
-                              builder: (context) => FlashCardView(flashCards: flashcard),
-                            ),
-                          );
-                        } else {
-                          AppUtils.showSnack("No Flash card");
-                        }
-                      });
-                    }
-                    // quiz
-                    if (stateController.state == SubjectState.quiz) {
-                      // print(widget.subject.dateAdded);
+                    // // quiz
+                    // if (stateController.state == SubjectState.quiz) {
+                    //   // print(widget.subject.dateAdded);
 
-                      if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
-                        appRoutes.pushNamed(
-                          PagesName.startQuizPage,
-                          queryParameters: {
-                            "title": chapter.first.title,
-                          },
-                          extra: widget.courseID,
-                        );
-                      } else {
-                        AppUtils.showSnack("First Enroll The Course");
-                      }
-                    }
+                    //   if (AppUtils.isCourseEnroledByMe(enrolls: widget.enrollmentData!)) {
+                    //     appRoutes.pushNamed(
+                    //       PagesName.startQuizPage,
+                    //       queryParameters: {
+                    //         "title": chapter.first.title,
+                    //       },
+                    //       extra: widget.courseID,
+                    //     );
+                    //   } else {
+                    //     AppUtils.showSnack("First Enroll The Course");
+                    //   }
+                    // }
                   },
                   child: ChapterTile(
                     courseId: widget.courseID,

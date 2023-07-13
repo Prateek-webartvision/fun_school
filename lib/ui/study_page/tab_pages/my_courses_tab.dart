@@ -30,6 +30,8 @@ class MyCoursesTab extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (controller.apiState == ApiState.error) {
           return Center(child: Text(controller.error.toString()));
+        } else if (controller.myCourses == null || controller.myCourses!.isEmpty) {
+          return Center(child: Text("No Enrollment"));
         } else {
           return CustomScrollView(
             slivers: [

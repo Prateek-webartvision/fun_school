@@ -26,20 +26,25 @@ class MyCoursesController extends GetxController {
   }
 
   _sortCoursesForUser() {
-    List<CoursesModel> myCourses = [];
+    List<CoursesModel> temp = [];
+    // print(AppStorage.user.currentUser()!.userid);
 
     if (_allCourses != null) {
       for (var courses in _allCourses!) {
-        for (var enroll in courses.courseEnrollment!) {
-          // checking current user is enrolled or not
-          if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
-            myCourses.add(courses);
+        if (courses.courseEnrollment != null) {
+          for (var enroll in courses.courseEnrollment!) {
+            // checking current user is enrolled or not
+            if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
+              temp.add(courses);
+            }
           }
         }
       }
     }
+    // print(temp);
 
-    this.myCourses = myCourses;
+    myCourses = temp;
+    update();
   }
 
 // get my enrollment
@@ -74,11 +79,11 @@ class MyCoursesController extends GetxController {
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       // print(v);
       apiState = ApiState.success;
-      List<CoursesModel> _data = [];
+      List<CoursesModel> data = [];
       for (var element in v) {
-        _data.add(CoursesModel.fromJson(element));
+        data.add(CoursesModel.fromJson(element));
       }
-      _allCourses = _data;
+      _allCourses = data;
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       if (error is KInternetException) {

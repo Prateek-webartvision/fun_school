@@ -28,7 +28,6 @@ class StartQuizView extends StatefulWidget {
 class _StartQuizViewState extends StartQuizState {
   @override
   Widget build(BuildContext context) {
-    print(QuizRepository.getAllQuizResults(title: widget.title!));
     return Scaffold(
       backgroundColor: AppColor.pinkColor,
       appBar: AppBar(

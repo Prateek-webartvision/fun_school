@@ -9,7 +9,11 @@ import 'quiz_tabs/mock_quiz_tab_page.dart';
 import 'quiz_tabs/quiz_tab_page.dart';
 
 class QuizQustionQnswerPage extends StatelessWidget {
-  const QuizQustionQnswerPage({super.key, this.extraController, required this.courseID});
+  const QuizQustionQnswerPage({
+    super.key,
+    this.extraController,
+    required this.courseID,
+  });
   final dynamic extraController;
   final int courseID;
 
@@ -46,7 +50,6 @@ class QuizQustionQnswerPage extends StatelessWidget {
                       quizController: extraController,
                       courseID: courseID.toString(),
                     ),
-              //
             )
           // No quiz controller found
           : NoQuizFoundWidget(),
