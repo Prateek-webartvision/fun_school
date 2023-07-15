@@ -112,7 +112,8 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
             // onClick: () => AppUtils.showSnack("coming soon"),
             onClick: () async => await launchUrl(
               Uri.parse(AppUrls.helpCenter),
-              mode: LaunchMode.externalApplication,
+              // Uri.parse("https://app.citycloudschool.co.ke/api_docs/endpoints/course_details/"),
+              mode: LaunchMode.inAppWebView,
             ),
           ),
           Divider(height: 0),
@@ -123,7 +124,7 @@ class _ProfileAndSettingsViewState extends ProfileAndSettingsState {
             onClick: () async {
               await launchUrl(
                 Uri.parse(AppUrls.about),
-                mode: LaunchMode.externalApplication,
+                mode: LaunchMode.inAppWebView,
               );
             },
           ),

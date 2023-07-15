@@ -3,7 +3,7 @@ class AppUrls {
   static const String _apis = "$domain/api_docs/apis";
 
   // static String chatGPTKey = "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";
-  static String chatGPTKey = "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";
+  static String chatGPTKey = "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";
 
   static const String helpCenter = "$domain/help.php";
   static const String about = "$domain/about.php";
@@ -31,4 +31,6 @@ class AppUrls {
   static const String getFlashcardByCourses = "$_apis/fetch_flashcard_per_course.php";
   static const String addFlashcardResult = "$_apis/add_flashcard_result.php";
   static const String getFlashcardResultByUser = "$_apis/fetch_flashcard_result.php";
+
+  static const String getTips = "$_apis/fetch_tips.php";
 }
