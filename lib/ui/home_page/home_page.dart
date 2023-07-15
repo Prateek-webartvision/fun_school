@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/repo/tips/tips_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
