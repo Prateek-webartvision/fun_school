@@ -183,12 +183,12 @@ final GoRouter appRoutes = GoRouter(
         }),
 
     // topic summary Page
-    GoRoute(
-      parentNavigatorKey: rootNavigator,
-      path: PagesName.getPath(PagesName.topicSummaryPage),
-      name: PagesName.topicSummaryPage,
-      pageBuilder: (context, state) => MaterialPage(child: PaworSummaryPage()),
-    ),
+    // GoRoute(
+    //   parentNavigatorKey: rootNavigator,
+    //   path: PagesName.getPath(PagesName.topicSummaryPage),
+    //   name: PagesName.topicSummaryPage,
+    //   pageBuilder: (context, state) => MaterialPage(child: PaworSummaryPage()),
+    // ),
 
     // Details exam page
     GoRoute(

@@ -33,4 +33,6 @@ class AppUrls {
   static const String getFlashcardResultByUser = "$_apis/fetch_flashcard_result.php";
 
   static const String getTips = "$_apis/fetch_tips.php";
+
+  static const String getPaworSummary = "$_apis/fetch_power_summary.php";
 }

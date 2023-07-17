@@ -11,8 +11,13 @@ import '../../../style/color.dart';
 import '../../../uitls/app_utils.dart';
 
 class MoreMenuSheet extends StatefulWidget {
-  const MoreMenuSheet({super.key, required this.playerController});
+  const MoreMenuSheet({
+    super.key,
+    required this.playerController,
+    required this.subjectId,
+  });
   final VideoPlayerController playerController;
+  final String subjectId;
 
   @override
   State<MoreMenuSheet> createState() => _MoreMenuSheetState();
@@ -62,15 +67,15 @@ class _MoreMenuSheetState extends State<MoreMenuSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                //"Power Summary"
                 GestureDetector(
                   onTap: () async {
                     AppUtils.closeBottomSheet();
-                    // AppUtils.showSnack("Coming soon");
                     if (widget.playerController.value.isPlaying) {
                       widget.playerController.pause();
                     }
                     await rootNavigator.currentState!.push(MaterialPageRoute(
-                      builder: (context) => PaworSummaryPage(),
+                      builder: (context) => PaworSummaryPage(subjectId: widget.subjectId),
                     ));
                     if (!widget.playerController.value.isPlaying) {
                       widget.playerController.play();

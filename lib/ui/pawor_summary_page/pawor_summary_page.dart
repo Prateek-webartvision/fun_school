@@ -3,27 +3,21 @@
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'pawor_summary_page_state.dart';
+
 class PaworSummaryPage extends StatefulWidget {
-  const PaworSummaryPage({super.key});
+  const PaworSummaryPage({super.key, required this.subjectId});
+  final String subjectId;
 
   @override
   State<PaworSummaryPage> createState() => _PaworSummaryPageState();
 }
 
-class _PaworSummaryPageState extends State<PaworSummaryPage> {
-  late WebViewController webController;
-  @override
-  void initState() {
-    webController = WebViewController();
-    webController.setJavaScriptMode(JavaScriptMode.unrestricted);
-    webController.loadRequest(Uri.parse('https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:foundation-algebra/x2f8bb11595b61c86:algebra-overview-history/v/origins-of-algebra'));
-
-    super.initState();
-  }
-
+class _PaworSummaryPageState extends PaworSummaryPageState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +26,28 @@ class _PaworSummaryPageState extends State<PaworSummaryPage> {
         title: Text("Pawor Summary", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
-      body: WebViewWidget(controller: webController),
+
+      body: GetBuilder(
+        init: paworSummaryController,
+        builder: (controller) {
+          if (controller.apiState == ApiState.loading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (controller.apiState == ApiState.error) {
+            return Center(child: Text(controller.error.toString()));
+          } else {
+            return Column(
+              children: [
+                Visibility(visible: controller.loadingPrgress != 1, child: LinearProgressIndicator(value: controller.loadingPrgress)),
+                Expanded(
+                  child: WebViewWidget(
+                    controller: controller.webController,
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
 //       body: ListView(
 //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 //         children: [
@@ -87,48 +102,61 @@ class _PaworSummaryPageState extends State<PaworSummaryPage> {
 //         ],
 //       ),
 
-      bottomNavigationBar: Container(
-        height: 76,
-        color: AppColor.scaffoldBg,
-        padding: EdgeInsets.only(top: 14),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  print("Back");
-                },
-                child: Column(
+      bottomNavigationBar: GetBuilder(
+          init: paworSummaryController,
+          builder: (controller) {
+            if (controller.apiState == ApiState.success) {
+              return Container(
+                height: 76,
+                color: AppColor.scaffoldBg,
+                padding: EdgeInsets.only(top: 14),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.arrow_circle_left_outlined),
-                    Text("Overview and history algebra", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400)),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  // webController.loadRequest(Uri.parse("https://www.youtube.com/"));
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.arrow_circle_right),
-                    Text(
-                      "Substitution and evaluating expressions",
-                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
-                      textAlign: TextAlign.center,
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.loadPre();
+                        },
+                        child: Column(
+                          children: [
+                            Icon(Icons.arrow_circle_left_outlined),
+                            Text(
+                              // "Overview and history algebra",
+                              (0 < controller.currentUrlIndex) ? controller.summarys![controller.currentUrlIndex - 1].subTitle ?? "" : "",
+                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.loadNext();
+                        },
+                        child: Column(
+                          children: [
+                            Icon(Icons.arrow_circle_right),
+                            Text(
+                              // "Substitution and evaluating expressions",
+                              (controller.currentUrlIndex < controller.summarys!.length - 1) ? controller.summarys![controller.currentUrlIndex + 1].subTitle ?? "" : "",
+                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
+              );
+            } else {
+              return 0.height;
+            }
+          }),
     );
   }
 }

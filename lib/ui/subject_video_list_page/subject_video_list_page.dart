@@ -54,6 +54,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
     AppUtils.showModelSheet(
       child: MoreMenuSheet(
         playerController: subjectVideoListPageController.videoPlayerController,
+        subjectId: widget.subjectId!.toString(),
       ),
       isScrolled: false,
     ).then((value) {

@@ -13,8 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseAnalytics.instance;
-  final ss = FirebaseMessaging.instance;
-  print(await ss.getToken());
+  FirebaseMessaging.instance;
   AppLocalNotification.instence;
   FirebaseMessaging.onMessage.listen(firebaseFGnotification);
   FirebaseMessaging.onBackgroundMessage((message) => firebaseBGMessages(message));
