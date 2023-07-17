@@ -1,16 +1,24 @@
+import 'package:citycloud_school/network/notification_services/notification_services.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'network/firebase_options.dart';
-import 'network/notification_services/notification_services.dart';
 import 'router/app_router.dart';
 import 'style/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  AppNotficationServices.instance;
+  FirebaseAnalytics.instance;
+  final ss = FirebaseMessaging.instance;
+  print(await ss.getToken());
+  AppLocalNotification.instence;
+  FirebaseMessaging.onMessage.listen(firebaseFGnotification);
+  FirebaseMessaging.onBackgroundMessage((message) => firebaseBGMessages(message));
+
   await GetStorage.init();
   runApp(const MyApp());
 }

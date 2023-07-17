@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: a742f71d7f3484253a623b30e19256aa4668ecbb3de6ad1beb0bcf8d4777ecd8
+      sha256: "5dce45a06d386358334eb1689108db6455d90ceb0d75848d5f4819283d4ee2b8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.3"
+    version: "1.3.4"
   archive:
     dependency: transitive
     description:
@@ -125,10 +125,10 @@ packages:
     dependency: transitive
     description:
       name: csslib
-      sha256: "706b5707578e0c1b4b7550f64078f0a0f19dec3f50a178ffae7006b0a9ca58fb"
+      sha256: "831883fb353c8bdc1d71979e5b342c7d88acfbc643113c14ae51e2442ea0f20f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "0.17.3"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -177,14 +177,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  firebase_analytics:
+    dependency: "direct main"
+    description:
+      name: firebase_analytics
+      sha256: d7494294bdb56a58ab6c4cfef377693835c43fa3610707346b98892fd7c4b634
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.4.4"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      sha256: bcb32ac53c494bd6deb61dcd02087418ae96d063ce522a4004974a32545c3f2b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.4"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      sha256: "2f7d8ab97b46a747730f580b5a38b3e5330efb54c16af48613a6f729cc5f57fa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.4+4"
   firebase_core:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: a4a99204da264a0aa9d54a332ea0315ce7b0768075139c77abefe98093dd98be
+      sha256: "2e9324f719e90200dc7d3c4f5d2abc26052f9f2b995d3b6626c47a0dfe1c8192"
       url: "https://pub.dev"
     source: hosted
-    version: "2.14.0"
+    version: "2.15.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -837,6 +861,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      sha256: "789d52bd789373cc1e100fb634af2127e86c99cf9abde09499743270c5de8d00"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: "8587d0b4991bd0f223f4b4957101c2c7449f905601571315f4967072498dd3fb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.9.1"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: "564ef378cafc1a0e29f1d76ce175ef517a0a6115875dff7b43fccbef2b0aeb30"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: "369fdf6160944a7db660ff15fa048c2bd681b09557907beaef1f95e8557d21dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.0"
   win32:
     dependency: transitive
     description:

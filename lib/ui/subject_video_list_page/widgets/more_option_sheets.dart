@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/ui/pawor_summary_page/pawor_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
@@ -62,9 +63,18 @@ class _MoreMenuSheetState extends State<MoreMenuSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     AppUtils.closeBottomSheet();
-                    AppUtils.showSnack("Coming soon");
+                    // AppUtils.showSnack("Coming soon");
+                    if (widget.playerController.value.isPlaying) {
+                      widget.playerController.pause();
+                    }
+                    await rootNavigator.currentState!.push(MaterialPageRoute(
+                      builder: (context) => PaworSummaryPage(),
+                    ));
+                    if (!widget.playerController.value.isPlaying) {
+                      widget.playerController.play();
+                    }
                   },
                   child: SizedBox(
                     width: 114,

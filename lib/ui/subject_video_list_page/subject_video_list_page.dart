@@ -52,7 +52,9 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   // more option click
   onMoreOptionClick({required String subTitle}) async {
     AppUtils.showModelSheet(
-      child: MoreMenuSheet(playerController: subjectVideoListPageController.videoPlayerController),
+      child: MoreMenuSheet(
+        playerController: subjectVideoListPageController.videoPlayerController,
+      ),
       isScrolled: false,
     ).then((value) {
       if (value == "note") {
@@ -62,7 +64,6 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
             contentTitle: widget.contentTitle,
             subTitle: subTitle,
             subjectId: widget.subjectId!,
-            // Todo pass note title here
             noteTitle: 'Text sub title',
           ),
           enableDrag: true,
@@ -189,43 +190,46 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                           ),
                         ),
                         // botom bar with mode option btn
+
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 14),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // more option widget
-                                    GestureDetector(
-                                      onTap: () => onMoreOptionClick(subTitle: controller.videos[controller.currentVideo].subTitle!),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
+                              (!subjectVideoListPageController.videoPlayerController.value.isInitialized)
+                                  ? SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Container(
-                                            height: 32,
-                                            width: 32,
-                                            decoration: BoxDecoration(
-                                              color: AppColor.white,
-                                              borderRadius: BorderRadius.circular(32),
-                                              border: Border.all(color: AppColor.softBorderColor),
+                                          // more option widget
+                                          GestureDetector(
+                                            onTap: () => onMoreOptionClick(subTitle: controller.videos[controller.currentVideo].subTitle!),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  height: 32,
+                                                  width: 32,
+                                                  decoration: BoxDecoration(
+                                                    color: AppColor.white,
+                                                    borderRadius: BorderRadius.circular(32),
+                                                    border: Border.all(color: AppColor.softBorderColor),
+                                                  ),
+                                                  child: Icon(Icons.more_horiz_rounded),
+                                                ),
+                                                4.height,
+                                                Text(
+                                                  "Menu",
+                                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                                ),
+                                              ],
                                             ),
-                                            child: Icon(Icons.more_horiz_rounded),
-                                          ),
-                                          4.height,
-                                          Text(
-                                            "Menu",
-                                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
-                                          ),
+                                          )
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                                    ),
                               2.height,
                               SizedBox(
                                 height: 12,

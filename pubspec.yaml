@@ -57,9 +57,11 @@ dependencies:
   flutter_local_notifications: ^14.1.1
   # firebase
   firebase_core: ^2.14.0
+  firebase_analytics: ^10.4.4
   firebase_messaging: ^14.6.4
   # chat GPT and url launcher
   url_launcher: ^6.1.11
+  webview_flutter: ^4.2.2
   chat_gpt_sdk: ^2.2.2
   carousel_slider: ^4.2.1
 

@@ -28,7 +28,7 @@ import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page
 import '../ui/start_quiz_pages/start_quiz_view.dart';
 import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_view.dart';
-import '../ui/topic_summary_page/topic_summary_page.dart';
+import '../ui/pawor_summary_page/pawor_summary_page.dart';
 import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
@@ -187,7 +187,7 @@ final GoRouter appRoutes = GoRouter(
       parentNavigatorKey: rootNavigator,
       path: PagesName.getPath(PagesName.topicSummaryPage),
       name: PagesName.topicSummaryPage,
-      pageBuilder: (context, state) => MaterialPage(child: TopicSummaryPage()),
+      pageBuilder: (context, state) => MaterialPage(child: PaworSummaryPage()),
     ),
 
     // Details exam page
