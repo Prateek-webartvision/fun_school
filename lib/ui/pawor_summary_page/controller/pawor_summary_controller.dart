@@ -40,7 +40,7 @@ class PaworSummaryController extends GetxController {
       currentUrlIndex++;
       _loadUrl(summarys![currentUrlIndex].uRL!);
     } else {
-      AppUtils.showSnack("page Ended");
+      AppUtils.showSnack("Page Ended");
     }
   }
 
@@ -49,7 +49,7 @@ class PaworSummaryController extends GetxController {
       currentUrlIndex--;
       _loadUrl(summarys![currentUrlIndex].uRL!);
     } else {
-      AppUtils.showSnack("page Ended");
+      AppUtils.showSnack("Page Ended");
     }
   }
 

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -162,67 +161,67 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
 }
 
 // bottom sheet
-class _MoreInfoSheet extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          height: 48,
-          width: double.maxFinite,
-          color: Color(0xfff4f4f4),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Stack(
-            children: [
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(
-                    Icons.close,
-                    size: 24,
-                  )),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Create Exam",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Divider(
-          height: 0,
-          color: AppColor.softBorderColor,
-        ),
-        16.height,
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(),
-              Text(
-                "Algebra",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-              ),
-              Text(
-                "Algebra (from Arabic ‏الجبر‎ (al-jabr) 'reunion of broken parts,[1] bonesetting'[2]) is the study of variables and the rules for manipulating these variables in formulas;[3] it is a unifying thread of almost all of mathematics.[4] Elementary algebra deals with the manipulation of variabl",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-              ),
-              16.height,
-              KBtn(
-                onClick: () {},
-                text: "Share",
-                width: double.maxFinite,
-              ),
-              16.height,
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}
+// class _MoreInfoSheet extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         Container(
+//           height: 48,
+//           width: double.maxFinite,
+//           color: Color(0xfff4f4f4),
+//           padding: const EdgeInsets.symmetric(horizontal: 16),
+//           child: Stack(
+//             children: [
+//               Align(
+//                   alignment: Alignment.centerLeft,
+//                   child: Icon(
+//                     Icons.close,
+//                     size: 24,
+//                   )),
+//               Align(
+//                 alignment: Alignment.center,
+//                 child: Text(
+//                   "Create Exam",
+//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         Divider(
+//           height: 0,
+//           color: AppColor.softBorderColor,
+//         ),
+//         16.height,
+//         Padding(
+//           padding: EdgeInsets.symmetric(horizontal: 16),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Container(),
+//               Text(
+//                 "Algebra",
+//                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+//               ),
+//               Text(
+//                 "Algebra (from Arabic ‏الجبر‎ (al-jabr) 'reunion of broken parts,[1] bonesetting'[2]) is the study of variables and the rules for manipulating these variables in formulas;[3] it is a unifying thread of almost all of mathematics.[4] Elementary algebra deals with the manipulation of variabl",
+//                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+//                 maxLines: 4,
+//                 overflow: TextOverflow.ellipsis,
+//               ),
+//               16.height,
+//               KBtn(
+//                 onClick: () {},
+//                 text: "Share",
+//                 width: double.maxFinite,
+//               ),
+//               16.height,
+//             ],
+//           ),
+//         )
+//       ],
+//     );
+//   }
+// }

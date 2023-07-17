@@ -28,7 +28,6 @@ import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page
 import '../ui/start_quiz_pages/start_quiz_view.dart';
 import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_view.dart';
-import '../ui/pawor_summary_page/pawor_summary_page.dart';
 import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
