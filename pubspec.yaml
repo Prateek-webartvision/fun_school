@@ -44,9 +44,10 @@ dependencies:
   flutter_svg: ^2.0.7
   video_player: ^2.6.1
   google_fonts: ^5.1.0
-  flutter_snake_navigationbar: ^0.6.1
   grouped_list: ^5.1.2
-  #
+  smooth_page_indicator: ^1.1.0
+  flutter_snake_navigationbar: ^0.6.1
+  # flash card and video
   flutter_card_swiper: ^6.0.0
   wakelock_plus: ^1.0.0+3
   share_plus: ^7.0.2
@@ -57,10 +58,10 @@ dependencies:
   # firebase
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4
-
-  #
+  # chat GPT and url launcher
   url_launcher: ^6.1.11
   chat_gpt_sdk: ^2.2.2
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,7 @@ flutter:
     - assets/logo/
     - assets/svg_icons/
     - assets/img/
+    - assets/img/home_images/
     - assets/videos/splash_video/
   #   - images/a_dot_ham.jpeg
 

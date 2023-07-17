@@ -24,11 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _videoController() async {
-    videoPlayerController = VideoPlayerController.asset("assets/videos/splash_video/splash.mp4");
+    videoPlayerController = VideoPlayerController.asset(
+      "assets/videos/splash_video/splash2.mp4",
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
     await videoPlayerController.initialize();
 
     videoPlayerController.play();
-
     videoPlayerController.addListener(() {
       if (!videoPlayerController.value.isPlaying) {
         if (AppStorage.user.currentUser() != null) {
@@ -50,12 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: videoPlayerController.value.aspectRatio,
-          child: VideoPlayer(videoPlayerController),
-        ),
-      ),
+      body: VideoPlayer(videoPlayerController),
     );
   }
 }
