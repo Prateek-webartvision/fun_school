@@ -18,6 +18,7 @@ class PaworSummaryController extends GetxController {
     apiState = ApiState.loading;
     webController = WebViewController();
     webController.setJavaScriptMode(JavaScriptMode.unrestricted);
+    webController.getScrollPosition();
 
     _loadSummary(subjectId);
   }
