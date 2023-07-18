@@ -296,7 +296,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                             }
                           }
                         } else {
-                          controller.onNextVideo();
+                          // controller.onNextVideo();
                         }
                       },
                       child: Row(
