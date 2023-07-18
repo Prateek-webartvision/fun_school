@@ -376,7 +376,7 @@ class InteractiveQuizController extends GetxController {
       _quiz = tempQuis[index];
     }
 
-    print(randomSeed);
+    // print(randomSeed);
 
     return _quiz;
   }

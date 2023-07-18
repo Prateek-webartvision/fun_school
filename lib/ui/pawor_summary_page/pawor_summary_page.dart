@@ -22,7 +22,7 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
-        title: Text("Pawor Summary", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Power Summary", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
 
