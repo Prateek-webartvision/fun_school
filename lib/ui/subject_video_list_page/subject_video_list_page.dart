@@ -285,6 +285,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                             ),
                           );
                           controller.videoPlayerController.play();
+                        } else {
+                          controller.onNextVideo();
                         }
 
                         if (result != null) {
