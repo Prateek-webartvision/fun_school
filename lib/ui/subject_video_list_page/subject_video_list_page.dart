@@ -285,8 +285,6 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                             ),
                           );
                           controller.videoPlayerController.play();
-                        } else {
-                          controller.onNextVideo();
                         }
 
                         if (result != null) {
@@ -297,6 +295,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                               controller.onNextVideo();
                             }
                           }
+                        } else {
+                          controller.onNextVideo();
                         }
                       },
                       child: Row(
