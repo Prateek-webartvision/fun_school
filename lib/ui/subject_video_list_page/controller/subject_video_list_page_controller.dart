@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
@@ -88,6 +90,10 @@ class SubjectVideoListPageController extends GetxController {
     videoPlayerController.seekTo(
       Duration(seconds: crrentDuration!.inSeconds - 10),
     );
+  }
+
+  int get randomNumber {
+    return Random().nextInt(videos.length);
   }
 
   @override

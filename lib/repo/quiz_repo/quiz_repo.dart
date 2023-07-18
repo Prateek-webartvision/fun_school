@@ -1,3 +1,4 @@
+import 'package:citycloud_school/models/quiz/interactive_quiz.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
@@ -78,6 +79,7 @@ class QuizRepository {
     });
   }
 
+  // hget quiz result
   static Future<List<QuizResultModel>?> getAllQuizResults({required String title}) async {
     List<QuizResultModel> res = [];
     await _api.postApi(AppUrls.fetchQuizScore, params: {
@@ -95,6 +97,19 @@ class QuizRepository {
       AppUtils.showSnack(error.toString());
     });
     return res;
+  }
+
+  static Future<List<InteractiveQuizModel>?> getIntractiveQuiz({required String title}) async {
+    return await _api.getApi(AppUrls.getInteractiveQuiz, params: {'title': title}).then((value) {
+      List<InteractiveQuizModel> temp = [];
+      for (var element in value) {
+        final quiz = InteractiveQuizModel.fromJson(element);
+        temp.add(quiz);
+      }
+      return temp;
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
   }
 }
 
