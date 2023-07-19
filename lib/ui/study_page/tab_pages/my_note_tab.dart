@@ -8,7 +8,6 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../widgets/note_dailog.dart';
 
 class MyNoteTab extends StatelessWidget {
   const MyNoteTab({
@@ -37,8 +36,17 @@ class MyNoteTab extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = controller.myNotes![index];
                 return NoteTile(
-                  title: item['courseName'],
-                  notes: item['data'],
+                  title: item.courseName,
+                  notes: item.data,
+                  totalNotes: item.totalNotes,
+                  onSubjectClick: (subject) {
+                    controller.subjectVisiblity(item: subject);
+                    // print(subject.isChaptersVisbile);
+                  },
+                  onTitleClick: (title) {
+                    controller.titleVisiblity(item: title);
+                    print("${title.title}, ${title.isTitleVisbile}");
+                  },
                 );
               },
               separatorBuilder: (context, index) => 10.height,
@@ -55,9 +63,15 @@ class NoteTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.notes,
+    required this.onSubjectClick,
+    required this.onTitleClick,
+    required this.totalNotes,
   });
   final String title;
-  final List notes;
+  final List<NotesBySubject> notes;
+  final Function(NotesBySubject subject) onSubjectClick;
+  final Function(NoteByTitle title) onTitleClick;
+  final int totalNotes;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +83,9 @@ class NoteTile extends StatelessWidget {
       ),
       child: Column(
         children: [
+          10.height,
           Container(
-            // color: Colors.green,
-            // height: 44,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +95,7 @@ class NoteTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // add Title
+                    // course name
                     Text(
                       // "Alegbra Foundations",
                       title,
@@ -93,7 +106,6 @@ class NoteTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                // notes count
                 Container(
                   decoration: BoxDecoration(
                     color: AppColor.scaffoldBg,
@@ -102,7 +114,7 @@ class NoteTile extends StatelessWidget {
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "${notes.length} Notes",
+                    "$totalNotes Notes",
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -112,8 +124,9 @@ class NoteTile extends StatelessWidget {
               ],
             ),
           ),
+          10.height,
 
-          // notes
+          // chapter
           ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: notes.length,
@@ -124,104 +137,129 @@ class NoteTile extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    // "Overview and history algebra",
-                    item['subject'],
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: () => onSubjectClick(item),
+                    child: Container(
+                      width: double.maxFinite,
+                      color: Colors.white,
+                      // subject name
+                      child: Text(
+                        // "Overview and history algebra",
+                        item.subjectName,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                   3.height,
                   // title
-                  ListView.separated(
-                    // padding: EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: item['data'].length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final item2 = item['data'][index];
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item2['title'],
-                            style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
-                          ),
-                          // 3.height,
-                          GroupedListView(
-                            shrinkWrap: true,
-                            // padding: EdgeInsets.symmetric(horizontal: 16),
-                            physics: NeverScrollableScrollPhysics(),
-                            elements: item2['data'] as List<NotesModel>,
-                            groupBy: (element) => element.subtitle!,
 
-                            groupSeparatorBuilder: (value) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  1.height,
-                                  Text(
-                                    value,
-                                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
-                                  ),
-                                  1.height,
-                                ],
-                              );
-                            },
-                            itemBuilder: (context, element) {
-                              return GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return NoteDailog(noteData: element);
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    border: Border.all(color: AppColor.softBorderColor),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                  child: Row(
+                  Visibility(
+                    visible: item.isChaptersVisbile,
+                    child: ListView.separated(
+                      // padding: EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: item.data.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final item2 = item.data[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () => onTitleClick(item2),
+                              child: Container(
+                                width: double.maxFinite,
+                                color: Colors.white,
+                                // subject name
+                                child: Text(
+                                  // "Overview and history algebra",
+                                  item2.title,
+                                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                            ),
+
+                            // 3.height,
+                            Visibility(
+                              visible: item2.isTitleVisbile,
+                              child: GroupedListView(
+                                shrinkWrap: true,
+                                // padding: EdgeInsets.symmetric(horizontal: 16),
+                                physics: NeverScrollableScrollPhysics(),
+                                elements: item2.data,
+                                groupBy: (element) => element.subtitle!,
+
+                                groupSeparatorBuilder: (value) {
+                                  return Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Icon(
-                                        Icons.note_rounded,
-                                        color: context.appTheme.colorScheme.primary,
+                                      1.height,
+                                      Text(
+                                        value,
+                                        style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
                                       ),
-                                      12.width,
-                                      Expanded(
-                                        child: Text(
-                                          // "“Sample Note”",
-                                          // notes[index].notes!,
-                                          element.notes ?? "",
-                                          style: GoogleFonts.inter(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      12.width,
-                                      Icon(Icons.copy_rounded),
-                                      12.width,
-                                      Icon(Icons.notes_rounded)
+                                      1.height,
                                     ],
-                                  ),
-                                ),
-                              );
-                            },
-                            separator: 8.height,
-                          ),
-                        ],
-                      );
-                    },
-                    separatorBuilder: (context, index) => 4.height,
+                                  );
+                                },
+                                itemBuilder: (context, element) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return NoteDailog(noteData: element);
+                                      //   },
+                                      // );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColor.white,
+                                        border: Border.all(color: AppColor.softBorderColor),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.note_rounded,
+                                            color: context.appTheme.colorScheme.primary,
+                                          ),
+                                          12.width,
+                                          Expanded(
+                                            child: Text(
+                                              // "“Sample Note”",
+                                              // notes[index].notes!,
+                                              element.notes ?? "",
+                                              style: GoogleFonts.inter(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          12.width,
+                                          Icon(Icons.copy_rounded),
+                                          12.width,
+                                          Icon(Icons.notes_rounded)
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                separator: 8.height,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => 4.height,
+                    ),
                   ),
                 ],
               );
@@ -298,7 +336,7 @@ class NoteTile extends StatelessWidget {
           //     separatorBuilder: (context, index) => 12.height,
           //   ),
           // ),
-          12.height,
+          10.height,
         ],
       ),
     );

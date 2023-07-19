@@ -313,54 +313,99 @@ class _HomePageState extends State<HomePage> {
                 // ),
 
                 (controller.tips!.isNotEmpty)
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            10.height,
-                            Text(
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          10.height,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
                               "Tip",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            10.height,
-                            ListView.separated(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.tips!.length,
-                              itemBuilder: (context, index) {
-                                final item = controller.tips![index];
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(4),
-                                    border: Border.all(color: AppColor.softBorderColor),
-                                  ),
-                                  clipBehavior: Clip.hardEdge,
-                                  padding: EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item.tipTitle ?? "",
-                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                                      ),
-                                      4.height,
-                                      Text(
-                                        item.tipContent ?? "",
-                                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                          ),
+                          10.height,
+                          CarouselSlider.builder(
+                            // items: courseSliderData,
+                            itemCount: controller.tips!.length,
+                            itemBuilder: (BuildContext context, int index, int realIndex) {
+                              final item = controller.tips![index];
+                              return Container(
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  color: AppColor.white,
+                                  borderRadius: BorderRadius.circular(4),
+                                  border: Border.all(color: AppColor.softBorderColor),
+                                ),
+                                margin: EdgeInsets.symmetric(horizontal: 16),
+                                clipBehavior: Clip.hardEdge,
+                                padding: EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.tipTitle ?? "",
+                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                                    ),
+                                    4.height,
+                                    Text(
+                                      item.tipContent ?? "",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 6,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            options: CarouselOptions(
+                              initialPage: 0,
+                              aspectRatio: 1,
+                              viewportFraction: 1,
+                              height: 160,
+                              enableInfiniteScroll: false,
+                              autoPlay: true,
+                              onPageChanged: (index, reason) {
+                                smoothIndicatorController.changeIndex(index);
                               },
-                              separatorBuilder: (context, index) => 6.height,
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          // ListView.separated(
+                          //   shrinkWrap: true,
+                          //   physics: NeverScrollableScrollPhysics(),
+                          //   itemCount: controller.tips!.length,
+                          //   itemBuilder: (context, index) {
+                          //     final item = controller.tips![index];
+                          //     return Container(
+                          //       decoration: BoxDecoration(
+                          //         color: AppColor.white,
+                          //         borderRadius: BorderRadius.circular(4),
+                          //         border: Border.all(color: AppColor.softBorderColor),
+                          //       ),
+                          //       clipBehavior: Clip.hardEdge,
+                          //       padding: EdgeInsets.all(16),
+                          //       child: Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           Text(
+                          //             item.tipTitle ?? "",
+                          //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                          //           ),
+                          //           4.height,
+                          //           Text(
+                          //             item.tipContent ?? "",
+                          //             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     );
+                          //   },
+                          //   separatorBuilder: (context, index) => 6.height,
+                          // )
+                        ],
                       )
                     : SizedBox()
               ],

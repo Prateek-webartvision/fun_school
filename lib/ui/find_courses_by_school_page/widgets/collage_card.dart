@@ -18,13 +18,16 @@ class CollageCard extends StatelessWidget {
   final bool isSelected;
   final Function()? onSelect;
 
+  final double width = 392.7272;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       // onTap: (onSelect != null) ? () => onSelect!(isSelected) : null,
       onTap: onSelect,
       child: Container(
-        width: 130,
+        // width: 130,
+        constraints: BoxConstraints(minWidth: 130, maxWidth: 140),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: (isSelected) ? AppColor.pinkColor.withOpacity(0.1) : Colors.white,
@@ -34,6 +37,7 @@ class CollageCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
               backgroundColor: AppColor.mainColor,
@@ -51,6 +55,7 @@ class CollageCard extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
+              textScaleFactor: context.screenWidth / width,
             ),
           ],
         ),

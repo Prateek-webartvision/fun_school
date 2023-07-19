@@ -5,7 +5,7 @@ import '../../../repo/subject_notes_repo/notes_repo.dart';
 
 class MyNotesController extends GetxController {
   List<NotesModel> _notes = [];
-  List? myNotes;
+  List<NestedNoteByCourse>? myNotes;
   ApiState apiState = ApiState.loading;
   String? error;
 
@@ -16,38 +16,52 @@ class MyNotesController extends GetxController {
   _initData() async {
     await _loadData();
 
-    // List<List<NotesModel>> temp = [];
-
-    List temp1 = [];
+    List<NestedNoteByCourse> temp1 = [];
 
     Set byCourse = _notes.map((e) => e.courseName).toSet();
     for (var courseName in byCourse) {
       final course = _notes.where((element) => element.courseName! == courseName).toList();
 
-      List subjectList = [];
+      List<NotesBySubject> subjectList = [];
 
-      // subject list
       Set bySubject = course.map((e) => e.subjectName).toSet();
       for (var subject in bySubject) {
         final subj = course.where((element) => element.subjectName! == subject).toList();
 
-        List titleList = [];
+        List<NoteByTitle> titleList = [];
 
-        //   // title List
         Set bytitle = subj.map((e) => e.title).toSet();
         for (var title in bytitle) {
           var res = subj.where((element) => element.title! == title).toList();
-          titleList.add({"title": title, "data": res});
+          // titleList.add({"title": title, "data": res});
+          titleList.add(NoteByTitle(title: title, isTitleVisbile: false, data: res));
         }
 
-        subjectList.add({"subject": subject, "data": titleList});
+        subjectList.add(NotesBySubject(
+          subjectName: subject,
+          isChaptersVisbile: false,
+          data: titleList,
+        ));
       }
 
-      temp1.add({"courseName": courseName, "data": subjectList});
+      final notesByCourse = NestedNoteByCourse(
+        courseName: courseName,
+        data: subjectList,
+        totalNotes: course.length,
+      );
+      temp1.add(notesByCourse);
     }
-    print(temp1);
-
     myNotes = temp1;
+    update();
+  }
+
+  subjectVisiblity({required NotesBySubject item}) {
+    item.isChaptersVisbile = !item.isChaptersVisbile;
+    update();
+  }
+
+  titleVisiblity({required NoteByTitle item}) {
+    item.isTitleVisbile = !item.isTitleVisbile;
     update();
   }
 
@@ -64,7 +78,33 @@ class MyNotesController extends GetxController {
   }
 }
 
-// class NotFilterModel
+class NestedNoteByCourse {
+  String courseName;
+  List<NotesBySubject> data;
+  int totalNotes;
+
+  NestedNoteByCourse({required this.courseName, required this.data, required this.totalNotes});
+}
+
+class NotesBySubject {
+  String subjectName;
+  bool isChaptersVisbile;
+  List<NoteByTitle> data;
+
+  NotesBySubject({required this.subjectName, required this.isChaptersVisbile, required this.data});
+
+  copyWith({bool? isChaptersVisbile}) {
+    this.isChaptersVisbile = isChaptersVisbile ?? this.isChaptersVisbile;
+  }
+}
+
+class NoteByTitle {
+  String title;
+  bool isTitleVisbile;
+  List<NotesModel> data;
+
+  NoteByTitle({required this.data, required this.title, required this.isTitleVisbile});
+}
 
 class NotesModel {
   int? notesId;

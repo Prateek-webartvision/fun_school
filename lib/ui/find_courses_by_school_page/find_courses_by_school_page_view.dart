@@ -44,7 +44,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                 // school selector
                 SliverToBoxAdapter(
                   child: Container(
-                    height: 114,
+                    // height: 114,
+                    constraints: BoxConstraints(minHeight: 114, maxHeight: 130),
                     decoration: BoxDecoration(
                       color: AppColor.white,
                       border: Border(
@@ -52,9 +53,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                         bottom: BorderSide(color: AppColor.softBorderColor),
                       ),
                     ),
-                    child: SchoolSelector(
-                      controller: controller.schoolSelectorController,
-                    ),
+                    child: SchoolSelector(controller: controller.schoolSelectorController),
                   ),
                 ),
 
