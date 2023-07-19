@@ -32,9 +32,19 @@ class MyNotesController extends GetxController {
 
         Set bytitle = subj.map((e) => e.title).toSet();
         for (var title in bytitle) {
-          var res = subj.where((element) => element.title! == title).toList();
+          final res = subj.where((element) => element.title! == title).toList();
+
+          Set bySubTitle = res.map((e) => e.subtitle).toSet();
+
+          List<NoteBySubTitle> subTitleList = [];
+          for (var subtitle in bySubTitle) {
+            final note = res.where((ee) => ee.subtitle! == subtitle).toList();
+
+            subTitleList.add(NoteBySubTitle(data: note, subTitle: subtitle, isSubTitleVisbile: false));
+          }
           // titleList.add({"title": title, "data": res});
-          titleList.add(NoteByTitle(title: title, isTitleVisbile: false, data: res));
+
+          titleList.add(NoteByTitle(title: title, isTitleVisbile: false, data: subTitleList));
         }
 
         subjectList.add(NotesBySubject(
@@ -65,6 +75,11 @@ class MyNotesController extends GetxController {
     update();
   }
 
+  subTitleVisiblity({required NoteBySubTitle item}) {
+    item.isSubTitleVisbile = !item.isSubTitleVisbile;
+    update();
+  }
+
   _loadData() async {
     apiState = ApiState.loading;
     await NotesRepository.getAllNotes().then((value) {
@@ -92,18 +107,22 @@ class NotesBySubject {
   List<NoteByTitle> data;
 
   NotesBySubject({required this.subjectName, required this.isChaptersVisbile, required this.data});
-
-  copyWith({bool? isChaptersVisbile}) {
-    this.isChaptersVisbile = isChaptersVisbile ?? this.isChaptersVisbile;
-  }
 }
 
 class NoteByTitle {
   String title;
   bool isTitleVisbile;
-  List<NotesModel> data;
+  List<NoteBySubTitle> data;
 
   NoteByTitle({required this.data, required this.title, required this.isTitleVisbile});
+}
+
+class NoteBySubTitle {
+  String subTitle;
+  bool isSubTitleVisbile;
+  List<NotesModel> data;
+
+  NoteBySubTitle({required this.data, required this.subTitle, required this.isSubTitleVisbile});
 }
 
 class NotesModel {
