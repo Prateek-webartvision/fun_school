@@ -2,16 +2,19 @@ class QuizModel {
   int? quizId;
   String? subjectId;
   String? title;
-  String? questionTitle;
+  String? missionText;
+  String? question;
+  String? sideImage;
   List<QuizData>? quizData;
   bool? isAllCurrect;
 
   QuizModel.fromJson(Map<String, dynamic> json) {
     quizId = json['quiz_id'];
-    //  = json['type'];
-    subjectId = json['subject_id'];
+    // subjectId = json['subject_id'];
     title = json['title'];
-    questionTitle = json['question_title'];
+    missionText = json['mission_text'];
+    question = json['question'];
+    sideImage = json['side_image'];
     if (json['quiz_data'] != null) {
       var temp = <QuizData>[];
       for (var element in json['quiz_data']) {

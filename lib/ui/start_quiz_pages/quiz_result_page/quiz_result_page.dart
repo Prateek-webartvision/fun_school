@@ -94,7 +94,7 @@ class _QuizResultPageState extends QuizResultState {
                       return _AnsTile(
                         currentQuestions: index,
                         totalQuestions: widget.quizWithAns.length,
-                        quations: data.questionTitle!,
+                        quations: data.question!,
                         // isCorrect: false,
                         isCorrect: (data.quizData!.length == res.length),
                       );

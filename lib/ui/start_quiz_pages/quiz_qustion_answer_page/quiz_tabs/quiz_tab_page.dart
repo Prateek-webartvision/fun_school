@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:ui' as ui;
+
 import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gif/flutter_gif.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -13,7 +18,7 @@ import '../../../../widegts/k_btn.dart';
 import '../../controller/quiz_controller.dart';
 import '../../model/quiz_model.dart';
 
-class QuizTabPage extends StatelessWidget {
+class QuizTabPage extends StatefulWidget {
   const QuizTabPage({
     super.key,
     required this.quizController,
@@ -25,9 +30,14 @@ class QuizTabPage extends StatelessWidget {
   final String courseId;
 
   @override
+  State<QuizTabPage> createState() => _QuizTabPageState();
+}
+
+class _QuizTabPageState extends State<QuizTabPage> {
+  @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: quizController,
+      init: widget.quizController,
       builder: (controller) {
         var quiz = controller.quizs![controller.currentQuizIndex];
         return Scaffold(
@@ -46,49 +56,82 @@ class QuizTabPage extends StatelessWidget {
                     // bar
                     LinearProgressIndicator(value: (controller.currentQuizIndex + 1) / controller.quizs!.length, minHeight: 6),
                     14.height,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // height: 24,
-                          decoration: BoxDecoration(
-                            color: AppColor.scaffoldBg,
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(color: Colors.black),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          child: Text(
-                            "Question ${controller.currentQuizIndex + 1}/${controller.quizs!.length}",
+                    Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: AppColor.mainColor,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.black),
+                      ),
+                      padding: EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Mission ${controller.currentQuizIndex + 1}",
                             style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColor.scaffoldBg,
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(color: AppColor.textFeildBorderColor),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          child: Text(
-                            "1 point",
+                          6.height,
+                          Text(
+                            quiz.missionText ?? "",
                             style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     Container(
+                    //       // height: 24,
+                    //       decoration: BoxDecoration(
+                    //         color: AppColor.scaffoldBg,
+                    //         borderRadius: BorderRadius.circular(100),
+                    //         border: Border.all(color: Colors.black),
+                    //       ),
+                    //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    //       child: Text(
+                    //         // "dsad",
+                    //         "Question ${controller.currentQuizIndex + 1}/${controller.quizs!.length}",
+                    //         style: TextStyle(
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w400,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Container(
+                    //       decoration: BoxDecoration(
+                    //         color: AppColor.scaffoldBg,
+                    //         borderRadius: BorderRadius.circular(100),
+                    //         border: Border.all(color: AppColor.textFeildBorderColor),
+                    //       ),
+                    //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    //       child: Text(
+                    //         "1 point",
+                    //         style: TextStyle(
+                    //           fontSize: 12,
+                    //           fontWeight: FontWeight.w400,
+                    //         ),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+
                     8.height,
 
                     // qustion
                     Text(
                       // "Look at the numbers. Drag and drop in their correct word.",
-                      quiz.questionTitle!,
+                      quiz.question ?? "",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -100,25 +143,44 @@ class QuizTabPage extends StatelessWidget {
 
               // dag options
               20.height,
-
-              Wrap(
-                runSpacing: 10,
-                spacing: 10,
-                children: quiz.quizData!
-                    .map(
-                      (e) => Draggable<QuizData>(
-                        data: e,
-                        feedback: DragableTitle(
-                          ans: e.correctAnswer!,
-                        ),
-                        // childWhenDragging: SizedBox(),
-                        child: DragableTitle(
-                          ans: e.correctAnswer!,
-                        ),
+              Container(
+                // height: 240,
+                decoration: BoxDecoration(
+                  color: AppColor.white,
+                  border: Border.all(color: AppColor.softBorderColor),
+                  // borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(children: [
+                  Expanded(flex: 1, child: KGifImage(url: quiz.sideImage!)),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: quiz.quizData!.length,
+                        itemBuilder: (context, index) {
+                          final item = quiz.quizData![index];
+                          return Draggable<QuizData>(
+                            data: item,
+                            feedback: DragableTitle(
+                              ans: item.correctAnswer!,
+                            ),
+                            // childWhenDragging: SizedBox(),
+                            child: DragableTitle(
+                              ans: item.correctAnswer!,
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => 10.height,
                       ),
-                    )
-                    .toList(),
+                    ),
+                  )
+                ]),
               ),
+
               20.height,
               // target
               Container(
@@ -169,7 +231,7 @@ class QuizTabPage extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: GetBuilder(
-            init: quizController,
+            init: widget.quizController,
             builder: (controller) {
               return Container(
                 padding: EdgeInsets.all(16),
@@ -205,8 +267,8 @@ class QuizTabPage extends StatelessWidget {
                           final data = {
                             "type": QuizType.quiz,
                             "data": controller.quizs!,
-                            "courseId": courseId,
-                            "subjectId": subjectId,
+                            "courseId": widget.courseId,
+                            "subjectId": widget.subjectId,
                           };
                           appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
                         }
@@ -254,6 +316,87 @@ class DragableTitle extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class KGifImage extends StatefulWidget {
+  const KGifImage({super.key, required this.url});
+  final String url;
+
+  @override
+  State<KGifImage> createState() => _KGifImageState();
+}
+
+class _KGifImageState extends State<KGifImage> with SingleTickerProviderStateMixin {
+  late FlutterGifController gifController;
+
+  @override
+  void initState() {
+    gifController = FlutterGifController(vsync: this);
+
+    super.initState();
+  }
+
+  // Function to extract gif image frames
+  Future<int> _extractGifFrames(ByteData data) async {
+    // Create a list to store the frames
+    // final List<Uint8List> frames = <Uint8List>[];
+
+    // Create a codec to decode the gif
+    final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+
+    // Count the number of frames in the gif
+    final int frameCount = codec.frameCount;
+    // print('Total frameCount: $frameCount');
+
+    // // Loop through the frames and add them to the list
+    // for (int i = 0; i < frameCount; i++) {
+    //   // Get the next frame
+    //   final ui.FrameInfo fi = await codec.getNextFrame();
+
+    //   // Add the frame to the list
+    //   final frame = await loadImage(fi.image);
+
+    //   // Add the frame to the list if it is not null
+    //   if (frame != null) {
+    //     frames.add(frame);
+    //   }
+    // }
+    return frameCount;
+    // return frames;
+  }
+
+  // Future<Uint8List?> loadImage(ui.Image image) async {
+  //   final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  //   return byteData?.buffer.asUint8List();
+  // }
+
+  @override
+  void dispose() {
+    gifController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GifImage(
+      fit: BoxFit.cover,
+      image: NetworkImage(widget.url),
+      controller: gifController,
+      repeat: ImageRepeat.repeat,
+      onFetchCompleted: () async {
+        gifController.value = 0;
+        gifController.stop();
+        final url = Uri.parse(widget.url);
+        final ByteData data = await NetworkAssetBundle(url).load(url.path);
+
+        // Using the _extractGifFrames function to extract the frames
+        await _extractGifFrames(data).then((e) {
+          // print(e);
+          gifController.repeat(min: 0, max: e.toDouble(), period: const Duration(seconds: 1));
+        });
+      },
     );
   }
 }

@@ -58,10 +58,16 @@ class MyNotesController extends GetxController {
         courseName: courseName,
         data: subjectList,
         totalNotes: course.length,
+        isCourseVisible: false,
       );
       temp1.add(notesByCourse);
     }
     myNotes = temp1;
+    update();
+  }
+
+  coursetVisiblity({required NestedNoteByCourse item}) {
+    item.isCourseVisible = !item.isCourseVisible;
     update();
   }
 
@@ -97,8 +103,9 @@ class NestedNoteByCourse {
   String courseName;
   List<NotesBySubject> data;
   int totalNotes;
+  bool isCourseVisible;
 
-  NestedNoteByCourse({required this.courseName, required this.data, required this.totalNotes});
+  NestedNoteByCourse({required this.courseName, required this.data, required this.totalNotes, required this.isCourseVisible});
 }
 
 class NotesBySubject {
