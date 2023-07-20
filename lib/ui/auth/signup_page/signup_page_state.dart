@@ -27,7 +27,7 @@ abstract class SignupPageState extends State<SignupPageView> {
   appleLogin() {}
 
   //email signup
-  emailSignup() {
+  emailSignup() async {
     if (usernameController.text.isEmpty) {
       AppUtils.showSnack("Enter username");
     } else if (emailController.text.isEmpty) {
@@ -39,11 +39,17 @@ abstract class SignupPageState extends State<SignupPageView> {
     } else if (passController.text != pass2Controller.text) {
       AppUtils.showSnack("The password and confirmation password do not match.");
     } else {
-      AppUtils.showloadingOverlay(() async {
-        var res = await AuthRepository.instance.createAccountWithEmailPassword(
+      await AppUtils.showloadingOverlay(() async {
+        var res = await AuthRepository.instance
+            .createAccountWithEmailPassword(
           username: usernameController.text,
           email: emailController.text.trim(),
-          password: passController.text,
+          password: passController.text.trim(),
+        )
+            .onError(
+          (error, stackTrace) {
+            AppUtils.showSnack(error.toString());
+          },
         );
 
         if (res != null) {

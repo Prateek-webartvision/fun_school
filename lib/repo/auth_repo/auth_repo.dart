@@ -24,8 +24,10 @@ class AuthRepository extends AuthRepo {
         throw value["message"];
       }
     }).onError((error, stackTrace) {
-      AppUtils.showSnack("$error");
+      // AppUtils.showSnack("$error");
+      throw error!;
     });
+    // return userData;
   }
 
   // sign in
