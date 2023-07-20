@@ -48,21 +48,21 @@ class _QuizResultPageState extends QuizResultState {
             worngAns: worngAns,
             grade: grade,
             onShare: (widget) async {
-              final ss = await screenshotController.captureFromWidget(widget);
+              var ss;
+              var file;
 
-              final tempDir = await getTemporaryDirectory();
-              File file = await File("${tempDir.path}/result.jpg").create();
-
-              file.writeAsBytesSync(ss);
-
-              AppUtils.showloadingOverlay(() async {
-                final res = await Share.shareXFiles(
-                  [XFile(file.path)],
-                  text: "Result",
-                  subject: 'Result',
-                );
-                print(res);
+              await AppUtils.showloadingOverlay(() async {
+                ss = await screenshotController.captureFromWidget(widget);
+                final tempDir = await getTemporaryDirectory();
+                file = await File("${tempDir.path}/result.jpg").create();
+                file.writeAsBytesSync(ss);
               });
+
+              await Share.shareXFiles(
+                [XFile(file.path)],
+                text: "Result",
+                subject: 'Result',
+              );
             },
           ),
           //     //     // ans tils

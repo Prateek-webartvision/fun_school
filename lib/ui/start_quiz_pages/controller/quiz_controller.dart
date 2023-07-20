@@ -8,8 +8,9 @@ class QuizController extends GetxController {
   ApiState apiState = ApiState.loading;
   String error = '';
   List<QuizModel>? quizs;
+  final int misstionIdex;
 
-  QuizController({String? title, int? subjectId}) {
+  QuizController({String? title, int? subjectId, required this.misstionIdex}) {
     loadQuiz(title: title, subjectId: subjectId);
   }
 

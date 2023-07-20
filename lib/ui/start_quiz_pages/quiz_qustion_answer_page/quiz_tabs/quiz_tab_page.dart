@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:number_to_indian_words/number_to_indian_words.dart';
 
 import '../../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../../router/app_router.dart';
@@ -66,7 +67,7 @@ class _QuizTabPageState extends State<QuizTabPage> {
                       child: Column(
                         children: [
                           Text(
-                            "Mission ${controller.currentQuizIndex + 1}",
+                            "Mission ${NumToWords.convertNumberToIndianWords(controller.misstionIdex)}".capitalize!,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -132,8 +133,8 @@ class _QuizTabPageState extends State<QuizTabPage> {
                       // "Look at the numbers. Drag and drop in their correct word.",
                       quiz.question ?? "",
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
                       ),
                     )
                   ],
@@ -143,7 +144,6 @@ class _QuizTabPageState extends State<QuizTabPage> {
               // dag options
               20.height,
               Container(
-                // height: 240,
                 decoration: BoxDecoration(
                   color: AppColor.white,
                   border: Border.all(color: AppColor.softBorderColor),
@@ -160,6 +160,7 @@ class _QuizTabPageState extends State<QuizTabPage> {
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemCount: quiz.quizData!.length,
+                        primary: false,
                         itemBuilder: (context, index) {
                           final item = quiz.quizData![index];
                           return Draggable<QuizData>(
@@ -182,51 +183,94 @@ class _QuizTabPageState extends State<QuizTabPage> {
 
               20.height,
               // target
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColor.white,
-                  border: Border.all(color: AppColor.softBorderColor),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: quiz.quizData!.length,
-                  itemBuilder: (context, index) {
-                    return DragTarget<QuizData>(
-                      onAccept: (data) {
-                        controller.changeAns(quizDataIndex: index, selectedAns: data.correctAnswer!);
-                      },
-                      builder: (context, candidateData, rejectedData) {
-                        return Container(
-                          height: 40,
-                          // color: Colors.green,
-                          alignment: Alignment.centerLeft,
-                          child: RichText(
-                            text: TextSpan(
-                                text: quiz.quizData![index].question,
-                                style: TextStyle(color: Colors.black),
-                                children: (quiz.quizData![index].selectedAns != null)
-                                    ? [
-                                        TextSpan(text: " "),
-                                        TextSpan(text: quiz.quizData![index].selectedAns!),
-                                      ]
-                                    : [
-                                        TextSpan(text: " "),
-                                        TextSpan(text: "_________"),
-                                      ]),
+
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: quiz.quizData!.length,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                itemBuilder: (context, index) {
+                  return DragTarget<QuizData>(
+                    onAccept: (data) {
+                      controller.changeAns(quizDataIndex: index, selectedAns: data.correctAnswer!);
+                    },
+                    builder: (context, candidateData, rejectedData) {
+                      return Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          border: Border.all(color: AppColor.softBorderColor),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          text: TextSpan(
+                            text: quiz.quizData![index].question,
+                            style: TextStyle(color: Colors.black),
+                            children: (quiz.quizData![index].selectedAns != null)
+                                ? [
+                                    TextSpan(text: " "),
+                                    TextSpan(text: quiz.quizData![index].selectedAns!),
+                                  ]
+                                : [
+                                    TextSpan(text: " "),
+                                    TextSpan(text: "_________"),
+                                  ],
                           ),
-                        );
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return 0.height;
-                  },
-                ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return 15.height;
+                },
               ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: AppColor.white,
+              //     border: Border.all(color: AppColor.softBorderColor),
+              //     borderRadius: BorderRadius.circular(8),
+              //   ),
+              //   alignment: Alignment.center,
+              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              //   margin: EdgeInsets.symmetric(horizontal: 16),
+              //   child: ListView.separated(
+              //     shrinkWrap: true,
+              //     itemCount: quiz.quizData!.length,
+              //     itemBuilder: (context, index) {
+              //       return DragTarget<QuizData>(
+              //         onAccept: (data) {
+              //           controller.changeAns(quizDataIndex: index, selectedAns: data.correctAnswer!);
+              //         },
+              //         builder: (context, candidateData, rejectedData) {
+              //           return Container(
+              //             height: 40,
+              //             // color: Colors.green,
+              //             alignment: Alignment.centerLeft,
+              //             child: RichText(
+              //               text: TextSpan(
+              //                   text: quiz.quizData![index].question,
+              //                   style: TextStyle(color: Colors.black),
+              //                   children: (quiz.quizData![index].selectedAns != null)
+              //                       ? [
+              //                           TextSpan(text: " "),
+              //                           TextSpan(text: quiz.quizData![index].selectedAns!),
+              //                         ]
+              //                       : [
+              //                           TextSpan(text: " "),
+              //                           TextSpan(text: "_________"),
+              //                         ]),
+              //             ),
+              //           );
+              //         },
+              //       );
+              //     },
+              //     separatorBuilder: (context, index) {
+              //       return 0.height;
+              //     },
+              //   ),
+              // ),
             ],
           ),
           bottomNavigationBar: GetBuilder(
@@ -337,39 +381,24 @@ class _KGifImageState extends State<KGifImage> with SingleTickerProviderStateMix
     super.initState();
   }
 
+  _loadFrame() async {
+    final url = Uri.parse(widget.url);
+    final ByteData data = await NetworkAssetBundle(url).load(url.path);
+
+    await _extractGifFrames(data).then((e) {
+      gifController.repeat(min: 0, max: e.toDouble(), period: const Duration(seconds: 1));
+    });
+  }
+
   // Function to extract gif image frames
   Future<int> _extractGifFrames(ByteData data) async {
-    // Create a list to store the frames
-    // final List<Uint8List> frames = <Uint8List>[];
-
     // Create a codec to decode the gif
     final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
 
-    // Count the number of frames in the gif
     final int frameCount = codec.frameCount;
-    // print('Total frameCount: $frameCount');
 
-    // // Loop through the frames and add them to the list
-    // for (int i = 0; i < frameCount; i++) {
-    //   // Get the next frame
-    //   final ui.FrameInfo fi = await codec.getNextFrame();
-
-    //   // Add the frame to the list
-    //   final frame = await loadImage(fi.image);
-
-    //   // Add the frame to the list if it is not null
-    //   if (frame != null) {
-    //     frames.add(frame);
-    //   }
-    // }
     return frameCount;
-    // return frames;
   }
-
-  // Future<Uint8List?> loadImage(ui.Image image) async {
-  //   final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  //   return byteData?.buffer.asUint8List();
-  // }
 
   @override
   void dispose() {
@@ -384,17 +413,10 @@ class _KGifImageState extends State<KGifImage> with SingleTickerProviderStateMix
       image: NetworkImage(widget.url),
       controller: gifController,
       repeat: ImageRepeat.repeat,
-      onFetchCompleted: () async {
+      onFetchCompleted: () {
         gifController.value = 0;
         gifController.stop();
-        final url = Uri.parse(widget.url);
-        final ByteData data = await NetworkAssetBundle(url).load(url.path);
-
-        // Using the _extractGifFrames function to extract the frames
-        await _extractGifFrames(data).then((e) {
-          // print(e);
-          gifController.repeat(min: 0, max: e.toDouble(), period: const Duration(seconds: 1));
-        });
+        _loadFrame();
       },
     );
   }

@@ -154,6 +154,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                                 title: chapter.first.title!,
                                 subjectId: widget.subject!.subjectId!,
                                 courseId: widget.courseID,
+                                index: index + 1,
                               ),
                             ),
                           );
@@ -199,10 +200,11 @@ class _ChaptersTabState extends State<ChaptersTab> {
 }
 
 class KLoadingPage extends StatefulWidget {
-  const KLoadingPage({super.key, required this.title, required this.subjectId, required this.courseId});
+  const KLoadingPage({super.key, required this.title, required this.subjectId, required this.courseId, required this.index});
   final String title;
   final int subjectId;
   final String courseId;
+  final int index;
 
   @override
   State<KLoadingPage> createState() => _KLoadingPageState();
@@ -215,10 +217,17 @@ class _KLoadingPageState extends State<KLoadingPage> {
   @override
   void initState() {
     quizController = QuizController(
+      misstionIdex: widget.index,
       title: widget.title,
       subjectId: widget.subjectId,
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    quizController.dispose();
+    super.dispose();
   }
 
   @override

@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late HomePageTipController homePageTipController;
   late SmoothIndicatorController smoothIndicatorController;
+  late SmoothIndicatorController smoothIndicatorTipController;
   List<CourseSliderTile> courseSliderData = [
     CourseSliderTile(
       assetImage: "assets/img/home_images/School.jpg",
@@ -62,6 +63,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     homePageTipController = HomePageTipController();
     smoothIndicatorController = SmoothIndicatorController(0);
+    smoothIndicatorTipController = SmoothIndicatorController(0);
     super.initState();
   }
 
@@ -369,9 +371,28 @@ class _HomePageState extends State<HomePage> {
                               enableInfiniteScroll: false,
                               autoPlay: false,
                               onPageChanged: (index, reason) {
-                                smoothIndicatorController.changeIndex(index);
+                                smoothIndicatorTipController.changeIndex(index);
                               },
                             ),
+                          ),
+                          8.height,
+                          AnimatedBuilder(
+                            animation: smoothIndicatorTipController,
+                            builder: (context, child) {
+                              return Align(
+                                alignment: Alignment.center,
+                                child: AnimatedSmoothIndicator(
+                                  effect: WormEffect(
+                                    dotHeight: 8,
+                                    dotWidth: 8,
+                                    activeDotColor: AppColor.mainColor,
+                                    dotColor: AppColor.mainColor.withOpacity(0.3),
+                                  ),
+                                  activeIndex: smoothIndicatorTipController.currentIndex,
+                                  count: controller.tips!.length,
+                                ),
+                              );
+                            },
                           ),
                           // ListView.separated(
                           //   shrinkWrap: true,
