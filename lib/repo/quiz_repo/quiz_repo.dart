@@ -15,17 +15,13 @@ class QuizType {
 class QuizRepository {
   static final _api = AppApi();
 
-  static Future getQuiz({
-    String? title,
-    required String quizType,
-    int? courseId,
-  }) async {
+  static Future getQuiz({String? title, required String quizType, int? subjectId}) async {
     Map<String, String> data = {"type": quizType};
     if (title != null) {
       data["title"] = title;
     }
-    if (courseId != null) {
-      data['subject_id'] = courseId.toString();
+    if (subjectId != null) {
+      data['subject_id'] = subjectId.toString();
     }
 
     return await _api.getApi(AppUrls.getQuizs, params: data).then((value) {

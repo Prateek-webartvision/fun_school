@@ -26,7 +26,7 @@ class MockQuizController extends GetxController {
 
   loadQuiz({String? title, int? courseId}) async {
     apiState = ApiState.loading;
-    await QuizRepository.getQuiz(title: title, courseId: courseId, quizType: QuizType.mockTest).then((value) {
+    await QuizRepository.getQuiz(title: title, subjectId: courseId, quizType: QuizType.mockTest).then((value) {
       quizs = value as List<MockQuizModel>;
       apiState = ApiState.success;
     }).onError((error, stackTrace) {

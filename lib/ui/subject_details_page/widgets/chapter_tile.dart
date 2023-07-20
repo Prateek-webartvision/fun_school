@@ -48,7 +48,7 @@ class ChapterTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColor.white,
         border: Border.all(color: AppColor.softBorderColor),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(6)),
       ),
       child: Column(
         children: [

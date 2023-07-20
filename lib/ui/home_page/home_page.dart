@@ -367,7 +367,7 @@ class _HomePageState extends State<HomePage> {
                               viewportFraction: 1,
                               height: 160,
                               enableInfiniteScroll: false,
-                              autoPlay: true,
+                              autoPlay: false,
                               onPageChanged: (index, reason) {
                                 smoothIndicatorController.changeIndex(index);
                               },

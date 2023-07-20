@@ -9,8 +9,8 @@ class QuizController extends GetxController {
   String error = '';
   List<QuizModel>? quizs;
 
-  QuizController({String? title, int? courseID}) {
-    loadQuiz(title: title, courseId: courseID);
+  QuizController({String? title, int? subjectId}) {
+    loadQuiz(title: title, subjectId: subjectId);
   }
 
   int currentQuizIndex = 0;
@@ -26,9 +26,9 @@ class QuizController extends GetxController {
     // print("object $selectedAns");
   }
 
-  loadQuiz({String? title, int? courseId}) async {
+  loadQuiz({String? title, int? subjectId}) async {
     apiState = ApiState.loading;
-    await QuizRepository.getQuiz(title: title, quizType: QuizType.quiz, courseId: courseId).then((value) {
+    await QuizRepository.getQuiz(title: title, quizType: QuizType.quiz, subjectId: subjectId).then((value) {
       quizs = value as List<QuizModel>;
       apiState = ApiState.success;
     }).onError((error, stackTrace) {

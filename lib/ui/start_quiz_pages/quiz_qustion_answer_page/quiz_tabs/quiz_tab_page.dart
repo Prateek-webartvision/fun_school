@@ -3,7 +3,6 @@
 import 'dart:ui' as ui;
 
 import 'package:citycloud_school/uitls/app_utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gif/flutter_gif.dart';

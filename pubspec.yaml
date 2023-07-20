@@ -65,6 +65,7 @@ dependencies:
   chat_gpt_sdk: ^2.2.2
   carousel_slider: ^4.2.1
   flutter_gif: ^0.0.4
+  number_to_indian_words: ^1.0.1
 
 dev_dependencies:
   flutter_test:
