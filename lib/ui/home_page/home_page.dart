@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     ),
     CourseSliderTile(
       assetImage: "assets/img/home_images/Career.jpg",
-      title: "Find course by career",
+      title: "Find courses by career",
       subTitle: "Search using your career aspirations",
       onClick: () {
         appRoutes.pushNamed(PagesName.findCourseByCareerPage);
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     ),
     CourseSliderTile(
       assetImage: "assets/img/home_images/Interest.jpg",
-      title: "Find Course by interest",
+      title: "Find Courses by interest",
       subTitle: "Find out how to code, design and lots more",
       onClick: () {
         appRoutes.pushNamed(PagesName.findCourseByInterestPage);

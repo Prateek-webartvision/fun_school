@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
 import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
-import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../models/quiz/interactive_quiz.model.dart';
-import '../interactive_quiz_page/interactive_quiz_page.dart';
 import 'controller/subject_video_list_page_controller.dart';
 import 'widgets/more_option_sheets.dart';
 import 'widgets/take_note_sheet.dart';
@@ -272,32 +270,32 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                     Text("${controller.videos[controller.currentVideo].subTitle}"),
                     GestureDetector(
                       onTap: () async {
-                        InteractiveQuizModel? result;
-                        final randomQuiz = interactiveQuizController.getRandomQuiz();
+                        //     InteractiveQuizModel? result;
+                        //     final randomQuiz = interactiveQuizController.getRandomQuiz();
 
-                        if (randomQuiz != null) {
-                          controller.videoPlayerController.pause();
-                          result = await rootNavigator.currentState!.push<InteractiveQuizModel>(
-                            MaterialPageRoute(
-                              builder: (context) => InteractiveQuizPage(
-                                quizModel: randomQuiz,
-                              ),
-                            ),
-                          );
-                          controller.videoPlayerController.play();
-                        }
+                        //     if (randomQuiz != null) {
+                        //       controller.videoPlayerController.pause();
+                        //       result = await rootNavigator.currentState!.push<InteractiveQuizModel>(
+                        //         MaterialPageRoute(
+                        //           builder: (context) => InteractiveQuizPage(
+                        //             quizModel: randomQuiz,
+                        //           ),
+                        //         ),
+                        //       );
+                        //       controller.videoPlayerController.play();
+                        //     }
 
-                        if (result != null) {
-                          var v = interactiveQuizController.addToViewed(quiz: result);
+                        //     if (result != null) {
+                        //       var v = interactiveQuizController.addToViewed(quiz: result);
 
-                          if (v == true) {
-                            if (controller.currentVideo < controller.videos.length - 1) {
-                              controller.onNextVideo();
-                            }
-                          }
-                        } else {
-                          // controller.onNextVideo();
-                        }
+                        //       if (v == true) {
+                        //         if (controller.currentVideo < controller.videos.length - 1) {
+                        controller.onNextVideo();
+                        //     }
+                        //   }
+                        // } else {
+                        //   // controller.onNextVideo();
+                        // }
                       },
                       child: Row(
                         children: [
