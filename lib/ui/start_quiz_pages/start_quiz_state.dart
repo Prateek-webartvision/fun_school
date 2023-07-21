@@ -6,15 +6,12 @@ import 'start_quiz_view.dart';
 
 abstract class StartQuizState extends State<StartQuizView> {
   late MockQuizController mockQuizController;
-  // late QuizController quizController;
 
   @override
   void initState() {
-    // quizController = QuizController(title: widget.title, subjectId: widget.subjectId);
     mockQuizController = MockQuizController(title: widget.title, courseID: widget.subjectId);
 
     Get.lazyPut(() => mockQuizController);
-    // Get.lazyPut(() => quizController);
 
     super.initState();
   }

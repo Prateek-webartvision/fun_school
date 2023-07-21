@@ -3,6 +3,7 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
+import 'package:citycloud_school/ui/interactive_quiz_page/interactive_quiz_page.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,6 @@ import '../../../repo/flascard_repo/flashcard_repo.dart';
 import '../../../style/color.dart';
 import '../../flash_card_page/flash_card_view.dart';
 import '../widgets/chapter_tile.dart';
-import '../widgets/mission_loading_page.dart';
 import '../widgets/subject_state_selector.dart';
 
 enum SubjectState { videos, quiz, flashcard }
@@ -97,26 +97,23 @@ class ChaptersTab extends StatelessWidget {
                   subjects: chapter,
                   videos: subject!.videos!,
                   enrollmentData: enrollmentData,
+                  missionIndex: index + 1,
                 ),
                 GestureDetector(
                   onTap: () async {
                     // enroll check
                     if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
                       // addd new page to load and show quiz
-                      var res = await rootNavigator.currentState!.push(
+                      await rootNavigator.currentState!.push(
                         MaterialPageRoute(
-                          builder: (context) => KQuizLoadingPage(
+                          builder: (context) => InteractiveQuizPage(
                             title: chapter.first.title!,
                             subjectId: subject!.subjectId!,
                             courseId: courseID,
-                            index: index + 1,
+                            misstionIdex: index + 1,
                           ),
                         ),
                       );
-                      // print(res);
-                      if (res != null) {
-                        AppUtils.showSnack(res);
-                      }
                     } else {
                       AppUtils.showSnack("First Enroll The Course");
                     }

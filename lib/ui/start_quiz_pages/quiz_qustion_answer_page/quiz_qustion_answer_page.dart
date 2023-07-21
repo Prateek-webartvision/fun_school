@@ -4,24 +4,22 @@ import 'package:flutter/material.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
 import '../controller/mock_quiz_controller.dart';
-import '../widgets/no_quiz_found.dart';
 import 'quiz_tabs/mock_quiz_tab_page.dart';
-import 'quiz_tabs/quiz_tab_page.dart';
 
 class QuizQustionQnswerPage extends StatelessWidget {
   const QuizQustionQnswerPage({
     super.key,
-    this.extraController,
+    required this.extraController,
     required this.subjectId,
     required this.courseId,
   });
-  final dynamic extraController;
+  final MockQuizController extraController;
   final int subjectId;
   final String courseId;
 
   popBack2Times() {
-    appRoutes.pop();
-    appRoutes.pop();
+    rootNavigator.currentState!.pop();
+    rootNavigator.currentState!.pop();
   }
 
   @override
@@ -31,31 +29,22 @@ class QuizQustionQnswerPage extends StatelessWidget {
         popBack2Times();
         return false;
       },
-      child: (extraController != null)
-          ? Scaffold(
-              appBar: AppBar(
-                backgroundColor: AppColor.scaffoldBg,
-                title: Text((extraController is MockQuizController) ? "Mock Test" : "Quiz", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                leading: GestureDetector(
-                  onTap: popBack2Times,
-                  child: Icon(Icons.arrow_back),
-                ),
-                centerTitle: true,
-              ),
-              body: (extraController is MockQuizController)
-                  ? MockQuizTabPage(
-                      mockQuizController: extraController,
-                      subjectId: subjectId.toString(),
-                      courseId: courseId,
-                    )
-                  : QuizTabPage(
-                      quizController: extraController,
-                      subjectId: subjectId.toString(),
-                      courseId: courseId,
-                    ),
-            )
-          // No quiz controller found
-          : NoQuizFoundWidget(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.scaffoldBg,
+          title: Text("Mock Test", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          leading: GestureDetector(
+            onTap: popBack2Times,
+            child: Icon(Icons.arrow_back),
+          ),
+          centerTitle: true,
+        ),
+        body: MockQuizTabPage(
+          mockQuizController: extraController,
+          subjectId: subjectId.toString(),
+          courseId: courseId,
+        ),
+      ),
     );
   }
 }

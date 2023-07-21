@@ -19,6 +19,7 @@ class ChapterTile extends StatelessWidget {
     this.subjectId,
     this.enrollmentData,
     required this.courseId,
+    required this.missionIndex,
   });
   final String title;
   final String courseId;
@@ -26,9 +27,20 @@ class ChapterTile extends StatelessWidget {
   final List<ContentVideo> videos;
   final int? subjectId;
   final List<CoursesEnrollment>? enrollmentData;
+  final int missionIndex;
 
-  getVideos(String subTitle) {
-    return videos.where((element) => element.subTitle!.contains(subTitle)).toList();
+  List<ContentVideo> getBelowVideos(int index) {
+    final topicSet = subjects.map((e) => e.subTitle).toList();
+
+    int detIndex = topicSet.indexOf(subjects[index].subTitle);
+    List<ContentVideo> belowVideos = [];
+
+    for (int i = detIndex; i < topicSet.length; i++) {
+      videos.where((element) => element.subTitle! == topicSet[i]).toList().forEach((e) {
+        belowVideos.add(e);
+      });
+    }
+    return belowVideos;
   }
 
   @override
@@ -94,18 +106,19 @@ class ChapterTile extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
-                    final videos = getVideos(subjects[index].subTitle!);
+                    final v = getBelowVideos(index);
 
-                    if (videos.isEmpty) {
+                    if (v.isEmpty) {
                       AppUtils.showSnack("No Videos");
                     } else {
                       rootNavigator.currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => SubjectVideoListPage(
-                            videos: videos,
+                            videos: v,
                             subjectId: subjectId,
                             contentTitle: subjects[index].title!,
                             courseID: courseId,
+                            missionIndex: missionIndex,
                           ),
                         ),
                       );

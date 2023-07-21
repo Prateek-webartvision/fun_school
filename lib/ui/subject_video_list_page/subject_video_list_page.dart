@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:math';
-
 import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
-import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +9,9 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../router/app_router.dart';
+import '../interactive_quiz_page/interactive_quiz_page.dart';
+import '../subject_details_page/widgets/mission_loading_page.dart';
 import 'controller/subject_video_list_page_controller.dart';
 import 'widgets/more_option_sheets.dart';
 import 'widgets/take_note_sheet.dart';
@@ -23,9 +23,11 @@ class SubjectVideoListPage extends StatefulWidget {
     this.subjectId,
     required this.contentTitle,
     required this.courseID,
+    required this.missionIndex,
   });
   final List<ContentVideo> videos;
   final int? subjectId;
+  final int missionIndex;
   final String contentTitle;
   final String courseID;
 
@@ -267,10 +269,19 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                     GestureDetector(
                       onTap: () async {
                         controller.onNextVideo(
-                          onVideoEnded: () {
-                            // load next video
-                            AppUtils.showSnack("This is last video");
-                            print("object");
+                          onVideoEnded: () async {
+                            controller.videoPlayerController.pause();
+                            await rootNavigator.currentState!.push(
+                              MaterialPageRoute(
+                                builder: (context) => InteractiveQuizPage(
+                                  title: widget.contentTitle,
+                                  subjectId: widget.subjectId!,
+                                  courseId: widget.courseID,
+                                  misstionIdex: widget.missionIndex,
+                                  isFromVideo: true,
+                                ),
+                              ),
+                            );
                           },
                         );
                       },

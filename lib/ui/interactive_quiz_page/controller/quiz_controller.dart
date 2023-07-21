@@ -24,7 +24,6 @@ class QuizController extends GetxController {
   changeAns({required int quizDataIndex, required String selectedAns}) {
     quizs![currentQuizIndex].quizData![quizDataIndex].copyWith(selectedAns: selectedAns);
     update();
-    // print("object $selectedAns");
   }
 
   loadQuiz({String? title, int? subjectId}) async {

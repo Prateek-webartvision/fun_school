@@ -10,13 +10,10 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:number_to_indian_words/number_to_indian_words.dart';
 
-import '../../../../repo/quiz_repo/quiz_repo.dart';
-import '../../../../router/app_router.dart';
-import '../../../../router/pages.dart';
-import '../../../../style/color.dart';
-import '../../../../widegts/k_btn.dart';
-import '../../controller/quiz_controller.dart';
-import '../../model/quiz_model.dart';
+import '../../style/color.dart';
+import '../../widegts/k_btn.dart';
+import 'controller/quiz_controller.dart';
+import '../start_quiz_pages/model/quiz_model.dart';
 
 class QuizTabPage extends StatefulWidget {
   const QuizTabPage({
@@ -24,10 +21,14 @@ class QuizTabPage extends StatefulWidget {
     required this.quizController,
     required this.subjectId,
     required this.courseId,
+    required this.onCencel,
+    required this.onSubmit,
   });
   final QuizController quizController;
   final String subjectId;
   final String courseId;
+  final Function() onCencel;
+  final Function() onSubmit;
 
   @override
   State<QuizTabPage> createState() => _QuizTabPageState();
@@ -283,10 +284,7 @@ class _QuizTabPageState extends State<QuizTabPage> {
                     Expanded(
                       child: KBtn(
                         height: 44,
-                        onClick: () {
-                          appRoutes.pop();
-                          appRoutes.pop();
-                        },
+                        onClick: widget.onCencel,
                         text: "Cancel",
                         bgColor: AppColor.white,
                         fbColor: Colors.black,
@@ -304,18 +302,8 @@ class _QuizTabPageState extends State<QuizTabPage> {
                         } else if ((controller.quizs!.length - 1) > controller.currentQuizIndex) {
                           controller.goToNextQuitions();
                         } else {
-                          appRoutes.pop();
-                          appRoutes.pop();
-                          // final data = {"type": QuizType.quiz, "data": controller.quizs};
-                          final data = {
-                            "type": QuizType.quiz,
-                            "data": controller.quizs!,
-                            "courseId": widget.courseId,
-                            "subjectId": widget.subjectId,
-                          };
-                          // appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
-                          // update new Quiz result page
-                          print("object $data");
+                          // submit
+                          widget.onSubmit();
                         }
                       },
                       text: "Next",

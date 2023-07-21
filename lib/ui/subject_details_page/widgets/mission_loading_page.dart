@@ -6,14 +6,22 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../router/app_router.dart';
 import '../../../router/pages.dart';
-import '../../start_quiz_pages/controller/quiz_controller.dart';
+import '../../interactive_quiz_page/controller/quiz_controller.dart';
 
 class KQuizLoadingPage extends StatefulWidget {
-  const KQuizLoadingPage({super.key, required this.title, required this.subjectId, required this.courseId, required this.index});
+  const KQuizLoadingPage({
+    super.key,
+    required this.title,
+    required this.subjectId,
+    required this.courseId,
+    required this.index,
+    this.isFromVideo = false,
+  });
   final String title;
   final int subjectId;
   final String courseId;
   final int index;
+  final bool isFromVideo;
 
   @override
   State<KQuizLoadingPage> createState() => _KQuizLoadingPageState();
@@ -64,12 +72,12 @@ class _KQuizLoadingPageState extends State<KQuizLoadingPage> {
 
             return Text("");
           } else {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
               // nev to quiz
               final data = {"controller": quizController, "courseId": widget.courseId, "subjectId": widget.subjectId};
               // print(data);
               if (isShow != true) {
-                appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
+                await appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
               }
               setState(() {
                 isShow = true;
