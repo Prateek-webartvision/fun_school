@@ -1,13 +1,13 @@
 import 'dart:math';
 
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../models/courses_dedails/subject.model.dart';
-import '../../../uitls/app_utils.dart';
 
 class SubjectVideoListPageController extends GetxController {
-  final List<ContentVideo> videos;
+  late final List<ContentVideo> videos;
   int currentVideo;
   late VideoPlayerController videoPlayerController;
   bool isVideoLoaded = false;
@@ -15,6 +15,12 @@ class SubjectVideoListPageController extends GetxController {
   bool isShowingPlaySeekBar = false;
 
   SubjectVideoListPageController({required this.videos, this.currentVideo = 0}) {
+    _loadVideo();
+  }
+
+  updateVideoList({required List<ContentVideo> newVideos}) {
+    videos = newVideos;
+    currentVideo = 0;
     _loadVideo();
   }
 
@@ -36,8 +42,16 @@ class SubjectVideoListPageController extends GetxController {
     await videoPlayerController.initialize().then((value) {
       isVideoLoaded = true;
       videoPlayerController.play();
-      isplaying = true;
       isShowingPlaySeekBar = true;
+      update();
+    });
+
+    videoPlayerController.addListener(() {
+      isplaying = videoPlayerController.value.isPlaying;
+      // print(" dasd = ${videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds}");
+      // if (videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds == 1) {
+      //   AppUtils.showSnack("Video Ended plase click 'next to'");
+      // }
       update();
     });
   }
@@ -58,13 +72,13 @@ class SubjectVideoListPageController extends GetxController {
     update();
   }
 
-  onNextVideo() {
+  onNextVideo({required Function() onVideoEnded}) {
     if (currentVideo < (videos.length - 1)) {
       currentVideo += 1;
       _loadVideo();
       update();
     } else {
-      AppUtils.showSnack("This is last video");
+      onVideoEnded();
     }
   }
 
@@ -74,8 +88,6 @@ class SubjectVideoListPageController extends GetxController {
     } else {
       videoPlayerController.play();
     }
-    isplaying = !isplaying;
-    update();
   }
 
   seekForword10Sec() async {

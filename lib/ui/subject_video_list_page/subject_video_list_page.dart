@@ -12,7 +12,6 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import '../../models/quiz/interactive_quiz.model.dart';
 import 'controller/subject_video_list_page_controller.dart';
 import 'widgets/more_option_sheets.dart';
 import 'widgets/take_note_sheet.dart';
@@ -36,14 +35,11 @@ class SubjectVideoListPage extends StatefulWidget {
 
 class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   late SubjectVideoListPageController subjectVideoListPageController;
-  late InteractiveQuizController interactiveQuizController;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     subjectVideoListPageController = SubjectVideoListPageController(videos: widget.videos);
-    interactiveQuizController = InteractiveQuizController(widget.contentTitle);
-
     WakelockPlus.enable();
     super.initState();
   }
@@ -51,7 +47,6 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
   @override
   void dispose() {
     subjectVideoListPageController.dispose();
-    interactiveQuizController.dispose();
     WakelockPlus.disable();
     super.dispose();
   }
@@ -123,6 +118,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                 )
                               : CircularProgressIndicator(),
                         ),
+                        // play back btns
                         Visibility(
                           visible: controller.isShowingPlaySeekBar,
                           // visible: true,
@@ -197,8 +193,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                 : SizedBox(),
                           ),
                         ),
-                        // botom bar with mode option btn
 
+                        // botom bar with mode option btn
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Column(
@@ -270,32 +266,13 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                     Text("${controller.videos[controller.currentVideo].subTitle}"),
                     GestureDetector(
                       onTap: () async {
-                        //     InteractiveQuizModel? result;
-                        //     final randomQuiz = interactiveQuizController.getRandomQuiz();
-
-                        //     if (randomQuiz != null) {
-                        //       controller.videoPlayerController.pause();
-                        //       result = await rootNavigator.currentState!.push<InteractiveQuizModel>(
-                        //         MaterialPageRoute(
-                        //           builder: (context) => InteractiveQuizPage(
-                        //             quizModel: randomQuiz,
-                        //           ),
-                        //         ),
-                        //       );
-                        //       controller.videoPlayerController.play();
-                        //     }
-
-                        //     if (result != null) {
-                        //       var v = interactiveQuizController.addToViewed(quiz: result);
-
-                        //       if (v == true) {
-                        //         if (controller.currentVideo < controller.videos.length - 1) {
-                        controller.onNextVideo();
-                        //     }
-                        //   }
-                        // } else {
-                        //   // controller.onNextVideo();
-                        // }
+                        controller.onNextVideo(
+                          onVideoEnded: () {
+                            // load next video
+                            AppUtils.showSnack("This is last video");
+                            print("object");
+                          },
+                        );
                       },
                       child: Row(
                         children: [
@@ -318,66 +295,5 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
         },
       ),
     );
-  }
-}
-
-class InteractiveQuizController extends GetxController {
-  List<InteractiveQuizModel>? quizs;
-  List<InteractiveQuizModel> viewedQuizs = [];
-  int? randomSeed;
-
-  InteractiveQuizController(String title) {
-    _loadQuiz(title);
-  }
-
-  void _loadQuiz(String title) async {
-    QuizRepository.getIntractiveQuiz(title: title).then((value) {
-      quizs = value;
-    }).onError((error, stackTrace) {
-      print(error!);
-    });
-    update();
-  }
-
-  bool addToViewed({required InteractiveQuizModel quiz}) {
-    bool allAndRight = false;
-
-    for (var element in quiz.quizData!) {
-      // print("${element.correctAnswer} == ${element.seletedAns}");
-      if (element.correctAnswer == element.seletedAns) {
-        allAndRight = true;
-      } else {
-        allAndRight = false;
-        break;
-      }
-    }
-
-    if (allAndRight) {
-      viewedQuizs.add(quiz);
-      randomSeed = null;
-      // print("ans r");
-    } else {
-      randomSeed = quiz.quizId;
-    }
-    // update();
-    return allAndRight;
-  }
-
-  getRandomQuiz() {
-    var tempQuis = quizs!;
-    InteractiveQuizModel? _quiz;
-
-    for (var element in viewedQuizs) {
-      tempQuis.remove(element);
-    }
-
-    if (tempQuis.isNotEmpty) {
-      final index = Random(randomSeed).nextInt(tempQuis.length);
-      _quiz = tempQuis[index];
-    }
-
-    // print(randomSeed);
-
-    return _quiz;
   }
 }

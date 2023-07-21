@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/ui/chat/chat_gpt_page.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/quiz_result_page.dart';
+import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/result_page/quiz_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

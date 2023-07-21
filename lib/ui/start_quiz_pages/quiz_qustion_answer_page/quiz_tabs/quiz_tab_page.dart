@@ -313,7 +313,9 @@ class _QuizTabPageState extends State<QuizTabPage> {
                             "courseId": widget.courseId,
                             "subjectId": widget.subjectId,
                           };
-                          appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
+                          // appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
+                          // update new Quiz result page
+                          print("object $data");
                         }
                       },
                       text: "Next",
