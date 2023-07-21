@@ -11,7 +11,6 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../router/app_router.dart';
 import '../interactive_quiz_page/interactive_quiz_page.dart';
-import '../subject_details_page/widgets/mission_loading_page.dart';
 import 'controller/subject_video_list_page_controller.dart';
 import 'widgets/more_option_sheets.dart';
 import 'widgets/take_note_sheet.dart';
@@ -111,11 +110,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                           child: (controller.isVideoLoaded)
                               ? SizedBox(
                                   width: double.maxFinite,
-                                  child: AspectRatio(
-                                    aspectRatio: controller.videoPlayerController.value.aspectRatio,
-                                    child: VideoPlayer(
-                                      controller.videoPlayerController,
-                                    ),
+                                  child: VideoPlayer(
+                                    controller.videoPlayerController,
                                   ),
                                 )
                               : CircularProgressIndicator(),

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/ui/interactive_quiz_page/quiz_tab_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../repo/quiz_repo/quiz_repo.dart';
@@ -97,7 +98,7 @@ class _GifResultPageState extends State<GifResultPage> {
               children: [
                 Container(),
                 Text(
-                  (ans.grade >= 75) ? "Mission Completed" : "Mission Fail",
+                  (ans.grade >= 100) ? "Mission Completed" : "Mission Fail",
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -109,13 +110,10 @@ class _GifResultPageState extends State<GifResultPage> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      (ans.grade >= 75)
-                          ? Flexible(child: Image(image: NetworkImage("https://rochakjankari.in/wp-content/uploads/2021/02/giphyuu.gif")))
-                          : Flexible(
-                              child: Image(
-                                  image: NetworkImage(
-                                      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/44b6695e-9ae7-4039-bd65-cede627e03dc/d65l57k-5ead046b-078f-4938-ad13-6608474b0547.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ0YjY2OTVlLTlhZTctNDAzOS1iZDY1LWNlZGU2MjdlMDNkY1wvZDY1bDU3ay01ZWFkMDQ2Yi0wNzhmLTQ5MzgtYWQxMy02NjA4NDc0YjA1NDcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.TyrGh1bDE3nFq3sLgGpHosphVvn7pJjR_CPbZVA8Tbg")),
-                            ),
+                      (ans.grade >= 100)
+                          //success
+                          ? Flexible(child: KGifImage(url: "http://app.citycloudschool.co.ke/default/x/upload/success_quiz.gif"))
+                          : Flexible(child: KGifImage(url: "http://app.citycloudschool.co.ke/default/x/upload/fail_quiz.gif")),
                     ],
                   ),
                 ),
@@ -129,7 +127,7 @@ class _GifResultPageState extends State<GifResultPage> {
                 if (widget.isFromVideo) {
                   rootNavigator.currentState!.pop();
                   rootNavigator.currentState!.pop();
-                  if (ans.grade > 75) {
+                  if (ans.grade > 100) {
                     rootNavigator.currentState!.pop();
                   }
                 } else {
@@ -137,7 +135,7 @@ class _GifResultPageState extends State<GifResultPage> {
                   rootNavigator.currentState!.pop();
                 }
               },
-              text: (ans.grade >= 75) ? "Unlock new Content" : "better luck next time",
+              text: (ans.grade >= 100) ? "Unlock new Content" : "better luck next time",
               height: 44,
             ),
           )),

@@ -28,8 +28,8 @@ class SubjectVideoListPageController extends GetxController {
 
     if (isVideoLoaded == true) {
       isVideoLoaded = false;
-      videoPlayerController.dispose();
       isplaying = false;
+      videoPlayerController.dispose();
       update();
     }
 
