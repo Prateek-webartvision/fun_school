@@ -48,7 +48,6 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                       ? Container(
                           width: double.maxFinite,
                           alignment: Alignment.center,
-                          // color: Colors.green,
                           child: Text("No Subjects found"),
                         )
                       : TabBarView(
@@ -59,6 +58,7 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                                 (i, value) => MapEntry(
                                   i,
                                   ChaptersTab(
+                                    courseData: widget.courseData,
                                     courseID: widget.courseData!.courseId!.toString(),
                                     subject: subjects[i],
                                     enrollmentData: widget.courseData!.courseEnrollment,

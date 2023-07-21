@@ -3,23 +3,18 @@
 import 'package:citycloud_school/ui/subject_video_list_page/subject_video_list_page.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../models/courses_dedails/courses.model.dart';
-import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../models/courses_dedails/subject.model.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
-import '../tab_pages/chapter_tab.dart';
 
 class ChapterTile extends StatelessWidget {
   const ChapterTile({
     super.key,
     required this.title,
     required this.subjects,
-    required this.state,
-    required this.flashCard,
     required this.videos,
     this.subjectId,
     this.enrollmentData,
@@ -28,15 +23,9 @@ class ChapterTile extends StatelessWidget {
   final String title;
   final String courseId;
   final List<SubjectContent> subjects;
-  final List<FlashCardModel> flashCard;
   final List<ContentVideo> videos;
-  final SubjectState state;
   final int? subjectId;
   final List<CoursesEnrollment>? enrollmentData;
-
-  getFlashCards(String subTitle) {
-    return flashCard.where((element) => element.subTitle!.contains(subTitle)).toList();
-  }
 
   getVideos(String subTitle) {
     return videos.where((element) => element.subTitle!.contains(subTitle)).toList();
@@ -71,15 +60,6 @@ class ChapterTile extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                       ),
-                      children: (state == SubjectState.quiz)
-                          ? [
-                              TextSpan(text: " "),
-                              TextSpan(
-                                text: "( start mock test )".capitalize,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ]
-                          : null,
                     ),
                   ),
                 ),
@@ -103,34 +83,32 @@ class ChapterTile extends StatelessWidget {
               ],
             ),
           ),
+
           // List of similer subjects with diffrent sub title
           ListView.separated(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            primary: false,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             itemCount: subjects.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
                   if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
-                    // for video
-                    if (state == SubjectState.videos) {
-                      final videos = getVideos(subjects[index].subTitle!);
+                    final videos = getVideos(subjects[index].subTitle!);
 
-                      if (videos.isEmpty) {
-                        AppUtils.showSnack("No Videos");
-                      } else {
-                        rootNavigator.currentState!.push(
-                          MaterialPageRoute(
-                            builder: (context) => SubjectVideoListPage(
-                              videos: videos,
-                              subjectId: subjectId,
-                              contentTitle: subjects[index].title!,
-                              courseID: courseId,
-                            ),
+                    if (videos.isEmpty) {
+                      AppUtils.showSnack("No Videos");
+                    } else {
+                      rootNavigator.currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => SubjectVideoListPage(
+                            videos: videos,
+                            subjectId: subjectId,
+                            contentTitle: subjects[index].title!,
+                            courseID: courseId,
                           ),
-                        );
-                      }
+                        ),
+                      );
                     }
                   } else {
                     AppUtils.showSnack("First Enroll The Course");
@@ -139,11 +117,7 @@ class ChapterTile extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      (state == SubjectState.videos)
-                          ? Icons.play_circle_fill_rounded
-                          : (state == SubjectState.flashcard)
-                              ? Icons.card_giftcard
-                              : Icons.info_rounded,
+                      Icons.play_circle_fill_rounded,
                       color: AppColor.mainColor,
                       size: 20,
                     ),
