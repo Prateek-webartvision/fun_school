@@ -90,12 +90,14 @@ class SubjectContent {
 
 class ContentVideo {
   int? videoId;
+  String? title;
   String? subTitle;
   String? videoLink;
   String? dateAdded;
 
   ContentVideo.fronJson(Map<String, dynamic> json) {
     videoId = json['video_id'];
+    title = json['title'];
     subTitle = json['sub_title'];
     videoLink = json['video_link'];
     dateAdded = json['date_added'];

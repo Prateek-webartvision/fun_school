@@ -35,7 +35,7 @@ class SubjectVideoListPageController extends GetxController {
 
     videoPlayerController = VideoPlayerController.contentUri(
       Uri.parse(videoLink),
-      videoPlayerOptions: VideoPlayerOptions(),
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
 
     await videoPlayerController.initialize().then((value) {
@@ -47,6 +47,7 @@ class SubjectVideoListPageController extends GetxController {
 
     videoPlayerController.addListener(() {
       isplaying = videoPlayerController.value.isPlaying;
+      // print(videoPlayerController.value.);
       // print(" dasd = ${videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds}");
       // if (videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds == 1) {
       //   AppUtils.showSnack("Video Ended plase click 'next to'");
@@ -90,17 +91,13 @@ class SubjectVideoListPageController extends GetxController {
   }
 
   seekForword10Sec() async {
-    var crrentDuration = await videoPlayerController.position;
-    videoPlayerController.seekTo(
-      Duration(seconds: crrentDuration!.inSeconds + 10),
-    );
+    var crrentDuration = videoPlayerController.value.position;
+    await videoPlayerController.seekTo(Duration(seconds: crrentDuration.inSeconds + 10));
   }
 
   seekbackword10Sec() async {
-    var crrentDuration = await videoPlayerController.position;
-    videoPlayerController.seekTo(
-      Duration(seconds: crrentDuration!.inSeconds - 10),
-    );
+    var crrentDuration = videoPlayerController.value.position;
+    await videoPlayerController.seekTo(Duration(seconds: crrentDuration.inSeconds - 10));
   }
 
   int get randomNumber {

@@ -47,11 +47,9 @@ class MyNoteTab extends StatelessWidget {
                     visible: item.isCourseVisible,
                     onSubjectClick: (subject) {
                       controller.subjectVisiblity(item: subject);
-                      // print(subject.isChaptersVisbile);
                     },
                     onTitleClick: (title) {
                       controller.titleVisiblity(item: title);
-                      // print("${title.title}, ${title.isTitleVisbile}");
                     },
                     onSubTitleClick: (NoteBySubTitle title) {
                       controller.subTitleVisiblity(item: title);
@@ -159,13 +157,18 @@ class NoteTile extends StatelessWidget {
                         width: double.maxFinite,
                         color: Colors.white,
                         // subject name
-                        child: Text(
-                          // "Overview and history algebra",
-                          item.subjectName,
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              // "Overview and history algebra",
+                              item.subjectName,
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Visibility(visible: item.isChaptersVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                          ],
                         ),
                       ),
                     ),
@@ -191,15 +194,24 @@ class NoteTile extends StatelessWidget {
                                   width: double.maxFinite,
                                   color: Colors.white,
                                   // subject name
-                                  child: Text(
-                                    // "Overview and history algebra",
-                                    item2.title,
-                                    style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        // "Overview and history algebra",
+                                        item2.title,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                      ),
+                                      Visibility(visible: item2.isTitleVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                                    ],
                                   ),
                                 ),
                               ),
 
-                              // 3.height,
+                              3.height,
                               // sub title
                               Visibility(
                                 visible: item2.isTitleVisbile,
@@ -218,9 +230,14 @@ class NoteTile extends StatelessWidget {
                                             width: double.maxFinite,
                                             color: Colors.white,
                                             // subject name
-                                            child: Text(
-                                              subTitle.subTitle,
-                                              style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  subTitle.subTitle,
+                                                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+                                                ),
+                                                Visibility(visible: subTitle.isSubTitleVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                                              ],
                                             ),
                                           ),
                                         ),

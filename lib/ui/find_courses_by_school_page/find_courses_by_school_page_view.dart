@@ -148,7 +148,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
               }
             }
           },
-          text: "Add to Study Plan",
+          // text: "Add to Study Plan",
+          text: "Add to my courses".capitalize!,
           width: MediaQuery.of(context).size.width - 32,
           height: 44,
           bgColor: Color(0xff6938EF),

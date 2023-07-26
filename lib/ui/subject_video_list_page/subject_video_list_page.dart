@@ -156,7 +156,7 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                           controller.playPouse();
                                         },
                                         child: Icon(
-                                          (controller.isplaying) ? Icons.play_circle_fill_rounded : Icons.pause_circle_filled_rounded,
+                                          (!controller.isplaying) ? Icons.play_circle_fill_rounded : Icons.pause_circle_filled_rounded,
                                           color: Colors.white,
                                           size: 40,
                                         ),
