@@ -11,7 +11,7 @@ class PaworSummaryController extends GetxController {
   late ApiState apiState;
   List<PaworSummaryModel>? summarys;
 
-  late int currentUrlIndex;
+  late int currentUrlIndex = 0;
   double loadingPrgress = 0;
 
   PaworSummaryController({required String subjectId}) {

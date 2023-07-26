@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -34,6 +36,14 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
           } else if (controller.apiState == ApiState.error) {
             return Center(child: Text(controller.error.toString()));
           } else {
+            if (controller.summarys!.isEmpty) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                rootNavigator.currentState!.pop();
+                AppUtils.showSnack("No Power summary");
+              });
+              return Text("");
+            }
+            print(controller.summarys);
             return Column(
               children: [
                 Visibility(visible: controller.loadingPrgress != 1, child: LinearProgressIndicator(value: controller.loadingPrgress)),
