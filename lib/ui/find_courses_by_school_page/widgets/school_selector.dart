@@ -24,8 +24,8 @@ class SchoolSelector extends StatelessWidget {
           itemCount: controller.schools.length,
           itemBuilder: (context, index) {
             return CollageCard(
-              name: controller.schools[index]['name'],
-              icon: controller.schools[index]['icon'],
+              name: controller.schools[index].name,
+              icon: controller.schools[index].icon,
               isSelected: (controller.schoolSeletedIndex == index),
               onSelect: () {
                 controller.changeSchool(index);

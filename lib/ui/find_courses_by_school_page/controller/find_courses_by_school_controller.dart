@@ -90,7 +90,7 @@ class FindCoursesBySchoolController extends GetxController {
       }
       if (error is FlutterError) {
         /// this error comw due to call api after disposing controller
-        AppUtils.showSnack("gotcha");
+        AppUtils.showSnack(error.message);
       } else {
         AppUtils.showSnack(error.runtimeType.toString());
         this.error = error.toString();

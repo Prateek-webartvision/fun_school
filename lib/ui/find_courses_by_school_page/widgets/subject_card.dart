@@ -28,6 +28,7 @@ class SubjectCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: 93,
         decoration: BoxDecoration(
           color: AppColor.white,
           border: Border.all(color: AppColor.softBorderColor),
@@ -56,7 +57,7 @@ class SubjectCard extends StatelessWidget {
                   Text(
                     // name,
                     currentItem.courseName!.toString(),
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   4.height,
                   Row(

@@ -34,8 +34,8 @@ class SchoolDropdown extends StatelessWidget {
       //
       items: controller.schools.map((value) {
         return DropdownMenuItem(
-          value: value['key'].toString(),
-          child: Text(value['name'].toString()),
+          value: value.key.toString(),
+          child: Text(value.key.toString()),
         );
       }).toList(),
     );

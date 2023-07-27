@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
@@ -13,8 +15,7 @@ import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
 import '../study_page/model/study_plan_model.dart';
 import 'find_courses_by_school_page_state.dart';
-import 'widgets/my_header_delegate.dart';
-import 'widgets/school_selector.dart';
+import 'widgets/select_school_dropdwon.dart';
 import 'widgets/select_study_plan_sheet.dart';
 import 'widgets/subject_card.dart';
 
@@ -35,73 +36,275 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
         backgroundColor: AppColor.scaffoldBg,
       ),
       //
+      // body: GetBuilder(
+      //   init: findCoursesBySchoolController,
+      //   builder: (controller) {
+      //     return NestedScrollView(
+      //         physics: NeverScrollableScrollPhysics(),
+      //         headerSliverBuilder: (context, innerBoxIsScrolled) {
+      //           return [
+      //             // school selector
+      //             // SliverToBoxAdapter(
+      //             //   child: Container(
+      //             //     // height: 114,
+      //             //     constraints: BoxConstraints(minHeight: 114, maxHeight: 130),
+      //             //     decoration: BoxDecoration(
+      //             //       color: AppColor.white,
+      //             //       border: Border(
+      //             //         top: BorderSide(color: AppColor.softBorderColor),
+      //             //         bottom: BorderSide(color: AppColor.softBorderColor),
+      //             //       ),
+      //             //     ),
+      //             //     child: SchoolSelector(controller: controller.schoolSelectorController),
+      //             //   ),
+      //             // ),
+
+      //             SliverPadding(
+      //               padding: EdgeInsets.symmetric(horizontal: 16),
+      //               sliver: SliverToBoxAdapter(
+      //                 child: SelectSchoolLevelDropDown(
+      //                   schoolSelectorController: controller.schoolSelectorController,
+      //                 ),
+      //               ),
+      //             ),
+
+      //             // stiky search bar
+      //             SliverPadding(
+      //               padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+      //               sliver: SliverPersistentHeader(
+      //                 // pinned: true,
+      //                 delegate: MyHeaderDelegate(
+      //                   child: KSearchField(
+      //                     onSubmmit: (value) => controller.searchSort(value),
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ];
+      //         },
+      //         body: (controller.apiState == ApiState.loading)
+      //             ? Center(child: CircularProgressIndicator())
+      //             : (controller.apiState == ApiState.error)
+      //                 ? Center(
+      //                     child: Text(controller.error.toString()),
+      //                   )
+      //                 : (controller.coursesBySearch!.isEmpty)
+      //                     ? Padding(
+      //                         padding: const EdgeInsets.symmetric(horizontal: 30),
+      //                         child: Center(
+      //                           child: Text(
+      //                             "No Courses to show try later, try to change school level, search keyword",
+      //                             textAlign: TextAlign.center,
+      //                             style: TextStyle(),
+      //                           ),
+      //                         ),
+      //                       )
+      //                     : CarouselSlider.builder(
+      //                         itemCount: controller.coursesBySearch!.length,
+      //                         itemBuilder: (context, index, realIndex) {
+      //                           return Padding(
+      //                             padding: const EdgeInsets.symmetric(horizontal: 16),
+      //                             child: Column(
+      //                               children: [
+      //                                 SubjectCard(
+      //                                   // name: "Mathematics",
+      //                                   currentItem: controller.coursesBySearch![index],
+      //                                   icon: Icons.book_rounded,
+      //                                   selectedSubject: controller.selectedSubject,
+      //                                   onTap: () {
+      //                                     appRoutes.pushNamed(
+      //                                       PagesName.subjectDetailsPage,
+      //                                       extra: controller.coursesBySearch![index],
+      //                                     );
+      //                                   },
+      //                                   onItemSelected: () {
+      //                                     controller.changeCourseSelection(controller.coursesBySearch![index]);
+      //                                   },
+      //                                 ),
+      //                               ],
+      //                             ),
+      //                           );
+      //                         },
+      //                         options: CarouselOptions(
+      //                           initialPage: 0,
+      //                           aspectRatio: 1,
+      //                           viewportFraction: 1,
+      //                           height: 160,
+      //                           enableInfiniteScroll: false,
+      //                           autoPlay: false,
+      //                           onPageChanged: (index, reason) {
+      //                             // smoothIndicatorTipController.changeIndex(index);
+      //                           },
+      //                         ),
+      //                       )
+      //         // : ListView.separated(
+      //         //     padding: EdgeInsets.all(16),
+      //         //     itemCount: controller.coursesBySearch!.length,
+      //         //     itemBuilder: (context, index) {
+      //         //       return SubjectCard(
+      //         //         // name: "Mathematics",
+      //         //         currentItem: controller.coursesBySearch![index],
+      //         //         icon: Icons.book_rounded,
+      //         //         selectedSubject: controller.selectedSubject,
+      //         //         onTap: () {
+      //         //           appRoutes.pushNamed(
+      //         //             PagesName.subjectDetailsPage,
+      //         //             extra: controller.coursesBySearch![index],
+      //         //           );
+      //         //         },
+      //         //         onItemSelected: () {
+      //         //           controller.changeCourseSelection(controller.coursesBySearch![index]);
+      //         //         },
+      //         //       );
+      //         //     },
+      //         //     separatorBuilder: (context, index) => 8.height,
+      //         //   ),
+      //         );
+      //   },
+      // ),
+
+      // mew layout
       body: GetBuilder(
         init: findCoursesBySchoolController,
         builder: (controller) {
-          return NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                // school selector
-                SliverToBoxAdapter(
-                  child: Container(
-                    // height: 114,
-                    constraints: BoxConstraints(minHeight: 114, maxHeight: 130),
-                    decoration: BoxDecoration(
-                      color: AppColor.white,
-                      border: Border(
-                        top: BorderSide(color: AppColor.softBorderColor),
-                        bottom: BorderSide(color: AppColor.softBorderColor),
-                      ),
-                    ),
-                    child: SchoolSelector(controller: controller.schoolSelectorController),
-                  ),
-                ),
-
-                // stiky search bar
-                SliverPadding(
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-                  sliver: SliverPersistentHeader(
-                    // pinned: true,
-                    delegate: MyHeaderDelegate(
-                      child: KSearchField(
-                        onSubmmit: (value) => controller.searchSort(value),
-                      ),
-                    ),
-                  ),
-                ),
-              ];
-            },
-            body: (controller.apiState == ApiState.loading)
-                ? Center(child: CircularProgressIndicator())
-                : (controller.apiState == ApiState.error)
-                    ? Center(
-                        child: Text(controller.error.toString()),
-                      )
-                    : ListView.separated(
-                        padding: EdgeInsets.all(16),
-                        itemCount: controller.coursesBySearch!.length,
-                        itemBuilder: (context, index) {
-                          return SubjectCard(
-                            // name: "Mathematics",
-                            currentItem: controller.coursesBySearch![index],
-                            icon: Icons.book_rounded,
-                            selectedSubject: controller.selectedSubject,
-                            onTap: () {
-                              appRoutes.pushNamed(
-                                PagesName.subjectDetailsPage,
-                                extra: controller.coursesBySearch![index],
-                              );
-                            },
-                            onItemSelected: () {
-                              controller.changeCourseSelection(controller.coursesBySearch![index]);
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) => 8.height,
-                      ),
+          return ListView(
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(16),
+            children: [
+              SelectSchoolLevelDropDown(schoolSelectorController: controller.schoolSelectorController),
+              20.height,
+              // search bar
+              KSearchField(onSubmmit: (value) => controller.searchSort(value)),
+              20.height,
+              // slider body
+              (controller.apiState == ApiState.loading)
+                  ? Center(child: CircularProgressIndicator())
+                  : (controller.apiState == ApiState.error)
+                      ? Center(
+                          child: Text(controller.error.toString()),
+                        )
+                      : (controller.coursesBySearch!.isEmpty)
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                              child: Center(
+                                child: Text(
+                                  "No Courses to show try later, try to change school level, search keyword",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(),
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: [
+                                CarouselSlider.builder(
+                                  itemCount: controller.coursesBySearch!.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final item = controller.coursesBySearch![index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        appRoutes.pushNamed(
+                                          PagesName.subjectDetailsPage,
+                                          extra: item,
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SubjectCard(
+                                            // name: "Mathematics",
+                                            currentItem: item,
+                                            icon: Icons.book_rounded,
+                                            selectedSubject: controller.selectedSubject,
+                                            // onTap: () {
+                                            // appRoutes.pushNamed(
+                                            //   PagesName.subjectDetailsPage,
+                                            //   extra: controller.coursesBySearch![index],
+                                            // );
+                                            // },
+                                            onItemSelected: () {
+                                              controller.changeCourseSelection(controller.coursesBySearch![index]);
+                                            },
+                                          ),
+                                          Container(
+                                            width: double.maxFinite,
+                                            // height: 300,
+                                            decoration: BoxDecoration(
+                                              color: AppColor.white,
+                                              border: Border.all(color: AppColor.softBorderColor),
+                                              borderRadius: BorderRadius.circular(4),
+                                            ),
+                                            clipBehavior: Clip.hardEdge,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  // color: Colors.green,
+                                                  width: double.maxFinite,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Text(
+                                                      item.courseDescription!,
+                                                      maxLines: 3,
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                //image
+                                                Image(
+                                                  height: 200,
+                                                  width: double.maxFinite,
+                                                  image: NetworkImage(item.courseCoverImage!),
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                                // 8.height,
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  options: CarouselOptions(
+                                    initialPage: 0,
+                                    aspectRatio: 1,
+                                    viewportFraction: 1,
+                                    height: 300 + 93,
+                                    enableInfiniteScroll: false,
+                                    autoPlay: false,
+                                    onPageChanged: (index, reason) {
+                                      smoothIndicatorTipController.changeIndex(index);
+                                    },
+                                  ),
+                                ),
+                                8.height,
+                                // smooth page indicator
+                                AnimatedBuilder(
+                                  animation: smoothIndicatorTipController,
+                                  builder: (context, child) {
+                                    return Align(
+                                      alignment: Alignment.center,
+                                      child: AnimatedSmoothIndicator(
+                                        effect: WormEffect(
+                                          dotHeight: 8,
+                                          dotWidth: 8,
+                                          activeDotColor: AppColor.mainColor,
+                                          dotColor: AppColor.mainColor.withOpacity(0.3),
+                                        ),
+                                        activeIndex: smoothIndicatorTipController.currentIndex,
+                                        count: controller.coursesBySearch!.length,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+            ],
           );
         },
       ),
+
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
         child: KBtn(

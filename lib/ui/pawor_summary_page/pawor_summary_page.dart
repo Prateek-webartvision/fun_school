@@ -43,7 +43,7 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
               });
               return Text("");
             }
-            print(controller.summarys);
+            // print(controller.summarys);
             return Column(
               children: [
                 Visibility(visible: controller.loadingPrgress != 1, child: LinearProgressIndicator(value: controller.loadingPrgress)),
