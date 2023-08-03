@@ -5,8 +5,8 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 
-class SubjectCard extends StatelessWidget {
-  const SubjectCard({
+class SubjectCard2 extends StatelessWidget {
+  const SubjectCard2({
     super.key,
     required this.name,
     required this.icon,

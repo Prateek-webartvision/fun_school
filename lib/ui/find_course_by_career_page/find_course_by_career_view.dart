@@ -5,14 +5,19 @@ import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/widegts/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
+import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
+import '../../uitls/app_utils.dart';
+import '../../widegts/k_btn.dart';
+import '../find_courses_by_school_page/widgets/select_study_plan_sheet.dart';
+import '../find_courses_by_school_page/widgets/subject_card.dart';
+import '../study_page/model/study_plan_model.dart';
 import 'find_course_by_career_state.dart';
-import 'widgets/subject_card.dart';
 import 'widgets/teg_selector.dart';
 
 class FindCourseByCareerView extends StatefulWidget {
@@ -110,8 +115,31 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                     child: Column(
                                       children: [
                                         SubjectCard(
-                                          name: "${item.courseName}",
-                                          icon: Icons.book,
+                                          // name: "Mathematics",
+                                          currentItem: item,
+                                          icon: Icons.book_rounded,
+                                          selectedSubject: controller.selectedSubject,
+
+                                          onEnroll: () async {
+                                            if (item.isCourseEnrolled == false) {
+                                              await AppUtils.showloadingOverlay(() async {
+                                                await EnrollCoursesRepository.enrollCourse(item.courseId).then((value) {
+                                                  if (value == 200) {
+                                                    controller.updateEnrollers(item);
+                                                  }
+                                                });
+                                              });
+                                            } else {
+                                              AppUtils.showSnack("Already Enrolled");
+                                            }
+                                          },
+                                          onItemSelected: () {
+                                            if (item.isCourseEnrolled) {
+                                              controller.changeCourseSelection(item);
+                                            } else {
+                                              AppUtils.showSnack("Enroll first");
+                                            }
+                                          },
                                         ),
                                         Container(
                                           width: double.maxFinite,
@@ -266,6 +294,68 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                 ],
               ),
             );
+          }
+        },
+      ),
+      bottomNavigationBar: GetBuilder(
+        init: findCourseByCareerController,
+        builder: (controller) {
+          if (controller.apiState == ApiState.success) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+              child: KBtn(
+                onClick: () async {
+                  if (controller.selectedSubject.isEmpty) {
+                    AppUtils.showSnack("Please Select Subject");
+                  } else {
+                    // get my studys plan
+                    List<StudyPlanModel>? myStudyPlan;
+                    await AppUtils.showloadingOverlay(() async {
+                      await StudyPlanRepository.getStudyPlans().then((value) {
+                        myStudyPlan = value;
+                      }).onError((error, stackTrace) {
+                        AppUtils.showSnack(error.toString());
+                      });
+                    });
+
+                    // show study plans list
+                    if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
+                      var res = await AppUtils.showModelSheet(
+                        child: MyStudyPlanSheet(
+                          myStudyPlan: myStudyPlan!,
+                        ),
+                        isScrolled: true,
+                        bgColor: AppColor.white,
+                        clip: Clip.hardEdge,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+                      );
+
+                      if (res != null) {
+                        // print("res :$res");
+                        final selectedCourses = controller.selectedSubject;
+                        final listCourses = selectedCourses.map((e) => e.courseName!).toList();
+                        AppUtils.showloadingOverlay(() async {
+                          //Todo this must be changed
+                          await StudyPlanRepository.buyStudyPlan(
+                            courseTitle: listCourses,
+                            studyPlan: res,
+                          );
+                        });
+                      }
+                    } else {
+                      AppUtils.showSnack("You dont have Study Plan, Create one");
+                    }
+                  }
+                },
+                // text: "Add to Study Plan",
+                text: "Add to my courses".capitalize!,
+                width: MediaQuery.of(context).size.width - 32,
+                height: 44,
+                bgColor: Color(0xff6938EF),
+              ),
+            );
+          } else {
+            return SizedBox();
           }
         },
       ),

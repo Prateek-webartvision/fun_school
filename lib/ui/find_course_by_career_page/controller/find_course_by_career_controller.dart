@@ -13,6 +13,7 @@ class FindCourseByCareerController extends GetxController {
 
   List<CoursesModel>? _coursesList;
   List<CoursesModel> filterList = [];
+  List<CoursesModel> selectedSubject = [];
 
   // search text;
   String searchText = "";
@@ -38,6 +39,22 @@ class FindCourseByCareerController extends GetxController {
     await _getCourses();
     _getCareerSets();
     _getInterestSets();
+  }
+
+  changeCourseSelection(CoursesModel selectedSubject) {
+    // this.selectedSubject = selectedSubject;
+    // print("object");
+    if (this.selectedSubject.contains(selectedSubject)) {
+      this.selectedSubject.remove(selectedSubject);
+    } else {
+      this.selectedSubject.add(selectedSubject);
+    }
+    update();
+  }
+
+  updateEnrollers(CoursesModel item) {
+    item.isCourseEnrolled = !item.isCourseEnrolled;
+    update();
   }
 
   // get sets off interest

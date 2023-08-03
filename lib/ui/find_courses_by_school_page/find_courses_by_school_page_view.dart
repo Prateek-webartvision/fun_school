@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
 import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
@@ -186,7 +187,9 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                 ),
                 15.height,
                 // search bar
-                KSearchField(onSubmmit: (value) => controller.searchSort(value)),
+                KSearchField(
+                  onSubmmit: (value) => controller.searchSort(value),
+                ),
                 // career selector
                 (controller.subSchoolSet != null)
                     ? Column(
@@ -236,14 +239,26 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                       currentItem: item,
                                       icon: Icons.book_rounded,
                                       selectedSubject: controller.selectedSubject,
-                                      // onTap: () {
-                                      // appRoutes.pushNamed(
-                                      //   PagesName.subjectDetailsPage,
-                                      //   extra: controller.coursesBySearch![index],
-                                      // );
-                                      // },
+
+                                      onEnroll: () async {
+                                        if (item.isCourseEnrolled == false) {
+                                          await AppUtils.showloadingOverlay(() async {
+                                            await EnrollCoursesRepository.enrollCourse(item.courseId).then((value) {
+                                              if (value == 200) {
+                                                controller.updateEnrollers(item);
+                                              }
+                                            });
+                                          });
+                                        } else {
+                                          AppUtils.showSnack("Already Enrolled");
+                                        }
+                                      },
                                       onItemSelected: () {
-                                        controller.changeCourseSelection(controller.coursesBySearch![index]);
+                                        if (item.isCourseEnrolled) {
+                                          controller.changeCourseSelection(item);
+                                        } else {
+                                          AppUtils.showSnack("Enroll first");
+                                        }
                                       },
                                     ),
                                     Container(
@@ -328,59 +343,67 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
           }
         },
       ),
+      bottomNavigationBar: GetBuilder(
+        init: findCoursesBySchoolController,
+        builder: (controller) {
+          if (controller.apiState == ApiState.success) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+              child: KBtn(
+                onClick: () async {
+                  if (controller.selectedSubject.isEmpty) {
+                    AppUtils.showSnack("Please Select Subject");
+                  } else {
+                    // get my studys plan
+                    List<StudyPlanModel>? myStudyPlan;
+                    await AppUtils.showloadingOverlay(() async {
+                      await StudyPlanRepository.getStudyPlans().then((value) {
+                        myStudyPlan = value;
+                      }).onError((error, stackTrace) {
+                        AppUtils.showSnack(error.toString());
+                      });
+                    });
 
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
-        child: KBtn(
-          onClick: () async {
-            if (findCoursesBySchoolController.selectedSubject.isEmpty) {
-              AppUtils.showSnack("Please Select Subject");
-            } else {
-              // get my studys plan
-              List<StudyPlanModel>? myStudyPlan;
-              await AppUtils.showloadingOverlay(() async {
-                await StudyPlanRepository.getStudyPlans().then((value) {
-                  myStudyPlan = value;
-                }).onError((error, stackTrace) {
-                  AppUtils.showSnack(error.toString());
-                });
-              });
+                    // show study plans list
+                    if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
+                      var res = await AppUtils.showModelSheet(
+                        child: MyStudyPlanSheet(
+                          myStudyPlan: myStudyPlan!,
+                        ),
+                        isScrolled: true,
+                        bgColor: AppColor.white,
+                        clip: Clip.hardEdge,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+                      );
 
-              // show study plans list
-              if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
-                var res = await AppUtils.showModelSheet(
-                  child: MyStudyPlanSheet(
-                    myStudyPlan: myStudyPlan!,
-                  ),
-                  isScrolled: true,
-                  bgColor: AppColor.white,
-                  clip: Clip.hardEdge,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
-                );
-
-                if (res != null) {
-                  // print("res :$res");
-                  final selectedCourses = findCoursesBySchoolController.selectedSubject;
-                  final listCourses = selectedCourses.map((e) => e.courseName!).toList();
-                  AppUtils.showloadingOverlay(() async {
-                    //Todo this must be changed
-                    await StudyPlanRepository.buyStudyPlan(
-                      courseTitle: listCourses,
-                      studyPlan: res,
-                    );
-                  });
-                }
-              } else {
-                AppUtils.showSnack("You dont have Study Plan, Create one");
-              }
-            }
-          },
-          // text: "Add to Study Plan",
-          text: "Add to my courses".capitalize!,
-          width: MediaQuery.of(context).size.width - 32,
-          height: 44,
-          bgColor: Color(0xff6938EF),
-        ),
+                      if (res != null) {
+                        // print("res :$res");
+                        final selectedCourses = controller.selectedSubject;
+                        final listCourses = selectedCourses.map((e) => e.courseName!).toList();
+                        AppUtils.showloadingOverlay(() async {
+                          //Todo this must be changed
+                          await StudyPlanRepository.buyStudyPlan(
+                            courseTitle: listCourses,
+                            studyPlan: res,
+                          );
+                        });
+                      }
+                    } else {
+                      AppUtils.showSnack("You dont have Study Plan, Create one");
+                    }
+                  }
+                },
+                // text: "Add to Study Plan",
+                text: "Add to my courses".capitalize!,
+                width: MediaQuery.of(context).size.width - 32,
+                height: 44,
+                bgColor: Color(0xff6938EF),
+              ),
+            );
+          } else {
+            return SizedBox();
+          }
+        },
       ),
     );
   }

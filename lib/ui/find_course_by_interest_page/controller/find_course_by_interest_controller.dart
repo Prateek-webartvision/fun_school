@@ -13,6 +13,7 @@ class FindCourseByInterestController extends GetxController {
 
   List<CoursesModel>? _coursesList;
   List<CoursesModel> filterList = [];
+  List<CoursesModel> selectedSubject = [];
 
   // sets
   late Set<String> interestSet;
@@ -32,6 +33,22 @@ class FindCourseByInterestController extends GetxController {
     await _getCourses();
     filterList = _finterAllQuerys(data: _coursesList!);
     _loadSetData();
+  }
+
+  updateEnrollers(CoursesModel item) {
+    item.isCourseEnrolled = !item.isCourseEnrolled;
+    update();
+  }
+
+  changeCourseSelection(CoursesModel selectedSubject) {
+    // this.selectedSubject = selectedSubject;
+    // print("object");
+    if (this.selectedSubject.contains(selectedSubject)) {
+      this.selectedSubject.remove(selectedSubject);
+    } else {
+      this.selectedSubject.add(selectedSubject);
+    }
+    update();
   }
 
   //loadSets

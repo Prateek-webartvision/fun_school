@@ -28,9 +28,14 @@ class FindCoursesBySchoolController extends GetxController {
     _initLoadDate();
   }
 
+  updateEnrollers(CoursesModel item) {
+    item.isCourseEnrolled = !item.isCourseEnrolled;
+    update();
+  }
+
   changeCourseSelection(CoursesModel selectedSubject) {
     // this.selectedSubject = selectedSubject;
-    print("object");
+    // print("object");
     if (this.selectedSubject.contains(selectedSubject)) {
       this.selectedSubject.remove(selectedSubject);
     } else {
