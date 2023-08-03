@@ -8,6 +8,7 @@ class CoursesModel {
   String? courseDescription;
   String? courseCoverImage;
   String? courseSchool;
+  String? courseSchoolSubCategory;
   String? courseCareer;
   String? courseInterest;
   String? courseProficiency;
@@ -23,6 +24,7 @@ class CoursesModel {
     this.courseDescription,
     this.courseCoverImage,
     this.courseSchool,
+    this.courseSchoolSubCategory,
     this.courseCareer,
     this.courseInterest,
     this.courseProficiency,
@@ -37,6 +39,7 @@ class CoursesModel {
     courseDescription = json['course_description'];
     courseCoverImage = json['course_cover_image'];
     courseSchool = json['course_school'];
+    courseSchoolSubCategory = json['course_school_sub_category'];
     courseCareer = json['course_career'];
     courseInterest = json['course_interest'];
     courseProficiency = json['course_proficiency'];

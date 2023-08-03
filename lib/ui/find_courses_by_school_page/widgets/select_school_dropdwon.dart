@@ -10,9 +10,11 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
     super.key,
     this.initInterest,
     required this.schoolSelectorController,
+    required this.onSelect,
   });
   final SchoolSelectorController schoolSelectorController;
   final String? initInterest;
+  final Function(int index) onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
       children: [
         Text(
           "Select School Level",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         Container(
           height: 40,
@@ -41,7 +43,7 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
             icon: Icon(Icons.arrow_drop_down),
             style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w500,
+              // fontWeight: FontWeight.w500,
               color: Colors.black,
             ),
             borderRadius: BorderRadius.circular(4),
@@ -53,7 +55,7 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
             onChanged: (value) {
               if (value != null) {
                 final index = schoolSelectorController.schools.indexWhere((element) => element.key == value);
-                schoolSelectorController.changeSchool(index);
+                onSelect(index);
               }
             },
 

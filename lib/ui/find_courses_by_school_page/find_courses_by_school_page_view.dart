@@ -13,6 +13,7 @@ import '../../style/color.dart';
 import '../../uitls/app_utils.dart';
 import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
+import '../find_course_by_career_page/widgets/teg_selector.dart';
 import '../study_page/model/study_plan_model.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/select_school_dropdwon.dart';
@@ -167,142 +168,164 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
       body: GetBuilder(
         init: findCoursesBySchoolController,
         builder: (controller) {
-          return ListView(
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.all(16),
-            children: [
-              SelectSchoolLevelDropDown(schoolSelectorController: controller.schoolSelectorController),
-              20.height,
-              // search bar
-              KSearchField(onSubmmit: (value) => controller.searchSort(value)),
-              20.height,
-              // slider body
-              (controller.apiState == ApiState.loading)
-                  ? Center(child: CircularProgressIndicator())
-                  : (controller.apiState == ApiState.error)
-                      ? Center(
-                          child: Text(controller.error.toString()),
-                        )
-                      : (controller.coursesBySearch!.isEmpty)
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                              child: Center(
-                                child: Text(
-                                  "No Courses to show try later, try to change school level, search keyword",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(),
-                                ),
-                              ),
-                            )
-                          : Column(
-                              children: [
-                                CarouselSlider.builder(
-                                  itemCount: controller.coursesBySearch!.length,
-                                  itemBuilder: (context, index, realIndex) {
-                                    final item = controller.coursesBySearch![index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        appRoutes.pushNamed(
-                                          PagesName.subjectDetailsPage,
-                                          extra: item,
-                                        );
+          if (controller.apiState == ApiState.loading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (controller.apiState == ApiState.error) {
+            return Center(child: Text(controller.error.toString()));
+          } else {
+            return ListView(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(16),
+              children: [
+                SelectSchoolLevelDropDown(
+                  schoolSelectorController: controller.schoolSelectorController,
+                  onSelect: (index) {
+                    controller.schoolSelectorController.changeSchool(index);
+                    controller.onSchoolChange();
+                  },
+                ),
+                15.height,
+                // search bar
+                KSearchField(onSubmmit: (value) => controller.searchSort(value)),
+                // career selector
+                (controller.subSchoolSet != null)
+                    ? Column(
+                        children: [
+                          15.height,
+                          TagSelector(
+                            currentIndex: controller.subScoolSelectionIndex,
+                            tagSet: controller.subSchoolSet!,
+                            onChanged: (index) {
+                              controller.changeSubSchoolSet(index);
+                            },
+                          ),
+                        ],
+                      )
+                    : 0.height,
+                //
+                20.height,
+                // slider body
+                (controller.coursesBySearch!.isEmpty)
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Center(
+                          child: Text(
+                            "No Courses to show try later, try to change school level, search keyword",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(),
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          CarouselSlider.builder(
+                            itemCount: controller.coursesBySearch!.length,
+                            itemBuilder: (context, index, realIndex) {
+                              final item = controller.coursesBySearch![index];
+                              return GestureDetector(
+                                onTap: () {
+                                  appRoutes.pushNamed(
+                                    PagesName.subjectDetailsPage,
+                                    extra: item,
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    SubjectCard(
+                                      // name: "Mathematics",
+                                      currentItem: item,
+                                      icon: Icons.book_rounded,
+                                      selectedSubject: controller.selectedSubject,
+                                      // onTap: () {
+                                      // appRoutes.pushNamed(
+                                      //   PagesName.subjectDetailsPage,
+                                      //   extra: controller.coursesBySearch![index],
+                                      // );
+                                      // },
+                                      onItemSelected: () {
+                                        controller.changeCourseSelection(controller.coursesBySearch![index]);
                                       },
+                                    ),
+                                    Container(
+                                      width: double.maxFinite,
+                                      height: 350,
+                                      decoration: BoxDecoration(
+                                        color: AppColor.white,
+                                        border: Border.all(color: AppColor.softBorderColor),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      clipBehavior: Clip.hardEdge,
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          SubjectCard(
-                                            // name: "Mathematics",
-                                            currentItem: item,
-                                            icon: Icons.book_rounded,
-                                            selectedSubject: controller.selectedSubject,
-                                            // onTap: () {
-                                            // appRoutes.pushNamed(
-                                            //   PagesName.subjectDetailsPage,
-                                            //   extra: controller.coursesBySearch![index],
-                                            // );
-                                            // },
-                                            onItemSelected: () {
-                                              controller.changeCourseSelection(controller.coursesBySearch![index]);
-                                            },
-                                          ),
-                                          Container(
+                                          SizedBox(
+                                            // color: Colors.green,
                                             width: double.maxFinite,
-                                            height: 350,
-                                            decoration: BoxDecoration(
-                                              color: AppColor.white,
-                                              border: Border.all(color: AppColor.softBorderColor),
-                                              borderRadius: BorderRadius.circular(4),
-                                            ),
-                                            clipBehavior: Clip.hardEdge,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                SizedBox(
-                                                  // color: Colors.green,
-                                                  width: double.maxFinite,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      item.courseDescription!,
-                                                      maxLines: 3,
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                    ),
-                                                  ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                item.courseDescription!,
+                                                maxLines: 3,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  overflow: TextOverflow.ellipsis,
                                                 ),
-                                                //image
-                                                Image(
-                                                  width: double.maxFinite,
-                                                  height: 250,
-                                                  image: NetworkImage(item.courseCoverImage!),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          )
+                                          ),
+                                          //image
+                                          Image(
+                                            width: double.maxFinite,
+                                            height: 250,
+                                            image: NetworkImage(item.courseCoverImage!),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ],
                                       ),
-                                    );
-                                  },
-                                  options: CarouselOptions(
-                                    initialPage: 0,
-                                    aspectRatio: 1,
-                                    viewportFraction: 1,
-                                    height: 350 + 93,
-                                    enableInfiniteScroll: false,
-                                    autoPlay: true,
-                                    onPageChanged: (index, reason) {
-                                      smoothIndicatorTipController.changeIndex(index);
-                                    },
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                8.height,
-                                // smooth page indicator
-                                AnimatedBuilder(
-                                  animation: smoothIndicatorTipController,
-                                  builder: (context, child) {
-                                    return Align(
-                                      alignment: Alignment.center,
-                                      child: AnimatedSmoothIndicator(
-                                        effect: WormEffect(
-                                          dotHeight: 8,
-                                          dotWidth: 8,
-                                          activeDotColor: AppColor.mainColor,
-                                          dotColor: AppColor.mainColor.withOpacity(0.3),
-                                        ),
-                                        activeIndex: smoothIndicatorTipController.currentIndex,
-                                        count: controller.coursesBySearch!.length,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
+                              );
+                            },
+                            options: CarouselOptions(
+                              initialPage: 0,
+                              aspectRatio: 1,
+                              viewportFraction: 1,
+                              height: 350 + 93,
+                              enableInfiniteScroll: false,
+                              autoPlay: true,
+                              onPageChanged: (index, reason) {
+                                smoothIndicatorTipController.changeIndex(index);
+                              },
                             ),
-            ],
-          );
+                          ),
+                          8.height,
+                          // smooth page indicator
+                          AnimatedBuilder(
+                            animation: smoothIndicatorTipController,
+                            builder: (context, child) {
+                              return Align(
+                                alignment: Alignment.center,
+                                child: AnimatedSmoothIndicator(
+                                  effect: WormEffect(
+                                    dotHeight: 8,
+                                    dotWidth: 8,
+                                    activeDotColor: AppColor.mainColor,
+                                    dotColor: AppColor.mainColor.withOpacity(0.3),
+                                  ),
+                                  activeIndex: smoothIndicatorTipController.currentIndex,
+                                  count: controller.coursesBySearch!.length,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+              ],
+            );
+          }
         },
       ),
 

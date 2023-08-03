@@ -14,20 +14,23 @@ class FindCoursesBySchoolController extends GetxController {
   String? error;
 
   List<CoursesModel> _coursesList = [];
-  List<CoursesModel>? _coursesBySchool;
+  // List<CoursesModel>? _coursesBySchool;
   List<CoursesModel>? coursesBySearch;
 
   List<CoursesModel> selectedSubject = [];
 
+  Set<String>? subSchoolSet;
+  int subScoolSelectionIndex = 0;
+
   late SchoolSelectorController schoolSelectorController;
 
   FindCoursesBySchoolController() {
-    schoolSelectorController = SchoolSelectorController(schoolSeletedIndex: 0);
     _initLoadDate();
   }
 
   changeCourseSelection(CoursesModel selectedSubject) {
     // this.selectedSubject = selectedSubject;
+    print("object");
     if (this.selectedSubject.contains(selectedSubject)) {
       this.selectedSubject.remove(selectedSubject);
     } else {
@@ -38,35 +41,93 @@ class FindCoursesBySchoolController extends GetxController {
 
   _initLoadDate() async {
     await _getCourses();
-    _sortBySchool(schoolSelectorController.selectionKey);
 
-    schoolSelectorController.addListener(() {
-      _sortBySchool(schoolSelectorController.selectionKey);
-    });
+    schoolSelectorController = SchoolSelectorController(schoolSeletedIndex: 0, coursesList: _coursesList);
+
+    coursesBySearch = _allSort(
+      data: _coursesList,
+      sortBySchool: schoolSelectorController.selectionKey,
+      sortByTag: '',
+      sortByQuery: '',
+    );
+    _setSubSchool();
   }
 
-  // sort by school
-  _sortBySchool(String sortby) async {
-    List<CoursesModel> _sortData = [];
-    if (_coursesList.isNotEmpty) {
-      for (var element in _coursesList) {
-        if (element.courseSchool == sortby) {
-          _sortData.add(element);
-        }
-      }
-    }
-    // print(_sortData);
-    _coursesBySchool = _sortData;
-    searchSort("");
-    // update();
+  onSchoolChange() {
+    coursesBySearch = _allSort(
+      data: _coursesList,
+      sortBySchool: schoolSelectorController.selectionKey,
+      sortByTag: '',
+      sortByQuery: '',
+    );
+    _setSubSchool();
+
+    update();
+  }
+
+  _setSubSchool() {
+    subScoolSelectionIndex = 0;
+    subSchoolSet = coursesBySearch!.map((e) => e.courseSchoolSubCategory!).toSet();
+
+    final subSchool = subSchoolSet!.toList();
+
+    coursesBySearch = _allSort(
+      data: _coursesList,
+      sortBySchool: schoolSelectorController.selectionKey,
+      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByQuery: '',
+    );
+    update();
+  }
+
+  changeSubSchoolSet(int index) {
+    subScoolSelectionIndex = index;
+    final subSchool = subSchoolSet!.toList();
+
+    coursesBySearch = _allSort(
+      data: _coursesList,
+      sortBySchool: schoolSelectorController.selectionKey,
+      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByQuery: '',
+    );
+    update();
   }
 
   searchSort(String value) {
-    if (_coursesBySchool != null) {
-      coursesBySearch = _coursesBySchool!.where((element) => element.courseName!.toLowerCase().contains(value.toString())).toList();
-      update();
+    final subSchool = subSchoolSet!.toList();
+
+    coursesBySearch = _allSort(
+      data: _coursesList,
+      sortBySchool: schoolSelectorController.selectionKey,
+      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByQuery: value,
+    );
+
+    update();
+  }
+
+  List<CoursesModel> _allSort({required List<CoursesModel> data, required String sortBySchool, required String sortByTag, required String sortByQuery}) {
+    List<CoursesModel> filteredData = data;
+
+    // school level filter
+    if (sortBySchool.isNotEmpty) {
+      List<CoursesModel> tempList = filteredData.where((element) => element.courseSchool == sortBySchool).toList();
+      filteredData = tempList;
     }
-    // print("object");
+
+    //sort by tag
+    if (sortByTag.isNotEmpty) {
+      List<CoursesModel> tempList = filteredData.where((element) => element.courseSchoolSubCategory == sortByTag).toList();
+      filteredData = tempList;
+    }
+
+    // search filter
+    if (sortByQuery.isNotEmpty) {
+      List<CoursesModel> tempList = filteredData.where((element) => element.courseName!.toLowerCase().contains(sortByQuery.toLowerCase().trim())).toList();
+      filteredData = tempList;
+    }
+
+    return filteredData;
   }
 
   // loading course data
@@ -76,11 +137,11 @@ class FindCoursesBySchoolController extends GetxController {
   }
 
   loadWithLoading() async {
-    List<CoursesModel> _data = [];
+    List<CoursesModel> data = [];
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
       for (var element in v) {
-        _data.add(CoursesModel.fromJson(element));
+        data.add(CoursesModel.fromJson(element));
       }
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
@@ -96,7 +157,7 @@ class FindCoursesBySchoolController extends GetxController {
         this.error = error.toString();
       }
     });
-    _coursesList = _data;
+    _coursesList = data;
     update();
   }
 
