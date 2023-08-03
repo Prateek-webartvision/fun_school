@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
+import '../subject_details_state.dart';
 
 class HeadTitle extends StatelessWidget {
   const HeadTitle({
     super.key,
     required this.controller,
-    required this.title,
     required this.tabs,
     this.onEnrollClick,
+    required this.subjectDetailsPageController,
   });
 
   final TabController controller;
   final List<String> tabs;
-  final String title;
-  final Function()? onEnrollClick;
+  final Function(bool isEnroled)? onEnrollClick;
+  final SubjectDetailsPageController subjectDetailsPageController;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,8 @@ class HeadTitle extends StatelessWidget {
                   ),
                   Text(
                     // "Mathematics",
-                    title,
+                    // title,
+                    subjectDetailsPageController.courseData!.courseName ?? "",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   4.height,
@@ -77,7 +79,7 @@ class HeadTitle extends StatelessWidget {
               // subject add btn
               GestureDetector(
                 onTap: () {
-                  onEnrollClick!();
+                  onEnrollClick!(subjectDetailsPageController.courseData!.isCourseEnrolled);
                 },
                 child: Container(
                   height: 40,
@@ -109,7 +111,7 @@ class HeadTitle extends StatelessWidget {
                         size: 24,
                       ),
                       6.width,
-                      Text("Enroll")
+                      Text((subjectDetailsPageController.courseData!.isCourseEnrolled) ? "Enrolled" : "Enroll")
                     ],
                   ),
                 ),

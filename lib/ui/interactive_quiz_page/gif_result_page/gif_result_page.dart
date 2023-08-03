@@ -138,7 +138,7 @@ class _GifResultPageState extends State<GifResultPage> {
               text: (ans.grade >= 100) ? "Unlock new Content" : "better luck next time",
               height: 44,
             ),
-          )),
+          ),),
     );
   }
 }

@@ -89,6 +89,7 @@ class _InteractiveQuizPageState extends State<InteractiveQuizPage> {
                 // ),
                 centerTitle: true,
               ),
+              // body: Text("${quizController.currentQuizIndex} ${widget.title}"),
               body: QuizTabPage(
                 quizController: quizController,
                 subjectId: widget.subjectId.toString(),
@@ -97,10 +98,11 @@ class _InteractiveQuizPageState extends State<InteractiveQuizPage> {
                 onSubmit: () {
                   final data = {
                     "type": QuizType.quiz,
-                    "data": controller.quizs!,
+                    "data": controller.quizs,
                     "courseId": widget.courseId,
                     "subjectId": widget.subjectId,
                   };
+                  print(data);
 
                   rootNavigator.currentState!.push(
                     MaterialPageRoute(

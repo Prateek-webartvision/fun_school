@@ -3,6 +3,7 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 
 import 'subject_details_state.dart';
 import 'tab_pages/chapter_tab.dart';
@@ -29,14 +30,18 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
           ),
         ],
       ),
-      body: (widget.courseData == null)
-          ? Center(
+      body: GetBuilder(
+        init: subjectDetailsPageController,
+        builder: (controller) {
+          if (widget.courseData == null) {
+            return Center(
               child: Text("Subjects not found"),
-            )
-          : Column(
+            );
+          } else {
+            return Column(
               children: [
                 HeadTitle(
-                  title: widget.courseData!.courseName!,
+                  subjectDetailsPageController: controller,
                   controller: pageTabController,
                   tabs: subjects.map((e) => e.subjectName!).toList(),
                   onEnrollClick: onEnrollClick,
@@ -58,7 +63,7 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                                 (i, value) => MapEntry(
                                   i,
                                   ChaptersTab(
-                                    courseData: widget.courseData!,
+                                    courseData: controller.courseData!,
                                     index: i,
                                   ),
                                 ),
@@ -68,7 +73,10 @@ class _SubjectDetailsViewState extends SubjectDetailsState {
                         ),
                 ),
               ],
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

@@ -59,7 +59,8 @@ class _ChaptersTabState extends State<ChaptersTab> {
                 child: SubjectStateSlector(
                   state: SubjectState.videos,
                   onChange: (state) {
-                    if (AppUtils.isCourseEnroledByMe(enrolls: chapterTabController.courseData.courseEnrollment!)) {
+                    // print(chapterTabController.courseData.isCourseEnrolled);
+                    if (chapterTabController.courseData.isCourseEnrolled) {
                       if (state == SubjectState.flashcard) {
                         // flashcard
                         AppUtils.showloadingOverlay(() async {
@@ -102,10 +103,10 @@ class _ChaptersTabState extends State<ChaptersTab> {
             return Column(
               children: [
                 ChapterTile(
+                  isEnrolled: chapterTabController.courseData.isCourseEnrolled,
                   courseId: chapterTabController.courseData.courseId!.toString(),
                   subjectId: chapterTabController.subject.subjectId,
                   title: chapterTabController.listVideo![index].first.title!,
-                  // subjects: chapter,
                   videos: chapterTabController.listVideo![index],
                   enrollmentData: chapterTabController.courseData.courseEnrollment,
                   missionIndex: index + 1,
@@ -114,7 +115,7 @@ class _ChaptersTabState extends State<ChaptersTab> {
                 GestureDetector(
                   onTap: () async {
                     // enroll check
-                    if (AppUtils.isCourseEnroledByMe(enrolls: chapterTabController.courseData.courseEnrollment!)) {
+                    if (chapterTabController.courseData.isCourseEnrolled) {
                       // addd new page to load and show quiz
                       await rootNavigator.currentState!.push(
                         MaterialPageRoute(
@@ -279,6 +280,7 @@ class ChapterTile extends StatelessWidget {
     this.enrollmentData,
     required this.courseId,
     required this.missionIndex,
+    required this.isEnrolled,
   });
   final String title;
   final String courseId;
@@ -287,6 +289,7 @@ class ChapterTile extends StatelessWidget {
   final int? subjectId;
   final List<CoursesEnrollment>? enrollmentData;
   final int missionIndex;
+  final bool isEnrolled;
 
   List<ContentVideo> getBelowVideos(int index) {
     final topicSet = videos.map((e) => e.subTitle).toList();
@@ -365,11 +368,11 @@ class ChapterTile extends StatelessWidget {
               // return Text("data");
               return GestureDetector(
                 onTap: () {
-                  if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
+                  if (isEnrolled) {
                     // final v = getBelowVideos(index);
                     // List<ContentVideo> v = [videos[index]];
 
-                    print(getBelowVideos(index));
+                    // print(getBelowVideos(index));
 
                     rootNavigator.currentState!.push(
                       MaterialPageRoute(
@@ -382,6 +385,8 @@ class ChapterTile extends StatelessWidget {
                         ),
                       ),
                     );
+                  } else {
+                    AppUtils.showSnack("First Enroll The Course");
                   }
                 },
                 child: Row(

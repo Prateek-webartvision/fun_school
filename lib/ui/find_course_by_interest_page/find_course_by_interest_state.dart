@@ -1,3 +1,4 @@
+import 'package:citycloud_school/ui/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,7 @@ import 'find_course_by_interest_view.dart';
 
 abstract class FindCourseByInterestState extends State<FindCourseByInterestView> {
   late FindCourseByInterestController findCourseByInterestController;
+  late SmoothIndicatorController smoothIndicatorController;
 
   onSearch(String s) => findCourseByInterestController.searchFilter(s);
   onInterest(String? interest) => findCourseByInterestController.interestFilter(interest);
@@ -14,6 +16,7 @@ abstract class FindCourseByInterestState extends State<FindCourseByInterestView>
   @override
   void initState() {
     findCourseByInterestController = FindCourseByInterestController();
+    smoothIndicatorController = SmoothIndicatorController(0);
     Get.lazyPut(() => findCourseByInterestController);
     super.initState();
   }

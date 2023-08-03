@@ -226,7 +226,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                           ),
                                           Container(
                                             width: double.maxFinite,
-                                            // height: 300,
+                                            height: 350,
                                             decoration: BoxDecoration(
                                               color: AppColor.white,
                                               border: Border.all(color: AppColor.softBorderColor),
@@ -235,6 +235,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                             clipBehavior: Clip.hardEdge,
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 SizedBox(
                                                   // color: Colors.green,
@@ -253,12 +255,11 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                                 ),
                                                 //image
                                                 Image(
-                                                  height: 200,
                                                   width: double.maxFinite,
+                                                  height: 250,
                                                   image: NetworkImage(item.courseCoverImage!),
-                                                  fit: BoxFit.fitWidth,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                // 8.height,
                                               ],
                                             ),
                                           )
@@ -270,9 +271,9 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                     initialPage: 0,
                                     aspectRatio: 1,
                                     viewportFraction: 1,
-                                    height: 300 + 93,
+                                    height: 350 + 93,
                                     enableInfiniteScroll: false,
-                                    autoPlay: false,
+                                    autoPlay: true,
                                     onPageChanged: (index, reason) {
                                       smoothIndicatorTipController.changeIndex(index);
                                     },

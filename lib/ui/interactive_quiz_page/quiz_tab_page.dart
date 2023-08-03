@@ -153,7 +153,14 @@ class _QuizTabPageState extends State<QuizTabPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(children: [
-                  Expanded(flex: 1, child: KGifImage(url: quiz.sideImage!)),
+                  // Text(quiz.sideImage.runtimeType.toString()),
+                  Expanded(
+                      flex: 1,
+                      child: (quiz.sideImage != null)
+                          ? KGifImage(url: quiz.sideImage!)
+                          : Center(
+                              child: Text("No Image"),
+                            )),
                   Expanded(
                     flex: 1,
                     child: Padding(
