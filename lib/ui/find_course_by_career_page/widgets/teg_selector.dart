@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
@@ -36,7 +37,7 @@ class TagSelector extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               alignment: Alignment.center,
               child: Text(
-                tagSet.elementAt(index),
+                tagSet.elementAt(index).capitalize!,
                 style: TextStyle(
                   color: (currentIndex != index) ? Color(0xff192325) : AppColor.white,
                   fontSize: 14,

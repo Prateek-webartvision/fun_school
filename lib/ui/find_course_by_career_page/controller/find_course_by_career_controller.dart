@@ -20,6 +20,8 @@ class FindCourseByCareerController extends GetxController {
   // coreer tag
   late Set<String> careerSet;
   int? currentCareerTagIndex;
+  late Set<String> proficiencySet;
+  int? currentProficiencyTagIndex;
 
   // interest tag
   late Set<String> interestSet;
@@ -42,10 +44,12 @@ class FindCourseByCareerController extends GetxController {
   _getInterestSets() {
     if (_coursesList != null) {
       Set<String> tempSet = {};
+
       for (var element in _coursesList!) {
         tempSet.add(element.courseInterest!);
       }
       interestSet = tempSet;
+
       update();
     }
   }
@@ -54,17 +58,28 @@ class FindCourseByCareerController extends GetxController {
   _getCareerSets() {
     if (_coursesList != null) {
       Set<String> tempSet = {};
+      Set<String> proficiencyTempSet = {};
+
       for (var element in _coursesList!) {
         tempSet.add(element.courseCareer!);
+        proficiencyTempSet.add(element.courseProficiency!);
       }
       careerSet = tempSet;
+      proficiencySet = proficiencyTempSet;
+      //
 
       if (careerSet.isNotEmpty) {
         currentCareerTagIndex = 0;
       }
+      if (proficiencySet.isNotEmpty) {
+        currentProficiencyTagIndex = 0;
+      }
+
+      // filter list
       filterList = _finterAllQuerys(
         data: _coursesList!,
         careerTag: careerSet.elementAt(currentCareerTagIndex!),
+        proficiency: proficiencySet.elementAt(currentProficiencyTagIndex!),
       );
 
       update();
@@ -88,14 +103,31 @@ class FindCourseByCareerController extends GetxController {
     currentCareerTagIndex = v;
     seletedInterest = null;
     schoolLevel = null;
+
     filterList = _finterAllQuerys(
       data: _coursesList!,
       careerTag: careerSet.elementAt(currentCareerTagIndex!),
+      proficiency: proficiencySet.elementAt(currentProficiencyTagIndex!),
       interest: seletedInterest,
       query: searchText,
       school: null,
     );
     update();
+  }
+
+  // change proficiency Tag
+  changeProficiencyTag(int i) {
+    if (currentProficiencyTagIndex != i) {
+      currentProficiencyTagIndex = i;
+
+      filterList = _finterAllQuerys(
+        data: _coursesList!,
+        careerTag: careerSet.elementAt(currentCareerTagIndex!),
+        query: searchText,
+        proficiency: proficiencySet.elementAt(currentProficiencyTagIndex!),
+      );
+      update();
+    }
   }
 
   // chnage Interest tag
@@ -163,16 +195,17 @@ class FindCourseByCareerController extends GetxController {
     String? careerTag,
     String? interest,
     String? school,
+    String? proficiency,
   }) {
-    List<CoursesModel> careerfilteredData = [];
+    List<CoursesModel> careerfilteredData = data;
 
     if (careerTag != null) {
-      List<CoursesModel> tempList = [];
-      for (var element in data) {
-        if (element.courseCareer == careerTag) {
-          tempList.add(element);
-        }
-      }
+      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseCareer == careerTag).toList();
+      careerfilteredData = tempList;
+    }
+
+    if (proficiency != null) {
+      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseProficiency == proficiency).toList();
       careerfilteredData = tempList;
     }
 
@@ -189,7 +222,6 @@ class FindCourseByCareerController extends GetxController {
     if (schoolLevel != null) {
       List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseSchool!.toLowerCase().contains(schoolLevel!.toLowerCase())).toList();
       careerfilteredData = tempList;
-      // print(tempList);
     }
 
     return careerfilteredData;
