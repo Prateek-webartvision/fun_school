@@ -7,12 +7,12 @@ import '../../../style/color.dart';
 class SelectIntreset extends StatelessWidget {
   const SelectIntreset({
     super.key,
-    required this.interestList,
-    this.initInterest,
+    required this.interestSet,
+    this.init,
     required this.onItemClick,
   });
-  final List<String> interestList;
-  final String? initInterest;
+  final Set<String> interestSet;
+  final int? init;
   final Function(String? interest) onItemClick;
 
   @override
@@ -36,8 +36,8 @@ class SelectIntreset extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
-          child: DropdownButton<String?>(
-            value: initInterest,
+          child: DropdownButton(
+            value: init != null ? interestSet.elementAt(init!) : null,
             hint: Text("Select Interest", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
             isExpanded: true,
             icon: Icon(Icons.arrow_drop_down),
@@ -53,7 +53,7 @@ class SelectIntreset extends StatelessWidget {
             isDense: true,
             onChanged: onItemClick,
             //
-            items: interestList.map((String value) {
+            items: interestSet.map((String value) {
               return DropdownMenuItem(
                 value: value,
                 child: Text(value),
@@ -61,31 +61,6 @@ class SelectIntreset extends StatelessWidget {
             }).toList(),
           ),
         ),
-        //
-        // 100.height,
-        // Container(
-        //   height: 40,
-        //   decoration: BoxDecoration(
-        //     color: AppColor.white,
-        //     borderRadius: BorderRadius.circular(4),
-        //     border: Border.all(color: AppColor.softBorderColor),
-        //   ),
-        //   padding: EdgeInsets.symmetric(horizontal: 10),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         child: Text(
-        //           "Lawyer, Poet",
-        //           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-        //           maxLines: 1,
-        //           overflow: TextOverflow.ellipsis,
-        //         ),
-        //       ),
-        //       10.width,
-        //       GestureDetector(onTap: () {}, child: Icon(Icons.arrow_drop_down))
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }

@@ -16,6 +16,7 @@ class FindCourseByInterestController extends GetxController {
 
   // sets
   late Set<String> interestSet;
+  int? interestindex;
   late Set<String> proficiencySet;
 
   // filters
@@ -37,6 +38,7 @@ class FindCourseByInterestController extends GetxController {
   _loadSetData() {
     Set<String> interestSet = {};
     Set<String> proficiencySet = {};
+
     if (_coursesList != null) {
       for (var element in _coursesList!) {
         interestSet.add(element.courseInterest!);
@@ -45,27 +47,46 @@ class FindCourseByInterestController extends GetxController {
     }
 
     this.interestSet = interestSet;
+    if (this.interestSet.isNotEmpty) {
+      interestindex = 0;
+    }
     this.proficiencySet = proficiencySet;
   }
 
   //searchFilter
   searchFilter(String v) {
     searchQuery = v;
-    filterList = _finterAllQuerys(data: _coursesList!, query: searchQuery, interest: interestQuery, proficiencyLevel: proficiencyLevel);
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      query: searchQuery,
+      interest: interestQuery,
+      proficiencyLevel: proficiencyLevel,
+    );
     update();
   }
 
   // interest filter
   interestFilter(String? interest) {
+    interestindex = interestSet.toList().indexOf(interest ?? "");
     interestQuery = interest;
-    filterList = _finterAllQuerys(data: _coursesList!, query: searchQuery, interest: interestQuery, proficiencyLevel: proficiencyLevel);
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      query: searchQuery,
+      interest: interestQuery,
+      proficiencyLevel: proficiencyLevel,
+    );
     update();
   }
 
   // level filter
   proficiencyFilter(String? level) {
     proficiencyLevel = level;
-    filterList = _finterAllQuerys(data: _coursesList!, query: searchQuery, interest: interestQuery, proficiencyLevel: proficiencyLevel);
+    filterList = _finterAllQuerys(
+      data: _coursesList!,
+      query: searchQuery,
+      interest: interestQuery,
+      proficiencyLevel: proficiencyLevel,
+    );
     update();
   }
 
