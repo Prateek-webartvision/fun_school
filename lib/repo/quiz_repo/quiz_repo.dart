@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:citycloud_school/models/quiz/interactive_quiz.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
@@ -66,7 +68,7 @@ class QuizRepository {
     data['subject_id'] = subjectid;
     data['score'] = score;
 
-    print(data);
+    // print(data);
 
     await _api.postApi(AppUrls.addQuizScore, params: data).then((value) {
       print(value);

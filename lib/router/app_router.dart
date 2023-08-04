@@ -241,7 +241,7 @@ final GoRouter appRoutes = GoRouter(
         return MaterialPage(
           key: state.pageKey,
           child: StartQuizView(
-            title: state.queryParameters['title'],
+            title: state.uri.queryParameters['title'],
             subjectId: int.parse(data['subjectId'].toString()),
             courseId: data['courseId'].toString(),
           ),

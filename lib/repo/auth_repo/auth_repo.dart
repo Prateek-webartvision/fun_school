@@ -70,7 +70,7 @@ class AuthRepository extends AuthRepo {
       // if (value['code'] == 200) {
       // } else {
       // return value
-      print(value);
+      // print(value);
       AppUtils.showSnack(value["message"]);
     }).onError((error, stackTrace) {
       AppUtils.showSnack(error.toString());

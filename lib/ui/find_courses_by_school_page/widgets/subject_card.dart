@@ -87,70 +87,71 @@ class SubjectCard extends StatelessWidget {
             ),
           ),
           10.width,
-          GestureDetector(
-            onTap: onEnroll,
-            // onTap: () {
-            //   // onEnrollClick!(subjectDetailsPageController.courseData!.isCourseEnrolled);
-            //   onEnroll;
-            // },
-            child: Container(
-              height: 40,
-              // width: 48,
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: AppColor.white,
-                borderRadius: BorderRadius.circular(48),
-                border: Border.all(color: AppColor.softBorderColor),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Color(0x0F101828),
-                //     offset: Offset(0, 1),
-                //     blurRadius: 2,
-                //   ),
-                //   BoxShadow(
-                //     color: Color(0x1A101828),
-                //     offset: Offset(0, 1),
-                //     blurRadius: 3,
-                //   ),
-                // ],
-              ),
-              alignment: Alignment.center,
-              child: Row(
-                children: [
-                  // Icon(
-                  //   Icons.add_rounded,
-                  //   color: AppColor.mainColor,
-                  //   size: 24,
-                  // ),
-                  // 6.width,
-                  Text((currentItem.isCourseEnrolled) ? "Enrolled" : "Enroll")
-                ],
-              ),
-            ),
-          ),
-          10.width,
-          GestureDetector(
-            onTap: onItemSelected,
-            child: Container(
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                  color: (selectedSubject.contains(currentItem)) ? AppColor.pinkColor : null,
-                  border: Border.all(color: AppColor.softBorderColor),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                alignment: Alignment.center,
-                child:
-                    // (name == (selectedSubject?.courseName ?? ""))
-                    // ?
-                    Icon(
-                  Icons.check,
-                  size: 16,
-                  color: AppColor.white,
+          (!currentItem.isCourseEnrolled)
+              ? GestureDetector(
+                  onTap: onEnroll,
+                  // onTap: () {
+                  //   // onEnrollClick!(subjectDetailsPageController.courseData!.isCourseEnrolled);
+                  // onEnroll;
+                  // },
+                  child: Container(
+                    height: 40,
+                    // width: 48,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(48),
+                      border: Border.all(color: AppColor.softBorderColor),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Color(0x0F101828),
+                      //     offset: Offset(0, 1),
+                      //     blurRadius: 2,
+                      //   ),
+                      //   BoxShadow(
+                      //     color: Color(0x1A101828),
+                      //     offset: Offset(0, 1),
+                      //     blurRadius: 3,
+                      //   ),
+                      // ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.add_rounded,
+                          color: AppColor.mainColor,
+                          size: 24,
+                        ),
+                        6.width,
+                        Text((currentItem.isCourseEnrolled) ? "Enrolled" : "Enroll")
+                      ],
+                    ),
+                  ),
                 )
-                // : 0.height,
+              // 10.width,
+              : GestureDetector(
+                  onTap: onItemSelected,
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        color: (selectedSubject.contains(currentItem)) ? AppColor.pinkColor : null,
+                        border: Border.all(color: AppColor.softBorderColor),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child:
+                          // (name == (selectedSubject?.courseName ?? ""))
+                          // ?
+                          Icon(
+                        Icons.check,
+                        size: 16,
+                        color: AppColor.white,
+                      )
+                      // : 0.height,
+                      ),
                 ),
-          ),
         ],
       ),
     );
