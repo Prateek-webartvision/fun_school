@@ -20,6 +20,7 @@ class MyCoursesController extends GetxController {
   String? error;
 
   bool isSelectMode = false;
+  List<String> selectedCourseIds = [];
 
   MyCoursesController() {
     _initDate();
@@ -44,10 +45,25 @@ class MyCoursesController extends GetxController {
   }
 
   // enable selection mode
-  enableSelectionMode() {
+  enableSelectionMode(String courseID) {
     if (isSelectMode == false) {
       isSelectMode = !isSelectMode;
+      selectedCourseIds.add(courseID);
     }
+    update();
+    // print(selectedCourseIds);
+  }
+
+  addCoursesAndRemove(String courseID) {
+    if (selectedCourseIds.contains(courseID)) {
+      selectedCourseIds.remove(courseID);
+    } else {
+      selectedCourseIds.add(courseID);
+    }
+    if (selectedCourseIds.isEmpty) {
+      isSelectMode = false;
+    }
+    update();
   }
 
   _sortCoursesForUser() {
