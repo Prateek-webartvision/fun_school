@@ -164,7 +164,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                                     item.courseDescription!,
                                                     maxLines: 3,
                                                     style: TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 12,
                                                       overflow: TextOverflow.ellipsis,
                                                     ),
                                                   ),

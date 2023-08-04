@@ -1,14 +1,17 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
+import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
 
 class MyCoursesTab extends StatelessWidget {
@@ -33,11 +36,89 @@ class MyCoursesTab extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: EdgeInsets.all(16).copyWith(bottom: 12),
+                padding: EdgeInsets.all(16).copyWith(bottom: 10),
+                sliver: SliverToBoxAdapter(
+                  child: Container(
+                    height: 44,
+                    width: double.maxFinite,
+                    padding: EdgeInsets.only(left: context.screenWidth * 0.5),
+                    child: GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          clipBehavior: Clip.hardEdge,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                          ),
+                          builder: (context) {
+                            return CreateFolderSheet(
+                              onCreate: (fname) async {
+                                controller.createFolder(fname);
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: context.theme.primaryColor),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Icon(Icons.add, color: context.theme.primaryColor), 6.width, Text("create folder".capitalize!)],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SliverPadding(
+                padding: EdgeInsets.all(16).copyWith(bottom: 12, top: 0),
                 sliver: SliverToBoxAdapter(
                   child: KSearchField(),
                 ),
               ),
+              //folders
+              (controller.myFolders != null && controller.myCourses!.isNotEmpty)
+                  ? SliverPadding(
+                      padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                      sliver: SliverToBoxAdapter(
+                          child: ListView.separated(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: controller.myFolders!.length,
+                        itemBuilder: (context, index) {
+                          final item = controller.myFolders![index];
+                          return Container(
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: context.theme.primaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              item.folderTitle!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => 10.height,
+                      )))
+                  : SliverToBoxAdapter(),
+              //
+
               // list
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
@@ -256,6 +337,110 @@ class MyCoursesTab extends StatelessWidget {
           );
         }
       },
+    );
+  }
+}
+
+class CreateFolderSheet extends StatefulWidget {
+  const CreateFolderSheet({
+    super.key,
+    required this.onCreate,
+  });
+  final Function(String fname) onCreate;
+  @override
+  State<CreateFolderSheet> createState() => _CreateFolderSheetState();
+}
+
+class _CreateFolderSheetState extends State<CreateFolderSheet> {
+  TextEditingController folderName = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          height: 48,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            color: AppColor.scaffoldBg,
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: SizedBox(height: 48, child: Icon(Icons.close))),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Create Folder",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        10.height,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              KTextField(
+                controller: folderName,
+                hint: "Title",
+              ),
+            ],
+          ),
+        ),
+
+        10.height,
+
+        // btns
+        SizedBox(
+          height: 56,
+          width: double.maxFinite,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              KBtn(
+                height: 44,
+                width: 165,
+                onClick: () {
+                  Navigator.of(context).pop();
+                },
+                text: "Cancel",
+                bgColor: AppColor.white,
+                borderSide: BorderSide(color: AppColor.softBorderColor),
+                fbColor: Colors.black,
+                borderRadius: 4,
+              ),
+              12.width,
+              KBtn(
+                width: 165,
+                height: 44,
+                onClick: () {
+                  if (folderName.text.isEmpty) {
+                    AppUtils.showSnack("Add Folder Title");
+                  } else {
+                    Navigator.of(context).pop();
+                    widget.onCreate(folderName.text);
+                  }
+                },
+                text: "Add New Folder",
+                borderRadius: 4,
+              ),
+            ],
+          ),
+        ),
+        20.height,
+      ],
     );
   }
 }

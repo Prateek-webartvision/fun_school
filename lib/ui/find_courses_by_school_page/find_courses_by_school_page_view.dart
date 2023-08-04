@@ -284,7 +284,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                                 item.courseDescription!,
                                                 maxLines: 3,
                                                 style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 12,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
                                               ),

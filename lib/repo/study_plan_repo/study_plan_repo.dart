@@ -5,6 +5,7 @@ import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
+import '../../ui/study_page/model/folder_model.dart';
 import '../../ui/study_page/model/study_plan_model.dart';
 
 class StudyPlanRepository {
@@ -16,7 +17,7 @@ class StudyPlanRepository {
     data["course"] = jsonEncode(courseTitle);
     data["plan"] = studyPlan;
 
-    // print(data);
+    print(data);
     //todo
     await _api.postApi(AppUrls.addStudyPlanByContent, params: data).then((value) {
       // print("$value");
@@ -59,6 +60,43 @@ class StudyPlanRepository {
       return value;
     }).onError((error, stackTrace) {
       throw error.toString();
+    });
+  }
+
+  // create new folder
+  static Future createNewFolder(String folderName) async {
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "folder_title": folderName,
+    };
+    return await _api.postApi(AppUrls.createFolder, params: data).then((value) {
+      if (value['code'] == 200) {
+        return value['message'];
+      } else {
+        throw value['message'];
+      }
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
+  }
+
+  // fatch all folders
+  static Future<List<AppFolderModel>?> getCourseFolders() async {
+    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+
+    return await _api.postApi(AppUrls.myCourseFolders, params: data).then((value) {
+      if (value != null) {
+        List<AppFolderModel> myList = [];
+        for (var element in value) {
+          final dir = AppFolderModel.fromJson(element);
+          if (int.parse(dir.userId!) == AppStorage.user.currentUser()!.userid!) {
+            myList.add(dir);
+          }
+        }
+        return myList;
+      }
+    }).onError((error, stackTrace) {
+      throw error!;
     });
   }
 }

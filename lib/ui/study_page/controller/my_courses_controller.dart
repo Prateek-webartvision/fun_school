@@ -7,22 +7,47 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
+import '../../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../../uitls/app_utils.dart';
+import '../model/folder_model.dart';
 
 class MyCoursesController extends GetxController {
   List<CoursesModel>? _allCourses;
 
   List<CoursesModel>? myCourses;
+  List<AppFolderModel>? myFolders;
   ApiState apiState = ApiState.loading;
   String? error;
+
+  bool isSelectMode = false;
 
   MyCoursesController() {
     _initDate();
   }
 
   _initDate() async {
+    await _loadFolders();
     await _loadAllCourses();
     _sortCoursesForUser();
+  }
+
+  //create new folder
+  createFolder(String fName) {
+    AppUtils.showloadingOverlay(() async {
+      await StudyPlanRepository.createNewFolder(fName).then((value) {
+        _loadFolders();
+        AppUtils.showSnack(value);
+      }).onError((error, stackTrace) {
+        AppUtils.showSnack(error.toString());
+      });
+    });
+  }
+
+  // enable selection mode
+  enableSelectionMode() {
+    if (isSelectMode == false) {
+      isSelectMode = !isSelectMode;
+    }
   }
 
   _sortCoursesForUser() {
@@ -98,7 +123,15 @@ class MyCoursesController extends GetxController {
         this.error = error.toString();
       }
     });
+    update();
+  }
 
+  _loadFolders() async {
+    await StudyPlanRepository.getCourseFolders().then((value) {
+      myFolders = value;
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack(error.toString());
+    });
     update();
   }
 }
