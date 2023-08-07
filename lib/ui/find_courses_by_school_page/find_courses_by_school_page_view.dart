@@ -263,7 +263,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                     ),
                                     Container(
                                       width: double.maxFinite,
-                                      height: 350,
+                                      height: 370 - 93,
                                       decoration: BoxDecoration(
                                         color: AppColor.white,
                                         border: Border.all(color: AppColor.softBorderColor),
@@ -291,11 +291,13 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                             ),
                                           ),
                                           //image
-                                          Image(
-                                            width: double.maxFinite,
-                                            height: 250,
-                                            image: NetworkImage(item.courseCoverImage!),
-                                            fit: BoxFit.cover,
+                                          Expanded(
+                                            child: Image(
+                                              width: double.maxFinite,
+                                              // height: 250,
+                                              image: NetworkImage(item.courseCoverImage!),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -308,7 +310,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                               initialPage: 0,
                               aspectRatio: 1,
                               viewportFraction: 1,
-                              height: 350 + 93,
+                              height: 370,
                               enableInfiniteScroll: false,
                               autoPlay: true,
                               onPageChanged: (index, reason) {

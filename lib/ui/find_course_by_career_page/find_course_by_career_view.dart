@@ -143,7 +143,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                         ),
                                         Container(
                                           width: double.maxFinite,
-                                          height: 350,
+                                          height: 370 - 93,
                                           decoration: BoxDecoration(
                                             color: AppColor.white,
                                             border: Border.all(color: AppColor.softBorderColor),
@@ -171,11 +171,13 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                                 ),
                                               ),
                                               //image
-                                              Image(
-                                                width: double.maxFinite,
-                                                height: 250,
-                                                image: NetworkImage(item.courseCoverImage!),
-                                                fit: BoxFit.cover,
+                                              Expanded(
+                                                child: Image(
+                                                  width: double.maxFinite,
+                                                  // height: 250,
+                                                  image: NetworkImage(item.courseCoverImage!),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -189,7 +191,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                 initialPage: 0,
                                 aspectRatio: 1,
                                 viewportFraction: 1,
-                                height: 350 + 93,
+                                height: 370,
                                 enableInfiniteScroll: false,
                                 autoPlay: true,
                                 onPageChanged: (index, reason) {
