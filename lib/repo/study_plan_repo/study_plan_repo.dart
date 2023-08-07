@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:citycloud_school/ui/subject_details_page/tab_pages/chapter_tab.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
 import '../../ui/study_page/model/folder_model.dart';
@@ -98,5 +99,58 @@ class StudyPlanRepository {
     }).onError((error, stackTrace) {
       throw error!;
     });
+  }
+
+  // add to folder api
+  static addToFolder({required String folderId, required List<String> selectedCourseIds}) async {
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "folder_id": folderId,
+      "course_id": jsonEncode(selectedCourseIds),
+    };
+
+    await _api.postApi(AppUrls.addToFolders, params: data).then((value) {
+      AppUtils.showSnack(value['message']);
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack(error.toString());
+    });
+    // print(data);
+  }
+
+  static Future<List<FolderCourseModel>?> getFolderCoursesByUser() async {
+    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+
+    return await _api.postApi(AppUrls.getCourseInUserFolder, params: data).then((value) {
+      List<FolderCourseModel> temp = [];
+      if (value != null) {
+        for (var element in value) {
+          final course = FolderCourseModel.fromJson(element);
+          temp.add(course);
+        }
+      }
+      return temp;
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
+  }
+}
+
+class FolderCourseModel {
+  int? id;
+  String? userId;
+  String? folderId;
+  String? folderName;
+  String? courseId;
+  String? courseName;
+  String? datePosted;
+
+  FolderCourseModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    folderId = json['folder_id'];
+    folderName = json['folder_name'];
+    courseId = json['course_id'];
+    courseName = json['course_name'];
+    datePosted = json['date_posted'];
   }
 }

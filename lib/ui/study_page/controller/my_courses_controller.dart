@@ -66,6 +66,12 @@ class MyCoursesController extends GetxController {
     update();
   }
 
+  clearSelectionModeAndData() {
+    isSelectMode = false;
+    selectedCourseIds.clear();
+    update();
+  }
+
   _sortCoursesForUser() {
     List<CoursesModel> temp = [];
     // print(AppStorage.user.currentUser()!.userid);

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
@@ -12,6 +13,7 @@ import '../../../router/app_router.dart';
 import '../../../style/color.dart';
 import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
+import '../folder_page/folder_page.dart';
 import '../model/folder_model.dart';
 
 class MyCoursesTab extends StatelessWidget {
@@ -87,17 +89,49 @@ class MyCoursesTab extends StatelessWidget {
                   ),
                 ),
                 //folders
-                (controller.myFolders != null && controller.myFolders!.isNotEmpty)
-                    ? SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
-                        sliver: SliverToBoxAdapter(
-                            child: ListView.separated(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: controller.myFolders!.length,
-                          itemBuilder: (context, index) {
-                            final item = controller.myFolders![index];
-                            return Container(
+                if (controller.myFolders != null && controller.myFolders!.isNotEmpty)
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                    sliver: SliverToBoxAdapter(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: controller.myFolders!.length,
+                        itemBuilder: (context, index) {
+                          final item = controller.myFolders![index];
+                          return GestureDetector(
+                            onTap: () async {
+                              List<FolderCourseModel>? respond;
+                              await AppUtils.showloadingOverlay(() async {
+                                await StudyPlanRepository.getFolderCoursesByUser().then((res) {
+                                  respond = res;
+                                }).onError((error, stackTrace) {
+                                  AppUtils.showSnack(error.toString());
+                                });
+                              });
+
+                              if (respond != null && respond!.isNotEmpty) {
+                                List<FolderCourseModel> coursesByFolderId = respond!.where((element) => element.folderId == item.folderId.toString()).toList();
+
+                                if (coursesByFolderId.isNotEmpty) {
+                                  rootNavigator.currentState!.push(
+                                    MaterialPageRoute(
+                                      builder: (context) => FolderPage(
+                                        coursesByFolderId: coursesByFolderId,
+                                        allcourses: controller.myCourses!,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  AppUtils.showSnack("No files");
+                                }
+                              } else {
+                                AppUtils.showSnack("No file");
+                              }
+
+                              // print("Click ${item.folderId}");
+                            },
+                            child: Container(
                               height: 44,
                               decoration: BoxDecoration(
                                 color: context.theme.primaryColor,
@@ -113,11 +147,15 @@ class MyCoursesTab extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                            );
-                          },
-                          separatorBuilder: (context, index) => 10.height,
-                        )))
-                    : SliverToBoxAdapter(),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => 10.height,
+                      ),
+                    ),
+                  )
+                else
+                  SliverToBoxAdapter(),
                 //
 
                 // list
@@ -381,9 +419,9 @@ class MyCoursesTab extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: KBtn(
                 width: double.maxFinite,
-                onClick: () {
+                onClick: () async {
                   if (controller.myFolders != null && controller.myFolders!.isNotEmpty) {
-                    showModalBottomSheet(
+                    AppFolderModel? res = await showModalBottomSheet(
                       context: context,
                       clipBehavior: Clip.hardEdge,
                       isScrollControlled: true,
@@ -395,6 +433,14 @@ class MyCoursesTab extends StatelessWidget {
                         return AddToFolderSheet(myFolders: controller.myFolders!);
                       },
                     );
+                    //
+                    if (res != null) {
+                      AppUtils.showloadingOverlay(() async {
+                        await StudyPlanRepository.addToFolder(folderId: res.folderId!.toString(), selectedCourseIds: controller.selectedCourseIds);
+                        // clear all selection and mode
+                        controller.clearSelectionModeAndData();
+                      });
+                    }
                   }
                 },
                 text: "Add New Folder",
@@ -410,12 +456,19 @@ class MyCoursesTab extends StatelessWidget {
   }
 }
 
-class AddToFolderSheet extends StatelessWidget {
+class AddToFolderSheet extends StatefulWidget {
   const AddToFolderSheet({
     super.key,
     required this.myFolders,
   });
   final List<AppFolderModel> myFolders;
+
+  @override
+  State<AddToFolderSheet> createState() => _AddToFolderSheetState();
+}
+
+class _AddToFolderSheetState extends State<AddToFolderSheet> {
+  AppFolderModel? selectedFolder;
 
   @override
   Widget build(BuildContext context) {
@@ -453,17 +506,56 @@ class AddToFolderSheet extends StatelessWidget {
       Expanded(
         child: ListView.separated(
           shrinkWrap: true,
-          itemCount: myFolders.length,
+          itemCount: widget.myFolders.length,
           padding: EdgeInsets.all(16),
           itemBuilder: (context, index) {
-            final item = myFolders[index];
-            return Container(
-              decoration: BoxDecoration(color: context.theme.primaryColor),
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(item.folderTitle!),
+            final item = widget.myFolders[index];
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedFolder = item;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: (item.folderId == selectedFolder?.folderId) ? context.theme.primaryColor : Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColor.mainColor),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Text(
+                  item.folderTitle!,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: (item.folderId != selectedFolder?.folderId) ? Colors.black87 : Colors.grey.shade300,
+                  ),
+                ),
+              ),
             );
           },
           separatorBuilder: (context, index) => 10.height,
+        ),
+      ),
+      10.height,
+      Visibility(
+        visible: selectedFolder != null,
+        child: GestureDetector(
+          onTap: () {
+            /// add folder
+            Navigator.of(context).pop(selectedFolder);
+          },
+          child: Container(
+            height: 44,
+            width: double.maxFinite,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColor.mainColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            margin: EdgeInsets.all(16),
+            child: Text("Add To", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+          ),
         ),
       )
     ]);
