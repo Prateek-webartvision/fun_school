@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/ui/subject_details_page/tab_pages/chapter_tab.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 
 import '../../ui/study_page/model/folder_model.dart';

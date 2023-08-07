@@ -2,7 +2,6 @@
 
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
