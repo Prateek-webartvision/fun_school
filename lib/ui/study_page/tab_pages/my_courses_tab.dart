@@ -137,7 +137,7 @@ class MyCoursesTab extends StatelessWidget {
                                 List<FolderCourseModel> coursesByFolderId = respond!.where((element) => element.folderId == item.folderId.toString()).toList();
 
                                 if (coursesByFolderId.isNotEmpty) {
-                                  rootNavigator.currentState!.push(
+                                  var res = await rootNavigator.currentState!.push(
                                     MaterialPageRoute(
                                       builder: (context) => FolderPage(
                                         coursesByFolderId: coursesByFolderId,
@@ -145,14 +145,17 @@ class MyCoursesTab extends StatelessWidget {
                                       ),
                                     ),
                                   );
+
+                                  if (res == true) {
+                                    // check if reutrn value is true then reload courses by new list
+                                    controller.reloadEnrollsCourseByFolder();
+                                  }
                                 } else {
                                   AppUtils.showSnack("No files");
                                 }
                               } else {
                                 AppUtils.showSnack("No file");
                               }
-
-                              // print("Click ${item.folderId}");
                             },
                             child: Column(
                               children: [

@@ -151,6 +151,27 @@ class StudyPlanRepository {
       throw error!;
     });
   }
+
+  // remove course From folder
+  static Future removeCourseFromfolder({required String courseId, required String folderId}) async {
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "folder_id": folderId,
+      "course_id": courseId,
+    };
+
+    return await _api.postApi(AppUrls.removeCourseFromFolder, params: data).then((value) {
+      if (value['code'] == 200) {
+        return value['message'];
+      } else {
+        throw value['message'];
+      }
+    }).onError(
+      (error, stackTrace) {
+        throw error!;
+      },
+    );
+  }
 }
 
 class EnrolledCoursesFolder {
