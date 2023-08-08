@@ -38,56 +38,79 @@ class MyCoursesTab extends StatelessWidget {
           } else {
             return CustomScrollView(
               slivers: [
+                // create folder btn and tips
                 SliverPadding(
                   padding: EdgeInsets.all(16).copyWith(bottom: 10),
                   sliver: SliverToBoxAdapter(
-                    child: Container(
-                      height: 44,
-                      width: double.maxFinite,
-                      padding: EdgeInsets.only(left: context.screenWidth * 0.5),
-                      child: GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            clipBehavior: Clip.hardEdge,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text("Group courses in folder",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            Text(
+                              "Long press a course to move to folder",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            builder: (context) {
-                              return CreateFolderSheet(
-                                onCreate: (fname) async {
-                                  controller.createFolder(fname);
-                                },
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: context.theme.primaryColor),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Icon(Icons.add, color: context.theme.primaryColor), 6.width, Text("create folder".capitalize!)],
+                          ],
+                        ),
+                        10.width,
+                        Expanded(
+                          child: SizedBox(
+                            height: 44,
+                            child: GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  clipBehavior: Clip.hardEdge,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                                  ),
+                                  builder: (context) {
+                                    return CreateFolderSheet(
+                                      onCreate: (fname) async {
+                                        controller.createFolder(fname);
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: context.theme.primaryColor),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [Icon(Icons.add, color: context.theme.primaryColor), 6.width, Text("create folder".capitalize!)],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
-
+                // search bar
                 SliverPadding(
                   padding: EdgeInsets.all(16).copyWith(bottom: 12, top: 0),
                   sliver: SliverToBoxAdapter(
                     child: KSearchField(),
                   ),
                 ),
+
                 //folders
                 if (controller.myFolders != null && controller.myFolders!.isNotEmpty)
                   SliverPadding(
@@ -131,22 +154,41 @@ class MyCoursesTab extends StatelessWidget {
 
                               // print("Click ${item.folderId}");
                             },
-                            child: Container(
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: context.theme.primaryColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                item.folderTitle!,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                            child: Column(
+                              children: [
+                                // folter top
+                                Row(
+                                  children: [
+                                    10.width,
+                                    Container(
+                                      height: 6,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        color: context.theme.primaryColor,
+                                        borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                                // folder content
+                                Container(
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: context.theme.primaryColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    item.folderTitle!,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
@@ -162,13 +204,17 @@ class MyCoursesTab extends StatelessWidget {
                 SliverPadding(
                   padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
                   sliver: SliverList.separated(
-                    itemCount: controller.myCourses!.length,
+                    itemCount: controller.myEnrollsOrInFolder!.length,
                     itemBuilder: (context, index) {
-                      final item = controller.myCourses![index];
+                      final itemTemp = controller.myEnrollsOrInFolder![index];
+                      // final item = controller.myCourses![index];
+                      final item = controller.myCourses!.where((element) => itemTemp.courseId! == element.courseId!.toString()).first;
+
+                      // return Text("data ${item.courseName}");
                       return GestureDetector(
                         onTap: () {
                           // print("${controller.myCourses![index]}");
-                          appRoutes.pushNamed(PagesName.subjectDetailsPage, extra: controller.myCourses![index]);
+                          appRoutes.pushNamed(PagesName.subjectDetailsPage, extra: item);
                         },
                         onLongPress: () {
                           controller.enableSelectionMode(item.courseId!.toString());
@@ -231,7 +277,7 @@ class MyCoursesTab extends StatelessWidget {
                                                   // 2.height,
                                                   Text(
                                                     // "Mathematics",
-                                                    controller.myCourses![index].courseName!,
+                                                    item.courseName!,
                                                     style: GoogleFonts.inter(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.w600,
@@ -276,7 +322,7 @@ class MyCoursesTab extends StatelessWidget {
                                               Expanded(
                                                 child: LinearProgressIndicator(
                                                   // value: 0.1,
-                                                  value: double.parse(controller.getMyEnrollment(index).progress!) / 100,
+                                                  value: controller.getMyProgress(item) / 100,
                                                   backgroundColor: AppColor.scaffoldBg,
                                                   color: context.appTheme.colorScheme.primary,
                                                   minHeight: 6,
@@ -286,7 +332,7 @@ class MyCoursesTab extends StatelessWidget {
                                               Text(
                                                 // "10%",
                                                 // "${controller.getMyEnrollment(index).progress}%",
-                                                "${int.parse(controller.getMyEnrollment(index).progress!)}%",
+                                                "${controller.getMyProgress(item).round()}%",
                                                 style: GoogleFonts.inter(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w600,
@@ -439,11 +485,13 @@ class MyCoursesTab extends StatelessWidget {
                         await StudyPlanRepository.addToFolder(folderId: res.folderId!.toString(), selectedCourseIds: controller.selectedCourseIds);
                         // clear all selection and mode
                         controller.clearSelectionModeAndData();
+                        // re load enrolls folders
+                        controller.reloadEnrollsCourseByFolder();
                       });
                     }
                   }
                 },
-                text: "Add New Folder",
+                text: "Add To Folder",
                 borderRadius: 4,
               ),
             );

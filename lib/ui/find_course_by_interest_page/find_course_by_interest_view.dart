@@ -322,56 +322,85 @@ class _FindCourseByInterestViewState extends FindCourseByInterestState {
           if (controller.apiState == ApiState.success) {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
-              child: KBtn(
-                onClick: () async {
-                  if (controller.selectedSubject.isEmpty) {
-                    AppUtils.showSnack("Please Select Subject");
-                  } else {
-                    // get my studys plan
-                    List<StudyPlanModel>? myStudyPlan;
-                    await AppUtils.showloadingOverlay(() async {
-                      await StudyPlanRepository.getStudyPlans().then((value) {
-                        myStudyPlan = value;
-                      }).onError((error, stackTrace) {
-                        AppUtils.showSnack(error.toString());
-                      });
-                    });
-
-                    // show study plans list
-                    if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
-                      var res = await AppUtils.showModelSheet(
-                        child: MyStudyPlanSheet(
-                          myStudyPlan: myStudyPlan!,
-                        ),
-                        isScrolled: true,
-                        bgColor: AppColor.white,
-                        clip: Clip.hardEdge,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
-                      );
-
-                      if (res != null) {
-                        // print("res :$res");
-                        final selectedCourses = controller.selectedSubject;
-                        final listCourses = selectedCourses.map((e) => e.courseName!).toList();
-                        AppUtils.showloadingOverlay(() async {
-                          //Todo this must be changed
-                          await StudyPlanRepository.buyStudyPlan(
-                            courseTitle: listCourses,
-                            studyPlan: res,
-                          );
-                        });
-                      }
-                    } else {
-                      AppUtils.showSnack("You dont have Study Plan, Create one");
-                    }
-                  }
-                },
-                // text: "Add to Study Plan",
-                text: "Add to my courses".capitalize!,
-                width: MediaQuery.of(context).size.width - 32,
-                height: 44,
-                bgColor: Color(0xff6938EF),
+              child: Text.rich(
+                TextSpan(
+                  text: "Enrolled Courses are added to",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: " ",
+                    ),
+                    TextSpan(
+                      text: '"My Courses"',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(
+                      text: " ",
+                    ),
+                    TextSpan(
+                      text: "in the study tab for easy access",
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
               ),
+
+              // child: KBtn(
+              //   onClick: () async {
+              //     if (controller.selectedSubject.isEmpty) {
+              //       AppUtils.showSnack("Please Select Subject");
+              //     } else {
+              //       // get my studys plan
+              //       List<StudyPlanModel>? myStudyPlan;
+              //       await AppUtils.showloadingOverlay(() async {
+              //         await StudyPlanRepository.getStudyPlans().then((value) {
+              //           myStudyPlan = value;
+              //         }).onError((error, stackTrace) {
+              //           AppUtils.showSnack(error.toString());
+              //         });
+              //       });
+
+              //       // show study plans list
+              //       if (myStudyPlan != null && myStudyPlan!.isNotEmpty) {
+              //         var res = await AppUtils.showModelSheet(
+              //           child: MyStudyPlanSheet(
+              //             myStudyPlan: myStudyPlan!,
+              //           ),
+              //           isScrolled: true,
+              //           bgColor: AppColor.white,
+              //           clip: Clip.hardEdge,
+              //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+              //         );
+
+              //         if (res != null) {
+              //           // print("res :$res");
+              //           final selectedCourses = controller.selectedSubject;
+              //           final listCourses = selectedCourses.map((e) => e.courseName!).toList();
+              //           AppUtils.showloadingOverlay(() async {
+              //             //Todo this must be changed
+              //             await StudyPlanRepository.buyStudyPlan(
+              //               courseTitle: listCourses,
+              //               studyPlan: res,
+              //             );
+              //           });
+              //         }
+              //       } else {
+              //         AppUtils.showSnack("You dont have Study Plan, Create one");
+              //       }
+              //     }
+              //   },
+              //   // text: "Add to Study Plan",
+              //   text: "Add to my courses".capitalize!,
+              //   width: MediaQuery.of(context).size.width - 32,
+              //   height: 44,
+              //   bgColor: Color(0xff6938EF),
+              // ),
             );
           } else {
             return SizedBox();

@@ -116,6 +116,7 @@ class StudyPlanRepository {
     // print(data);
   }
 
+  // get folder courses by user
   static Future<List<FolderCourseModel>?> getFolderCoursesByUser() async {
     Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
 
@@ -131,6 +132,46 @@ class StudyPlanRepository {
     }).onError((error, stackTrace) {
       throw error!;
     });
+  }
+
+  // get my enrolled course with folder
+  static Future<List<EnrolledCoursesFolder>?> getMyEnrolledCorseAndFolders() async {
+    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+
+    return await _api.postApi(AppUrls.getMyEnrolledCoursesAndFolder, params: data).then((value) {
+      List<EnrolledCoursesFolder> temp = [];
+      if (value != null) {
+        for (var element in value) {
+          final enrol = EnrolledCoursesFolder.fromJson(element);
+          temp.add(enrol);
+        }
+      }
+      return temp;
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
+  }
+}
+
+class EnrolledCoursesFolder {
+  int? courseEnrollmentId;
+  String? userId;
+  String? username;
+  String? courseId;
+  String? courseName;
+  String? folderId;
+  String? progress;
+  String? dateAdded;
+
+  EnrolledCoursesFolder.fromJson(Map<String, dynamic> json) {
+    courseEnrollmentId = json['course_enrollment_id'];
+    userId = json['user_id'];
+    username = json['username'];
+    courseId = json['course_id'];
+    courseName = json['course_name'];
+    folderId = json['folder_id'];
+    progress = json['progress'];
+    dateAdded = json['date_added'];
   }
 }
 

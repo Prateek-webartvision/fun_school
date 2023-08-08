@@ -16,6 +16,7 @@ class MyCoursesController extends GetxController {
 
   List<CoursesModel>? myCourses;
   List<AppFolderModel>? myFolders;
+  List<EnrolledCoursesFolder>? myEnrollsOrInFolder;
   ApiState apiState = ApiState.loading;
   String? error;
 
@@ -28,6 +29,7 @@ class MyCoursesController extends GetxController {
 
   _initDate() async {
     await _loadFolders();
+    await _loadEnrolCorsesByFolder();
     await _loadAllCourses();
     _sortCoursesForUser();
   }
@@ -95,16 +97,16 @@ class MyCoursesController extends GetxController {
   }
 
 // get my enrollment
-  CoursesEnrollment getMyEnrollment(int index) {
-    final cs = myCourses![index].courseEnrollment!;
+  double getMyProgress(CoursesModel item) {
+    // final cs = myCourses![index].courseEnrollment!;
     late CoursesEnrollment myRnroll;
-    for (var element in cs) {
+    for (var element in item.courseEnrollment!) {
       if (int.parse(element.userId!) == AppStorage.user.currentUser()!.userid) {
         myRnroll = element;
       }
     }
 
-    return myRnroll;
+    return double.parse(myRnroll.progress!);
   }
 
   // get my courses
@@ -151,6 +153,19 @@ class MyCoursesController extends GetxController {
   _loadFolders() async {
     await StudyPlanRepository.getCourseFolders().then((value) {
       myFolders = value;
+    }).onError((error, stackTrace) {
+      AppUtils.showSnack(error.toString());
+    });
+    update();
+  }
+
+  reloadEnrollsCourseByFolder() {
+    _loadEnrolCorsesByFolder();
+  }
+
+  _loadEnrolCorsesByFolder() async {
+    await StudyPlanRepository.getMyEnrolledCorseAndFolders().then((value) {
+      myEnrollsOrInFolder = value;
     }).onError((error, stackTrace) {
       AppUtils.showSnack(error.toString());
     });

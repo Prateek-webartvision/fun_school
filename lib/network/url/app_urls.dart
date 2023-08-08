@@ -28,6 +28,7 @@ class AppUrls {
   static const String myCourseFolders = "$_apis/fetch_course_folder.php";
   static const String addToFolders = "$_apis/add_course_folder_content.php";
   static const String getCourseInUserFolder = "$_apis/fetch_course_per_folder.php";
+  static const String getMyEnrolledCoursesAndFolder = "$_apis/fetch_course_enrollment.php";
 
   static const String addStudyPlanByContent = "$_apis/add_study_plan_content.php";
 

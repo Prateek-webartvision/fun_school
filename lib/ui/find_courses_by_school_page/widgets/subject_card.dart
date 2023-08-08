@@ -129,29 +129,30 @@ class SubjectCard extends StatelessWidget {
                     ),
                   ),
                 )
-              // 10.width,
-              : GestureDetector(
-                  onTap: onItemSelected,
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: BoxDecoration(
-                        color: (selectedSubject.contains(currentItem)) ? AppColor.pinkColor : null,
-                        border: Border.all(color: AppColor.softBorderColor),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      alignment: Alignment.center,
-                      child:
-                          // (name == (selectedSubject?.courseName ?? ""))
-                          // ?
-                          Icon(
-                        Icons.check,
-                        size: 16,
-                        color: AppColor.white,
-                      )
-                      // : 0.height,
-                      ),
-                ),
+              : SizedBox()
+          // 10.width,
+          // : GestureDetector(
+          //     onTap: onItemSelected,
+          //     child: Container(
+          //         height: 20,
+          //         width: 20,
+          //         decoration: BoxDecoration(
+          //           color: (selectedSubject.contains(currentItem)) ? AppColor.pinkColor : null,
+          //           border: Border.all(color: AppColor.softBorderColor),
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //         alignment: Alignment.center,
+          //         child:
+          //             // (name == (selectedSubject?.courseName ?? ""))
+          //             // ?
+          //             Icon(
+          //           Icons.check,
+          //           size: 16,
+          //           color: AppColor.white,
+          //         )
+          //         // : 0.height,
+          //         ),
+          // ),
         ],
       ),
     );
