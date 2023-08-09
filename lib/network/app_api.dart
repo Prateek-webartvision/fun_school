@@ -25,7 +25,7 @@ class AppApi extends ApiService {
     http.MultipartRequest request = http.MultipartRequest(_get, finalUri);
 
     try {
-      http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send().timeout(timeOutDuretion);
 
       if (response.statusCode == 200) {
         return json.decode(await response.stream.bytesToString());
@@ -55,7 +55,7 @@ class AppApi extends ApiService {
     http.MultipartRequest request = http.MultipartRequest(_post, finalUri);
 
     try {
-      http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send().timeout(timeOutDuretion);
 
       if (response.statusCode == 200) {
         return json.decode(await response.stream.bytesToString());

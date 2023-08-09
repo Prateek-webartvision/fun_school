@@ -13,6 +13,12 @@ class HomePageTipController extends GetxController {
     _loadTips();
   }
 
+  reloadTips() {
+    apiState = ApiState.loading;
+    update();
+    _loadTips();
+  }
+
   void _loadTips() async {
     await TipsRepository.getTips().then((value) {
       tips = value;
@@ -24,3 +30,19 @@ class HomePageTipController extends GetxController {
     update();
   }
 }
+
+
+  // if (error is KInternetException || error is KRequestTimeOutException) {
+  //       print("object");
+  //       scaffoldMenagerKey.currentState
+  //         ?..removeCurrentMaterialBanner()
+  //         ..showMaterialBanner(MaterialBanner(content: Text(this.error.toString()), actions: [
+  //           GestureDetector(
+  //             onTap: () {
+  //               scaffoldMenagerKey.currentState?..removeCurrentMaterialBanner();
+  //               _loadTips();
+  //             },
+  //             child: Icon(Icons.replay_outlined),
+  //           )
+  //         ]));
+  //     }

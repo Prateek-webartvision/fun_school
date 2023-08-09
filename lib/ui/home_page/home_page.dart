@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,7 +83,13 @@ class _HomePageState extends State<HomePage> {
           if (controller.apiState == ApiState.loading) {
             return Center(child: CircularProgressIndicator());
           } else if (controller.apiState == ApiState.error) {
-            return Center(child: Text(controller.error.toString()));
+            // return Center(child: Text(controller.error.toString()));
+            return ErrorPage(
+                error: controller.error.toString(),
+                onError: () {
+                  // Reload method here
+                  controller.reloadTips();
+                });
           } else {
             return ListView(
               padding: EdgeInsets.symmetric(vertical: 16),
