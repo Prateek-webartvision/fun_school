@@ -1,24 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
-import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../uitls/app_utils.dart';
-import '../../widegts/k_btn.dart';
 import '../../widegts/k_text_field.dart';
 import '../find_course_by_career_page/widgets/teg_selector.dart';
-import '../study_page/model/study_plan_model.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/select_school_dropdwon.dart';
-import 'widgets/select_study_plan_sheet.dart';
 import 'widgets/subject_card.dart';
 
 class FindCoursesBySchoolPageView extends StatefulWidget {
@@ -172,7 +169,13 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
           if (controller.apiState == ApiState.loading) {
             return Center(child: CircularProgressIndicator());
           } else if (controller.apiState == ApiState.error) {
-            return Center(child: Text(controller.error.toString()));
+            // return Center(child: Text(controller.error.toString()));
+            return ErrorPage(
+              error: controller.error.toString(),
+              onError: () {
+                controller.reload();
+              },
+            );
           } else {
             return ListView(
               physics: NeverScrollableScrollPhysics(),
@@ -263,7 +266,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                     ),
                                     Container(
                                       width: double.maxFinite,
-                                      height: 370 - 93,
+                                      height: 420 - 93,
                                       decoration: BoxDecoration(
                                         color: AppColor.white,
                                         border: Border.all(color: AppColor.softBorderColor),
@@ -310,7 +313,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                               initialPage: 0,
                               aspectRatio: 1,
                               viewportFraction: 1,
-                              height: 370,
+                              height: 420,
                               enableInfiniteScroll: false,
                               autoPlay: true,
                               onPageChanged: (index, reason) {
@@ -350,12 +353,12 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
         builder: (controller) {
           if (controller.apiState == ApiState.success) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+              padding: EdgeInsets.symmetric(horizontal: 30).copyWith(bottom: 20),
               child: Text.rich(
                 TextSpan(
                   text: "Enrolled Courses are added to",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.normal,
                   ),
                   children: [
@@ -365,7 +368,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                     TextSpan(
                       text: '"My Courses"',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

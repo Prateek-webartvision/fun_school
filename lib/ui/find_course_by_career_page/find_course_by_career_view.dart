@@ -9,14 +9,10 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
-import '../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../uitls/app_utils.dart';
-import '../../widegts/k_btn.dart';
-import '../find_courses_by_school_page/widgets/select_study_plan_sheet.dart';
 import '../find_courses_by_school_page/widgets/subject_card.dart';
-import '../study_page/model/study_plan_model.dart';
 import 'find_course_by_career_state.dart';
 import 'widgets/teg_selector.dart';
 
@@ -143,7 +139,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                         ),
                                         Container(
                                           width: double.maxFinite,
-                                          height: 370 - 93,
+                                          height: 420 - 93,
                                           decoration: BoxDecoration(
                                             color: AppColor.white,
                                             border: Border.all(color: AppColor.softBorderColor),
@@ -191,7 +187,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                 initialPage: 0,
                                 aspectRatio: 1,
                                 viewportFraction: 1,
-                                height: 370,
+                                height: 420,
                                 enableInfiniteScroll: false,
                                 autoPlay: true,
                                 onPageChanged: (index, reason) {
@@ -309,7 +305,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                 TextSpan(
                   text: "Enrolled Courses are added to",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.normal,
                   ),
                   children: [
@@ -319,7 +315,7 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                     TextSpan(
                       text: '"My Courses"',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

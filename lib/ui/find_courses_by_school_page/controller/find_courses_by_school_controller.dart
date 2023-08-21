@@ -1,9 +1,5 @@
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
-import 'package:citycloud_school/network/exception/k_exceptions.dart';
 import 'package:citycloud_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -14,7 +10,6 @@ class FindCoursesBySchoolController extends GetxController {
   String? error;
 
   List<CoursesModel> _coursesList = [];
-  // List<CoursesModel>? _coursesBySchool;
   List<CoursesModel>? coursesBySearch;
 
   List<CoursesModel> selectedSubject = [];
@@ -34,14 +29,16 @@ class FindCoursesBySchoolController extends GetxController {
   }
 
   changeCourseSelection(CoursesModel selectedSubject) {
-    // this.selectedSubject = selectedSubject;
-    // print("object");
     if (this.selectedSubject.contains(selectedSubject)) {
       this.selectedSubject.remove(selectedSubject);
     } else {
       this.selectedSubject.add(selectedSubject);
     }
     update();
+  }
+
+  reload() {
+    _initLoadDate();
   }
 
   _initLoadDate() async {
@@ -138,10 +135,11 @@ class FindCoursesBySchoolController extends GetxController {
   // loading course data
   _getCourses() async {
     apiState = ApiState.loading;
-    await loadWithLoading();
+    update();
+    await reloadWithLoading();
   }
 
-  loadWithLoading() async {
+  reloadWithLoading() async {
     List<CoursesModel> data = [];
     await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
       apiState = ApiState.success;
@@ -150,17 +148,7 @@ class FindCoursesBySchoolController extends GetxController {
       }
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
-      if (error is KInternetException) {
-        AppUtils.showSnack(error.message.toString());
-        this.error = error.message.toString();
-      }
-      if (error is FlutterError) {
-        /// this error comw due to call api after disposing controller
-        AppUtils.showSnack(error.message);
-      } else {
-        AppUtils.showSnack(error.runtimeType.toString());
-        this.error = error.toString();
-      }
+      this.error = error.toString();
     });
     _coursesList = data;
     update();

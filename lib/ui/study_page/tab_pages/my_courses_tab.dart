@@ -48,19 +48,19 @@ class MyCoursesTab extends StatelessWidget {
                           children: [
                             Text("Group courses in folder",
                                 style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 )),
                             Text(
                               "Long press a course to move to folder",
                               style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 9,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
-                        10.width,
+                        14.width,
                         Expanded(
                           child: SizedBox(
                             height: 44,
