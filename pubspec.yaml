@@ -98,6 +98,7 @@ flutter:
     - assets/
     - assets/logo/
     - assets/svg_icons/
+    - assets/svg_icons/icons/
     - assets/img/
     - assets/img/home_images/
     - assets/videos/splash_video/

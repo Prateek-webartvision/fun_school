@@ -18,6 +18,7 @@ class BottomNavBarPage extends StatefulWidget {
 
 class _BottomNavBarPageState extends State<BottomNavBarPage> {
   late NavPageController navPageController;
+  Color appbarBg = AppColor.scaffoldBg;
 
   @override
   void initState() {
@@ -30,25 +31,39 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.scaffoldBg,
-      appBar: AppBar(
-        backgroundColor: AppColor.scaffoldBg,
-        leading: Center(
-          child: Image.asset(
-            AppAssets.logo,
-            height: 40,
-            width: 40,
-          ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: GetBuilder(
+          init: navPageController,
+          builder: (controller) {
+            return AppBar(
+              backgroundColor: appbarBg,
+              leading: Center(
+                child: Image.asset(AppAssets.logo, height: 40, width: 40),
+              ),
+              title: (controller.currentIndex == 3)
+                  ? Text(
+                      "Communities",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    )
+                  : null,
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    // AppNotficationServices.instance.showNotifaction();
+                    AppUtils.showSnack("coming soon");
+                  },
+                  icon: Icon(Icons.notifications_outlined),
+                ),
+              ],
+            );
+          },
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                // AppNotficationServices.instance.showNotifaction();
-                AppUtils.showSnack("coming soon");
-              },
-              icon: Icon(Icons.notifications_outlined)),
-        ],
       ),
+      // body
       body: widget.child,
+      // nav bar
       bottomNavigationBar: GetBuilder(
         init: navPageController,
         builder: (controller) {

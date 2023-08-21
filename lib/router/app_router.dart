@@ -36,6 +36,7 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMenagerKey = GlobalKey<ScaffoldM
 
 final GoRouter appRoutes = GoRouter(
   initialLocation: PagesName.getPath(PagesName.splashScreen),
+
   navigatorKey: rootNavigator,
   routerNeglect: true,
 
