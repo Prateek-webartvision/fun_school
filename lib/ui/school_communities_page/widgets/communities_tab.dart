@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/style/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -34,7 +36,7 @@ class CommunitiesTabSelector extends StatelessWidget {
               tab(
                 title: "Discussions",
                 color: colorShifter(itemId: 0),
-                icon: Icons.forum_rounded,
+                svgIcon: AppAssets.svg.weChatFillIcon,
                 onTab: () {
                   controller.index = 0;
                 },
@@ -43,7 +45,7 @@ class CommunitiesTabSelector extends StatelessWidget {
               tab(
                 title: "Groups",
                 color: colorShifter(itemId: 1),
-                icon: Icons.radio_button_checked,
+                svgIcon: AppAssets.svg.recordCircleIcon,
                 onTab: () {
                   controller.index = 1;
                 },
@@ -52,7 +54,7 @@ class CommunitiesTabSelector extends StatelessWidget {
               tab(
                 title: "Messages",
                 color: colorShifter(itemId: 2),
-                icon: Icons.chat_bubble,
+                svgIcon: AppAssets.svg.groupIcon,
                 onTab: () {
                   controller.index = 2;
                 },
@@ -76,7 +78,7 @@ class CommunitiesTabSelector extends StatelessWidget {
   Widget tab({
     required String title,
     required Color color,
-    required IconData icon,
+    required String svgIcon,
     required Function() onTab,
   }) =>
       Expanded(
@@ -91,11 +93,12 @@ class CommunitiesTabSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: 16,
-                ),
+                // Icon(
+                //   icon,
+                //   color: color,
+                //   size: 16,
+                // ),
+                SvgPicture.asset(svgIcon),
                 4.width,
                 Text(
                   title,

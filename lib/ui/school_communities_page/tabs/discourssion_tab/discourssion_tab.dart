@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kd_utils/kd_utils.dart';
+
+import 'wigets/image_post_tile.dart';
+import 'wigets/text_post_tile.dart';
 
 class DiscourssionTab extends StatefulWidget {
   const DiscourssionTab({super.key});
@@ -116,187 +117,27 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
         // post
 
         SliverList.separated(
+          itemCount: 3,
           itemBuilder: (context, index) {
-            return Container(
-              height: 215,
-              width: double.maxFinite,
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(36),
-                          color: AppColor.softBorderColor,
-                          image: DecorationImage(
-                            image: NetworkImage("https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      12.width,
-                      Row(
-                        children: [
-                          Text("Jerome Bell", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                          4.width,
-                          Icon(
-                            Icons.verified,
-                            color: AppColor.mainColor,
-                            size: 12,
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Text("33m"),
-                          4.width,
-                          Icon(Icons.more_horiz),
-                        ],
-                      ),
-                    ],
-                  ),
-                  // dive line and message
-                  Expanded(
-                    child: Container(
-                      // color: Colors.yellow,
-                      margin: EdgeInsets.symmetric(vertical: 6),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 36,
-                            alignment: Alignment.center,
-                            child: Container(
-                              width: 4,
-                              decoration: BoxDecoration(color: AppColor.softBorderColor, borderRadius: BorderRadius.circular(4)),
-                            ),
-                          ),
-                          12.width,
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Importance of Quantum Physics in Modern Technology?",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                                4.height,
-                                Text(
-                                  "Quantum physics is often considered the backbone of many modern...",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                                4.height,
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.thumb_up_alt_rounded,
-                                      color: AppColor.mainColor,
-                                      size: 24,
-                                    ),
-                                    12.width,
-                                    SvgPicture.asset(
-                                      AppAssets.svg.messageIcon,
-                                      height: 24,
-                                      width: 24,
-                                    ),
-                                    12.width,
-                                    SvgPicture.asset(
-                                      AppAssets.svg.rePostIcon,
-                                      height: 24,
-                                      width: 24,
-                                    ),
-                                    12.width,
-                                    SvgPicture.asset(
-                                      AppAssets.svg.sendIcon,
-                                      height: 24,
-                                      width: 24,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+            if (index == 2) {
+              return ImagePostTile(
+                profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
+                userName: "Jerome Bell",
+                isVerify: true,
+                time: DateTime.now().subtract(Duration(minutes: 5)).toUtc().toString(),
+                topic: "How are virtual realities impacting our daily lives?",
+                message:
+                    "Virtual Reality (VR) has been a rising technology for the past few years. While it started mainly in the gaming industry, it has now permeated into various sectors like education, healthcare, and even tourism. I'm curious to hear from others: How do you think VR is shaping our routines, interactions, and experiences in the current decade? Are there any unforeseen consequences or benefits that you've observed?",
+              );
+            }
 
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 36,
-                        child: Align(
-                          alignment: Alignment(-.5, 0),
-                          child: SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              clipBehavior: Clip.none,
-                              fit: StackFit.expand,
-                              children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    height: 16,
-                                    width: 16,
-                                    decoration: BoxDecoration(
-                                      color: AppColor.softBorderColor,
-                                      border: Border.all(color: AppColor.white),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: -16 * 0.5,
-                                  child: Container(
-                                    height: 16,
-                                    width: 16,
-                                    decoration: BoxDecoration(
-                                      color: AppColor.mainColor,
-                                      borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(color: AppColor.white),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            "https://images.unsplash.com/photo-1618641986557-1ecd230959aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      12.width,
-                      Text(
-                        "26 replies ",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                      ),
-                      Text(
-                        "• 112 Likes",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            return TextPostTile(
+              profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
+              userName: "Jerome Bell",
+              isVerify: true,
+              time: DateTime.now().subtract(Duration(minutes: 33)).toUtc().toString(),
+              topic: "Importance of Quantum Physics in Modern Technology?",
+              message: "Quantum physics is often considered the backbone of many modern...",
             );
           },
           separatorBuilder: (context, index) => Divider(height: 0),

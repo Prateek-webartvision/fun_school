@@ -22,4 +22,9 @@ mixin class SvgAssets {
   final String sendIcon = "assets/svg_icons/icons/send.svg";
   final String rePostIcon = "assets/svg_icons/icons/repost.svg";
   final String messageIcon = "assets/svg_icons/icons/message.svg";
+
+  final String weChatFillIcon = "assets/svg_icons/icons/wechat-fill.svg";
+  final String recordCircleIcon = "assets/svg_icons/icons/record-circle-line.svg";
+  final String groupIcon = "assets/svg_icons/icons/Group.svg";
+  final String pencilFillIcon = "assets/svg_icons/icons/pencil-fill.svg";
 }
