@@ -7,12 +7,11 @@ import 'package:citycloud_school/ui/school_communities_page/tabs/discourssion_ta
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kd_utils/kd_utils.dart';
 
 import 'controllers/communities_tab_controller.dart';
+import 'tabs/group_tab/group_tab.dart';
 import 'widgets/communities_tab.dart';
 import 'widgets/communities_tab_view.dart';
-import 'widgets/group_tab_tile.dart';
 import 'widgets/new_post_sheet.dart';
 
 class SchoolCommunitiesPage extends StatefulWidget {
@@ -79,60 +78,6 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
           );
         },
       ),
-    );
-  }
-}
-
-class GroupsTab extends StatelessWidget {
-  const GroupsTab({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 12, bottom: 10),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "My Groups",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                4.height,
-                Text(
-                  "Groups are specialized communities tailored to specific courses, topics, or interests.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverList.separated(
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return GroupTabTile(
-                onItemClick: () {
-                  print("object");
-                },
-              );
-            },
-            separatorBuilder: (context, index) => 10.height,
-          ),
-        )
-      ],
     );
   }
 }
