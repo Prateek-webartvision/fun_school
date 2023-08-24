@@ -7,10 +7,13 @@ import 'package:citycloud_school/ui/school_communities_page/tabs/discourssion_ta
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kd_utils/kd_utils.dart';
 
 import 'controllers/communities_tab_controller.dart';
 import 'widgets/communities_tab.dart';
 import 'widgets/communities_tab_view.dart';
+import 'widgets/group_tab_tile.dart';
+import 'widgets/new_post_sheet.dart';
 
 class SchoolCommunitiesPage extends StatefulWidget {
   const SchoolCommunitiesPage({super.key});
@@ -39,7 +42,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
               controller: communitiesTabController,
               children: [
                 DiscourssionTab(),
-                Center(child: Text("data 2")),
+                GroupsTab(),
                 Center(child: Text("data 3")),
               ],
             ),
@@ -61,16 +64,16 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
               backgroundColor: AppColor.mainColor,
               child: SvgPicture.asset(AppAssets.svg.pencilFillIcon),
               onPressed: () {
-                //
+                // post bottom sheet
                 showModalBottomSheet(
                   context: rootNavigator.currentContext!,
                   isScrollControlled: true,
                   builder: (context) {
-                    return NewPostSheet();
+                    return NewPostSheet(
+                        // onPostClick: () {},
+                        );
                   },
                 );
-
-                // rootNavigator.currentState!.toString();
               },
             ),
           );
@@ -80,81 +83,56 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   }
 }
 
-class NewPostSheet extends StatefulWidget {
-  const NewPostSheet({
+class GroupsTab extends StatelessWidget {
+  const GroupsTab({
     super.key,
   });
 
   @override
-  State<NewPostSheet> createState() => _NewPostSheetState();
-}
-
-class _NewPostSheetState extends State<NewPostSheet> {
-  bool isPage2 = false;
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      color: AppColor.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 48,
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: AppColor.softBorderColor))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 12, bottom: 10),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Post Discussion",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  "My Groups",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                InkWell(
-                  onTap: () {
-                    rootNavigator.currentState!.pop();
-                  },
-                  child: Icon(Icons.close_rounded),
-                )
+                4.height,
+                Text(
+                  "Groups are specialized communities tailored to specific courses, topics, or interests.",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),
-          //
-          Text("data"),
-          ElevatedButton(
-              onPressed: () {
-                isPage2 = true;
-                setState(() {});
-              },
-              child: Text("NextShet"))
-        ],
-      ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          sliver: SliverList.separated(
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return GroupTabTile(
+                onItemClick: () {
+                  print("object");
+                },
+              );
+            },
+            separatorBuilder: (context, index) => 10.height,
+          ),
+        )
+      ],
     );
   }
-
-  Widget page1() => Container(
-        height: 100,
-        width: double.maxFinite,
-        color: AppColor.white,
-        child: Column(
-          children: [
-            Text("data"),
-            ElevatedButton(
-                onPressed: () {
-                  isPage2 = true;
-                  setState(() {});
-                },
-                child: Text("NextShet"))
-          ],
-        ),
-      );
-
-  Widget page2 = Container(
-    height: 100,
-    width: double.maxFinite,
-    color: AppColor.facebookBlue,
-    child: Column(
-      children: [Text("data"), ElevatedButton(onPressed: () {}, child: Text("NextShet"))],
-    ),
-  );
 }

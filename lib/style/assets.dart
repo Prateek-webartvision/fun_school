@@ -27,4 +27,11 @@ mixin class SvgAssets {
   final String recordCircleIcon = "assets/svg_icons/icons/record-circle-line.svg";
   final String groupIcon = "assets/svg_icons/icons/Group.svg";
   final String pencilFillIcon = "assets/svg_icons/icons/pencil-fill.svg";
+  final String listIcon = "assets/svg_icons/icons/list.svg";
+  final String arrowRight = "assets/svg_icons/icons/arrow_right.svg";
+  final String chatPollIcon = "assets/svg_icons/icons/chat-poll-line.svg";
+  final String happyFaceIcon = "assets/svg_icons/icons/happy.svg";
+  final String attachmentIcon = "assets/svg_icons/icons/attachment-line.svg";
+  final String parentFillIcon = "assets/svg_icons/icons/parent-fill.svg";
+  final String calendarlineIcon = "assets/svg_icons/icons/calendar-line.svg";
 }
