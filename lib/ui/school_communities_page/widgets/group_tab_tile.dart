@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -17,20 +18,11 @@ class GroupTabTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(9), boxShadow: [
-        BoxShadow(
-          offset: Offset(0, 1),
-          blurRadius: 2,
-          spreadRadius: 0,
-          color: Color(0xFF101828).withOpacity(0.06),
-        ),
-        BoxShadow(
-          offset: Offset(0, 1),
-          blurRadius: 3,
-          spreadRadius: 0,
-          color: Color(0xFF101828).withOpacity(0.1),
-        ),
-      ]),
+      decoration: BoxDecoration(
+        color: AppColor.white,
+        borderRadius: BorderRadius.circular(9),
+        boxShadow: AppShadow.mainShadow,
+      ),
       clipBehavior: Clip.hardEdge,
       child: Material(
         color: Colors.transparent,

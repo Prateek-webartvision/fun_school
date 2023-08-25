@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/style/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../../style/color.dart';
@@ -24,18 +25,7 @@ class MeetingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [
-        BoxShadow(
-          offset: Offset(0, 1),
-          blurRadius: 2,
-          color: Color(0xff101828).withOpacity(0.06),
-        ),
-        BoxShadow(
-          offset: Offset(0, 1),
-          blurRadius: 3,
-          color: Color(0xff101828).withOpacity(0.10),
-        )
-      ]),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: AppShadow.mainShadow),
       padding: EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       child: InkWell(
         onTap: onItemClick,

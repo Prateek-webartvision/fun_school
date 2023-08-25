@@ -34,4 +34,7 @@ mixin class SvgAssets {
   final String attachmentIcon = "assets/svg_icons/icons/attachment-line.svg";
   final String parentFillIcon = "assets/svg_icons/icons/parent-fill.svg";
   final String calendarlineIcon = "assets/svg_icons/icons/calendar-line.svg";
+  final String openedFilderIcon = "assets/svg_icons/icons/opened.svg";
+  final String zipIcon = "assets/svg_icons/icons/zip.svg";
+  final String jpg = "assets/svg_icons/icons/jpg.svg";
 }

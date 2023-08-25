@@ -10,3 +10,20 @@ class AppTheme {
         textTheme: GoogleFonts.interTextTheme(),
       );
 }
+
+class AppShadow {
+  static List<BoxShadow> mainShadow = [
+    BoxShadow(
+      offset: const Offset(0, 1),
+      blurRadius: 2,
+      spreadRadius: 0,
+      color: const Color(0xFF101828).withOpacity(0.06),
+    ),
+    BoxShadow(
+      offset: const Offset(0, 1),
+      blurRadius: 3,
+      spreadRadius: 0,
+      color: const Color(0xFF101828).withOpacity(0.1),
+    ),
+  ];
+}
