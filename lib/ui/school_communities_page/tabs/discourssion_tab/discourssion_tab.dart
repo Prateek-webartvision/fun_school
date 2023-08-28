@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -123,6 +125,9 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
               return ImagePostTile(
                 profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
                 userName: "Jerome Bell",
+                onProfileClick: () {
+                  rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+                },
                 isVerify: true,
                 time: DateTime.now().subtract(Duration(minutes: 5)).toUtc().toString(),
                 topic: "How are virtual realities impacting our daily lives?",
@@ -134,6 +139,9 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
             return TextPostTile(
               profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
               userName: "Jerome Bell",
+              onProfileClick: () {
+                rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+              },
               isVerify: true,
               time: DateTime.now().subtract(Duration(minutes: 33)).toUtc().toString(),
               topic: "Importance of Quantum Physics in Modern Technology?",

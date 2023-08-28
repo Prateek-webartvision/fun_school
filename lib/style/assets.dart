@@ -39,4 +39,8 @@ mixin class SvgAssets {
   final String openedFilderIcon = "assets/svg_icons/icons/opened.svg";
   final String zipIcon = "assets/svg_icons/icons/zip.svg";
   final String jpg = "assets/svg_icons/icons/jpg.svg";
+
+  final String verified = "assets/svg_icons/icons/verified.svg";
+  final String helpfullUser = "assets/svg_icons/icons/helpful_user.svg";
+  final String scholar = "assets/svg_icons/icons/Scholar.svg";
 }

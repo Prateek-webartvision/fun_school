@@ -1,21 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../../../style/assets.dart';
-import '../../../../../style/color.dart';
-import '../../../../../uitls/helper.dart';
+import '../../../style/assets.dart';
+import '../../../style/color.dart';
+import '../../../uitls/helper.dart';
 
-class TextPostTile extends StatelessWidget {
-  const TextPostTile({
+class PostTile extends StatelessWidget {
+  const PostTile({
     super.key,
     required this.profileUrl,
     required this.userName,
     this.isVerify = false,
     required this.time,
-    required this.topic,
+    this.topic,
     required this.message,
     this.isLiked,
     this.last2Likes,
@@ -27,7 +27,7 @@ class TextPostTile extends StatelessWidget {
   final String userName;
   final bool isVerify;
   final String time;
-  final String topic;
+  final String? topic;
   final String message;
   final bool? isLiked;
   final List<String>? last2Likes;
@@ -38,7 +38,7 @@ class TextPostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 215,
+      height: 180,
       width: double.maxFinite,
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -80,6 +80,7 @@ class TextPostTile extends StatelessWidget {
               Spacer(),
               Row(
                 children: [
+                  // Text(DateTime.parse(time).toLocal().toString()),
                   Text(timeCheck(yourTime: DateTime.parse(time))),
                   4.width,
                   Icon(Icons.more_horiz),
@@ -106,14 +107,15 @@ class TextPostTile extends StatelessWidget {
                   12.width,
                   Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          topic,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        4.height,
+                        // Text(
+                        //   topic,
+                        //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        //   overflow: TextOverflow.ellipsis,
+                        //   maxLines: 2,
+                        // ),
+                        // 4.height,
                         Text(
                           message,
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),

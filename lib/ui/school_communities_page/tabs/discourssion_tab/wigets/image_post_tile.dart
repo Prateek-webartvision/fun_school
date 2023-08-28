@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -22,6 +21,7 @@ class ImagePostTile extends StatelessWidget {
     this.last2Likes,
     this.likes,
     this.replies,
+    this.onProfileClick,
   });
   final String profileUrl;
   final String userName;
@@ -33,6 +33,7 @@ class ImagePostTile extends StatelessWidget {
   final List<String>? last2Likes;
   final int? likes;
   final int? replies;
+  final Function()? onProfileClick;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,30 +47,34 @@ class ImagePostTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 36,
-                width: 36,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(36),
-                  color: AppColor.softBorderColor,
-                  image: DecorationImage(
-                    image: NetworkImage(profileUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              12.width,
-              Row(
-                children: [
-                  Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                  4.width,
-                  if (isVerify == true)
-                    Icon(
-                      Icons.verified,
-                      color: AppColor.mainColor,
-                      size: 12,
+              GestureDetector(
+                onTap: onProfileClick,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 36,
+                      width: 36,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36),
+                        color: AppColor.softBorderColor,
+                        image: DecorationImage(
+                          image: NetworkImage(profileUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                ],
+                    12.width,
+                    Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    4.width,
+                    if (isVerify == true)
+                      Icon(
+                        Icons.verified,
+                        color: AppColor.mainColor,
+                        size: 12,
+                      ),
+                  ],
+                ),
               ),
               Spacer(),
               Row(
