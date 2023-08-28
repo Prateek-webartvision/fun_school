@@ -26,7 +26,9 @@ mixin class SvgAssets {
   final String weChatFillIcon = "assets/svg_icons/icons/wechat-fill.svg";
   final String recordCircleIcon = "assets/svg_icons/icons/record-circle-line.svg";
   final String groupIcon = "assets/svg_icons/icons/Group.svg";
+  final String groupFillIcon = "assets/svg_icons/icons/Group_fill.svg";
   final String pencilFillIcon = "assets/svg_icons/icons/pencil-fill.svg";
+  final String search = "assets/svg_icons/icons/search.svg";
   final String listIcon = "assets/svg_icons/icons/list.svg";
   final String arrowRight = "assets/svg_icons/icons/arrow_right.svg";
   final String chatPollIcon = "assets/svg_icons/icons/chat-poll-line.svg";
