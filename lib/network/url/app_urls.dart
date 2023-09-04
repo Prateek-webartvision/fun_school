@@ -43,4 +43,7 @@ class AppUrls {
 
   static const String getPaworSummary = "$_apis/fetch_power_summary.php";
   static const String getInteractiveQuiz = "$_apis/fetch_interactive_quiz.php";
+
+  // part 2
+  static const String getCommunityDiscussionPost = "$_apis/community_fetch_timelines.php";
 }

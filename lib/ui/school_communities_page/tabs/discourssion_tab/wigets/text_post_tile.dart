@@ -18,9 +18,9 @@ class TextPostTile extends StatelessWidget {
     required this.topic,
     required this.message,
     this.isLiked,
-    this.last2Likes,
-    this.likes,
-    this.replies,
+    this.first2Likes = const <String>[],
+    this.likes = 0,
+    this.replies = 0,
     this.onProfileClick,
   });
   final String profileUrl;
@@ -30,7 +30,7 @@ class TextPostTile extends StatelessWidget {
   final String topic;
   final String message;
   final bool? isLiked;
-  final List<String>? last2Likes;
+  final List<String>? first2Likes;
   final int? likes;
   final int? replies;
   final Function()? onProfileClick;
@@ -38,7 +38,7 @@ class TextPostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 215,
+      // height: 215,
       width: double.maxFinite,
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -66,14 +66,19 @@ class TextPostTile extends StatelessWidget {
                       ),
                     ),
                     12.width,
-                    Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                    4.width,
-                    if (isVerify == true)
-                      Icon(
-                        Icons.verified,
-                        color: AppColor.mainColor,
-                        size: 12,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                        4.width,
+                        if (isVerify == true)
+                          Icon(
+                            Icons.verified,
+                            color: AppColor.mainColor,
+                            size: 12,
+                          ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -87,135 +92,153 @@ class TextPostTile extends StatelessWidget {
               ),
             ],
           ),
-          // dive line and message
-          Expanded(
-            child: Container(
-              // color: Colors.yellow,
-              margin: EdgeInsets.symmetric(vertical: 6),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 36,
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: 4,
-                      decoration: BoxDecoration(color: AppColor.softBorderColor, borderRadius: BorderRadius.circular(4)),
-                    ),
+          // dive line and messagech
+
+          Container(
+            // color: Colors.yellow,
+            margin: EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: 48),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        topic,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        // overflow: TextOverflow.ellipsis,
+                        // maxLines: 2,
+                      ),
+                      4.height,
+                      Text(
+                        message,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
+                      4.height,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.thumb_up_alt_rounded,
+                            color: AppColor.mainColor,
+                            size: 24,
+                          ),
+                          12.width,
+                          SvgPicture.asset(
+                            AppAssets.svg.messageIcon,
+                            height: 24,
+                            width: 24,
+                          ),
+                          12.width,
+                          SvgPicture.asset(
+                            AppAssets.svg.rePostIcon,
+                            height: 24,
+                            width: 24,
+                          ),
+                          12.width,
+                          SvgPicture.asset(
+                            AppAssets.svg.sendIcon,
+                            height: 24,
+                            width: 24,
+                          )
+                        ],
+                      )
+                    ],
                   ),
-                  12.width,
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          topic,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        4.height,
-                        Text(
-                          message,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        4.height,
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.thumb_up_alt_rounded,
-                              color: AppColor.mainColor,
-                              size: 24,
-                            ),
-                            12.width,
-                            SvgPicture.asset(
-                              AppAssets.svg.messageIcon,
-                              height: 24,
-                              width: 24,
-                            ),
-                            12.width,
-                            SvgPicture.asset(
-                              AppAssets.svg.rePostIcon,
-                              height: 24,
-                              width: 24,
-                            ),
-                            12.width,
-                            SvgPicture.asset(
-                              AppAssets.svg.sendIcon,
-                              height: 24,
-                              width: 24,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
+          // like and all
           Row(
             children: [
-              SizedBox(
-                width: 36,
-                child: Align(
-                  alignment: Alignment(-.5, 0),
-                  child: SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      fit: StackFit.expand,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            height: 16,
-                            width: 16,
-                            decoration: BoxDecoration(
-                              color: AppColor.softBorderColor,
-                              border: Border.all(color: AppColor.white),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                                fit: BoxFit.cover,
+              Container(
+                color: Colors.green,
+                width: 32,
+                height: 16,
+                child: (first2Likes!.isEmpty)
+                    ? SizedBox()
+                    : Stack(
+                        children: List.generate(
+                          (first2Likes!.length > 2) ? 2 : first2Likes!.length,
+                          (index) {
+                            return Positioned(
+                              left: index * 9,
+                              child: Container(
+                                height: 16,
+                                width: 16,
+                                decoration: BoxDecoration(
+                                  color: AppColor.softBorderColor,
+                                  border: Border.all(color: AppColor.white),
+                                  image: DecorationImage(
+                                    image: NetworkImage(first2Likes![index]),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
+                            );
+                          },
                         ),
-                        Positioned(
-                          right: -16 * 0.5,
-                          child: Container(
-                            height: 16,
-                            width: 16,
-                            decoration: BoxDecoration(
-                              color: AppColor.mainColor,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: AppColor.white),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1618641986557-1ecd230959aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
+                // child: Align(
+                //   alignment: Alignment(-.5, 0),
+                //   child: SizedBox(
+                //     width: 16,
+                //     height: 16,
+                //     child: Stack(
+                //       alignment: Alignment.center,
+                //       clipBehavior: Clip.none,
+                //       fit: StackFit.expand,
+                //       children: [
+                //         Align(
+                //           alignment: Alignment.center,
+                //           child: Container(
+                //             height: 16,
+                //             width: 16,
+                //             decoration: BoxDecoration(
+                //               color: AppColor.softBorderColor,
+                //               border: Border.all(color: AppColor.white),
+                //               image: DecorationImage(
+                //                 image: NetworkImage(
+                //                     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //               borderRadius: BorderRadius.circular(16),
+                //             ),
+                //           ),
+                //         ),
+                //         Positioned(
+                //           right: -16 * 0.5,
+                //           child: Container(
+                //             height: 16,
+                //             width: 16,
+                //             decoration: BoxDecoration(
+                //               color: AppColor.mainColor,
+                //               borderRadius: BorderRadius.circular(16),
+                //               border: Border.all(color: AppColor.white),
+                //               image: DecorationImage(
+                //                 image: NetworkImage(
+                //                     "https://images.unsplash.com/photo-1618641986557-1ecd230959aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ),
               12.width,
               Text(
-                "26 replies ",
+                "$replies replies ",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
               Text(
-                "• 112 Likes",
+                "• $likes Likes",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ],
