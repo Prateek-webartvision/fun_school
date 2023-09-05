@@ -46,4 +46,5 @@ class AppUrls {
 
   // part 2
   static const String getCommunityDiscussionPost = "$_apis/community_fetch_timelines.php";
+  static const String getTrendingHashtags = "$_apis/trending_hashtags.php";
 }

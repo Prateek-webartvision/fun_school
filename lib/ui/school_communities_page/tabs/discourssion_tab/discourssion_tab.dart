@@ -5,6 +5,7 @@ import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -69,78 +70,97 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                               height: 1.6,
                             ),
                           ),
-                          Text(
-                            "See All",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.mainColor),
-                          )
+                          // Text(
+                          //   "See All",
+                          //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.mainColor),
+                          // )
                         ],
                       ),
                       12.height,
                       SizedBox(
                         height: 34,
-                        child: ListView(
+                        child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          children: [
-                            Container(
-                              height: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: AppColor.softBorderColor),
-                              ),
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: Text(
-                                "Mars Colonization",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.tegTextColor,
-                                ),
-                              ),
-                            ),
-                            4.width,
-                            Container(
-                              height: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: AppColor.softBorderColor),
-                              ),
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: Text(
-                                "Deep Learning",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.tegTextColor,
-                                ),
-                              ),
-                            ),
-                            4.width,
-                            Container(
-                              height: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: AppColor.softBorderColor),
-                              ),
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: Text(
-                                "Mental Health Awareness",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.tegTextColor,
-                                ),
-                              ),
-                            ),
-                          ],
+                          itemCount: controller.trendingHastags!.length,
+                          itemBuilder: (context, index) {
+                            final item = controller.trendingHastags![index];
+                            return TrendingHashtagChip(
+                              text: item.hashtag!,
+                              isSelected: item.hashtag == controller.selectedTag,
+                              onTap: () {
+                                controller.setSelectTag = item.hashtag!;
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) => 4.width,
                         ),
                       ),
+                      // SizedBox(
+                      //   height: 34,
+                      //   child: ListView(
+                      //     scrollDirection: Axis.horizontal,
+                      //     shrinkWrap: true,
+                      //     children: [
+                      //       Container(
+                      //         height: double.maxFinite,
+                      //         decoration: BoxDecoration(
+                      //           color: AppColor.white,
+                      //           borderRadius: BorderRadius.circular(100),
+                      //           border: Border.all(color: AppColor.softBorderColor),
+                      //         ),
+                      //         alignment: Alignment.center,
+                      //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      //         child: Text(
+                      //           "Mars Colonization",
+                      //           style: TextStyle(
+                      //             fontSize: 12,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: AppColor.tegTextColor,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       4.width,
+                      //       Container(
+                      //         height: double.maxFinite,
+                      //         decoration: BoxDecoration(
+                      //           color: AppColor.white,
+                      //           borderRadius: BorderRadius.circular(100),
+                      //           border: Border.all(color: AppColor.softBorderColor),
+                      //         ),
+                      //         alignment: Alignment.center,
+                      //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      //         child: Text(
+                      //           "Deep Learning",
+                      //           style: TextStyle(
+                      //             fontSize: 12,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: AppColor.tegTextColor,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       4.width,
+                      //       Container(
+                      //         height: double.maxFinite,
+                      //         decoration: BoxDecoration(
+                      //           color: AppColor.white,
+                      //           borderRadius: BorderRadius.circular(100),
+                      //           border: Border.all(color: AppColor.softBorderColor),
+                      //         ),
+                      //         alignment: Alignment.center,
+                      //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      //         child: Text(
+                      //           "Mental Health Awareness",
+                      //           style: TextStyle(
+                      //             fontSize: 12,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: AppColor.tegTextColor,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       15.height,
                     ],
                   ),
@@ -148,56 +168,110 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
               ),
 
               // post
+              if (controller.discussions!.isEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Center(
+                      child: Text(
+                        "No Discussion to show please reload or change hashtag",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                SliverList.separated(
+                  itemCount: controller.discussions!.length,
+                  itemBuilder: (context, index) {
+                    final item = controller.discussions![index];
+                    // print(item.likes);
 
-              SliverList.separated(
-                itemCount: controller.discussions!.length,
-                itemBuilder: (context, index) {
-                  final item = controller.discussions![index];
-                  // print(item.likes);
+                    // if (index == 2) {
+                    //   return ImagePostTile(
+                    //     profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
+                    //     userName: "Jerome Bell",
+                    //     onProfileClick: () {
+                    //       rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+                    //     },
+                    //     isVerify: true,
+                    //     time: DateTime.now().subtract(Duration(minutes: 5)).toUtc().toString(),
+                    //     topic: "How are virtual realities impacting our daily lives?",
+                    //     message:
+                    //         "Virtual Reality (VR) has been a rising technology for the past few years. While it started mainly in the gaming industry, it has now permeated into various sectors like education, healthcare, and even tourism. I'm curious to hear from others: How do you think VR is shaping our routines, interactions, and experiences in the current decade? Are there any unforeseen consequences or benefits that you've observed?",
+                    //   );
+                    // }
 
-                  // if (index == 2) {
-                  //   return ImagePostTile(
-                  //     profileUrl: "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg",
-                  //     userName: "Jerome Bell",
-                  //     onProfileClick: () {
-                  //       rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
-                  //     },
-                  //     isVerify: true,
-                  //     time: DateTime.now().subtract(Duration(minutes: 5)).toUtc().toString(),
-                  //     topic: "How are virtual realities impacting our daily lives?",
-                  //     message:
-                  //         "Virtual Reality (VR) has been a rising technology for the past few years. While it started mainly in the gaming industry, it has now permeated into various sectors like education, healthcare, and even tourism. I'm curious to hear from others: How do you think VR is shaping our routines, interactions, and experiences in the current decade? Are there any unforeseen consequences or benefits that you've observed?",
-                  //   );
-                  // }
+                    return TextPostTile(
+                      profileUrl: item.userProfileImage!,
+                      userName: item.username!,
+                      onProfileClick: () {
+                        // soon it will change
+                        rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+                      },
+                      likes: item.likesCount,
+                      replies: item.replysCount,
+                      time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
 
-                  return TextPostTile(
-                    profileUrl: item.userProfileImage!,
-                    userName: item.username!,
-                    onProfileClick: () {
-                      // soon it will change
-                      rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
-                    },
-                    likes: item.likesCount,
-                    replies: item.replysCount,
-                    time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
+                      type: item.type!,
+                      topic: item.topic ?? "",
+                      message: item.text!,
+                      media: item.media,
 
-                    type: item.type!,
-                    topic: item.topic ?? "",
-                    message: item.text!,
-                    media: item.media,
-
-                    first2Likes: item.likes,
-                    // topic: "Importance of Quantum Physics in Modern Technology?",
-                    // message: "Quantum physics is often considered the backbone of many modern...",
-                    // message: "${DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toLocal()}",
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(height: 0),
-              )
+                      first2Likes: item.likes,
+                      // topic: "Importance of Quantum Physics in Modern Technology?",
+                      // message: "Quantum physics is often considered the backbone of many modern...",
+                      // message: "${DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toLocal()}",
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(height: 0),
+                )
             ],
           ),
         );
       },
+    );
+  }
+}
+
+class TrendingHashtagChip extends StatelessWidget {
+  const TrendingHashtagChip({
+    super.key,
+    required this.text,
+    this.onTap,
+    this.isSelected = false,
+  });
+  final String text;
+  final Function()? onTap;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.maxFinite,
+      decoration: BoxDecoration(
+        color: isSelected ? AppColor.mainColor : AppColor.white,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: AppColor.softBorderColor),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: isSelected ? AppColor.white : AppColor.tegTextColor,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

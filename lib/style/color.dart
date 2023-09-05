@@ -12,4 +12,5 @@ class AppColor {
   static const Color textFeildBorderColor = Color(0xffD0D4D9);
   static const Color softBorderColor = Color(0xffdedede);
   static const Color unSelectedTapColor = Color(0xff656565);
+  static const Color lightTextColor = Color(0xff999999);
 }

@@ -200,3 +200,25 @@ class Hashtags {
     return toJson.toString();
   }
 }
+
+class TrandingHashtags {
+  int? hashtageId;
+  String? hashtag;
+
+  TrandingHashtags.fromJson(Map<String, dynamic> json) {
+    hashtageId = json["hashtage_id"];
+    hashtag = json["hashtag"];
+  }
+
+  Map<String, dynamic> get toJson {
+    Map<String, dynamic> json = {};
+    json["hashtage_id"] = hashtageId;
+    json["hashtag"] = hashtag;
+    return json;
+  }
+
+  @override
+  String toString() {
+    return toJson.toString();
+  }
+}

@@ -226,11 +226,19 @@ class TextPostTile extends StatelessWidget {
               12.width,
               Text(
                 "$replies replies ",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.lightTextColor,
+                ),
               ),
               Text(
                 "• $likes Likes",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.lightTextColor,
+                ),
               ),
             ],
           ),
