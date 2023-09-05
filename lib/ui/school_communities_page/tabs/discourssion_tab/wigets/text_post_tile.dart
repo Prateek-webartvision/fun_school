@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../../../models/community_discussion_model/community_discussion_model.dart';
 import '../../../../../style/assets.dart';
 import '../../../../../style/color.dart';
 import '../../../../../uitls/helper.dart';
+import '../../../../../widegts/overlaping_user_avtar.dart';
 
 class TextPostTile extends StatelessWidget {
   const TextPostTile({
@@ -18,19 +21,23 @@ class TextPostTile extends StatelessWidget {
     required this.topic,
     required this.message,
     this.isLiked,
-    this.first2Likes = const <String>[],
+    this.first2Likes = const <Likes>[],
+    this.media,
     this.likes = 0,
     this.replies = 0,
     this.onProfileClick,
+    required this.type,
   });
   final String profileUrl;
   final String userName;
   final bool isVerify;
   final String time;
-  final String topic;
-  final String message;
+  final String? topic;
+  final String? message;
   final bool? isLiked;
-  final List<String>? first2Likes;
+  final String type;
+  final List<Likes>? first2Likes;
+  final List<Media>? media;
   final int? likes;
   final int? replies;
   final Function()? onProfileClick;
@@ -92,8 +99,8 @@ class TextPostTile extends StatelessWidget {
               ),
             ],
           ),
-          // dive line and messagech
 
+          // topic, message, and images
           Container(
             // color: Colors.yellow,
             margin: EdgeInsets.symmetric(vertical: 6),
@@ -105,18 +112,69 @@ class TextPostTile extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        topic,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                        // overflow: TextOverflow.ellipsis,
-                        // maxLines: 2,
+                      // topic
+                      Visibility(
+                        visible: topic != null,
+                        child: Column(
+                          children: [
+                            Text(
+                              topic!,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 2,
+                            ),
+                            4.height,
+                          ],
+                        ),
                       ),
-                      4.height,
-                      Text(
-                        message,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      // Message
+                      Visibility(
+                        visible: message != null,
+                        child: Column(
+                          children: [
+                            Text(
+                              message!,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                            4.height,
+                          ],
+                        ),
                       ),
-                      4.height,
+
+                      // images
+                      Visibility(
+                        visible: (type == "image" && media!.isNotEmpty),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 100,
+                              width: double.maxFinite,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: media!.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: 100,
+                                    width: 140,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(4),
+                                      image: DecorationImage(
+                                        image: CachedNetworkImageProvider(media![index].src!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) => 6.width,
+                              ),
+                            ),
+                            10.height,
+                          ],
+                        ),
+                      ),
+                      // like, share, comment btns
                       Row(
                         children: [
                           Icon(
@@ -154,83 +212,16 @@ class TextPostTile extends StatelessWidget {
           // like and all
           Row(
             children: [
-              Container(
-                color: Colors.green,
+              SizedBox(
+                // color: Colors.green,
                 width: 32,
                 height: 16,
                 child: (first2Likes!.isEmpty)
                     ? SizedBox()
-                    : Stack(
-                        children: List.generate(
-                          (first2Likes!.length > 2) ? 2 : first2Likes!.length,
-                          (index) {
-                            return Positioned(
-                              left: index * 9,
-                              child: Container(
-                                height: 16,
-                                width: 16,
-                                decoration: BoxDecoration(
-                                  color: AppColor.softBorderColor,
-                                  border: Border.all(color: AppColor.white),
-                                  image: DecorationImage(
-                                    image: NetworkImage(first2Likes![index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                    : OverlapingUserAvtar(
+                        likes: first2Likes!,
+                        maxAvtatCount: 2,
                       ),
-                // child: Align(
-                //   alignment: Alignment(-.5, 0),
-                //   child: SizedBox(
-                //     width: 16,
-                //     height: 16,
-                //     child: Stack(
-                //       alignment: Alignment.center,
-                //       clipBehavior: Clip.none,
-                //       fit: StackFit.expand,
-                //       children: [
-                //         Align(
-                //           alignment: Alignment.center,
-                //           child: Container(
-                //             height: 16,
-                //             width: 16,
-                //             decoration: BoxDecoration(
-                //               color: AppColor.softBorderColor,
-                //               border: Border.all(color: AppColor.white),
-                //               image: DecorationImage(
-                //                 image: NetworkImage(
-                //                     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                //                 fit: BoxFit.cover,
-                //               ),
-                //               borderRadius: BorderRadius.circular(16),
-                //             ),
-                //           ),
-                //         ),
-                //         Positioned(
-                //           right: -16 * 0.5,
-                //           child: Container(
-                //             height: 16,
-                //             width: 16,
-                //             decoration: BoxDecoration(
-                //               color: AppColor.mainColor,
-                //               borderRadius: BorderRadius.circular(16),
-                //               border: Border.all(color: AppColor.white),
-                //               image: DecorationImage(
-                //                 image: NetworkImage(
-                //                     "https://images.unsplash.com/photo-1618641986557-1ecd230959aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
-                //                 fit: BoxFit.cover,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ),
               12.width,
               Text(

@@ -153,6 +153,7 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                 itemCount: controller.discussions!.length,
                 itemBuilder: (context, index) {
                   final item = controller.discussions![index];
+                  // print(item.likes);
 
                   // if (index == 2) {
                   //   return ImagePostTile(
@@ -179,14 +180,15 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                     likes: item.likesCount,
                     replies: item.replysCount,
                     time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
-                    topic: item.text!,
-                    first2Likes: [
-                      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                    ],
+
+                    type: item.type!,
+                    topic: item.topic ?? "",
+                    message: item.text!,
+                    media: item.media,
+
+                    first2Likes: item.likes,
                     // topic: "Importance of Quantum Physics in Modern Technology?",
-                    message: "Quantum physics is often considered the backbone of many modern...",
+                    // message: "Quantum physics is often considered the backbone of many modern...",
                     // message: "${DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toLocal()}",
                   );
                 },

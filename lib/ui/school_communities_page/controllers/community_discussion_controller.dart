@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../models/community_discussion_model/community_discussion_model.dart';
 import '../../../repo/community/community_discussion_repo.dart';
 
 class CommunityDiscussionController extends GetxController {
