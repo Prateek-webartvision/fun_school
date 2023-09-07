@@ -21,12 +21,13 @@ class TextPostTile extends StatelessWidget {
     required this.topic,
     required this.message,
     this.isLiked,
+    required this.type,
     this.first2Likes = const <Likes>[],
     this.media,
     this.likes = 0,
     this.replies = 0,
     this.onProfileClick,
-    required this.type,
+    this.onLikeClick,
   });
   final String profileUrl;
   final String userName;
@@ -41,6 +42,7 @@ class TextPostTile extends StatelessWidget {
   final int? likes;
   final int? replies;
   final Function()? onProfileClick;
+  final Function()? onLikeClick;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class TextPostTile extends StatelessWidget {
                 children: [
                   Text(timeCheck(yourTime: DateTime.parse(time))),
                   4.width,
-                  Icon(Icons.more_horiz),
+                  InkWell(onTap: onProfileClick, child: Icon(Icons.more_horiz)),
                 ],
               ),
             ],
@@ -177,10 +179,13 @@ class TextPostTile extends StatelessWidget {
                       // like, share, comment btns
                       Row(
                         children: [
-                          Icon(
-                            Icons.thumb_up_alt_rounded,
-                            color: AppColor.mainColor,
-                            size: 24,
+                          InkWell(
+                            onTap: onLikeClick,
+                            child: Icon(
+                              Icons.thumb_up_alt_rounded,
+                              color: AppColor.mainColor,
+                              size: 24,
+                            ),
                           ),
                           12.width,
                           SvgPicture.asset(

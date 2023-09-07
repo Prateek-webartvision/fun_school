@@ -76,4 +76,20 @@ class AppUtils {
       return true;
     }
   }
+
+  static slidePush({required Widget page}) {
+    rootNavigator.currentState!.push(
+      PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+          animation = CurvedAnimation(curve: Curves.easeIn, parent: animation);
+          final slide = SlideTransition(
+            position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+            child: page,
+          );
+
+          return slide;
+        },
+      ),
+    );
+  }
 }

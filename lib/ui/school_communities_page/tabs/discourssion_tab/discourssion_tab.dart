@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/repo/community/community_discussion_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -207,21 +208,22 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                       userName: item.username!,
                       onProfileClick: () {
                         // soon it will change
-                        rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+                        // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
+                        AppUtils.slidePush(page: OtherProfilePage(userId: item.userId!));
                       },
                       likes: item.likesCount,
                       replies: item.replysCount,
                       time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
-
                       type: item.type!,
                       topic: item.topic ?? "",
                       message: item.text!,
                       media: item.media,
-
                       first2Likes: item.likes,
-                      // topic: "Importance of Quantum Physics in Modern Technology?",
-                      // message: "Quantum physics is often considered the backbone of many modern...",
-                      // message: "${DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toLocal()}",
+                      onLikeClick: () {
+                        AppUtils.showloadingOverlay(() async {
+                          await CommunityDiscussionRepostory.likeDislikeDiscussion(discussionId: item.discussionId.toString());
+                        });
+                      },
                     );
                   },
                   separatorBuilder: (context, index) => Divider(height: 0),

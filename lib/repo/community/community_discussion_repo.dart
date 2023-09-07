@@ -1,4 +1,5 @@
 import 'package:citycloud_school/network/app_api.dart';
+import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 
 import '../../models/community_discussion_model/community_discussion_model.dart';
@@ -34,6 +35,20 @@ class CommunityDiscussionRepostory {
     });
   }
 
+  // filter by User id
+  static Future<List<CommunityDiscussionUserModel>> filterDiscussionByUser({required String userId}) async {
+    return await _api.getApi(AppUrls.getCommunityDiscussionPost, params: {"user_id": userId}).then((value) {
+      List<CommunityDiscussionUserModel> discussions = [];
+      for (var element in value) {
+        final CommunityDiscussionUserModel discussion = CommunityDiscussionUserModel.fromJson(element);
+        discussions.add(discussion);
+      }
+      return discussions;
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
+  }
+
   // get hash tags
   static Future<List<TrandingHashtags>> getTandingHashTags() async {
     return await _api.getApi(AppUrls.getTrendingHashtags).then((value) {
@@ -46,5 +61,31 @@ class CommunityDiscussionRepostory {
     }).onError((error, stackTrace) {
       throw error!;
     });
+  }
+
+  // like and dislike discussion
+  static Future likeDislikeDiscussion({required String discussionId}) async {
+    Map<String, String> perams = {};
+    perams['discussion_id'] = discussionId;
+    perams['user_id'] = AppStorage.user.currentUser()!.userid!.toString();
+
+    return await _api.getApi(AppUrls.discussionLikeDislike, params: perams).then((value) {
+      print(value);
+      return value;
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
+  }
+
+  // discustion Comment
+  static Future commentDiscussion({
+    required String discussionId,
+    required String comment,
+    String? image,
+  }) async {
+    Map<String, String> perams = {};
+    perams['pub_id'] = discussionId;
+    perams['user_id'] = AppStorage.user.currentUser()!.userid!.toString();
+    perams['text'] = comment;
   }
 }

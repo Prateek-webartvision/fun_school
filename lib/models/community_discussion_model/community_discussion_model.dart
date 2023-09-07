@@ -1,4 +1,5 @@
-class CommunityDiscussionModel {
+//
+abstract class DiscussionModel {
   int? discussionId;
   int? userId;
   String? username;
@@ -21,7 +22,7 @@ class CommunityDiscussionModel {
   List<Likes>? likes;
   List<Hashtags>? hashtags;
 
-  CommunityDiscussionModel.fromJson(Map<String, dynamic> json) {
+  DiscussionModel.fromJson(Map<String, dynamic> json) {
     discussionId = json['discussion_id'];
     userId = json["user_id"];
     username = json['username'];
@@ -94,6 +95,37 @@ class CommunityDiscussionModel {
     json['likes'] = likes;
     json['media'] = media;
 
+    return json;
+  }
+
+  @override
+  String toString() {
+    return toJson.toString();
+  }
+}
+
+class CommunityDiscussionModel extends DiscussionModel {
+  CommunityDiscussionModel.fromJson(super.json) : super.fromJson();
+}
+
+class CommunityDiscussionUserModel extends DiscussionModel {
+  String? posts;
+  String? followers;
+  String? following;
+
+  CommunityDiscussionUserModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    posts = json['posts'];
+    followers = json['followers'];
+    following = json['following'];
+  }
+
+  @override
+  Map<String, dynamic> get toJson {
+    Map<String, dynamic> json = {};
+    json['posts'] = posts;
+    json['followers'] = followers;
+    json['following'] = following;
+    json.addAll(super.toJson);
     return json;
   }
 
