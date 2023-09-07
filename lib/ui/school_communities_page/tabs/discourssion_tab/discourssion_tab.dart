@@ -215,6 +215,8 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                       replies: item.replysCount,
                       time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
                       type: item.type!,
+                      userType: item.userType!,
+                      isVerify: item.userType == "Certified_Tutor",
                       topic: item.topic ?? "",
                       message: item.text!,
                       media: item.media,

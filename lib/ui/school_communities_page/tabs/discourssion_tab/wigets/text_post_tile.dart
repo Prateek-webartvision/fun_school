@@ -6,20 +6,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../../models/community_discussion_model/community_discussion_model.dart';
+
 import '../../../../../style/assets.dart';
 import '../../../../../style/color.dart';
 import '../../../../../uitls/helper.dart';
 import '../../../../../widegts/overlaping_user_avtar.dart';
+import '../../../../profile_page_other/controller/other_profile_controller.dart';
 
 class TextPostTile extends StatelessWidget {
   const TextPostTile({
     super.key,
-    required this.profileUrl,
+    this.profileUrl,
     required this.userName,
     this.isVerify = false,
     required this.time,
-    required this.topic,
-    required this.message,
+    this.topic,
+    this.message,
     this.isLiked,
     required this.type,
     this.first2Likes = const <Likes>[],
@@ -28,8 +30,9 @@ class TextPostTile extends StatelessWidget {
     this.replies = 0,
     this.onProfileClick,
     this.onLikeClick,
+    required this.userType,
   });
-  final String profileUrl;
+  final String? profileUrl;
   final String userName;
   final bool isVerify;
   final String time;
@@ -37,6 +40,7 @@ class TextPostTile extends StatelessWidget {
   final String? message;
   final bool? isLiked;
   final String type;
+  final String userType;
   final List<Likes>? first2Likes;
   final List<Media>? media;
   final int? likes;
@@ -68,15 +72,26 @@ class TextPostTile extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(36),
                         color: AppColor.softBorderColor,
-                        image: DecorationImage(
-                          image: NetworkImage(profileUrl),
-                          fit: BoxFit.cover,
-                        ),
+                        image: (profileUrl != null)
+                            ? DecorationImage(
+                                image: NetworkImage(profileUrl!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment(1.7, 1.7),
+                            child: getProfileBages(userType),
+                          )
+                        ],
                       ),
                     ),
                     12.width,
                     Row(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                         4.width,
@@ -144,38 +159,37 @@ class TextPostTile extends StatelessWidget {
                       ),
 
                       // images
-                      Visibility(
-                        visible: (type == "image" && media!.isNotEmpty),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 100,
-                              width: double.maxFinite,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: media!.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 100,
-                                    width: 140,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(4),
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(media![index].src!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                separatorBuilder: (context, index) => 6.width,
-                              ),
-                            ),
-                            10.height,
-                          ],
-                        ),
-                      ),
+                      (type == "image" && media != null && media!.isNotEmpty)
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 100,
+                                  width: double.maxFinite,
+                                  child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: media!.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        height: 100,
+                                        width: 140,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(4),
+                                          image: DecorationImage(
+                                            image: CachedNetworkImageProvider(media![index].src!),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) => 6.width,
+                                  ),
+                                ),
+                                10.height,
+                              ],
+                            )
+                          : 0.height,
                       // like, share, comment btns
                       Row(
                         children: [
@@ -224,7 +238,7 @@ class TextPostTile extends StatelessWidget {
                 child: (first2Likes!.isEmpty)
                     ? SizedBox()
                     : OverlapingUserAvtar(
-                        likes: first2Likes!,
+                        avtarUrls: first2Likes!.map((e) => e.userProfileImage!).toList(),
                         maxAvtatCount: 2,
                       ),
               ),

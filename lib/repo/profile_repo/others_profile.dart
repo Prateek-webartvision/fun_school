@@ -1,4 +1,6 @@
+import 'package:citycloud_school/models/community_discussion_model/community_discussion_model.dart';
 import 'package:citycloud_school/network/app_api.dart';
+import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 
 class OthersProfileRepository {
@@ -26,6 +28,9 @@ class OtherProfileModel {
   String? following;
   String? regDate;
   String? status;
+  List<FollowingModel>? followersProfiles;
+  bool isFollowed = false;
+  List<CommunityDiscussionModel>? discussions;
 
   OtherProfileModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -39,6 +44,26 @@ class OtherProfileModel {
     following = json['following'];
     regDate = json['reg_date'];
     status = json['status'];
+    if (json['followers_profiles'] != null) {
+      List<FollowingModel> followers = [];
+      for (var element in json['followers_profiles']) {
+        final follow = FollowingModel.fromJson(element);
+        if (follow.userId! == AppStorage.user.currentUser()!.userid) {
+          isFollowed = true;
+        }
+        followers.add(follow);
+      }
+      followersProfiles = followers;
+    }
+    // discussion
+    if (json['discussions'] != null) {
+      List<CommunityDiscussionModel> discussions = [];
+      for (var element in json['discussions']) {
+        final dis = CommunityDiscussionModel.fromJson(element);
+        discussions.add(dis);
+      }
+      this.discussions = discussions;
+    }
   }
 
   Map<String, dynamic> get toJson {
@@ -61,5 +86,21 @@ class OtherProfileModel {
   @override
   String toString() {
     return toJson.toString();
+  }
+}
+
+class FollowingModel {
+  int? userId;
+  String? username;
+  String? aboutUser;
+  String? userProfileImage;
+  String? userType;
+
+  FollowingModel.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    username = json['username'];
+    aboutUser = json['About_user'];
+    userProfileImage = json['user_profile_image'];
+    userType = json['user_type'];
   }
 }
