@@ -1,4 +1,6 @@
 //
+import 'package:citycloud_school/network/data/app_storage.dart';
+
 abstract class DiscussionModel {
   int? discussionId;
   int? userId;
@@ -20,6 +22,7 @@ abstract class DiscussionModel {
   String? edited;
   List<Media>? media;
   List<Likes>? likes;
+  bool isLiked = false;
   List<Hashtags>? hashtags;
 
   DiscussionModel.fromJson(Map<String, dynamic> json) {
@@ -55,6 +58,9 @@ abstract class DiscussionModel {
       List<Likes> likes = [];
       for (var element in json['likes']) {
         final like = Likes.fromJson(element);
+        if (like.userId! == AppStorage.user.currentUser()!.userid!) {
+          isLiked = true;
+        }
         likes.add(like);
       }
       this.likes = likes;

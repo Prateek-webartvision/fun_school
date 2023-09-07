@@ -70,7 +70,6 @@ class CommunityDiscussionRepostory {
     perams['user_id'] = AppStorage.user.currentUser()!.userid!.toString();
 
     return await _api.getApi(AppUrls.discussionLikeDislike, params: perams).then((value) {
-      print(value);
       return value;
     }).onError((error, stackTrace) {
       throw error!;

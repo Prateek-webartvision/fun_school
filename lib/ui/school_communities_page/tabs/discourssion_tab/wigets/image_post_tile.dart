@@ -1,5 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+/*
+   this widgets is not in use
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kd_utils/kd_utils.dart';

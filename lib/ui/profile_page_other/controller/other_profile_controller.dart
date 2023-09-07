@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../models/community_discussion_model/community_discussion_model.dart';
 import '../../../repo/profile_repo/others_profile.dart';
 import '../../../style/assets.dart';
 
@@ -37,6 +38,16 @@ class OtherProfileController extends GetxController {
   // reload profile
   reLoadProfil() async {
     await _iniLoadProfile();
+  }
+
+  setLikeDisLike({required CommunityDiscussionModel discussion}) {
+    discussion.isLiked = !discussion.isLiked;
+    if (discussion.isLiked) {
+      discussion.likesCount = discussion.likesCount! + 1;
+    } else {
+      discussion.likesCount = discussion.likesCount! - 1;
+    }
+    update();
   }
 }
 

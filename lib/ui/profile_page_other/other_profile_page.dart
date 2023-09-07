@@ -204,10 +204,7 @@ class _OtherProfilePageState extends OtherProfilePageState {
                 child: TabBarView(
                   controller: tabController,
                   children: [
-                    PostTab(
-                      discussions: profile.data!.discussions!,
-                      profile: profile.data!,
-                    ),
+                    PostTab(controller: otherProfileController),
                     Center(
                       child: Text("Replies"),
                     )

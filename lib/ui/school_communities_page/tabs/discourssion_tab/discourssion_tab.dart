@@ -221,9 +221,11 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                       message: item.text!,
                       media: item.media,
                       first2Likes: item.likes,
+                      isLiked: item.isLiked,
                       onLikeClick: () {
                         AppUtils.showloadingOverlay(() async {
                           await CommunityDiscussionRepostory.likeDislikeDiscussion(discussionId: item.discussionId.toString());
+                          controller.setLikeDisLike(discussion: item);
                         });
                       },
                     );

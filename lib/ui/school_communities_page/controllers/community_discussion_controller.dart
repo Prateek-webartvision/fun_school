@@ -23,6 +23,16 @@ class CommunityDiscussionController extends GetxController {
     update();
   }
 
+  setLikeDisLike({required CommunityDiscussionModel discussion}) {
+    discussion.isLiked = !discussion.isLiked;
+    if (discussion.isLiked) {
+      discussion.likesCount = discussion.likesCount! + 1;
+    } else {
+      discussion.likesCount = discussion.likesCount! - 1;
+    }
+    update();
+  }
+
   _filter() async {
     state = ApiState.loading;
     update();

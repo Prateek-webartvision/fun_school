@@ -22,7 +22,7 @@ class TextPostTile extends StatelessWidget {
     required this.time,
     this.topic,
     this.message,
-    this.isLiked,
+    this.isLiked = false,
     required this.type,
     this.first2Likes = const <Likes>[],
     this.media,
@@ -38,7 +38,7 @@ class TextPostTile extends StatelessWidget {
   final String time;
   final String? topic;
   final String? message;
-  final bool? isLiked;
+  final bool isLiked;
   final String type;
   final String userType;
   final List<Likes>? first2Likes;
@@ -196,8 +196,8 @@ class TextPostTile extends StatelessWidget {
                           InkWell(
                             onTap: onLikeClick,
                             child: Icon(
-                              Icons.thumb_up_alt_rounded,
-                              color: AppColor.mainColor,
+                              (isLiked) ? Icons.thumb_up_alt_rounded : Icons.thumb_up_alt_outlined,
+                              color: (isLiked) ? AppColor.mainColor : Colors.black,
                               size: 24,
                             ),
                           ),
