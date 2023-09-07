@@ -16,3 +16,7 @@ timeCheck({required DateTime yourTime}) {
 
   return "${diff.inDays}d";
 }
+
+DateTime getDateFromTimestemp10(String timeStemp) {
+  return DateTime.fromMicrosecondsSinceEpoch(int.parse(timeStemp) * 1000000);
+}

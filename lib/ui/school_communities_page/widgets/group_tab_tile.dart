@@ -4,15 +4,25 @@ import 'package:citycloud_school/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:intl/intl.dart';
 
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
+import '../../../uitls/helper.dart';
 
 class GroupTabTile extends StatelessWidget {
   const GroupTabTile({
     super.key,
     this.onItemClick,
+    required this.title,
+    required this.description,
+    required this.totalMembers,
+    required this.datejoinedPoch,
   });
+  final String title;
+  final String description;
+  final String totalMembers;
+  final String datejoinedPoch;
   final Function()? onItemClick;
 
   @override
@@ -34,11 +44,11 @@ class GroupTabTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Physics Enthusiasts",
+                  title,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  "Dive into the world of physics, from quantum mechanics to classical dynamics.",
+                  description,
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                 ),
                 12.height,
@@ -50,7 +60,7 @@ class GroupTabTile extends StatelessWidget {
                       SvgPicture.asset(AppAssets.svg.parentFillIcon),
                       4.width,
                       Text(
-                        "1200",
+                        totalMembers,
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -63,7 +73,8 @@ class GroupTabTile extends StatelessWidget {
                       SvgPicture.asset(AppAssets.svg.calendarlineIcon),
                       4.width,
                       Text(
-                        "Joined on May 20, 2023",
+                        // "Joined on May 20, 2023",
+                        "Joined on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(datejoinedPoch))}",
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                       ),
                     ],

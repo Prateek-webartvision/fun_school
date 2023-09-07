@@ -3,6 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
+import 'package:citycloud_school/ui/school_communities_page/controllers/community_group_controller.dart';
 import 'package:citycloud_school/ui/school_communities_page/tabs/discourssion_tab/discourssion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,19 +27,18 @@ class SchoolCommunitiesPage extends StatefulWidget {
 class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   late CommunitiesTabController communitiesTabController;
   late CommunityDiscussionController discussionController;
+  late CommunityGroupController groupController;
 
   @override
   void initState() {
     communitiesTabController = CommunitiesTabController(initIntex: 0);
     discussionController = CommunityDiscussionController();
+    groupController = CommunityGroupController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // CommunityDiscussionRepostory.getDiscussionsPosts().then((value) {
-    //   print(value);
-    // });
     return Scaffold(
       body: Column(
         children: [
@@ -48,7 +48,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
               controller: communitiesTabController,
               children: [
                 DiscourssionTab(controller: discussionController),
-                GroupsTab(),
+                GroupsTab(controller: groupController),
                 ChatTab(),
               ],
             ),

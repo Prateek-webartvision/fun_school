@@ -12,7 +12,7 @@ class AppApi extends ApiService {
 
   // get method
   @override
-  Future getApi(String url, {Map<String, String>? params, Map<String, dynamic>? body}) async {
+  Future getApi(String url, {Map<String, String>? params}) async {
     Uri uri = Uri.parse(url);
     late Uri finalUri;
 
