@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/style/assets.dart';
+import 'package:citycloud_school/ui/exam_find_page/find_exam_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../router/app_router.dart';
-import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../uitls/app_utils.dart';
 import 'widgets/assessment_tile.dart';
@@ -22,20 +21,6 @@ class ExamPreparationPage extends StatefulWidget {
 }
 
 class _ExamPreparationPageState extends State<ExamPreparationPage> {
-  // late TabController pageTabController;
-
-  @override
-  void initState() {
-    // pageTabController = TabController(length: 4, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // pageTabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +49,9 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> {
                   ExamTabBtns(
                     svgImageIcon: AppAssets.svg.examSearch,
                     title: "Find Exams",
-                    onTap: () {},
+                    onTap: () {
+                      AppUtils.slidePush(page: FindExamPage());
+                    },
                   ),
                   ExamTabBtns(
                     svgImageIcon: AppAssets.svg.examStudy,
@@ -97,7 +84,7 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> {
                 title: "JAMB",
                 color: Color(0xff6519BA),
                 onClick: () {
-                  appRoutes.pushNamed(PagesName.detailExamPage);
+                  AppUtils.showSnack("coming soon");
                 },
               ),
               12.height,
@@ -216,59 +203,6 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> {
           )
         ],
       ),
-      // body: Column(
-      //   children: [
-      //     Container(
-      //       color: AppColor.white,
-      //       padding: EdgeInsets.symmetric(horizontal: 16),
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           Container(height: 16),
-      //           Text(
-      //             "Exam Preparation",
-      //             style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w700),
-      //           ),
-      //           // 14.height,
-      //           TabBar(
-      //             controller: pageTabController,
-      //             isScrollable: true,
-      //             indicatorSize: TabBarIndicatorSize.label,
-      //             splashFactory: NoSplash.splashFactory,
-      //             overlayColor: MaterialStateProperty.resolveWith<Color?>(
-      //               (Set<MaterialState> states) {
-      //                 return states.contains(MaterialState.focused) ? null : Colors.transparent;
-      //               },
-      //             ),
-      //             splashBorderRadius: BorderRadius.circular(100),
-      //             dividerColor: Colors.transparent,
-      //             unselectedLabelColor: AppColor.unSelectedTapColor,
-      //             labelPadding: EdgeInsets.only(right: 24),
-      //             tabs: const [
-      //               Tab(text: "Exam prep"),
-      //               Tab(text: "Find an exam"),
-      //               Tab(text: "Create exam timetable"),
-      //               Tab(text: "My Assessment"),
-      //             ],
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-
-      //     //
-      //     Expanded(
-      //       child: TabBarView(
-      //         controller: pageTabController,
-      //         children: [
-      //           ExamPrepTab(),
-      //           FindAnExamTab(),
-      //           Center(child: Text("coming soon")),
-      //           Center(child: Text("coming soon")),
-      //         ],
-      //       ),
-      //     )
-      //   ],
-      // ),
     );
   }
 }

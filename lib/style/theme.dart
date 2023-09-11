@@ -26,4 +26,13 @@ class AppShadow {
       color: const Color(0xFF101828).withOpacity(0.1),
     ),
   ];
+
+  static List<BoxShadow> boxShadow = [
+    BoxShadow(
+      offset: const Offset(0, 1),
+      blurRadius: 2,
+      spreadRadius: 0,
+      color: const Color(0xFF101828).withOpacity(0.05),
+    ),
+  ];
 }
