@@ -7,7 +7,7 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../widgets/create_exam_sheet.dart';
 
 class ExamPrepTab extends StatelessWidget {
   const ExamPrepTab({
@@ -22,7 +22,7 @@ class ExamPrepTab extends StatelessWidget {
         CreatePlanBtn(
           onTap: () {
             AppUtils.showModelSheet(
-              child: _CreateExamSheet(),
+              child: CreateExamSheet(),
               bgColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
@@ -95,158 +95,6 @@ class ExamPrepTab extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-}
-
-class _CreateExamSheet extends StatefulWidget {
-  // const _CreateExamSheet({
-
-  @override
-  State<_CreateExamSheet> createState() => _CreateExamSheetState();
-}
-
-class _CreateExamSheetState extends State<_CreateExamSheet> {
-  TextEditingController createTextFeild = TextEditingController();
-  TextEditingController dateTextFeild = TextEditingController();
-  TextEditingController courseTextFeild = TextEditingController();
-  TextEditingController reminderTextFeild = TextEditingController();
-
-  @override
-  void initState() {
-    createTextFeild.text = "2023 Exam Test";
-    dateTextFeild.text = "Select Exam Date";
-    courseTextFeild.text = "Select Course";
-    reminderTextFeild.text = "30 mins before";
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 48,
-                  width: double.maxFinite,
-                  child: Stack(
-                    children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.close,
-                            size: 24,
-                          )),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Create Exam",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                16.height,
-                KTextField(
-                  hint: "Title Exam",
-                  textInputType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  controller: createTextFeild,
-                ),
-                16.height,
-                PopupMenuButton(
-                  child: KTextField(
-                    enabled: false,
-                    suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
-                    hint: "Add Exam Date",
-                    controller: dateTextFeild,
-                  ),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("Select Exam Date"),
-                      )
-                    ];
-                  },
-                ),
-                16.height,
-                PopupMenuButton(
-                  child: KTextField(
-                    enabled: false,
-                    suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
-                    hint: "Add Course",
-                    controller: courseTextFeild,
-                  ),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("Select Exam Date"),
-                      )
-                    ];
-                  },
-                ),
-                16.height,
-                PopupMenuButton(
-                  child: KTextField(
-                    enabled: false,
-                    suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
-                    hint: "Set Reminder",
-                    controller: reminderTextFeild,
-                  ),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("Select Exam Date"),
-                      )
-                    ];
-                  },
-                ),
-              ],
-            ),
-          ),
-          Divider(height: 40),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: KBtn(
-                    height: 44,
-                    onClick: () {
-                      AppUtils.closeBottomSheet();
-                      AppUtils.showSnack("coming soon");
-                    },
-                    text: "Cancel",
-                    bgColor: AppColor.white,
-                    fbColor: Colors.black,
-                    borderSide: BorderSide(color: AppColor.softBorderColor),
-                  ),
-                ),
-                12.width,
-                Expanded(
-                    child: KBtn(
-                  onClick: () {
-                    AppUtils.closeBottomSheet();
-                    AppUtils.showSnack("coming soon");
-                  },
-                  text: "Create",
-                  height: 44,
-                )),
-              ],
-            ),
-          ),
-          20.height,
-        ],
-      ),
     );
   }
 }
