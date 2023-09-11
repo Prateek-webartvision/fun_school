@@ -11,14 +11,15 @@ import 'style/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   FirebaseAnalytics.instance;
   FirebaseMessaging.instance;
   AppLocalNotification.instence;
   FirebaseMessaging.onMessage.listen(firebaseFGnotification);
   FirebaseMessaging.onBackgroundMessage((message) => firebaseBGMessages(message));
 
-  await GetStorage.init();
   runApp(const MyApp());
 }
 

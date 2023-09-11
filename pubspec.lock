@@ -468,10 +468,10 @@ packages:
     dependency: "direct main"
     description:
       name: kd_utils
-      sha256: c4f89e53fe214308263d4294283f09c1115da297a6be0213e73080c71092a96a
+      sha256: "657a0326376d12ce5513b9a9406c5e674c79db9f28c7971e9c922425bf77e4ae"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0+4"
+    version: "0.1.0+7"
   lints:
     dependency: transitive
     description:

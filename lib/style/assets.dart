@@ -44,4 +44,9 @@ mixin class SvgAssets {
   final String helpfullUser = "assets/svg_icons/icons/helpful_user.svg";
   final String scholar = "assets/svg_icons/icons/Scholar.svg";
   final String normalTutor = "assets/svg_icons/icons/normal_tutor.svg";
+
+  final String examAssessment = "assets/svg_icons/icons/exam_icons/assessment.svg";
+  final String examSearch = "assets/svg_icons/icons/exam_icons/search.svg";
+  final String examStudy = "assets/svg_icons/icons/exam_icons/study.svg";
+  final String examStudyPlanIcon = "assets/svg_icons/icons/exam_icons/study_plan_icon.svg";
 }

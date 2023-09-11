@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.3 <4.0.0"
+  sdk: ">=3.1.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -39,7 +39,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   go_router: ^10.1.2
-  kd_utils: ^0.1.0+4
+  kd_utils: ^0.1.0+7
   get_storage: ^2.1.1
   flutter_svg: ^2.0.7
   video_player: ^2.7.1
@@ -100,6 +100,7 @@ flutter:
     - assets/logo/
     - assets/svg_icons/
     - assets/svg_icons/icons/
+    - assets/svg_icons/icons/exam_icons/
     - assets/img/
     - assets/img/home_images/
     - assets/videos/splash_video/
