@@ -51,7 +51,7 @@ class MyStudyPlanTab extends StatelessWidget {
               SliverPadding(
                 padding: EdgeInsets.all(16).copyWith(bottom: 12),
                 sliver: SliverToBoxAdapter(
-                  child: CreatePlanBtn(onTap: () => addStudyPlanBtn(context)),
+                  child: CreateStudyPlanBtn(onTap: () => addStudyPlanBtn(context)),
                 ),
               ),
               SliverPadding(

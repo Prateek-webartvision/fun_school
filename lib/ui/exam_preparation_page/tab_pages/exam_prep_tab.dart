@@ -19,7 +19,7 @@ class ExamPrepTab extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(16),
       children: [
-        CreatePlanBtn(
+        CreateStudyPlanBtn(
           onTap: () {
             AppUtils.showModelSheet(
               child: CreateExamSheet(),

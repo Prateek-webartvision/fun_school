@@ -74,7 +74,7 @@ class PrepareForAnExamPage extends StatelessWidget {
                       ),
                     ),
                     12.height,
-                    CreatePlanBtn(
+                    CreateStudyPlanBtn(
                       onTap: () {
                         AppUtils.showSnack("coming soon");
                       },

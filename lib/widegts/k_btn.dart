@@ -91,8 +91,8 @@ class KBtn extends StatelessWidget {
 
 // Cerate plan btn
 
-class CreatePlanBtn extends StatelessWidget {
-  const CreatePlanBtn({
+class CreateStudyPlanBtn extends StatelessWidget {
+  const CreateStudyPlanBtn({
     super.key,
     this.text,
     required this.onTap,
