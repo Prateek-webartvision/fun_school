@@ -93,3 +93,19 @@ class AppUtils {
     );
   }
 }
+
+class MyDialog<T> extends RawDialogRoute<T> {
+  MyDialog()
+      : super(
+          pageBuilder: (BuildContext context, Animation<double> anim, Animation<double> anim2) {
+            Tween<Offset> tw = Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+            final animation = CurvedAnimation(curve: Curves.easeIn, parent: anim);
+            final slid = SlideTransition(
+              position: tw.animate(animation),
+              child: Center(child: Material(child: Text("data"))),
+            );
+            return slid;
+          },
+          barrierDismissible: true,
+        );
+}

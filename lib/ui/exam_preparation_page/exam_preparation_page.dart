@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/style/assets.dart';
+import 'package:citycloud_school/ui/exam_assessment_page/exam_assessment_page.dart';
 import 'package:citycloud_school/ui/exam_find_page/find_exam_page.dart';
 import 'package:citycloud_school/ui/exam_study_plan_page/exam_study_plan_page.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,10 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> {
                   ExamTabBtns(
                     svgImageIcon: AppAssets.svg.examAssessment,
                     title: "Assessments",
+                    onTap: () {
+                      // assessment page
+                      AppUtils.slidePush(page: ExamMyAssessmentsPage());
+                    },
                   ),
                 ]),
               ),
