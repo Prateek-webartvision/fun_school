@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/style/const.dart';
 import 'package:citycloud_school/style/theme.dart';
+import 'package:citycloud_school/ui/exam_assessment_analysis_page/exam_assessment_analysis_page.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class _ExamAssessmentDetailsPageState extends State<ExamAssessmentDetailsPage> {
         title: Text("Mathematics Mid-Term 2023"),
         titleTextStyle: AppTextStyle.appBarText,
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz))],
+        // shadowColor: AppColor.softBorderColor,
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
@@ -243,7 +246,13 @@ class _ExamAssessmentDetailsPageState extends State<ExamAssessmentDetailsPage> {
                   bgColor: AppColor.white,
                   fbColor: Colors.black,
                   borderSide: BorderSide(color: AppColor.softBorderColor),
-                  onClick: () {},
+                  onClick: () {
+                    rootNavigator.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (context) => ExamAssessmentAnalysisPage(),
+                      ),
+                    );
+                  },
                   text: "View Question Analysis",
                 )
               ],
