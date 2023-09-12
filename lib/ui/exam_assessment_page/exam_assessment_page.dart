@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/style/const.dart';
+import 'package:citycloud_school/ui/exam_assessment_details_page/exam_assessment_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -54,6 +56,11 @@ class _ExamMyAssessmentsPageState extends State<ExamMyAssessmentsPage> {
                 date: DateTime(2023, 3, 15),
                 score: 85,
                 scoreOutoff: 100,
+                onClick: () {
+                  rootNavigator.currentState!.push(MaterialPageRoute(
+                    builder: (context) => ExamAssessmentDetailsPage(),
+                  ));
+                },
               ),
               12.height,
               AssessmentItemTile(
@@ -84,48 +91,53 @@ class AssessmentItemTile extends StatelessWidget {
     required this.date,
     required this.score,
     required this.scoreOutoff,
+    this.onClick,
   });
   final String title;
   final DateTime date;
   final int score;
   final int scoreOutoff;
+  final Function()? onClick;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: AppColor.white),
-      padding: EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.text16W600,
-          ),
-          Text(
-            // "Date Taken: March 15, 2023",
-            "Date Taken: ${DateFormat("MMMM d, yyyy").format(date)}",
-            style: AppTextStyle.text12W400,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text.rich(
-                TextSpan(text: "Score: ", children: [
-                  TextSpan(
-                    text: "$score/$scoreOutoff",
-                    style: TextStyle(color: AppColor.mainColor),
-                  ),
-                ]),
-                style: AppTextStyle.text12W400,
-              ),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 14,
-              )
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTap: onClick,
+      child: Container(
+        decoration: BoxDecoration(color: AppColor.white),
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppTextStyle.text16W600,
+            ),
+            Text(
+              // "Date Taken: March 15, 2023",
+              "Date Taken: ${DateFormat("MMMM d, yyyy").format(date)}",
+              style: AppTextStyle.text12W400,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text.rich(
+                  TextSpan(text: "Score: ", children: [
+                    TextSpan(
+                      text: "$score/$scoreOutoff",
+                      style: TextStyle(color: AppColor.mainColor),
+                    ),
+                  ]),
+                  style: AppTextStyle.text12W400,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 14,
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

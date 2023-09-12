@@ -14,4 +14,6 @@ class AppColor {
   static const Color unSelectedTapColor = Color(0xff656565);
   static const Color lightTextColor = Color(0xff999999);
   static const Color yellow = Color(0xffFFA500);
+  static const Color green = Color(0xff008000);
+  static const Color red = Color(0xffFF0000);
 }
