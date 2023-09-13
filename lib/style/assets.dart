@@ -5,8 +5,12 @@ class AppAssets extends Videos with SvgAssets {
   AppAssets();
 
   static SvgAssets get svg => AppAssets();
-
   static Videos videos = AppAssets();
+
+  // images
+
+  static const String startExamTextBg = "assets/img/start_exam_bg_text.png";
+  static const String startExamQBg = "assets/img/start_exam_bg_q.png";
 }
 
 abstract class Videos {
