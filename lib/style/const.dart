@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'color.dart';
+
 class AppTextStyle {
   static TextStyle get appBarText => const TextStyle(
         color: Colors.black,
@@ -18,3 +20,12 @@ class AppTextStyle {
         fontWeight: FontWeight.w400,
       );
 }
+
+// border1
+OutlineInputBorder studyPlanDropBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(5),
+  borderSide: const BorderSide(
+    color: AppColor.softBorderColor,
+    width: 1,
+  ),
+);
