@@ -38,6 +38,7 @@ mixin class SvgAssets {
   final String chatPollIcon = "assets/svg_icons/icons/chat-poll-line.svg";
   final String happyFaceIcon = "assets/svg_icons/icons/happy.svg";
   final String attachmentIcon = "assets/svg_icons/icons/attachment-line.svg";
+  final String attachment2Icon = "assets/svg_icons/icons/attachment-2.svg";
   final String parentFillIcon = "assets/svg_icons/icons/parent-fill.svg";
   final String calendarlineIcon = "assets/svg_icons/icons/calendar-line.svg";
   final String openedFilderIcon = "assets/svg_icons/icons/opened.svg";
@@ -53,4 +54,6 @@ mixin class SvgAssets {
   final String examSearch = "assets/svg_icons/icons/exam_icons/search.svg";
   final String examStudy = "assets/svg_icons/icons/exam_icons/study.svg";
   final String examStudyPlanIcon = "assets/svg_icons/icons/exam_icons/study_plan_icon.svg";
+
+  final String uploadIcon = "assets/svg_icons/icons/upload-cloud.svg";
 }

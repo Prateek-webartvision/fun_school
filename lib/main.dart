@@ -26,8 +26,8 @@ void main() async {
 
   FirebaseAnalytics.instance;
   FirebaseMessaging.instance;
-  FirebaseMessaging.onMessage.listen(firebaseFGnotification);
   FirebaseMessaging.onBackgroundMessage(firebaseBGMessages);
+  FirebaseMessaging.onMessage.listen(firebaseFGnotification);
 
   runApp(const MyApp());
 }

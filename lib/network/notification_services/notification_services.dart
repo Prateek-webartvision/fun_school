@@ -3,47 +3,63 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> firebaseFGnotification(RemoteMessage message) async {
-  await AppLocalNotification.instence.showNotifaction(title: message.notification?.title, message: message.notification?.body);
+  await AppLocalNotification.instence.showNotifaction(
+    title: message.notification?.title,
+    message: message.notification?.body,
+  );
 }
 
 Future<void> firebaseBGMessages(RemoteMessage message) async {
   await Firebase.initializeApp();
-  await AppLocalNotification.instence.showNotifaction(title: message.notification?.title, message: message.notification?.body);
+  await AppLocalNotification.instence.showNotifaction(
+    title: message.notification?.title,
+    message: message.notification?.body,
+  );
 }
 
-class AppLocalNotification {
-  late FlutterLocalNotificationsPlugin _localNotifications;
-  late InitializationSettings _initializationSettings;
-  AndroidInitializationSettings androidSettings = const AndroidInitializationSettings("mipmap/noti_logo");
+const String _flutterNotificationChennalName = "App Notification";
+const String _flutterNotificationChennalId = "AN1";
 
+class AppLocalNotification {
   static AppLocalNotification? _init;
 
+  late FlutterLocalNotificationsPlugin _localNotifications;
+
   AppLocalNotification._() {
-    _localNotifications = FlutterLocalNotificationsPlugin();
-    _initializationSettings = InitializationSettings(android: androidSettings);
+    _notiInit();
   }
 
   static AppLocalNotification get instence => _init ??= AppLocalNotification._();
 
-  showNotifaction({
-    String? title,
-    String? message,
-  }) async {
-    await _localNotifications.initialize(_initializationSettings);
-    _localNotifications.show(
-      3,
-      title,
-      message,
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          "t",
-          "tt",
-          playSound: true,
-          importance: Importance.max,
-          setAsGroupSummary: true,
-          showProgress: true,
-        ),
+  Future _notiInit() async {
+    _localNotifications = FlutterLocalNotificationsPlugin();
+    // ANDROID NOTIFICATION ICON
+    AndroidInitializationSettings androidSettings = const AndroidInitializationSettings("mipmap/noti_logo");
+    //
+    final InitializationSettings initializationSettings = InitializationSettings(android: androidSettings);
+    //
+    await _localNotifications.initialize(initializationSettings);
+  }
+
+  // SHOW ALL FIREBASE NOTIFICATIONS
+  showNotifaction({String? title, String? message}) async {
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _flutterNotificationChennalId,
+        _flutterNotificationChennalName,
+        playSound: true,
+        importance: Importance.max,
+        priority: Priority.max,
       ),
     );
+
+    await _localNotifications.show(
+      6,
+      title,
+      message,
+      notificationDetails,
+    );
+
+    // await _localNotifications.periodicallyShow(id, title, body, repeatInterval, notificationDetails);
   }
 }
