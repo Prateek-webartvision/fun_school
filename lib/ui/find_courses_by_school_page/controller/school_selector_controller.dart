@@ -32,9 +32,9 @@ class SchoolSelectorController extends GetxController {
 
   _createSchoolList(List<CoursesModel> courses) {
     List<SchoolModel> temp = [];
-    Set<String> _school = courses.map((e) => e.courseSchool!).toSet();
+    Set<String> school = courses.map((e) => e.courseSchool!).toSet();
 
-    for (var element in _school) {
+    for (var element in school) {
       temp.add(SchoolModel(name: element.replaceAll("_", " ").capitalize!, key: element));
     }
     schools = temp;
@@ -58,7 +58,6 @@ class SchoolModel {
   SchoolModel({required this.name, this.icon, required this.key});
   @override
   String toString() {
-    // TODO: implement toString
     return "$name, $key";
   }
 }

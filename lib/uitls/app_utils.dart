@@ -45,7 +45,7 @@ class AppUtils {
 
   // loading overlay
   static showloadingOverlay(Future Function() futureFun) async {
-    final OverlayEntry _entry = OverlayEntry(
+    final OverlayEntry entry = OverlayEntry(
       builder: (context) {
         return Material(
           color: Colors.black26,
@@ -59,12 +59,10 @@ class AppUtils {
         );
       },
     );
-
-    //
-    rootNavigator.currentState!.overlay!.insert(_entry);
+    rootNavigator.currentState!.overlay!.insert(entry);
 
     await futureFun();
-    _entry.remove();
+    entry.remove();
   }
 
   static bool isCourseEnroledByMe({required List<CoursesEnrollment> enrolls}) {

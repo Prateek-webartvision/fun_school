@@ -84,7 +84,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 }
 
                 if (controller.currentIndex == 2) {
-                  print("chat");
+                  debugPrint("chat");
                 }
               },
             ),

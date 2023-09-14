@@ -42,7 +42,7 @@ class CertificateExamTab extends StatelessWidget {
           color: Color(0xff6519BA),
           onClick: () {
             // appRoutes.pushNamed(PagesName.detailExamPage);
-            rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => DetailExamPage()));
+            rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => DetailCertificateExamPage()));
           },
         ),
         12.height,

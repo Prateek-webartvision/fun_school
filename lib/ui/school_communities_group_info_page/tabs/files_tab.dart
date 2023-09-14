@@ -31,7 +31,7 @@ class FilesTab extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                print("click");
+                // print("click");
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

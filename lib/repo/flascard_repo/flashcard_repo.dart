@@ -2,6 +2,7 @@ import 'package:citycloud_school/models/courses_dedails/flashcard.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../network/app_api.dart';
 
@@ -44,9 +45,9 @@ class FlashCardRepository {
     data["flashcard_result"] = result.toString();
 
     await _api.postApi(AppUrls.addFlashcardResult, params: data).then((value) {
-      print(value);
+      debugPrint(value);
     }).onError((error, stackTrace) {
-      print(error.toString());
+      debugPrint(error.toString());
     });
   }
 
@@ -54,7 +55,7 @@ class FlashCardRepository {
     return await _api.postApi(AppUrls.getFlashcardResultByUser, params: {"user_id": AppStorage.user.currentUser()!.userid!.toString()}).then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print("dasda");
+      debugPrint("dasda");
     });
   }
 }

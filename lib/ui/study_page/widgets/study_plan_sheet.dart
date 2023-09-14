@@ -123,7 +123,7 @@ class _AddStudyPlanSheetState extends State<AddStudyPlanSheet> {
                         } else {
                           throw value['message'];
                         }
-                        print(value);
+                        // print(value);
                       }).onError((error, stackTrace) {
                         AppUtils.showSnack(error.toString());
                       });

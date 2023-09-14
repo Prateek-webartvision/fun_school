@@ -243,7 +243,7 @@ Widget _fCard(FlashCardModel flashCard) => Container(
 
 class _CardResult extends StatelessWidget {
   const _CardResult({
-    super.key,
+    // super.key,
     required this.card,
   });
   final List<FlashCardModel> card;

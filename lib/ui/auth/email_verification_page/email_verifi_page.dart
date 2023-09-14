@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,7 +9,7 @@ class EmailVerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var xx = GoRouterState.of(context).extra;
-    print(xx);
+    debugPrint(xx.toString());
     // appRoutes.backButtonDispatcher.addCallback(() async {
     //   print("hello");
     //   return false;

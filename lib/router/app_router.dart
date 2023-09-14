@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
 import 'package:citycloud_school/ui/chat_gpt_page/chat_gpt_page.dart';
@@ -21,9 +21,7 @@ import '../ui/home_page/home_page.dart';
 import '../ui/prepare_for_an_exam_page/prepare_for_an_exam_page.dart';
 import '../ui/profile_and_settings_page/profile_and_settings_page_view.dart';
 import '../ui/school_communities_page/school_communities_page.dart';
-import '../ui/start_exam_pages/question_answer_page/question_answer_page.dart';
-import '../ui/start_exam_pages/result_page/result_page.dart';
-import '../ui/start_exam_pages/start_exam_page/start_exam_page.dart';
+import '../ui/exam_certificate_start_pages/result_page/result_page.dart';
 import '../ui/start_quiz_pages/quiz_qustion_answer_page/quiz_qustion_answer_page.dart';
 import '../ui/start_quiz_pages/start_quiz_view.dart';
 import '../ui/study_page/study_page.dart';
@@ -195,30 +193,34 @@ final GoRouter appRoutes = GoRouter(
         parentNavigatorKey: rootNavigator,
         path: PagesName.getPath(PagesName.detailExamPage),
         name: PagesName.detailExamPage,
-        pageBuilder: (context, state) => MaterialPage(child: DetailExamPage()),
+        pageBuilder: (context, state) => MaterialPage(
+              child: DetailCertificateExamPage(),
+              name: state.name,
+              arguments: state.extra,
+            ),
         routes: [
           //start exam Page
-          GoRoute(
-            parentNavigatorKey: rootNavigator,
-            path: PagesName.startExamPage,
-            name: PagesName.startExamPage,
-            pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              child: StartExamPage(),
-            ),
-            routes: [
-              // Question answer page
-              GoRoute(
-                parentNavigatorKey: rootNavigator,
-                path: PagesName.questionAnswerPage,
-                name: PagesName.questionAnswerPage,
-                pageBuilder: (context, state) => MaterialPage(
-                  key: state.pageKey,
-                  child: QuestionAnswerPage(),
-                ),
-              ),
-            ],
-          ),
+          // GoRoute(
+          //   parentNavigatorKey: rootNavigator,
+          //   path: PagesName.startExamPage,
+          //   name: PagesName.startExamPage,
+          //   pageBuilder: (context, state) => MaterialPage(
+          //     key: state.pageKey,
+          //     child: StartExamPage(),
+          //   ),
+          //   routes: [
+          //     // Question answer page
+          //     GoRoute(
+          //       parentNavigatorKey: rootNavigator,
+          //       path: PagesName.questionAnswerPage,
+          //       name: PagesName.questionAnswerPage,
+          //       pageBuilder: (context, state) => MaterialPage(
+          //         key: state.pageKey,
+          //         child: QuestionAnswerPage(),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ]),
 
     // result page

@@ -17,7 +17,7 @@ class StudyPlanRepository {
     data["course"] = jsonEncode(courseTitle);
     data["plan"] = studyPlan;
 
-    print(data);
+    // print(data);
     //todo
     await _api.postApi(AppUrls.addStudyPlanByContent, params: data).then((value) {
       // print("$value");

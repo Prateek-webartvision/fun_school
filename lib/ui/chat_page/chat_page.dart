@@ -69,7 +69,7 @@ class _ChatPageState extends State<ChatPage> {
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                     ),
                     onSubmitted: (value) {
-                      print(value);
+                      debugPrint(value);
                     },
                   ),
                 ),

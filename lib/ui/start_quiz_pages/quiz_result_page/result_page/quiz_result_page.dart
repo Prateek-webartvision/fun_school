@@ -48,11 +48,10 @@ class _QuizResultPageState extends QuizResultState {
             worngAns: worngAns,
             grade: grade,
             onShare: (widget) async {
-              var ss;
-              var file;
+              late File file;
 
               await AppUtils.showloadingOverlay(() async {
-                ss = await screenshotController.captureFromWidget(widget);
+                var ss = await screenshotController.captureFromWidget(widget);
                 final tempDir = await getTemporaryDirectory();
                 file = await File("${tempDir.path}/result.jpg").create();
                 file.writeAsBytesSync(ss);
@@ -347,7 +346,7 @@ class ResultHead extends StatelessWidget {
 //
 class _AnsTile extends StatelessWidget {
   const _AnsTile({
-    super.key,
+    // super.key,
     required this.isCorrect,
     required this.quations,
     required this.totalQuestions,
@@ -383,7 +382,7 @@ class _AnsTile extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Text(
-                  "Question ${currentQuestions + 1}/${totalQuestions}",
+                  "Question ${currentQuestions + 1}/$totalQuestions",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

@@ -64,6 +64,7 @@ class KBtn extends StatelessWidget {
             AppAssets.svg.facebookIcon,
             height: 24,
             width: 24,
+            // ignore: deprecated_member_use
             color: AppColor.white,
           ),
           label: Text(text),

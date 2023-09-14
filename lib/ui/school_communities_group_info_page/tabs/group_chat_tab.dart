@@ -49,7 +49,7 @@ class GroupChatRoomTab extends StatelessWidget {
                   border: OutlineInputBorder(borderSide: BorderSide.none),
                 ),
                 onSubmitted: (value) {
-                  print(value);
+                  // print(value);
                 },
               ),
             ),

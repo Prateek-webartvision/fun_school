@@ -22,7 +22,7 @@ class PagesName {
 
   static String topicSummaryPage = "topicSummaryPage";
   static String detailExamPage = "detailExamPage";
-  static String startExamPage = "startExamPage";
+  // static String startExamPage = "startExamPage";
   static String questionAnswerPage = "QuestionAnswerPage";
   static String resultPage = "resultPage";
 

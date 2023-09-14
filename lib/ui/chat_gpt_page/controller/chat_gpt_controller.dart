@@ -17,9 +17,9 @@ class ChatGptController extends GetxController {
 
   ChatGptController() {
     openAI = OpenAI.instance.build(token: AppUrls.chatGPTKey);
-    scrollController.addListener(() {
-      print(scrollController.position.maxScrollExtent);
-    });
+    // scrollController.addListener(() {
+    //   print(scrollController.position.maxScrollExtent);
+    // });
   }
 
   @override

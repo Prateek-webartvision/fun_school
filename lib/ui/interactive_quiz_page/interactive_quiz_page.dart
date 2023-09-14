@@ -102,7 +102,7 @@ class _InteractiveQuizPageState extends State<InteractiveQuizPage> {
                     "courseId": widget.courseId,
                     "subjectId": widget.subjectId,
                   };
-                  print(data);
+                  // print(data);
 
                   rootNavigator.currentState!.push(
                     MaterialPageRoute(

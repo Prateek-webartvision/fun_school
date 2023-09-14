@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -9,17 +8,18 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
 import '../../widegts/k_btn.dart';
+import '../exam_certificate_start_pages/start_exam_page/start_exam_page.dart';
 import 'controllers/year_controller.dart';
 import 'widgets/exam_details_tile.dart';
 
-class DetailExamPage extends StatefulWidget {
-  const DetailExamPage({super.key});
+class DetailCertificateExamPage extends StatefulWidget {
+  const DetailCertificateExamPage({super.key});
 
   @override
-  State<DetailExamPage> createState() => _DetailExamPageState();
+  State<DetailCertificateExamPage> createState() => _DetailCertificateExamPageState();
 }
 
-class _DetailExamPageState extends State<DetailExamPage> {
+class _DetailCertificateExamPageState extends State<DetailCertificateExamPage> {
   List<String> years = ["2009", "2020", "2021", "2022", "2023"];
   late YearSelectorController yearSelectorController;
 
@@ -129,8 +129,8 @@ class _DetailExamPageState extends State<DetailExamPage> {
               ExamDetailsTile(
                 completeState: 1,
                 onClick: () {
-                  // TODO
                   // appRoutes.pushNamed(PagesName.startExamPage);
+                  rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
                   // print("object ${appRoutes.location}");
                 },
               ),
@@ -225,28 +225,28 @@ class _DetailExamPageState extends State<DetailExamPage> {
   }
 }
 
-class _RealTabView extends StatelessWidget {
-  // const _RealTabView({
-  //   super.key,
-  // });
+// class _RealTabView extends StatelessWidget {
+//   // const _RealTabView({
+//   //   super.key,
+//   // });
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(16),
-      children: [
-        ExamDetailsTile(
-          completeState: 1,
-          onClick: () {
-            appRoutes.pushNamed(PagesName.startExamPage);
-            // print("object ${appRoutes.location}");
-          },
-        ),
-        12.height,
-        ExamDetailsTile(completeState: 2),
-        12.height,
-        ExamDetailsTile(completeState: 3),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView(
+//       padding: EdgeInsets.all(16),
+//       children: [
+//         ExamDetailsTile(
+//           completeState: 1,
+//           onClick: () {
+//             // appRoutes.pushNamed(PagesName.startExamPage);
+//             // print("object ${appRoutes.location}");
+//           },
+//         ),
+//         12.height,
+//         ExamDetailsTile(completeState: 2),
+//         12.height,
+//         ExamDetailsTile(completeState: 3),
+//       ],
+//     );
+//   }
+// }

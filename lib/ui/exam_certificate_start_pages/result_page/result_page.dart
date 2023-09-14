@@ -204,11 +204,11 @@ class ResultPage extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.all(16),
               children: [
-                _AnsTile(isCorrect: true),
+                AnsTile(isCorrect: true),
                 10.height,
-                _AnsTile(isCorrect: true),
+                AnsTile(isCorrect: true),
                 10.height,
-                _AnsTile(isCorrect: false),
+                AnsTile(isCorrect: false),
               ],
             ),
           )
@@ -244,8 +244,8 @@ class ResultPage extends StatelessWidget {
   }
 }
 
-class _AnsTile extends StatelessWidget {
-  const _AnsTile({
+class AnsTile extends StatelessWidget {
+  const AnsTile({
     super.key,
     required this.isCorrect,
   });
