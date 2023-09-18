@@ -45,7 +45,7 @@ class _KTextFieldState extends State<KTextField> {
           style: GoogleFonts.inter(
             fontSize: 14,
             fontWeight: FontWeight.normal,
-            color: AppColor.textFeildColor,
+            color: AppColor.darkTextColor,
           ),
         ),
         TextField(
@@ -55,7 +55,7 @@ class _KTextFieldState extends State<KTextField> {
           obscureText: (widget.isPassword) ? passHide : widget.isPassword,
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
-          cursorColor: AppColor.textFeildColor,
+          cursorColor: AppColor.darkTextColor,
           cursorRadius: Radius.circular(8),
           cursorOpacityAnimates: true,
           decoration: InputDecoration(

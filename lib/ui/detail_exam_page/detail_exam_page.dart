@@ -110,7 +110,7 @@ class _DetailCertificateExamPageState extends State<DetailCertificateExamPage> {
                         alignment: Alignment.center,
                         child: Text(
                           years[index],
-                          style: TextStyle(color: (controller.index != index) ? AppColor.textFeildColor : AppColor.white),
+                          style: TextStyle(color: (controller.index != index) ? AppColor.darkTextColor : AppColor.white),
                         ),
                       ),
                     );
