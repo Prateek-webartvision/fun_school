@@ -51,4 +51,7 @@ class AppUrls {
   static const String discussionComment = "$_apis/comment_discussion.php";
   static const String getOtherProfile = "$_apis/profile.php";
   static const String getcummuityGroups = "$_apis/groups.php";
+
+  // exam
+  static const String getExams = "$_apis/exams.php";
 }

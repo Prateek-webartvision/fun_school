@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/ui/exam_preparation_page/tab_pages/find_an_exam_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
+import 'exam_pewparation_page_state.dart';
+import 'tab_pages/find_an_exam_tab.dart';
 
 class ExamPreparationPage extends StatefulWidget {
   const ExamPreparationPage({super.key});
@@ -14,15 +15,7 @@ class ExamPreparationPage extends StatefulWidget {
   State<ExamPreparationPage> createState() => _ExamPreparationPageState();
 }
 
-class _ExamPreparationPageState extends State<ExamPreparationPage> with TickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  void initState() {
-    tabController = TabController(length: 3, vsync: this);
-    super.initState();
-  }
-
+class _ExamPreparationPageState extends ExamPreparationPageState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +100,7 @@ class _ExamPreparationPageState extends State<ExamPreparationPage> with TickerPr
             child: TabBarView(
               controller: tabController,
               children: [
-                FindAnExamTab(),
+                FindAnExamTab(crontroller: findExamCrontroller),
                 Text("data"),
                 Text("data"),
               ],
