@@ -21,6 +21,7 @@ class ExamSubjectTile extends StatelessWidget {
       onTap: onClick,
       child: Container(
         height: 62,
+        width: double.maxFinite,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4),

@@ -41,11 +41,11 @@ class MockExamTab extends StatelessWidget {
                   title: "Mathematics",
                   editions: 30,
                   onClick: () {
-                    Navigator.of(rootNavigator.currentContext!).push(
-                      MaterialPageRoute(
-                        builder: (context) => ExamFindMock(),
-                      ),
-                    );
+                    // Navigator.of(rootNavigator.currentContext!).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => ExamFindEditions(),
+                    //   ),
+                    // );
                   },
                 ),
                 8.height,

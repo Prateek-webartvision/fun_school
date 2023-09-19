@@ -56,4 +56,6 @@ mixin class SvgAssets {
   final String examStudyPlanIcon = "assets/svg_icons/icons/exam_icons/study_plan_icon.svg";
 
   final String uploadIcon = "assets/svg_icons/icons/upload-cloud.svg";
+
+  final String bookEdit = "assets/svg_icons/icons/exam_icons/book_edit.svg";
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dart:math' as math;
+
 class AppColor {
   // static const Color mainColor = Color(0xff6938EF);
   static const Color mainColor = Color(0xff1D3460);
@@ -18,4 +20,7 @@ class AppColor {
   static const Color yellow = Color(0xffFFA500);
   static const Color green = Color(0xff008000);
   static const Color red = Color(0xffFF0000);
+
+  //random colors
+  static Color get randomColor => Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 }

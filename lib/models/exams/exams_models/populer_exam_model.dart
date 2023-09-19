@@ -1,14 +1,25 @@
+import 'all_exam_model.dart';
+
 class PopulerExamsModel {
   int? examCategoryId;
   String? examCategoryName;
   String? recommendation;
-  String? dateAdded;
+  int? dateAdded;
+  List<AllExamModel>? allExams;
 
   PopulerExamsModel.fromJson(Map<String, dynamic> json) {
     examCategoryId = json['exam_category_id'];
     examCategoryName = json['exam_category_name'];
     recommendation = json['recommendation'];
     dateAdded = json['date_added'];
+    if (json['all_exams'] != null) {
+      List<AllExamModel> allExams = [];
+      for (var element in json['all_exams']) {
+        final exam = AllExamModel.fromJson(element);
+        allExams.add(exam);
+      }
+      this.allExams = allExams;
+    }
   }
 
   Map<String, dynamic> get toJson {

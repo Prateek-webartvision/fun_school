@@ -1,4 +1,6 @@
+import 'package:citycloud_school/style/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -10,17 +12,16 @@ class ExamTile extends StatelessWidget {
     this.color,
     required this.title,
     this.onClick,
+    required this.date,
   });
   final Color? color;
   final String title;
   final Function()? onClick;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   AppUtils.showSnack("coming soon");
-      // },
       onTap: onClick,
       child: Container(
         decoration: BoxDecoration(
@@ -34,7 +35,8 @@ class ExamTile extends StatelessWidget {
             CircleAvatar(
               radius: 20,
               backgroundColor: color,
-              child: const Icon(Icons.edit_document, color: AppColor.white),
+              // child: const Icon(Icons.edit_document, color: AppColor.white),
+              child: SvgPicture.asset(AppAssets.svg.bookEdit),
             ),
             10.width,
             Expanded(
@@ -49,7 +51,7 @@ class ExamTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Users : 35,400 - Latest Year: 2023",
+                    "Latest Year: ${date.year}",
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
