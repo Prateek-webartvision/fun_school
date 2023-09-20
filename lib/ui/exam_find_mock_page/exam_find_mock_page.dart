@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -63,27 +64,24 @@ class _ExamFindEditionsState extends State<ExamFindEditions> {
             itemBuilder: (context, index) {
               final item = widget.exam[index];
               return MockSubjectTile(
-                  // title: "Mathematics Edition 1",
                   title: item.examName!,
-                  questions: 20,
+                  multiChioceQuestions: item.multichoiceQuestionsCount ?? 0,
+                  theoryQuestions: item.theoryQuestionsCount ?? 0,
                   onClick: () {
                     // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
-                    rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => ExamFindStartMockPage()));
+                    // check question befor open exam
+                    if (item.multichoiceQuestionsCount! <= 0 && item.theoryQuestionsCount! <= 0) {
+                      AppUtils.showSnack("No Question to show");
+                    } else {
+                      final examStatPage = MaterialPageRoute(
+                        builder: (_) => ExamFindStartMockPage(examId: item.examId.toString()),
+                      );
+                      rootNavigator.currentState!.push(examStatPage);
+                    }
                   });
             },
             separatorBuilder: (context, index) => 8.height,
           )
-          // MockSubjectTile(
-          //     title: "Mathematics Edition 1",
-          //     questions: 20,
-          //     onClick: () {
-          //       // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
-          //       rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => ExamFindStartMockPage()));
-          //     }),
-          // 8.height,
-          // MockSubjectTile(title: "Mathematics Edition 2", questions: 20),
-          // 8.height,
-          // MockSubjectTile(title: "Mathematics Edition 3", questions: 20),
         ],
       ),
     );

@@ -29,7 +29,7 @@ class _FindExamPageState extends State<FindExamPage> with TickerProviderStateMix
   void initState() {
     catBtnSet = widget.allExams.map((e) => e.examSubCategoryName).toSet().toList();
     tabController = TabController(length: catBtnSet.length, vsync: this);
-    widget.crontroller.groupAllExamByName(allExams: widget.allExams);
+    widget.crontroller.groupAllExamByName(catBtnSet: catBtnSet, allExams: widget.allExams);
 
     super.initState();
   }

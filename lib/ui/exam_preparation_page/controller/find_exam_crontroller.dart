@@ -33,18 +33,22 @@ class FindExamCrontroller extends GetxController {
     return cates;
   }
 
-  groupAllExamByName({required List<AllExamModel> allExams}) {
+  groupAllExamByName({required List<String?> catBtnSet, required List<AllExamModel> allExams}) {
     Set exams = allExams.map((e) => e.examCourseName).toSet();
 
     List<List<AllExamModel>> sortExam = [];
 
-    // print(exams);
-    for (var element in exams) {
-      final ex = allExams.where((eb) => eb.examCourseName == element).toList();
-      sortExam.add(ex);
+    for (var cat in catBtnSet) {
+      final data = allExams.where((e) => e.examSubCategoryName == cat).toList();
+
+      for (var ex in exams) {
+        final st = data.where((element) => element.examCourseName == ex).toList();
+        if (st.isNotEmpty) {
+          sortExam.add(st);
+        }
+      }
     }
     sortedAllExam = sortExam;
-    // update();
   }
 
   _loadData() async {

@@ -1,3 +1,6 @@
+import 'package:citycloud_school/models/exams/exams_models/multi_choice_quetion_model.dart';
+import 'package:citycloud_school/models/exams/exams_models/theory_question_model.dart';
+
 class AllExamModel {
   int? examId;
   String? examName;
@@ -9,6 +12,10 @@ class AllExamModel {
   String? examCourseId;
   String? examCourseName;
   int? dateAdded;
+  int? multichoiceQuestionsCount;
+  int? theoryQuestionsCount;
+  // List<MultiChoiceQuestion>? multichoiceQuestions;
+  // List<TheoryQuestion>? theory_questions;
 
   AllExamModel.fromJson(Map<String, dynamic> json) {
     examId = json['exam_id'];
@@ -21,6 +28,24 @@ class AllExamModel {
     examCourseId = json['exam_course_id'];
     examCourseName = json['exam_course_name'];
     dateAdded = json['date_added'];
+    multichoiceQuestionsCount = json['multichoice_questions_count'];
+    theoryQuestionsCount = json['theory_questions_count'];
+    // if (json["multichoice_questions"] != null) {
+    //   List<MultiChoiceQuestion> questions = [];
+    //   for (var element in json["multichoice_questions"]) {
+    //     final que = MultiChoiceQuestion.fromJson(element);
+    //     questions.add(que);
+    //   }
+    //   multichoiceQuestions = questions;
+    // }
+    // if (json["theory_questions"] != null) {
+    //   List<TheoryQuestion> questions = [];
+    //   for (var element in json["theory_questions"]) {
+    //     final que = TheoryQuestion.fromJson(element);
+    //     questions.add(que);
+    //   }
+    //   theory_questions = questions;
+    // }
   }
 
   Map<String, dynamic> get toJson {
@@ -35,6 +60,8 @@ class AllExamModel {
     json['exam_course_id'] = examCourseId;
     json['exam_course_name'] = examCourseName;
     json['date_added'] = dateAdded;
+    json['multichoice_questions_count'] = multichoiceQuestionsCount;
+    json['theory_questions_count'] = theoryQuestionsCount;
     return json;
   }
 

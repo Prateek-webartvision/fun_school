@@ -2,18 +2,20 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../style/color.dart';
 import '../../../style/theme.dart';
 
 class MockSubjectTile extends StatelessWidget {
   const MockSubjectTile({
     super.key,
     required this.title,
-    required this.questions,
     this.onClick,
+    this.multiChioceQuestions = 0,
+    this.theoryQuestions = 0,
   });
   final String title;
-  final int questions;
+  // final int questions;
+  final int multiChioceQuestions;
+  final int theoryQuestions;
   final Function()? onClick;
 
   @override
@@ -39,14 +41,15 @@ class MockSubjectTile extends StatelessWidget {
                   title,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
-                Text(
-                  "30 minutes",
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.mainColor),
-                )
+                // Text(
+                //   "30 minutes",
+                //   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.mainColor),
+                // )
               ],
             ),
             Text(
-              "$questions questions",
+              // "$questions questions",
+              "$multiChioceQuestions Multichoice Questions • $theoryQuestions Theory Questions",
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
             ),
           ],
