@@ -90,6 +90,16 @@ class AppUtils {
       ),
     );
   }
+
+  // get readable duration
+  static String getReadableDuration(Duration duration) {
+    // final Duration dd = Duration(hours: 09, minutes: 10);
+    int hur = (duration.inHours % 60);
+    int min = (duration.inMinutes % 60);
+
+    final time = "${(hur >= 1) ? "$hur hours" : ""} ${(min >= 1) ? "$min minutes" : ""}";
+    return time;
+  }
 }
 
 class MyDialog<T> extends RawDialogRoute<T> {

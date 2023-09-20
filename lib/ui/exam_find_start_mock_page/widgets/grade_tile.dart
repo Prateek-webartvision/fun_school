@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -15,7 +16,7 @@ class GradeTile extends StatelessWidget {
     this.onStartClick,
   });
   final String title;
-  final String time;
+  final Duration time;
   final int questions;
   final String? grade;
   final Function()? onStartClick;
@@ -39,8 +40,13 @@ class GradeTile extends StatelessWidget {
               color: AppColor.white,
             ),
           ),
-          Text(
-            "$time • $questions Questions",
+          Text.rich(
+            TextSpan(text: AppUtils.getReadableDuration(time), children: [
+              TextSpan(text: " "),
+              TextSpan(text: "•"),
+              TextSpan(text: " "),
+              TextSpan(text: "$questions Questions"),
+            ]),
             style: TextStyle(
               fontSize: 16,
               color: AppColor.white,
