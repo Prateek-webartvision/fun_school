@@ -1,4 +1,5 @@
 import 'package:citycloud_school/models/exams/exams_models/multi_choice_quetion_model.dart';
+import 'package:citycloud_school/models/exams/exams_models/scrore_model.dart';
 import 'package:citycloud_school/models/exams/exams_models/theory_question_model.dart';
 
 abstract class _ExamModel {
@@ -75,20 +76,26 @@ class AllExamModel extends _ExamModel {
 class AllExamModel2 extends _ExamModel {
   String? durationMultichoice;
   String? durationTheory;
-
+  ScoreModel? latestScore;
   List<TheoryQuestion>? theoryQuestions;
-  List<MultiChoiceQuestion>? multichoice_questions;
+  List<MultiChoiceQuestion>? multichoiceQuestions;
 
   AllExamModel2.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     durationMultichoice = json['duration_multichoice'];
     durationTheory = json['duration_theory'];
+    //Scrore
+    if (json['latest_score'] != null && json['latest_score'].isNotEmpty) {
+      latestScore = ScoreModel.fromJson(json['latest_score']);
+      // print(json['latest_score']);
+    }
+    //
     if (json['multichoice_questions'] != null) {
       List<MultiChoiceQuestion> mcqs = [];
       for (var element in json['multichoice_questions']) {
         final mcq = MultiChoiceQuestion.fromJson(element);
         mcqs.add(mcq);
       }
-      multichoice_questions = mcqs;
+      multichoiceQuestions = mcqs;
     }
     if (json['theory_questions'] != null) {
       List<TheoryQuestion> theoryquestions = [];

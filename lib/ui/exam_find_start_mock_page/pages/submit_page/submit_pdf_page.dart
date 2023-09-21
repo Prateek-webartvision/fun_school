@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../style/const.dart';
+import '../../../../style/const.dart';
 
 class MockSubmitPdfPage extends StatefulWidget {
   const MockSubmitPdfPage({super.key});

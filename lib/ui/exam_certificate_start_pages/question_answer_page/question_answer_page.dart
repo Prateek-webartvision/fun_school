@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../widegts/k_btn.dart';
+import '../../../widegts/point_chip.dart';
+import '../../../widegts/question_chip.dart';
 
 class QuestionAnswerPage extends StatefulWidget {
   const QuestionAnswerPage({super.key});
@@ -53,37 +55,11 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      // height: 24,
-                      decoration: BoxDecoration(
-                        color: AppColor.scaffoldBg,
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: Colors.black),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      child: Text(
-                        "Question 1/7",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+                    QuestionChip(
+                      totalQuestions: 7,
+                      currentQuestion: 1,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColor.scaffoldBg,
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColor.textFeildBorderColor),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      child: Text(
-                        "1 point",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    )
+                    PointChip()
                   ],
                 ),
                 8.height,
