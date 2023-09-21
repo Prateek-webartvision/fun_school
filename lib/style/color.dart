@@ -5,7 +5,8 @@ import 'dart:math' as math;
 class AppColor {
   // static const Color mainColor = Color(0xff6938EF);
   static const Color mainColor = Color(0xff1D3460);
-  static const Color pinkColor = Color(0xffF670C7);
+  // static const Color pinkColor = Color(0xffF670C7);
+  static const Color pinkColor = Color(0xff999999);
   static const Color scaffoldBg = Color(0xffF4F4F4);
   static const Color darkScaffoldBg = Color(0xff1F3265);
   static const Color white = Colors.white;

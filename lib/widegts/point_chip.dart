@@ -9,7 +9,7 @@ class PointChip extends StatelessWidget {
     super.key,
     this.point = 1,
   });
-  final int point;
+  final int? point;
 
   @override
   Widget build(BuildContext context) {

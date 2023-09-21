@@ -6,6 +6,7 @@ class MultiChoiceQuestion {
   String? question;
   List<String>? questionAnswers;
   String? correctAnswer;
+  String? selectedAnswer;
   int? date;
 
   MultiChoiceQuestion.fromJson(Map<String, dynamic> json) {
@@ -34,6 +35,8 @@ class MultiChoiceQuestion {
     json['question'] = question;
     json['question_answers'] = questionAnswers;
     json['correct_answer'] = correctAnswer;
+    json['seletec_answer'] = selectedAnswer;
+
     json['date'] = date;
     return json;
   }
