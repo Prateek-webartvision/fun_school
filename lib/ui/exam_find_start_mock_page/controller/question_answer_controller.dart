@@ -33,9 +33,19 @@ class QuestionAnswerController extends GetxController {
 
   @override
   void dispose() {
-    for (var element in questions) {
-      element.selectedAnswer = null;
-    }
+    // for (var element in questions) {
+    //   // element.selectedAnswer = null;
+    // }
     super.dispose();
+  }
+
+  ({int correctAns, int inCorrectAns, int grade}) getResult() {
+    final currectAns = questions.where((e) => e.selectedAnswer == e.correctAnswer).length;
+    // print("$currectAns , ${questions.length - currectAns}, ${currectAns / questions.length}");
+    return (
+      correctAns: currectAns,
+      inCorrectAns: questions.length - currectAns,
+      grade: ((currectAns / questions.length) * 100).round(),
+    );
   }
 }

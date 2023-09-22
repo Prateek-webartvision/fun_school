@@ -3,7 +3,6 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/style/const.dart';
-import 'package:citycloud_school/ui/exam_certificate_start_pages/result_page/result_page.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -14,6 +13,7 @@ import '../../../../widegts/k_btn.dart';
 import '../../controller/question_answer_controller.dart';
 import '../../widgets/answer_selector_tile.dart';
 import '../../widgets/head_question.dart';
+import '../result_page/find_exam_result_page.dart';
 
 class AnswerPage extends StatefulWidget {
   const AnswerPage({super.key, required this.questions, required this.initIndex, required this.title});
@@ -99,7 +99,7 @@ class _AnswerPageState extends State<AnswerPage> {
               onEnd: () {
                 rootNavigator.currentState!.pushReplacement(
                   MaterialPageRoute(
-                    builder: (_) => ResultPage(),
+                    builder: (_) => FindExamResultPage(controller: answerController),
                   ),
                 );
               },
