@@ -77,33 +77,38 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
           }
 
           // success
-          return ListView(
-            padding: EdgeInsets.all(16),
-            children: [
-              GradeTile(
-                title: "Multichoice",
-                time: Duration(minutes: int.parse(controller.allExams?.durationMultichoice ?? "0")),
-                questions: controller.allExams?.multichoiceQuestions?.length ?? 0,
-                grade: controller.allExams?.latestScore?.grade,
-                onStartClick: () {
-                  final questionViewPage = MaterialPageRoute(
-                    builder: (_) => QuestionViewPage(
-                      title: controller.allExams!.examCourseName.toString(),
-                      questions: controller.allExams!.multichoiceQuestions!,
-                    ),
-                  );
-                  rootNavigator.currentState!.push(questionViewPage);
-                },
-              ),
-              18.height,
-              GradeTile(
-                title: "Theory",
-                // time: "45 minutes",
-                time: Duration(minutes: int.parse(controller.allExams?.durationTheory ?? "0")),
-                questions: controller.allExams?.theoryQuestions?.length ?? 0,
-                grade: controller.allExams?.latestScore?.grade,
-              )
-            ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              await controller.reload();
+            },
+            child: ListView(
+              padding: EdgeInsets.all(16),
+              children: [
+                GradeTile(
+                  title: "Multichoice",
+                  time: Duration(minutes: int.parse(controller.allExams?.durationMultichoice ?? "0")),
+                  questions: controller.allExams?.multichoiceQuestions?.length ?? 0,
+                  grade: controller.allExams?.latestScore?.grade,
+                  onStartClick: () {
+                    final questionViewPage = MaterialPageRoute(
+                      builder: (_) => QuestionViewPage(
+                        title: controller.allExams!.examCourseName.toString(),
+                        questions: controller.allExams!.multichoiceQuestions!,
+                      ),
+                    );
+                    rootNavigator.currentState!.push(questionViewPage);
+                  },
+                ),
+                18.height,
+                GradeTile(
+                  title: "Theory",
+                  // time: "45 minutes",
+                  time: Duration(minutes: int.parse(controller.allExams?.durationTheory ?? "0")),
+                  questions: controller.allExams?.theoryQuestions?.length ?? 0,
+                  grade: controller.allExams?.latestScore?.grade,
+                )
+              ],
+            ),
           );
         },
       ),

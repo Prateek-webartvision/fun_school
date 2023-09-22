@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
+import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/answer_review_page/answer_review_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -23,6 +25,10 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
   @override
   void initState() {
     ans = widget.controller.getResult();
+    final examId = widget.controller.questions.first.examId!;
+
+    ExamsRepository.saveMultiChoiceExamScore(examId: examId, score: ans.grade.toString());
+
     super.initState();
   }
 
@@ -236,7 +242,6 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                   totalQ: widget.controller.questions.length,
                   currentQ: index + 1,
                   question: item.question!,
-                  // question: ("${item.selectedAnswer} == ${item.correctAnswer}").toString(),
                   isCorrect: (item.selectedAnswer == item.correctAnswer),
                   points: int.parse(item.points ?? "0"),
                 );
@@ -264,13 +269,15 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
             ),
             12.width,
             Expanded(
-                child: KBtn(
-              onClick: () {
-                // appRoutes.pushNamed(PagesName.resultPage);
-              },
-              text: "Next",
-              height: 44,
-            )),
+              child: KBtn(
+                onClick: () {
+                  final reviewPage = MaterialPageRoute(builder: (_) => AsnwerReviewPage(questions: widget.controller.questions));
+                  rootNavigator.currentState!.push(reviewPage);
+                },
+                text: "Next",
+                height: 44,
+              ),
+            ),
           ],
         ),
       ),

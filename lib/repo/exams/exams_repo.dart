@@ -3,6 +3,7 @@ import 'package:citycloud_school/models/exams/exams_models/populer_exam_model.da
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:flutter/foundation.dart';
 
 class ExamsRepository {
   static final _api = AppApi();
@@ -37,5 +38,22 @@ class ExamsRepository {
     }).onError((error, stackTrace) {
       throw error!;
     });
+  }
+
+  static saveMultiChoiceExamScore({required String examId, required String score}) async {
+    // final url = AppUrls.saveMultiChoiceExamScore;
+    Map<String, String> perams = {};
+    perams["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    perams["exam_id"] = examId;
+    perams["score"] = score;
+
+    await _api.postApi(AppUrls.saveMultiChoiceExamScore, params: perams).then(
+      (value) {
+        debugPrint(value.toString());
+      },
+    ).onError((error, stackTrace) {
+      debugPrint(error.toString());
+    });
+    // print(perams);
   }
 }
