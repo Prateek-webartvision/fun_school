@@ -1,14 +1,21 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/answer_review_page/answer_review_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../style/color.dart';
 import '../../../../widegts/k_btn.dart';
+import '../../../../widegts/share_result_ss.dart';
 import '../../controller/question_answer_controller.dart';
 import 'widgets/ans_tile.dart';
 
@@ -22,6 +29,7 @@ class FindExamResultPage extends StatefulWidget {
 
 class _FindExamResultPageState extends State<FindExamResultPage> {
   late ({int correctAns, int grade, int inCorrectAns}) ans;
+
   @override
   void initState() {
     ans = widget.controller.getResult();
@@ -73,7 +81,7 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Congratulations! You passed!",
+                          (ans.grade >= 75) ? "Congratulations! You passed!" : "Try again",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -207,25 +215,44 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                 ),
                 12.height,
                 // share btn
-                Container(
-                  height: 44,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  // padding: EdgeInsets.s,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.share_outlined),
-                      6.45.width,
-                      Text(
-                        "Share Result",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                      ),
-                    ],
+
+                GestureDetector(
+                  onTap: () async {
+                    // share
+                    Uint8List image = await ScreenshotController().captureFromWidget(
+                      ShareResultSS(ans: ans),
+                    );
+
+                    final dir = await getTemporaryDirectory();
+                    const imageName = "tempResult.jpg";
+                    String imagePath = "${dir.path}/$imageName";
+                    File imageFile = File(imagePath);
+                    await imageFile.writeAsBytes(image);
+
+                    await Share.shareXFiles([XFile(imageFile.path)]);
+                    // Share.share("text");
+
+                    // print("object");
+                  },
+                  child: Container(
+                    height: 44,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.share_outlined),
+                        6.45.width,
+                        Text(
+                          "Share Result",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

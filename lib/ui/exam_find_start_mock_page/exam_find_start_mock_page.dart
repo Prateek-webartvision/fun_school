@@ -2,6 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/question_view_page/question_view_page.dart';
+import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/submit_page/submit_theory_page.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -106,6 +107,15 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
                   time: Duration(minutes: int.parse(controller.allExams?.durationTheory ?? "0")),
                   questions: controller.allExams?.theoryQuestions?.length ?? 0,
                   grade: controller.allExams?.latestScore?.grade,
+                  onStartClick: () {
+                    final submitExamPage = MaterialPageRoute(
+                      builder: (_) => TheorySumbmitPage(
+                        title: controller.allExams!.examCourseName.toString(),
+                        questions: controller.allExams!.theoryQuestions!,
+                      ),
+                    );
+                    rootNavigator.currentState!.push(submitExamPage);
+                  },
                 )
               ],
             ),

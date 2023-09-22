@@ -77,7 +77,7 @@ class AllExamModel2 extends _ExamModel {
   String? durationMultichoice;
   String? durationTheory;
   ScoreModel? latestScore;
-  List<TheoryQuestion>? theoryQuestions;
+  List<TheoryQuestionModel>? theoryQuestions;
   List<MultiChoiceQuestion>? multichoiceQuestions;
 
   AllExamModel2.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
@@ -98,9 +98,9 @@ class AllExamModel2 extends _ExamModel {
       multichoiceQuestions = mcqs;
     }
     if (json['theory_questions'] != null) {
-      List<TheoryQuestion> theoryquestions = [];
+      List<TheoryQuestionModel> theoryquestions = [];
       for (var element in json['theory_questions']) {
-        final th = TheoryQuestion.fromJson(element);
+        final th = TheoryQuestionModel.fromJson(element);
         theoryquestions.add(th);
       }
       theoryQuestions = theoryquestions;

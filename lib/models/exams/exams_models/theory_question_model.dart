@@ -1,4 +1,4 @@
-class TheoryQuestion {
+class TheoryQuestionModel {
   int? questionId;
   String? examId;
   String? questionNo;
@@ -6,7 +6,9 @@ class TheoryQuestion {
   String? question;
   String? answer;
   int? date;
-  TheoryQuestion.fromJson(Map<String, dynamic> json) {
+  String? userAnswer;
+
+  TheoryQuestionModel.fromJson(Map<String, dynamic> json) {
     questionId = json['question_id'];
     examId = json['exam_id'];
     questionNo = json['question_no'];
