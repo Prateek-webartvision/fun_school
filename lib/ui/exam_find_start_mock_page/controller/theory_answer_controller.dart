@@ -11,9 +11,8 @@ class TheoryAnswerController extends GetxController {
     index = initIndex;
   }
 
-  setAnswerAndNext(TextEditingController answer) {
-    if (questions.length - 1 > index) {
-      questions[index].userAnswer = answer.text;
+  submitandAnswerAndNext(TextEditingController answer) async {
+    if ((questions.length - 1) > index) {
       index++;
       answer.clear();
       update();

@@ -89,7 +89,7 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
                   title: "Multichoice",
                   time: Duration(minutes: int.parse(controller.allExams?.durationMultichoice ?? "0")),
                   questions: controller.allExams?.multichoiceQuestions?.length ?? 0,
-                  grade: controller.allExams?.latestScore?.grade,
+                  grade: controller.allExams?.multichoiceScore?.grade,
                   onStartClick: () {
                     final questionViewPage = MaterialPageRoute(
                       builder: (_) => QuestionViewPage(
@@ -106,7 +106,7 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
                   // time: "45 minutes",
                   time: Duration(minutes: int.parse(controller.allExams?.durationTheory ?? "0")),
                   questions: controller.allExams?.theoryQuestions?.length ?? 0,
-                  grade: controller.allExams?.latestScore?.grade,
+                  grade: controller.allExams?.theoryScore?.grade,
                   onStartClick: () {
                     final submitExamPage = MaterialPageRoute(
                       builder: (_) => TheorySumbmitPage(

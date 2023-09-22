@@ -6,7 +6,7 @@ class TheoryQuestionModel {
   String? question;
   String? answer;
   int? date;
-  String? userAnswer;
+  bool? ansSubmited = false;
 
   TheoryQuestionModel.fromJson(Map<String, dynamic> json) {
     questionId = json['question_id'];

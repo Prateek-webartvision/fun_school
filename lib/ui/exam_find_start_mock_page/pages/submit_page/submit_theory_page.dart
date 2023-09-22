@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
@@ -49,7 +50,6 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
                 question: controller.questions[controller.index].question ?? "",
                 points: int.parse(controller.questions[controller.index].points ?? "0"),
               ),
-
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -87,142 +87,41 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
                     ),
                   ),
                 ),
-              )
-
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //   ),
-              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           Container(
-              //             decoration: BoxDecoration(
-              //               color: AppColor.scaffoldBg,
-              //               borderRadius: BorderRadius.circular(100),
-              //               border: Border.all(color: Colors.black),
-              //             ),
-              //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              //             child: Text(
-              //               "Question 1",
-              //               style: TextStyle(
-              //                 fontSize: 14,
-              //                 fontWeight: FontWeight.w400,
-              //               ),
-              //             ),
-              //           ),
-              //           //
-              //           Container(
-              //             decoration: BoxDecoration(
-              //               color: AppColor.scaffoldBg,
-              //               borderRadius: BorderRadius.circular(100),
-              //               border: Border.all(color: Colors.black),
-              //             ),
-              //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              //             child: Text(
-              //               "100 point",
-              //               style: TextStyle(
-              //                 fontSize: 14,
-              //                 fontWeight: FontWeight.w400,
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       12.height,
-              //       //
-              //       Text(
-              //         "Write Essay About Artifial Intelegence",
-              //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              //       ),
-              //       12.height,
-              //       Container(
-              //         height: 193,
-              //         decoration: BoxDecoration(
-              //           color: AppColor.scaffoldBg,
-              //           image: DecorationImage(
-              //             image: AssetImage(AppAssets.startExamTextBg),
-              //             fit: BoxFit.cover,
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // 14.height,
-              // //
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: AppColor.white,
-              //     border: Border.all(color: AppColor.softBorderColor),
-              //     borderRadius: BorderRadius.circular(4),
-              //   ),
-              //   margin: EdgeInsets.symmetric(horizontal: 16),
-              //   padding: const EdgeInsets.all(12),
-              //   child: Column(
-              //     children: [
-              //       Container(
-              //         height: 32,
-              //         width: 32,
-              //         decoration: BoxDecoration(color: AppColor.mainColor, borderRadius: BorderRadius.circular(30)),
-              //         alignment: Alignment.center,
-              //         child: SvgPicture.asset(AppAssets.svg.uploadIcon),
-              //       ),
-              //       10.height,
-              //       Text(
-              //         "Upload Answers PDF",
-              //         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              // 12.height, // attech file name
-              // ListView(
-              //   shrinkWrap: true,
-              //   padding: EdgeInsets.symmetric(horizontal: 16),
-              //   children: [
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Row(
-              //           children: [
-              //             SvgPicture.asset(AppAssets.svg.attachment2Icon),
-              //             4.width,
-              //             Text(
-              //               "Essay-ahamd.pdf",
-              //               style: TextStyle(
-              //                 fontSize: 12,
-              //                 fontWeight: FontWeight.w700,
-              //                 color: AppColor.mainColor,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         Icon(Icons.close, size: 20),
-              //       ],
-              //     )
-              //   ],
-              // )
+              ),
             ],
           );
         },
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: KBtn(
-          height: 44,
-          onClick: () {
-            if (answerText.text.isNotEmpty) {
-              answerController.setAnswerAndNext(answerText);
-            } else {
-              AppUtils.showSnack("give you answer");
-            }
+        child: GetBuilder(
+          init: answerController,
+          builder: (controller) {
+            return KBtn(
+              height: 44,
+              onClick: () async {
+                if (answerText.text.isNotEmpty) {
+                  final ans = controller.questions[controller.index];
+                  await AppUtils.showloadingOverlay(() async {
+                    var vv = await ExamsRepository.submitTheoryExam(
+                      examId: ans.examId!,
+                      questionId: ans.questionId.toString(),
+                      answer: answerText.text,
+                    );
+                    if (controller.index == (controller.questions.length - 1)) {
+                      if (vv == true) {
+                        AppUtils.showSnack("Thanku for submit your answer");
+                      }
+                    }
+                  });
+                  answerController.submitandAnswerAndNext(answerText);
+                } else {
+                  AppUtils.showSnack("give you answer");
+                }
+              },
+              text: (controller.index >= (controller.questions.length - 1)) ? "Submit" : "Next",
+            );
           },
-          text: "Next",
         ),
       ),
     );

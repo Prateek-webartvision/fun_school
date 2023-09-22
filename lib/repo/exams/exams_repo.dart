@@ -54,6 +54,31 @@ class ExamsRepository {
     ).onError((error, stackTrace) {
       debugPrint(error.toString());
     });
+  }
+
+  static submitTheoryExam({
+    required String examId,
+    required,
+    required String questionId,
+    required String answer,
+  }) async {
+    Map<String, String> perams = {};
+    perams["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    perams["exam_id"] = examId;
+    perams["question_type"] = "theory";
+    perams["question_id"] = questionId;
+    perams["answer"] = answer;
+
     // print(perams);
+    return await _api.postApi(AppUrls.submitTheoryExam, params: perams).then((value) {
+      // print(value);
+      if (value['message'] != "Exam answer added successfully ") {
+        throw value['message'];
+      } else {
+        return true;
+      }
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
   }
 }

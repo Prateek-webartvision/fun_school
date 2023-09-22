@@ -76,7 +76,8 @@ class AllExamModel extends _ExamModel {
 class AllExamModel2 extends _ExamModel {
   String? durationMultichoice;
   String? durationTheory;
-  ScoreModel? latestScore;
+  ScoreModel? multichoiceScore;
+  ScoreModel? theoryScore;
   List<TheoryQuestionModel>? theoryQuestions;
   List<MultiChoiceQuestion>? multichoiceQuestions;
 
@@ -84,9 +85,13 @@ class AllExamModel2 extends _ExamModel {
     durationMultichoice = json['duration_multichoice'];
     durationTheory = json['duration_theory'];
     //Scrore
-    if (json['latest_score'] != null && json['latest_score'].isNotEmpty) {
-      latestScore = ScoreModel.fromJson(json['latest_score']);
-      // print(json['latest_score']);
+    if (json['multichoice_score'] != null && json['multichoice_score'].isNotEmpty) {
+      multichoiceScore = ScoreModel.fromJson(json['multichoice_score']);
+      // multichoiceScore!.grade = "b";
+      // print(multichoiceScore?.grade.toString());
+    }
+    if (json['theory_score'] != null && json['theory_score'].isNotEmpty) {
+      theoryScore = ScoreModel.fromJson(json['theory_score']);
     }
     //
     if (json['multichoice_questions'] != null) {
