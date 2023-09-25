@@ -57,4 +57,7 @@ class AppUrls {
   static const String getExamsByExamId = "$_apis/exams_questions.php";
   static const String saveMultiChoiceExamScore = "$_apis/exam_save_multichoice_result.php";
   static const String submitTheoryExam = "$_apis/exam_record_answers.php";
+
+  //study plan
+  static const String examStudyPlans = "$_apis/exam_study_plan.php";
 }

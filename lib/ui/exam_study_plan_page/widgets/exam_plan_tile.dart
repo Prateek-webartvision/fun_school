@@ -13,11 +13,13 @@ class ExamStudyPlanTile extends StatelessWidget {
     required this.date,
     required this.progress,
     this.onClick,
+    required this.examHour,
   });
 
   final String title;
   final DateTime date;
   final int progress;
+  final int examHour;
   final Function()? onClick;
 
   @override
@@ -55,7 +57,7 @@ class ExamStudyPlanTile extends StatelessWidget {
             ),
             Text.rich(
               TextSpan(text: "Progress : ", children: [
-                TextSpan(text: "20 hours ("),
+                TextSpan(text: "$examHour hours ("),
                 TextSpan(text: "$progress% completed", style: TextStyle(color: AppColor.mainColor)),
                 TextSpan(text: ")"),
               ]),
