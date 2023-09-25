@@ -51,9 +51,12 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Icon(
-                          Icons.close,
-                          size: 24,
+                        child: GestureDetector(
+                          onTap: () => AppUtils.closeBottomSheet(),
+                          child: Icon(
+                            Icons.close,
+                            size: 24,
+                          ),
                         ),
                       ),
                       Align(

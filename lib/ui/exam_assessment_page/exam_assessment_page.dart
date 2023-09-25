@@ -19,14 +19,14 @@ class _ExamMyAssessmentsPageState extends State<ExamMyAssessmentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('My Assessments'),
-        titleTextStyle: AppTextStyle.appBarText,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add_rounded))],
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text('My Assessments'),
+      //   titleTextStyle: AppTextStyle.appBarText,
+      //   actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add_rounded))],
+      // ),
       body: ListView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         children: [
           // message
           Column(

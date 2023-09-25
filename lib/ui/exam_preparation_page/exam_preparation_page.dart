@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/ui/exam_assessment_page/exam_assessment_page.dart';
 import 'package:citycloud_school/ui/exam_study_plan_page/exam_study_plan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,7 +104,8 @@ class _ExamPreparationPageState extends ExamPreparationPageState {
               children: [
                 FindAnExamTab(crontroller: findExamCrontroller),
                 ExamStudyPlan(controller: examStudyPlanController),
-                Text("data"),
+                // Text("data"),
+                ExamMyAssessmentsPage()
               ],
             ),
           )

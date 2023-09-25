@@ -3,7 +3,6 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
 import 'package:citycloud_school/ui/exam_study_plan_details_page/exam_study_plan_details_page.dart';
-import 'package:citycloud_school/uitls/helper.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -98,34 +97,12 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                     progress: plan.progressPercentage!.toInt(),
                     examHour: int.parse(plan.studyHours ?? "0"),
                     onClick: () {
-                      rootNavigator.currentState!.push(MaterialPageRoute(builder: (context) => ExamStudyPlanDetailsPage()));
+                      final page = MaterialPageRoute(builder: (context) => ExamStudyPlanDetailsPage(studyPlan: plan));
+                      rootNavigator.currentState!.push(page);
                     },
                   );
                 },
                 separatorBuilder: (context, index) => 12.height,
-                // children: [
-                //   ExamStudyPlanTile(
-                //     // title: "JAMB 2023",
-                //     title: "JAMB 2023",
-                //     date: DateTime(2023, 9, 10),
-                //     progress: 40,
-                //     onClick: () {
-                //       rootNavigator.currentState!.push(MaterialPageRoute(builder: (context) => ExamStudyPlanDetailsPage()));
-                //     },
-                //   ),
-                //   12.height,
-                //   ExamStudyPlanTile(
-                //     title: "WAEC Mock 2023",
-                //     date: DateTime(2023, 10, 15),
-                //     progress: 25,
-                //   ),
-                //   12.height,
-                //   ExamStudyPlanTile(
-                //     title: "SSCE Practice",
-                //     date: DateTime(2023, 11, 20),
-                //     progress: 55,
-                //   ),
-                // ],
               );
             },
           )

@@ -13,10 +13,12 @@ class WeekDaySelector extends StatelessWidget {
     super.key,
     required this.weekDays,
     required this.controller,
+    this.onChange,
   });
 
   final List<int> weekDays;
   final WeekDaySelectorController controller;
+  final Function()? onChange;
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -34,6 +36,9 @@ class WeekDaySelector extends StatelessWidget {
                         onTap: () {
                           if (cnt.currentIndex != i) {
                             cnt.currentIndex = i;
+                            if (onChange != null) {
+                              onChange!();
+                            }
                           }
                         },
                         child: Container(
