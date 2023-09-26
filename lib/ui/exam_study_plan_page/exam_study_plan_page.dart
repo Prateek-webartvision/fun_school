@@ -95,7 +95,7 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                     title: plan.examName.toString(),
                     date: getDateTimeFromTimeStamp(timeStamp: plan.dateOfExam),
                     progress: plan.progressPercentage!.toInt(),
-                    examHour: int.parse(plan.studyHours ?? "0"),
+                    examHour: int.parse(plan.progressHours ?? "0"),
                     onClick: () {
                       final page = MaterialPageRoute(builder: (context) => ExamStudyPlanDetailsPage(studyPlan: plan));
                       rootNavigator.currentState!.push(page);

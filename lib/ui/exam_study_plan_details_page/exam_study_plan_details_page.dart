@@ -10,9 +10,10 @@ import '../../models/exams/exam_study_plan_models/exam_study_plan_model.dart';
 import '../../style/color.dart';
 import '../../style/const.dart';
 import '../../style/theme.dart';
-import 'controller/week_day_selector_controller.dart';
+import 'controller/exam_study_plan_details_controller.dart';
 import 'widgets/plan_head.dart';
 import 'widgets/plan_study_schedule_tile.dart';
+import 'widgets/study_resourse_tile.dart';
 import 'widgets/week_day_selector.dart';
 
 class ExamStudyPlanDetailsPage extends StatefulWidget {
@@ -56,34 +57,35 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
               12.height,
 
               // Courses in exam
-              Container(
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColor.white,
-                  borderRadius: BorderRadius.circular(4),
-                  boxShadow: AppShadow.boxShadow,
+              if (controller.studyPlan.examStudyPlanCourses != null && controller.studyPlan.examStudyPlanCourses!.isNotEmpty)
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(4),
+                    boxShadow: AppShadow.boxShadow,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Courses in the Exam", style: AppTextStyle.text12W400),
+                      5.height,
+                      Wrap(
+                        spacing: 8,
+                        children: controller.studyPlan.examStudyPlanCourses!
+                            .map(
+                              (e) => Container(
+                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                child: Text(e.name ?? "N/A", style: AppTextStyle.text12W400),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Courses in the Exam", style: AppTextStyle.text12W400),
-                    5.height,
-                    Wrap(
-                      spacing: 8,
-                      children: controller.studyPlan.examStudyPlanCourses!
-                          .map(
-                            (e) => Container(
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                              child: Text(e.name ?? "N/A", style: AppTextStyle.text12W400),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ],
-                ),
-              ),
-              12.height,
+              if (controller.studyPlan.examStudyPlanCourses != null && controller.studyPlan.examStudyPlanCourses!.isNotEmpty) 12.height,
               //
               Container(
                 padding: EdgeInsets.all(12),
@@ -148,6 +150,7 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                     12.height,
                     DropdownButtonFormField(
                       value: controller.selectedWeek,
+                      hint: Text("week day"),
                       style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
                         isCollapsed: true,
@@ -195,42 +198,45 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                       },
                       separatorBuilder: (context, index) => 6.height,
                     ),
-                    // PlanStudyScheduleTile(
-                    //   title: "Algebra",
-                    //   subTitle: "6:00 pm - 8:00 pm",
-                    // ),
-                    // 6.height,
-                    // PlanStudyScheduleTile(
-                    //   title: "Electricity",
-                    //   subTitle: "08:00 pm - 10:00 pm",
-                    // ),
                   ],
                 ),
               ),
 
-              // 12.height,
-              // //
-              // Container(
-              //   padding: EdgeInsets.all(12),
-              //   decoration: BoxDecoration(
-              //     color: AppColor.white,
-              //     borderRadius: BorderRadius.circular(4),
-              //     boxShadow: AppShadow.boxShadow,
-              //   ),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     mainAxisSize: MainAxisSize.min,
-              //     children: [
-              //       Text("Resources", style: AppTextStyle.text12W400),
-              //       12.height,
-              //       StudyResourseTile(title: "Algebra Notes"),
-              //       5.height,
-              //       StudyResourseTile(title: "Geometry Video Lectures"),
-              //       5.height,
-              //       StudyResourseTile(title: "Prose Study Materials"),
-              //     ],
-              //   ),
-              // ),
+              if (controller.studyPlan.examStudyPlanResources != null && controller.studyPlan.examStudyPlanResources!.isNotEmpty)
+                Column(
+                  children: [
+                    12.height,
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppColor.white,
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: AppShadow.boxShadow,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Resources", style: AppTextStyle.text12W400),
+                          12.height,
+                          ListView.separated(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: controller.studyPlan.examStudyPlanResources!.length,
+                            itemBuilder: (context, index) {
+                              final src = controller.studyPlan.examStudyPlanResources![index];
+                              return StudyResourseTile(
+                                title: src.title ?? "",
+                                url: src.link ?? "",
+                              );
+                            },
+                            separatorBuilder: (context, index) => 5.height,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
             ],
           );
         },
@@ -278,44 +284,5 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
         ),
       ),
     );
-  }
-}
-
-class ExamStudyPlanDetailsController extends GetxController {
-  final ExamStudyPlanModel studyPlan;
-  late Set<String> _weekSet;
-  late String selectedWeek;
-
-  List<TimeTableModel> timeTable = [];
-
-  late WeekDaySelectorController weekDaySelectorController;
-  List<int> weekDays = [1, 2, 3, 4, 5, 6, 7];
-
-  ExamStudyPlanDetailsController({required this.studyPlan}) {
-    weekDaySelectorController = WeekDaySelectorController();
-    _weekSet = studyPlan.examStudyPlanTimetable!.reversed.map((e) => e.week!).toSet();
-    selectedWeek = _weekSet.first;
-    _filterData();
-  }
-
-  List<String> get weekSet => _weekSet.toList();
-
-  set setWeek(String week) {
-    selectedWeek = week;
-    _filterData();
-    update();
-  }
-
-  onDayChange() {
-    _filterData();
-    // update();
-  }
-
-  _filterData() {
-    final temp = studyPlan.examStudyPlanTimetable?.where(
-      (element) => element.week == selectedWeek && int.parse(element.day.toString()) == (weekDaySelectorController.currentIndex + 1),
-    );
-    timeTable = temp?.toList() ?? [];
-    update();
   }
 }

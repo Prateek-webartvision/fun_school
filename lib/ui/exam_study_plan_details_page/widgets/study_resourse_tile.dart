@@ -9,8 +9,10 @@ class StudyResourseTile extends StatelessWidget {
   const StudyResourseTile({
     super.key,
     required this.title,
+    required this.url,
   });
   final String title;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,8 @@ class StudyResourseTile extends StatelessWidget {
             ],
           ),
           Text(
-            "www.mathstudy.com/algebra-notes",
+            url,
+            // "www.mathstudy.com/algebra-notes das da sd asd as d asd a sd ",
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
