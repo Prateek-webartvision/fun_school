@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:citycloud_school/style/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../style/color.dart';
@@ -24,7 +26,7 @@ class KTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final bool? enabled;
-  final Icon? suffixIcon;
+  final Widget? suffixIcon;
   final String? errorText;
   final int maxLine;
 
@@ -51,6 +53,7 @@ class _KTextFieldState extends State<KTextField> {
         TextField(
           maxLines: widget.maxLine,
           enabled: widget.enabled,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
           controller: widget.controller,
           obscureText: (widget.isPassword) ? passHide : widget.isPassword,
           textInputAction: widget.textInputAction,
@@ -65,8 +68,10 @@ class _KTextFieldState extends State<KTextField> {
             disabledBorder: _border(),
             enabledBorder: _border(),
             errorBorder: _border(),
+            suffixIconConstraints: BoxConstraints(minWidth: 16 + 24),
             suffixIcon: (widget.suffixIcon != null)
                 ? widget.suffixIcon
+                // ? SvgPicture.asset(AppAssets.svg.calendarlineIcon)
                 : (widget.isPassword)
                     ? GestureDetector(
                         onTap: () {

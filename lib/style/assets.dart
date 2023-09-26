@@ -41,6 +41,7 @@ mixin class SvgAssets {
   final String attachment2Icon = "assets/svg_icons/icons/attachment-2.svg";
   final String parentFillIcon = "assets/svg_icons/icons/parent-fill.svg";
   final String calendarlineIcon = "assets/svg_icons/icons/calendar-line.svg";
+  final String calendarline2Icon = "assets/svg_icons/icons/calendar-line2.svg";
   final String openedFilderIcon = "assets/svg_icons/icons/opened.svg";
   final String zipIcon = "assets/svg_icons/icons/zip.svg";
   final String jpg = "assets/svg_icons/icons/jpg.svg";

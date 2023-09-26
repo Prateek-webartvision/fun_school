@@ -21,16 +21,16 @@ class ExamPrepTab extends StatelessWidget {
       children: [
         CreateStudyPlanBtn(
           onTap: () {
-            AppUtils.showModelSheet(
-              child: CreateExamSheet(),
-              bgColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              isScrolled: true,
-            );
+            // AppUtils.showModelSheet(
+            //   child: CreateExamSheet(),
+            //   bgColor: Colors.white,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.vertical(
+            //       top: Radius.circular(12),
+            //     ),
+            //   ),
+            //   isScrolled: true,
+            // );
           },
         ),
         12.height,

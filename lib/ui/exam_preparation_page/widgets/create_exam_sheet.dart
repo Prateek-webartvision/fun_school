@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/style/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
@@ -9,7 +12,8 @@ import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
 
 class CreateExamSheet extends StatefulWidget {
-  const CreateExamSheet({super.key});
+  const CreateExamSheet({super.key, required this.onCreate});
+  final Function() onCreate;
 
   @override
   State<CreateExamSheet> createState() => _CreateExamSheetState();
@@ -17,18 +21,27 @@ class CreateExamSheet extends StatefulWidget {
 
 class _CreateExamSheetState extends State<CreateExamSheet> {
   TextEditingController createTextFeild = TextEditingController();
+  DateTime? dateOfExam;
   TextEditingController dateTextFeild = TextEditingController();
   TextEditingController courseTextFeild = TextEditingController();
   TextEditingController reminderTextFeild = TextEditingController();
 
-  @override
-  void initState() {
-    createTextFeild.text = "2023 Exam Test";
-    dateTextFeild.text = "Select Exam Date";
-    courseTextFeild.text = "Select Course";
-    reminderTextFeild.text = "30 mins before";
+  // @override
+  // void initState() {
+  //   // createTextFeild.text = "2023 Exam Test";
+  //   // dateTextFeild.text = "Select Exam Date";
+  //   // courseTextFeild.text = "Select Course";
+  //   // reminderTextFeild.text = "30 mins before";
+  //   super.initState();
+  // }
 
-    super.initState();
+  @override
+  void dispose() {
+    createTextFeild.dispose();
+    dateTextFeild.dispose();
+    courseTextFeild.dispose();
+    reminderTextFeild.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,10 +66,7 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
                           onTap: () => AppUtils.closeBottomSheet(),
-                          child: Icon(
-                            Icons.close,
-                            size: 24,
-                          ),
+                          child: Icon(Icons.close, size: 24),
                         ),
                       ),
                       Align(
@@ -72,27 +82,38 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                 16.height,
                 KTextField(
                   hint: "Name of the exam",
-                  textInputType: TextInputType.emailAddress,
+                  textInputType: TextInputType.text,
                   textInputAction: TextInputAction.next,
                   controller: createTextFeild,
                 ),
                 16.height,
-                PopupMenuButton(
+                // date of exam
+                GestureDetector(
+                  onTap: () async {
+                    DateTime currentDate = DateTime.now();
+
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: dateOfExam ?? currentDate,
+                      firstDate: currentDate,
+                      lastDate: currentDate.add(Duration(days: 365)),
+                    );
+                    if (date != null) {
+                      setState(() {
+                        dateOfExam = date;
+                        dateTextFeild.text = DateFormat("MMMM d, yyyy").format(dateOfExam!);
+                      });
+                    }
+                  },
                   child: KTextField(
                     enabled: false,
-                    suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
+                    suffixIcon: SvgPicture.asset(AppAssets.svg.calendarline2Icon),
                     hint: "Date of the exam",
                     controller: dateTextFeild,
                   ),
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("Select Exam Date"),
-                      )
-                    ];
-                  },
                 ),
                 16.height,
+                // list of courses
                 PopupMenuButton(
                   child: KTextField(
                     enabled: false,
@@ -159,7 +180,6 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                     height: 44,
                     onClick: () {
                       AppUtils.closeBottomSheet();
-                      AppUtils.showSnack("coming soon");
                     },
                     text: "Cancel",
                     bgColor: AppColor.white,
@@ -172,7 +192,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                     child: KBtn(
                   onClick: () {
                     AppUtils.closeBottomSheet();
-                    AppUtils.showSnack("coming soon");
+                    widget.onCreate();
+                    // AppUtils.showSnack("coming soon");
                   },
                   text: "Create",
                   height: 44,

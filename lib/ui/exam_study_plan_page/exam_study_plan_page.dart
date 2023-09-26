@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:citycloud_school/repo/exams/exam_study_plan_repo.dart';
+import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
 import 'package:citycloud_school/ui/exam_study_plan_details_page/exam_study_plan_details_page.dart';
@@ -26,12 +28,6 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   titleTextStyle: AppTextStyle.appBarText,
-      //   title: const Text("Study Plan"),
-      //   centerTitle: true,
-      //   actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded))],
-      // ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 16),
         children: [
@@ -58,7 +54,12 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
             onTap: () {
               // Create new study plan sheet
               AppUtils.showModelSheet(
-                child: CreateExamSheet(),
+                child: CreateExamSheet(
+                  onCreate: () {
+                    // print("object");
+                    // ExamStudyPlanRepository.addStudyPlan();
+                  },
+                ),
                 bgColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
                 isScrolled: true,

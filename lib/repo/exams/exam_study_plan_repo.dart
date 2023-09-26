@@ -18,4 +18,17 @@ class ExamStudyPlanRepository {
       throw error!;
     });
   }
+
+  // add to study plan
+  static addStudyPlan() async {
+    Map<String, dynamic> prms = {};
+    prms['exam_name'] = "";
+    prms['date_of_exam'] = "";
+    prms['exam_course'] = "";
+    prms['study_hours'] = "";
+    prms['study_periods'] = "";
+    prms['reminder_settings'] = "";
+
+    print(prms);
+  }
 }
