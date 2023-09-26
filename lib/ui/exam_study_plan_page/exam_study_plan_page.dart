@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/repo/exams/exam_study_plan_repo.dart';
-import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
 import 'package:citycloud_school/ui/exam_study_plan_details_page/exam_study_plan_details_page.dart';
@@ -55,6 +53,7 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
               // Create new study plan sheet
               AppUtils.showModelSheet(
                 child: CreateExamSheet(
+                  courses: widget.controller.courseslist,
                   onCreate: () {
                     // print("object");
                     // ExamStudyPlanRepository.addStudyPlan();

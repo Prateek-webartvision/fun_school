@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../style/color.dart';
@@ -71,7 +69,6 @@ class _KTextFieldState extends State<KTextField> {
             suffixIconConstraints: BoxConstraints(minWidth: 16 + 24),
             suffixIcon: (widget.suffixIcon != null)
                 ? widget.suffixIcon
-                // ? SvgPicture.asset(AppAssets.svg.calendarlineIcon)
                 : (widget.isPassword)
                     ? GestureDetector(
                         onTap: () {

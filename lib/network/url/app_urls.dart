@@ -61,4 +61,5 @@ class AppUrls {
   //study plan
   static const String examStudyPlans = "$_apis/exam_study_plan.php";
   static const String examAddStudyPlan = "$_apis/exam_add_study_plan.php";
+  static const String getExamCoursesList = "$_apis/exam_add_study_plan_courses.php";
 }
