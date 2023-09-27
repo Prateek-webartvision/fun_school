@@ -7,7 +7,6 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 import '../../../widegts/k_btn.dart';
-import '../widgets/create_exam_sheet.dart';
 
 class ExamPrepTab extends StatelessWidget {
   const ExamPrepTab({

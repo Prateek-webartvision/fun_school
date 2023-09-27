@@ -1,6 +1,9 @@
 import 'package:citycloud_school/models/exams/exam_study_plan_models/course_name_model.dart';
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:citycloud_school/router/app_router.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/exams/exam_study_plan_models/exam_study_plan_model.dart';
 
@@ -34,15 +37,31 @@ class ExamStudyPlanRepository {
   }
 
   // add to study plan
-  static addStudyPlan() async {
+  static Future addStudyPlan({
+    required String examName,
+    required DateTime examDate,
+    required List<CoursesName> courses,
+    required String studyHour,
+    required String periods,
+    required String reminder,
+    required TimeOfDay reminderTime,
+  }) async {
     Map<String, dynamic> prms = {};
-    prms['exam_name'] = "";
-    prms['date_of_exam'] = "";
-    prms['exam_course'] = "";
-    prms['study_hours'] = "";
-    prms['study_periods'] = "";
-    prms['reminder_settings'] = "";
+    prms['exam_name'] = examName;
+    prms['date_of_exam'] = DateFormat("yyyy-MM-dd").format(examDate).toString();
+    prms['exam_course'] = courses.map((e) => e.id).toList().toString();
+    prms['study_hours'] = studyHour;
+    prms['study_periods'] = periods;
+    prms['reminder_settings'] = "$reminder at ${reminderTime.format(rootNavigator.currentContext!)}";
 
-    print(prms);
+    return await _api.postApi(AppUrls.examAddStudyPlan, params: prms).then((value) {
+      if (value['code'] == 200) {
+        return value['message'];
+      } else {
+        throw value['message'];
+      }
+    }).onError((error, stackTrace) {
+      throw error!;
+    });
   }
 }

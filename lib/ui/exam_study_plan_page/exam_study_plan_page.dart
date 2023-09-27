@@ -9,6 +9,7 @@ import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:kd_utils/methods/timestemp.dart';
 
+import '../../repo/exams/exam_study_plan_repo.dart';
 import '../../uitls/app_utils.dart';
 import '../../widegts/k_btn.dart';
 import '../exam_preparation_page/widgets/create_exam_sheet.dart';
@@ -51,18 +52,66 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
           CreateStudyPlanBtn(
             onTap: () {
               // Create new study plan sheet
-              AppUtils.showModelSheet(
-                child: CreateExamSheet(
-                  courses: widget.controller.courseslist,
-                  onCreate: () {
-                    // print("object");
-                    // ExamStudyPlanRepository.addStudyPlan();
-                  },
+              showModalBottomSheet(
+                context: rootNavigator.currentContext!,
+                builder: (context) {
+                  var sheetBottomSpace = MediaQuery.of(context).viewInsets;
+
+                  // return SizedBox(height: 100, child: KTextField());
+                  return Padding(
+                    padding: sheetBottomSpace,
+                    child: CreateExamSheet(
+                      courses: widget.controller.courseslist,
+                      onCreate: (name, examDate, selectedCourses, studyHour, periods, reminderSteeing, reminderTime) {
+                        AppUtils.showloadingOverlay(() async {
+                          await ExamStudyPlanRepository.addStudyPlan(
+                            examName: name,
+                            examDate: examDate,
+                            courses: selectedCourses,
+                            studyHour: studyHour,
+                            periods: periods,
+                            reminder: reminderSteeing,
+                            reminderTime: reminderTime,
+                          ).then((value) {
+                            AppUtils.showSnack(value);
+                            widget.controller.reload();
+                          }).onError((error, stackTrace) {
+                            AppUtils.showSnack(error.toString());
+                          });
+                        });
+                      },
+                      // onCreate: () {
+                      //   // print("object");
+                      // },
+                    ),
+                  );
+                },
+                clipBehavior: Clip.hardEdge,
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
-                bgColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
-                isScrolled: true,
               );
+              Future.delayed(
+                Duration(seconds: 1),
+                () {},
+              );
+              // AppUtils.showModelSheet(
+              //   child: Padding(
+              //     padding: MediaQuery.of(rootNavigator.currentState!.context).viewInsets,
+              //     child: SizedBox(height: 60, child: KTextField()),
+              //     // child: CreateExamSheet(
+              //     //   courses: widget.controller.courseslist,
+              //     //   onCreate: () {
+              //     //     // print("object");
+              //     //     // ExamStudyPlanRepository.addStudyPlan();
+              //     //   },
+              //     // ),
+              //   ),
+              //   bgColor: Colors.white,
+              //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+              //   isScrolled: true,
+              // );
             },
           ),
           12.height,
