@@ -5,8 +5,8 @@ import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../models/courses_dedails/courses.model.dart';
-import '../../../models/courses_dedails/subject.model.dart';
+import '../../../models/courses_details/courses.model.dart';
+import '../../../models/courses_details/subject.model.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
 
@@ -108,7 +108,7 @@ class ChapterTile extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  if (AppUtils.isCourseEnroledByMe(enrolls: enrollmentData!)) {
+                  if (AppUtils.isCourseEnrolledByMe(enrolls: enrollmentData!)) {
                     final v = getBelowVideos(index);
 
                     if (v.isEmpty) {

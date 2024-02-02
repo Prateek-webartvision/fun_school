@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/courses_dedails/courses.model.dart';
+import '../models/courses_details/courses.model.dart';
 import '../network/data/app_storage.dart';
 import '../router/app_router.dart';
 
@@ -43,8 +43,8 @@ class AppUtils {
     }
   }
 
-  // loading overlay
-  static showLoadingOverlay(Future Function() futureFun) async {
+  //* loading overlay
+  static Future<void> showLoadingOverlay(Future Function() futureFun) async {
     final OverlayEntry entry = OverlayEntry(
       builder: (context) {
         return Material(
@@ -67,8 +67,7 @@ class AppUtils {
     entry.remove();
   }
 
-  static bool isCourseEnroledByMe({required List<CoursesEnrollment> enrolls}) {
-    // print()
+  static bool isCourseEnrolledByMe({required List<CoursesEnrollment> enrolls}) {
     var isEnrolled = enrolls.where((element) =>
         int.parse(element.userId!) == AppStorage.user.currentUser()!.userId!);
     if (isEnrolled.isEmpty) {

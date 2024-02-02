@@ -7,7 +7,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../models/courses_dedails/flashcard.model.dart';
+import '../../models/courses_details/flashcard.model.dart';
 import 'flash_card_state.dart';
 
 class FlashCardView extends StatefulWidget {
@@ -34,7 +34,9 @@ class _FlashCardViewState extends FlashCardState {
               onTap: () => appRoutes.pop(),
               child: Icon(Icons.close),
             ),
-            title: Text("${controller.currentCard + 1}/${controller.flashCards.length}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            title: Text(
+                "${controller.currentCard + 1}/${controller.flashCards.length}",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             centerTitle: true,
             actions: [
               Icon(Icons.settings_outlined),
@@ -76,9 +78,16 @@ class _FlashCardViewState extends FlashCardState {
                             ),
                           ),
                           (!controller.isFlashcardFinished)
-                              ? Text((controller.flashCards[controller.currentCard].flashcardResult == null)
+                              ? Text((controller
+                                          .flashCards[controller.currentCard]
+                                          .flashcardResult ==
+                                      null)
                                   ? ""
-                                  : (controller.flashCards[controller.currentCard].flashcardResult == true)
+                                  : (controller
+                                              .flashCards[
+                                                  controller.currentCard]
+                                              .flashcardResult ==
+                                          true)
                                       ? "Understood"
                                       : "Not Understood")
                               : SizedBox(),
@@ -117,7 +126,8 @@ class _FlashCardViewState extends FlashCardState {
                         initialIndex: controller.initCard,
                         padding: EdgeInsets.all(0),
                         isLoop: false,
-                        allowedSwipeDirection: AllowedSwipeDirection.symmetric(horizontal: true),
+                        allowedSwipeDirection:
+                            AllowedSwipeDirection.symmetric(horizontal: true),
                         backCardOffset: Offset(0, 0),
                         scale: 1,
                         onSwipe: (previousIndex, currentIndex, direction) {
@@ -136,7 +146,10 @@ class _FlashCardViewState extends FlashCardState {
                         onEnd: () {
                           controller.isCardEnd(true);
                         },
-                        cardBuilder: (BuildContext context, int index, int horizontalOffsetPercentage, int verticalOffsetPercentage) {
+                        cardBuilder: (BuildContext context,
+                            int index,
+                            int horizontalOffsetPercentage,
+                            int verticalOffsetPercentage) {
                           return _fCard(controller.flashCards[index]);
                         },
                       ),
@@ -269,8 +282,13 @@ class _CardResult extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                (card[index].flashcardResult == true) ? "Understood" : "Not Understood",
-                style: TextStyle(color: (card[index].flashcardResult == true) ? Colors.green : Colors.red),
+                (card[index].flashcardResult == true)
+                    ? "Understood"
+                    : "Not Understood",
+                style: TextStyle(
+                    color: (card[index].flashcardResult == true)
+                        ? Colors.green
+                        : Colors.red),
               ),
               Text("ID: ${card[index].flashcardId!.toString()}"),
             ],

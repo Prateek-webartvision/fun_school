@@ -1,4 +1,4 @@
-import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/models/courses_details/courses.model.dart';
 import 'package:citycloud_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -44,7 +44,8 @@ class FindCoursesBySchoolController extends GetxController {
   _initLoadDate() async {
     await _getCourses();
 
-    schoolSelectorController = SchoolSelectorController(schoolSeletedIndex: 0, coursesList: _coursesList);
+    schoolSelectorController = SchoolSelectorController(
+        schoolSeletedIndex: 0, coursesList: _coursesList);
 
     coursesBySearch = _allSort(
       data: _coursesList,
@@ -69,7 +70,8 @@ class FindCoursesBySchoolController extends GetxController {
 
   _setSubSchool() {
     subScoolSelectionIndex = 0;
-    subSchoolSet = coursesBySearch!.map((e) => e.courseSchoolSubCategory!).toSet();
+    subSchoolSet =
+        coursesBySearch!.map((e) => e.courseSchoolSubCategory!).toSet();
 
     final subSchool = subSchoolSet!.toList();
 
@@ -108,24 +110,36 @@ class FindCoursesBySchoolController extends GetxController {
     update();
   }
 
-  List<CoursesModel> _allSort({required List<CoursesModel> data, required String sortBySchool, required String sortByTag, required String sortByQuery}) {
+  List<CoursesModel> _allSort(
+      {required List<CoursesModel> data,
+      required String sortBySchool,
+      required String sortByTag,
+      required String sortByQuery}) {
     List<CoursesModel> filteredData = data;
 
     // school level filter
     if (sortBySchool.isNotEmpty) {
-      List<CoursesModel> tempList = filteredData.where((element) => element.courseSchool == sortBySchool).toList();
+      List<CoursesModel> tempList = filteredData
+          .where((element) => element.courseSchool == sortBySchool)
+          .toList();
       filteredData = tempList;
     }
 
     //sort by tag
     if (sortByTag.isNotEmpty) {
-      List<CoursesModel> tempList = filteredData.where((element) => element.courseSchoolSubCategory == sortByTag).toList();
+      List<CoursesModel> tempList = filteredData
+          .where((element) => element.courseSchoolSubCategory == sortByTag)
+          .toList();
       filteredData = tempList;
     }
 
     // search filter
     if (sortByQuery.isNotEmpty) {
-      List<CoursesModel> tempList = filteredData.where((element) => element.courseName!.toLowerCase().contains(sortByQuery.toLowerCase().trim())).toList();
+      List<CoursesModel> tempList = filteredData
+          .where((element) => element.courseName!
+              .toLowerCase()
+              .contains(sortByQuery.toLowerCase().trim()))
+          .toList();
       filteredData = tempList;
     }
 

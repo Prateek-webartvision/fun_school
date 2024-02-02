@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../models/courses_dedails/courses.model.dart';
+import '../../../models/courses_details/courses.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
 import '../../../utils/app_utils.dart';

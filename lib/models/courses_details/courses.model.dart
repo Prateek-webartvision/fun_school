@@ -58,7 +58,7 @@ class CoursesModel {
       }
       this.courseEnrollment = courseEnrollment;
       isCourseEnrolled =
-          AppUtils.isCourseEnroledByMe(enrolls: this.courseEnrollment!);
+          AppUtils.isCourseEnrolledByMe(enrolls: this.courseEnrollment!);
     }
 
     status = json['status'];

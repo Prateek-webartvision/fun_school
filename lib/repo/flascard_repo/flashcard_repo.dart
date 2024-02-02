@@ -1,4 +1,4 @@
-import 'package:citycloud_school/models/courses_dedails/flashcard.model.dart';
+import 'package:citycloud_school/models/courses_details/flashcard.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/utils/app_utils.dart';

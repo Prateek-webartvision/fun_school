@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/models/courses_details/courses.model.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -68,7 +68,8 @@ class SubjectCard extends StatelessWidget {
                     6.width,
                     Text(
                       "Videos",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                     13.width,
                     Icon(
@@ -79,7 +80,8 @@ class SubjectCard extends StatelessWidget {
                     6.width,
                     Text(
                       "Quizzes",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -124,7 +126,9 @@ class SubjectCard extends StatelessWidget {
                           size: 24,
                         ),
                         6.width,
-                        Text((currentItem.isCourseEnrolled) ? "Enrolled" : "Enroll")
+                        Text((currentItem.isCourseEnrolled)
+                            ? "Enrolled"
+                            : "Enroll")
                       ],
                     ),
                   ),

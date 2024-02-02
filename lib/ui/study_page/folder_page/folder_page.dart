@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../models/courses_dedails/courses.model.dart';
+import '../../../models/courses_details/courses.model.dart';
 import '../../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../../router/app_router.dart';
 import '../../../router/pages.dart';

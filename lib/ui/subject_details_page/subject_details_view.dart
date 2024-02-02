@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/models/courses_details/courses.model.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';

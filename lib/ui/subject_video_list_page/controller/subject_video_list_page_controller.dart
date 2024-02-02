@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../models/courses_dedails/subject.model.dart';
+import '../../../models/courses_details/subject.model.dart';
 
 class SubjectVideoListPageController extends GetxController {
   late final List<ContentVideo> videos;
@@ -13,7 +13,8 @@ class SubjectVideoListPageController extends GetxController {
   bool isplaying = false;
   bool isShowingPlaySeekBar = false;
 
-  SubjectVideoListPageController({required this.videos, this.currentVideo = 0}) {
+  SubjectVideoListPageController(
+      {required this.videos, this.currentVideo = 0}) {
     _loadVideo();
   }
 
@@ -92,12 +93,14 @@ class SubjectVideoListPageController extends GetxController {
 
   seekForword10Sec() async {
     var crrentDuration = videoPlayerController.value.position;
-    await videoPlayerController.seekTo(Duration(seconds: crrentDuration.inSeconds + 10));
+    await videoPlayerController
+        .seekTo(Duration(seconds: crrentDuration.inSeconds + 10));
   }
 
   seekbackword10Sec() async {
     var crrentDuration = videoPlayerController.value.position;
-    await videoPlayerController.seekTo(Duration(seconds: crrentDuration.inSeconds - 10));
+    await videoPlayerController
+        .seekTo(Duration(seconds: crrentDuration.inSeconds - 10));
   }
 
   int get randomNumber {

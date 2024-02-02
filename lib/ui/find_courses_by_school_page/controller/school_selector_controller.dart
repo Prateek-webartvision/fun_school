@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../models/courses_dedails/courses.model.dart';
+import '../../../models/courses_details/courses.model.dart';
 
 class SchoolSelectorController extends GetxController {
   int schoolSeletedIndex;
@@ -25,7 +25,8 @@ class SchoolSelectorController extends GetxController {
     ),
   ];
 
-  SchoolSelectorController({this.schoolSeletedIndex = 0, required List<CoursesModel> coursesList}) {
+  SchoolSelectorController(
+      {this.schoolSeletedIndex = 0, required List<CoursesModel> coursesList}) {
     _createSchoolList(coursesList);
     selectionKey = schools[schoolSeletedIndex].key;
   }
@@ -35,7 +36,8 @@ class SchoolSelectorController extends GetxController {
     Set<String> school = courses.map((e) => e.courseSchool!).toSet();
 
     for (var element in school) {
-      temp.add(SchoolModel(name: element.replaceAll("_", " ").capitalize!, key: element));
+      temp.add(SchoolModel(
+          name: element.replaceAll("_", " ").capitalize!, key: element));
     }
     schools = temp;
     update();

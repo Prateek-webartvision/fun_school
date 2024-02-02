@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:number_to_indian_words/number_to_indian_words.dart';
 
-import '../../../models/courses_dedails/courses.model.dart';
-import '../../../models/courses_dedails/subject.model.dart';
+import '../../../models/courses_details/courses.model.dart';
+import '../../../models/courses_details/subject.model.dart';
 import '../../../repo/flascard_repo/flashcard_repo.dart';
 import '../../../router/app_router.dart';
 import '../../../router/pages.dart';

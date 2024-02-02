@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/models/courses_dedails/courses.model.dart';
+import 'package:citycloud_school/models/courses_details/courses.model.dart';
 import 'package:citycloud_school/ui/chat_gpt_page/chat_gpt_page.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/result_page/quiz_result_page.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +28,12 @@ import '../ui/study_page/study_page.dart';
 import '../ui/subject_details_page/subject_details_view.dart';
 import 'pages.dart';
 
-final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>(debugLabel: "root");
-final GlobalKey<NavigatorState> _shalNav = GlobalKey<NavigatorState>(debugLabel: "shell");
-final GlobalKey<ScaffoldMessengerState> scaffoldMenagerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<NavigatorState> rootNavigator =
+    GlobalKey<NavigatorState>(debugLabel: "root");
+final GlobalKey<NavigatorState> _shalNav =
+    GlobalKey<NavigatorState>(debugLabel: "shell");
+final GlobalKey<ScaffoldMessengerState> scaffoldMenagerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 final GoRouter appRoutes = GoRouter(
   initialLocation: PagesName.getPath(PagesName.splashScreen),
@@ -101,7 +104,8 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.findCoursesBySchoolPage,
               name: PagesName.findCoursesBySchoolPage,
-              pageBuilder: (context, state) => MaterialPage(child: FindCoursesBySchoolPageView()),
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: FindCoursesBySchoolPageView()),
             ),
 
             //find course by career page
@@ -109,7 +113,8 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.findCourseByCareerPage,
               name: PagesName.findCourseByCareerPage,
-              pageBuilder: (context, state) => MaterialPage(child: FindCourseByCareerView()),
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: FindCourseByCareerView()),
             ),
 
             // find course by interest page
@@ -117,7 +122,8 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.findCourseByInterestPage,
               name: PagesName.findCourseByInterestPage,
-              pageBuilder: (context, state) => MaterialPage(child: FindCourseByInterestView()),
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: FindCourseByInterestView()),
             ),
 
             // Prepare For An Exam Page
@@ -125,7 +131,8 @@ final GoRouter appRoutes = GoRouter(
               parentNavigatorKey: rootNavigator,
               path: PagesName.prepareForAnExamPage,
               name: PagesName.prepareForAnExamPage,
-              pageBuilder: (context, state) => MaterialPage(child: PrepareForAnExamPage()),
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: PrepareForAnExamPage()),
             ),
           ],
         ),
@@ -146,7 +153,8 @@ final GoRouter appRoutes = GoRouter(
           path: PagesName.getPath(PagesName.examPreparationPage),
           name: PagesName.examPreparationPage,
           pageBuilder: (context, state) {
-            return NoTransitionPage(key: state.pageKey, child: ExamPreparationPage());
+            return NoTransitionPage(
+                key: state.pageKey, child: ExamPreparationPage());
           },
         ),
         // school Communities Page
@@ -155,7 +163,8 @@ final GoRouter appRoutes = GoRouter(
           path: PagesName.getPath(PagesName.schoolCommunitiesPage),
           name: PagesName.schoolCommunitiesPage,
           pageBuilder: (context, state) {
-            return NoTransitionPage(key: state.pageKey, child: SchoolCommunitiesPage());
+            return NoTransitionPage(
+                key: state.pageKey, child: SchoolCommunitiesPage());
           },
         ),
         // profile And Settings
@@ -164,7 +173,8 @@ final GoRouter appRoutes = GoRouter(
           path: PagesName.getPath(PagesName.profileAndSettings),
           name: PagesName.profileAndSettings,
           pageBuilder: (context, state) {
-            return NoTransitionPage(key: state.pageKey, child: ProfileAndSettingsView());
+            return NoTransitionPage(
+                key: state.pageKey, child: ProfileAndSettingsView());
           },
         ),
       ],
@@ -295,7 +305,8 @@ final GoRouter appRoutes = GoRouter(
       parentNavigatorKey: rootNavigator,
       path: PagesName.getPath(PagesName.chatGptPage),
       name: PagesName.chatGptPage,
-      pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: ChatGptPage()),
+      pageBuilder: (context, state) =>
+          MaterialPage(key: state.pageKey, child: ChatGptPage()),
     )
   ],
 );

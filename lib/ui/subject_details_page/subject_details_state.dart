@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/courses_dedails/courses.model.dart';
-import '../../models/courses_dedails/subject.model.dart';
+import '../../models/courses_details/courses.model.dart';
+import '../../models/courses_details/subject.model.dart';
 import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
 import '../../utils/app_utils.dart';
 import 'subject_details_view.dart';
