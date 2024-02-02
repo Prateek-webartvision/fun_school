@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
-import 'exam_pewparation_page_state.dart';
+import 'exam_preparation_page_state.dart';
 import 'tab_pages/find_an_exam_tab.dart';
 
 class ExamPreparationPage extends StatefulWidget {
@@ -32,7 +32,8 @@ class _ExamPreparationPageState extends ExamPreparationPageState {
                 Container(),
                 Text(
                   "Examination Hub",
-                  style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w700),
+                  style: GoogleFonts.inter(
+                      fontSize: 20, fontWeight: FontWeight.w700),
                 ),
                 4.height,
                 Text(
@@ -42,40 +43,6 @@ class _ExamPreparationPageState extends ExamPreparationPageState {
                     color: AppColor.darkTextColor,
                   ),
                 ),
-                // 12.height,
-                // Container(
-                //   height: 84,
-                //   width: double.maxFinite,
-                //   decoration: BoxDecoration(
-                //     color: AppColor.white,
-                //     borderRadius: BorderRadius.circular(4),
-                //   ),
-                //   clipBehavior: Clip.hardEdge,
-                //   child: Row(children: [
-                //     ExamTabBtns(
-                //       svgImageIcon: AppAssets.svg.examSearch,
-                //       title: "Find Exams",
-                //       onTap: () {
-                //         AppUtils.slidePush(page: FindExamPage());
-                //       },
-                //     ),
-                //     ExamTabBtns(
-                //       svgImageIcon: AppAssets.svg.examStudy,
-                //       title: "Study Plan",
-                //       onTap: () {
-                //         AppUtils.slidePush(page: ExamStudyPlan());
-                //       },
-                //     ),
-                //     ExamTabBtns(
-                //       svgImageIcon: AppAssets.svg.examAssessment,
-                //       title: "Assessments",
-                //       onTap: () {
-                //         // assessment page
-                //         AppUtils.slidePush(page: ExamMyAssessmentsPage());
-                //       },
-                //     ),
-                //   ]),
-                // ),
                 12.height,
               ],
             ),
@@ -85,15 +52,9 @@ class _ExamPreparationPageState extends ExamPreparationPageState {
             controller: tabController,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
-              Tab(
-                text: "Find Exam",
-              ),
-              Tab(
-                text: "Study Plan",
-              ),
-              Tab(
-                text: "Assessments",
-              ),
+              Tab(text: "Find Exam"),
+              Tab(text: "Study Plan"),
+              Tab(text: "Assessments"),
             ],
           ),
           16.height,
@@ -102,9 +63,8 @@ class _ExamPreparationPageState extends ExamPreparationPageState {
             child: TabBarView(
               controller: tabController,
               children: [
-                FindAnExamTab(crontroller: findExamCrontroller),
+                FindAnExamTab(controller: findExamController),
                 ExamStudyPlan(controller: examStudyPlanController),
-                // Text("data"),
                 ExamMyAssessmentsPage()
               ],
             ),

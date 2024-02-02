@@ -1,14 +1,14 @@
 import 'all_exam_model.dart';
 
-class PopulerExamsModel {
+class PopPulerExamsModel {
   int? examCategoryId;
   String? examCategoryName;
   String? recommendation;
   int? dateAdded;
   List<AllExamModel>? allExams;
 
-  PopulerExamsModel.fromJson(Map<String, dynamic> json) {
-    examCategoryId = json['exam_category_id'];
+  PopPulerExamsModel.fromJson(Map<String, dynamic> json) {
+    examCategoryId = int.tryParse(json['exam_category_id']);
     examCategoryName = json['exam_category_name'];
     recommendation = json['recommendation'];
     dateAdded = json['date_added'];

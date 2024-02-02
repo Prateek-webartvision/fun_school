@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../utils/helper.dart';
 import '../controller/week_day_selector_controller.dart';
 
 class WeekDaySelector extends StatelessWidget {
@@ -53,7 +52,7 @@ class WeekDaySelector extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Text(
-                              getWeekDay(e, inSort: true).toUpperCase(),
+                              getWeekDay(e, short: true).toUpperCase(),
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,

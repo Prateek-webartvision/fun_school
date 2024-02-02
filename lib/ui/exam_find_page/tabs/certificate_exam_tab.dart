@@ -6,7 +6,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/exams/exams_models/all_exam_model.dart';
 import '../../../router/app_router.dart';
 import '../../exam_find_mock_page/exam_find_mock_page.dart';
-import '../../exam_preparation_page/controller/find_exam_crontroller.dart';
+import '../../exam_preparation_page/controller/find_exam_controller.dart';
 import '../widgets/exam_subject_tile.dart';
 
 class PastQuestionsTab extends StatelessWidget {
@@ -16,7 +16,7 @@ class PastQuestionsTab extends StatelessWidget {
     required this.crontroller,
   });
   final List<List<AllExamModel>> allExams;
-  final FindExamCrontroller crontroller;
+  final FindExamController crontroller;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,8 @@ class PastQuestionsTab extends StatelessWidget {
                   // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => DetailCertificateExamPage()));
 
                   MaterialPageRoute examFindEditionPage = MaterialPageRoute(
-                    builder: (_) => ExamFindEditions(exam: exam, crontroller: crontroller),
+                    builder: (_) =>
+                        ExamFindEditions(exam: exam, crontroller: crontroller),
                   );
                   rootNavigator.currentState!.push(examFindEditionPage);
                 },

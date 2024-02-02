@@ -6,19 +6,18 @@ import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
-import 'package:kd_utils/methods/timestemp.dart';
 
 import '../../../style/color.dart';
-import '../controller/find_exam_crontroller.dart';
+import '../controller/find_exam_controller.dart';
 import '../widgets/exam_tile.dart';
 
 class FindAnExamTab extends StatefulWidget {
   const FindAnExamTab({
     super.key,
-    required this.crontroller,
+    required this.controller,
   });
 
-  final FindExamCrontroller crontroller;
+  final FindExamController controller;
 
   @override
   State<FindAnExamTab> createState() => _FindAnExamTabState();
@@ -26,13 +25,13 @@ class FindAnExamTab extends StatefulWidget {
 
 class _FindAnExamTabState extends State<FindAnExamTab> {
   Future onReload() async {
-    await widget.crontroller.reload();
+    await widget.controller.reload();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: widget.crontroller,
+      init: widget.controller,
       builder: (cnt) {
         if (cnt.state == ApiState.loading) {
           return Center(child: CircularProgressIndicator());
@@ -53,7 +52,7 @@ class _FindAnExamTabState extends State<FindAnExamTab> {
             padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
             children: [
               // Popular Exams
-              if (cnt.populerExams?.isNotEmpty != null)
+              if (cnt.popPulerExams?.isNotEmpty != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,9 +68,9 @@ class _FindAnExamTabState extends State<FindAnExamTab> {
                     ListView.separated(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: cnt.populerExams!.length,
+                      itemCount: cnt.popPulerExams!.length,
                       itemBuilder: (context, index) {
-                        final item = cnt.populerExams![index];
+                        final item = cnt.popPulerExams![index];
                         final rmColor = AppColor.randomColor;
                         return ExamTile(
                           title: item.examCategoryName.toString(),

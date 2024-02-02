@@ -8,7 +8,7 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../models/exams/exams_models/all_exam_model.dart';
 import '../../style/color.dart';
-import '../exam_preparation_page/controller/find_exam_crontroller.dart';
+import '../exam_preparation_page/controller/find_exam_controller.dart';
 import 'tabs/certificate_exam_tab.dart';
 
 class FindExamPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class FindExamPage extends StatefulWidget {
       required this.crontroller,
       required this.title});
   final List<AllExamModel> allExams;
-  final FindExamCrontroller crontroller;
+  final FindExamController crontroller;
   final String title;
 
   @override

@@ -15,7 +15,8 @@ abstract class _ExamModel {
   int? dateAdded;
 
   _ExamModel.fromJson(Map<String, dynamic> json) {
-    examId = json['exam_id'];
+    // print(json['exam_id']);
+    examId = int.tryParse(json['exam_id'].toString());
     examName = json['exam_name'];
     examYear = json['exam_year'];
     examCategory = json['exam_category'];
@@ -50,19 +51,19 @@ abstract class _ExamModel {
 }
 
 class AllExamModel extends _ExamModel {
-  int? multichoiceQuestionsCount;
+  int? multiChoiceQuestionsCount;
   int? theoryQuestionsCount;
 
   AllExamModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    multichoiceQuestionsCount = json['multichoice_questions_count'];
-    theoryQuestionsCount = json['theory_questions_count'];
+    multiChoiceQuestionsCount = int.parse(json['multichoice_questions_count']);
+    theoryQuestionsCount = int.tryParse(json['theory_questions_count']);
   }
 
   @override
   Map<String, dynamic> get toJson {
     Map<String, dynamic> json = super.toJson;
 
-    json['multichoice_questions_count'] = multichoiceQuestionsCount;
+    json['multichoice_questions_count'] = multiChoiceQuestionsCount;
     json['theory_questions_count'] = theoryQuestionsCount;
     return json;
   }
@@ -85,7 +86,8 @@ class AllExamModel2 extends _ExamModel {
     durationMultichoice = json['duration_multichoice'];
     durationTheory = json['duration_theory'];
     //Scrore
-    if (json['multichoice_score'] != null && json['multichoice_score'].isNotEmpty) {
+    if (json['multichoice_score'] != null &&
+        json['multichoice_score'].isNotEmpty) {
       multichoiceScore = ScoreModel.fromJson(json['multichoice_score']);
       // multichoiceScore!.grade = "b";
       // print(multichoiceScore?.grade.toString());

@@ -146,7 +146,7 @@ final GoRouter appRoutes = GoRouter(
           },
         ),
 
-        // exam preparation page
+        //* exam preparation page
         GoRoute(
           parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.examPreparationPage),

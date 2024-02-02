@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:developer';
-
 import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';

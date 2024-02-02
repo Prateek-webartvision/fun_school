@@ -2,17 +2,17 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../models/exams/exams_models/all_exam_model.dart';
-import '../../../models/exams/exams_models/populer_exam_model.dart';
+import '../../../models/exams/exams_models/pop_puler_exam_model.dart';
 import '../../../repo/exams/exams_repo.dart';
 
-class FindExamCrontroller extends GetxController {
+class FindExamController extends GetxController {
   late ApiState state;
   String? error;
-  List<PopulerExamsModel>? populerExams;
-  List<PopulerExamsModel>? recommendedExams;
+  List<PopPulerExamsModel>? popPulerExams;
+  List<PopPulerExamsModel>? recommendedExams;
   List<List<AllExamModel>>? sortedAllExam;
 
-  FindExamCrontroller() {
+  FindExamController() {
     initLoadData();
   }
 
@@ -26,14 +26,20 @@ class FindExamCrontroller extends GetxController {
     await _loadData();
   }
 
-  // get exams by sub get
-  List<List<AllExamModel>> getExamsBySubCategories({required String subCat, required List<List<AllExamModel>> allExam}) {
-    final cates = allExam.where((element) => element.first.examSubCategoryName == subCat).toList();
+  //* get exams by sub get
+  List<List<AllExamModel>> getExamsBySubCategories(
+      {required String subCat, required List<List<AllExamModel>> allExam}) {
+    final cates = allExam
+        .where((element) => element.first.examSubCategoryName == subCat)
+        .toList();
 
     return cates;
   }
 
-  groupAllExamByName({required List<String?> catBtnSet, required List<AllExamModel> allExams}) {
+  groupAllExamByName({
+    required List<String?> catBtnSet,
+    required List<AllExamModel> allExams,
+  }) {
     Set exams = allExams.map((e) => e.examCourseName).toSet();
 
     List<List<AllExamModel>> sortExam = [];
@@ -42,7 +48,8 @@ class FindExamCrontroller extends GetxController {
       final data = allExams.where((e) => e.examSubCategoryName == cat).toList();
 
       for (var ex in exams) {
-        final st = data.where((element) => element.examCourseName == ex).toList();
+        final st =
+            data.where((element) => element.examCourseName == ex).toList();
         if (st.isNotEmpty) {
           sortExam.add(st);
         }
@@ -52,33 +59,32 @@ class FindExamCrontroller extends GetxController {
   }
 
   _loadData() async {
-    await ExamsRepository.getExams().then((value) {
-      // examsData = value;
-      _filerPopulerAndRecomdedExams(value);
+    try {
+      final res = await ExamsRepository.getExams();
+      _filerPopPulerAndRecommendedExams(res);
       state = ApiState.success;
-    }).onError((error, stackTrace) {
-      this.error = error.toString();
+    } catch (e) {
+      error = e.toString();
       state = ApiState.error;
-    });
+    }
     update();
   }
 
-  _filerPopulerAndRecomdedExams(List<PopulerExamsModel>? data) {
-    // Set recommendation = data!.map((e) => e.recommendation).toSet();
+  _filerPopPulerAndRecommendedExams(List<PopPulerExamsModel>? data) {
     List<String> recommendation = ["recommended", "popular"];
-    List<PopulerExamsModel> populerExams = [];
-    List<PopulerExamsModel> recommendedExam = [];
+    List<PopPulerExamsModel> popPulerExams = [];
+    List<PopPulerExamsModel> recommendedExam = [];
 
     for (var element in data!) {
       if (element.recommendation == recommendation[0]) {
         recommendedExam.add(element);
       }
       if (element.recommendation == recommendation[1]) {
-        populerExams.add(element);
+        popPulerExams.add(element);
       }
     }
 
     recommendedExams = recommendedExam;
-    this.populerExams = populerExams;
+    this.popPulerExams = popPulerExams;
   }
 }
