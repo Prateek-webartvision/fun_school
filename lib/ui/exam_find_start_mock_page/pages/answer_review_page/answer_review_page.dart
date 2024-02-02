@@ -2,16 +2,16 @@
 
 import 'package:citycloud_school/style/const.dart';
 import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widegts/answer_indicator.dart';
-import 'package:citycloud_school/widegts/point_chip.dart';
-import 'package:citycloud_school/widegts/question_chip.dart';
+import 'package:citycloud_school/widgets/answer_indicator.dart';
+import 'package:citycloud_school/widgets/point_chip.dart';
+import 'package:citycloud_school/widgets/question_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../models/exams/exams_models/multi_choice_quetion_model.dart';
 import '../../../../style/color.dart';
-import '../../../../widegts/k_btn.dart';
+import '../../../../widgets/k_btn.dart';
 
 part 'controller/answer_review_controller.dart';
 

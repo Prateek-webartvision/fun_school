@@ -3,7 +3,7 @@
 import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

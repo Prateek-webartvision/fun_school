@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../../style/color.dart';
-import '../../../../../widegts/answer_indicator.dart';
+import '../../../../../widgets/answer_indicator.dart';
 
 class AnsTile extends StatelessWidget {
   const AnsTile({

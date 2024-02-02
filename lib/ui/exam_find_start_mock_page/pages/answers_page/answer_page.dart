@@ -9,7 +9,7 @@ import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../models/exams/exams_models/multi_choice_quetion_model.dart';
-import '../../../../widegts/k_btn.dart';
+import '../../../../widgets/k_btn.dart';
 import '../../controller/question_answer_controller.dart';
 import '../../widgets/answer_selector_tile.dart';
 import '../../widgets/head_question.dart';

@@ -30,9 +30,9 @@ import 'pages.dart';
 
 final GlobalKey<NavigatorState> rootNavigator =
     GlobalKey<NavigatorState>(debugLabel: "root");
-final GlobalKey<NavigatorState> _shalNav =
+final GlobalKey<NavigatorState> _shallNav =
     GlobalKey<NavigatorState>(debugLabel: "shell");
-final GlobalKey<ScaffoldMessengerState> scaffoldMenagerKey =
+final GlobalKey<ScaffoldMessengerState> scaffoldManagerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 final GoRouter appRoutes = GoRouter(
@@ -43,7 +43,6 @@ final GoRouter appRoutes = GoRouter(
 
   // routs
   routes: [
-    // Splach Screen
     GoRoute(
       parentNavigatorKey: rootNavigator,
       path: PagesName.getPath(PagesName.splashScreen),
@@ -60,8 +59,8 @@ final GoRouter appRoutes = GoRouter(
       routes: [
         //Sign up
         GoRoute(
-          path: PagesName.signupPage,
-          name: PagesName.signupPage,
+          path: PagesName.signUpPage,
+          name: PagesName.signUpPage,
           builder: (context, state) => SignupPageView(),
         ),
 
@@ -83,7 +82,7 @@ final GoRouter appRoutes = GoRouter(
 
     // bottom nav page
     ShellRoute(
-      navigatorKey: _shalNav,
+      navigatorKey: _shallNav,
       pageBuilder: (context, state, child) {
         return NoTransitionPage(
           child: BottomNavBarPage(child: child),
@@ -92,7 +91,7 @@ final GoRouter appRoutes = GoRouter(
       routes: [
         // home page
         GoRoute(
-          parentNavigatorKey: _shalNav,
+          parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.homePage),
           name: PagesName.homePage,
           pageBuilder: (context, state) {
@@ -139,7 +138,7 @@ final GoRouter appRoutes = GoRouter(
 
         // study page
         GoRoute(
-          parentNavigatorKey: _shalNav,
+          parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.studyPage),
           name: PagesName.studyPage,
           pageBuilder: (context, state) {
@@ -149,7 +148,7 @@ final GoRouter appRoutes = GoRouter(
 
         // exam preparation page
         GoRoute(
-          parentNavigatorKey: _shalNav,
+          parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.examPreparationPage),
           name: PagesName.examPreparationPage,
           pageBuilder: (context, state) {
@@ -159,7 +158,7 @@ final GoRouter appRoutes = GoRouter(
         ),
         // school Communities Page
         GoRoute(
-          parentNavigatorKey: _shalNav,
+          parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.schoolCommunitiesPage),
           name: PagesName.schoolCommunitiesPage,
           pageBuilder: (context, state) {
@@ -169,7 +168,7 @@ final GoRouter appRoutes = GoRouter(
         ),
         // profile And Settings
         GoRoute(
-          parentNavigatorKey: _shalNav,
+          parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.profileAndSettings),
           name: PagesName.profileAndSettings,
           pageBuilder: (context, state) {
@@ -263,8 +262,8 @@ final GoRouter appRoutes = GoRouter(
       routes: [
         GoRoute(
           parentNavigatorKey: rootNavigator,
-          path: PagesName.quizQustionAnswerPage,
-          name: PagesName.quizQustionAnswerPage,
+          path: PagesName.quizQuestionAnswerPage,
+          name: PagesName.quizQuestionAnswerPage,
           pageBuilder: (context, state) {
             Map data = state.extra as Map;
             return MaterialPage(

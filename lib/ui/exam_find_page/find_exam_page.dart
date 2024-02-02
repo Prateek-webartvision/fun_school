@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/style/const.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -12,7 +12,11 @@ import '../exam_preparation_page/controller/find_exam_crontroller.dart';
 import 'tabs/certificate_exam_tab.dart';
 
 class FindExamPage extends StatefulWidget {
-  const FindExamPage({super.key, required this.allExams, required this.crontroller, required this.title});
+  const FindExamPage(
+      {super.key,
+      required this.allExams,
+      required this.crontroller,
+      required this.title});
   final List<AllExamModel> allExams;
   final FindExamCrontroller crontroller;
   final String title;
@@ -21,15 +25,18 @@ class FindExamPage extends StatefulWidget {
   State<FindExamPage> createState() => _FindExamPageState();
 }
 
-class _FindExamPageState extends State<FindExamPage> with TickerProviderStateMixin {
+class _FindExamPageState extends State<FindExamPage>
+    with TickerProviderStateMixin {
   late TabController tabController;
   late final List<String?> catBtnSet;
 
   @override
   void initState() {
-    catBtnSet = widget.allExams.map((e) => e.examSubCategoryName).toSet().toList();
+    catBtnSet =
+        widget.allExams.map((e) => e.examSubCategoryName).toSet().toList();
     tabController = TabController(length: catBtnSet.length, vsync: this);
-    widget.crontroller.groupAllExamByName(catBtnSet: catBtnSet, allExams: widget.allExams);
+    widget.crontroller
+        .groupAllExamByName(catBtnSet: catBtnSet, allExams: widget.allExams);
 
     super.initState();
   }
@@ -42,7 +49,10 @@ class _FindExamPageState extends State<FindExamPage> with TickerProviderStateMix
         // title: const Text("Find Exams"),
         title: Text(widget.title),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded))],
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded))
+        ],
       ),
       body: GetBuilder(
         init: widget.crontroller,
@@ -65,8 +75,12 @@ class _FindExamPageState extends State<FindExamPage> with TickerProviderStateMix
                         return Center(
                           child: KBtn(
                             height: 44,
-                            bgColor: (tabController.index == index) ? AppColor.mainColor : AppColor.white,
-                            fbColor: (tabController.index == index) ? AppColor.white : Colors.black,
+                            bgColor: (tabController.index == index)
+                                ? AppColor.mainColor
+                                : AppColor.white,
+                            fbColor: (tabController.index == index)
+                                ? AppColor.white
+                                : Colors.black,
                             text: catBtnSet[index] ?? "",
                             // text: "Past Questions",
                             onClick: () {
@@ -89,7 +103,8 @@ class _FindExamPageState extends State<FindExamPage> with TickerProviderStateMix
                   physics: NeverScrollableScrollPhysics(),
                   children: catBtnSet.map((e) {
                     // flilter exams
-                    final filterExams = cnt.getExamsBySubCategories(allExam: cnt.sortedAllExam!, subCat: e!);
+                    final filterExams = cnt.getExamsBySubCategories(
+                        allExam: cnt.sortedAllExam!, subCat: e!);
 
                     return PastQuestionsTab(
                       allExams: filterExams,

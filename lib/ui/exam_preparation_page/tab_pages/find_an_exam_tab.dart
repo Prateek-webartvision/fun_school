@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_find_page/find_exam_page.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -75,7 +75,8 @@ class _FindAnExamTabState extends State<FindAnExamTab> {
                         final rmColor = AppColor.randomColor;
                         return ExamTile(
                           title: item.examCategoryName.toString(),
-                          date: getDateTimeFromTimeStamp(timeStamp: item.dateAdded),
+                          date: getDateTimeFromTimeStamp(
+                              timeStamp: item.dateAdded),
                           color: rmColor,
                           onClick: () {
                             // go to exam sub category page
@@ -120,7 +121,8 @@ class _FindAnExamTabState extends State<FindAnExamTab> {
                         final rmColor = AppColor.randomColor;
                         return ExamTile(
                           title: item.examCategoryName.toString(),
-                          date: getDateTimeFromTimeStamp(timeStamp: item.dateAdded),
+                          date: getDateTimeFromTimeStamp(
+                              timeStamp: item.dateAdded),
                           color: rmColor,
                           onClick: () {
                             // go to exam sub category page

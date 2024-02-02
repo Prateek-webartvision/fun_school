@@ -2,8 +2,8 @@
 
 import 'package:citycloud_school/repo/subject_notes_repo/notes_repo.dart';
 import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
-import 'package:citycloud_school/widegts/k_text_field.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
+import 'package:citycloud_school/widgets/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 

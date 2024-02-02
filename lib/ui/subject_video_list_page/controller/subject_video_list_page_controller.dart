@@ -10,7 +10,7 @@ class SubjectVideoListPageController extends GetxController {
   int currentVideo;
   late VideoPlayerController videoPlayerController;
   bool isVideoLoaded = false;
-  bool isplaying = false;
+  bool isPlaying = false;
   bool isShowingPlaySeekBar = false;
 
   SubjectVideoListPageController(
@@ -29,7 +29,7 @@ class SubjectVideoListPageController extends GetxController {
 
     if (isVideoLoaded == true) {
       isVideoLoaded = false;
-      isplaying = false;
+      isPlaying = false;
       videoPlayerController.dispose();
       update();
     }
@@ -47,7 +47,7 @@ class SubjectVideoListPageController extends GetxController {
     });
 
     videoPlayerController.addListener(() {
-      isplaying = videoPlayerController.value.isPlaying;
+      isPlaying = videoPlayerController.value.isPlaying;
       // print(videoPlayerController.value.);
       // print(" dasd = ${videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds}");
       // if (videoPlayerController.value.position.inSeconds / videoPlayerController.value.duration.inSeconds == 1) {
@@ -84,7 +84,7 @@ class SubjectVideoListPageController extends GetxController {
   }
 
   playPouse() {
-    if (isplaying) {
+    if (isPlaying) {
       videoPlayerController.pause();
     } else {
       videoPlayerController.play();

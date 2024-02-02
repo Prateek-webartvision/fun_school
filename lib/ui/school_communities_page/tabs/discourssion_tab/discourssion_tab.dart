@@ -4,7 +4,7 @@ import 'package:citycloud_school/repo/community/community_discussion_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
 import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';

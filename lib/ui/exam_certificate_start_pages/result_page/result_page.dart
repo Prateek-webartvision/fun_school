@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
+import '../../../widgets/k_btn.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({super.key});
@@ -14,7 +14,8 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
-        title: Text("Result", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Result",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
 
@@ -57,7 +58,10 @@ class ResultPage extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             text: "TO PASS",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
                             children: [
                               TextSpan(text: " "),
                               TextSpan(
@@ -152,7 +156,10 @@ class ResultPage extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "6",
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff008000)),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff008000)),
                           ),
                         ),
                         4.height,
@@ -167,7 +174,10 @@ class ResultPage extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "1",
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffFF0000)),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffFF0000)),
                           ),
                         ),
                       ],
@@ -192,7 +202,8 @@ class ResultPage extends StatelessWidget {
                       6.45.width,
                       Text(
                         "Share Result",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),

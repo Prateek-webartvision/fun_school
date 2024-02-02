@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/k_text_field.dart';
 import 'login_page_state.dart';
 
 class LoginPageView extends StatefulWidget {
@@ -21,7 +21,8 @@ class _LoginPageViewState extends LoginPageSate {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
-        title: Text("Welcome", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Welcome",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: ListView(

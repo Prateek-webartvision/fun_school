@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -340,14 +340,16 @@ class _HomePageState extends State<HomePage> {
                           CarouselSlider.builder(
                             // items: courseSliderData,
                             itemCount: controller.tips!.length,
-                            itemBuilder: (BuildContext context, int index, int realIndex) {
+                            itemBuilder: (BuildContext context, int index,
+                                int realIndex) {
                               final item = controller.tips![index];
                               return Container(
                                 width: double.maxFinite,
                                 decoration: BoxDecoration(
                                   color: AppColor.white,
                                   borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(color: AppColor.softBorderColor),
+                                  border: Border.all(
+                                      color: AppColor.softBorderColor),
                                 ),
                                 margin: EdgeInsets.symmetric(horizontal: 16),
                                 clipBehavior: Clip.hardEdge,
@@ -357,12 +359,16 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       item.tipTitle ?? "",
-                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700),
                                     ),
                                     4.height,
                                     Text(
                                       item.tipContent ?? "",
-                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 6,
                                     ),
@@ -393,9 +399,11 @@ class _HomePageState extends State<HomePage> {
                                     dotHeight: 8,
                                     dotWidth: 8,
                                     activeDotColor: AppColor.mainColor,
-                                    dotColor: AppColor.mainColor.withOpacity(0.3),
+                                    dotColor:
+                                        AppColor.mainColor.withOpacity(0.3),
                                   ),
-                                  activeIndex: smoothIndicatorTipController.currentIndex,
+                                  activeIndex:
+                                      smoothIndicatorTipController.currentIndex,
                                   count: controller.tips!.length,
                                 ),
                               );

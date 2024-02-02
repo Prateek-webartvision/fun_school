@@ -6,14 +6,14 @@ import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/controller/other_profile_controller.dart';
 import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../widegts/overlaping_user_avtar.dart';
+import '../../widgets/overlaping_user_avtar.dart';
 import 'other_profile_page_state.dart';
 import 'tabs/post_tab.dart';
 

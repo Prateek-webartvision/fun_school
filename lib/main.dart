@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      scaffoldMessengerKey: scaffoldMenagerKey,
+      scaffoldMessengerKey: scaffoldManagerKey,
       title: 'Fun School',
       theme: AppTheme.light,
       routerConfig: appRoutes,

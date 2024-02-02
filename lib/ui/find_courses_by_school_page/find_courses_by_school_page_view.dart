@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -12,7 +12,7 @@ import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../utils/app_utils.dart';
-import '../../widegts/k_text_field.dart';
+import '../../widgets/k_text_field.dart';
 import '../find_course_by_career_page/widgets/teg_selector.dart';
 import 'find_courses_by_school_page_state.dart';
 import 'widgets/select_school_dropdwon.dart';

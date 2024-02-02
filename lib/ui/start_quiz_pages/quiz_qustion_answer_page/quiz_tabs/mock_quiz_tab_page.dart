@@ -9,7 +9,7 @@ import '../../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../../router/pages.dart';
 import '../../../../style/color.dart';
 import '../../../../utils/app_utils.dart';
-import '../../../../widegts/k_btn.dart';
+import '../../../../widgets/k_btn.dart';
 import '../../controller/mock_quiz_controller.dart';
 import '../../widgets/ans_option.dart';
 

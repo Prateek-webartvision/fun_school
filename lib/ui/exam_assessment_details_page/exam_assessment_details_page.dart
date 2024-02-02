@@ -5,7 +5,7 @@ import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/style/const.dart';
 import 'package:citycloud_school/style/theme.dart';
 import 'package:citycloud_school/ui/exam_assessment_analysis_page/exam_assessment_analysis_page.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -17,7 +17,8 @@ class ExamAssessmentDetailsPage extends StatefulWidget {
   const ExamAssessmentDetailsPage({super.key});
 
   @override
-  State<ExamAssessmentDetailsPage> createState() => _ExamAssessmentDetailsPageState();
+  State<ExamAssessmentDetailsPage> createState() =>
+      _ExamAssessmentDetailsPageState();
 }
 
 class _ExamAssessmentDetailsPageState extends State<ExamAssessmentDetailsPage> {
@@ -54,7 +55,9 @@ class _ExamAssessmentDetailsPageState extends State<ExamAssessmentDetailsPage> {
                   TextSpan(
                     text: "Score: ",
                     children: [
-                      TextSpan(text: "85/100", style: TextStyle(color: AppColor.mainColor)),
+                      TextSpan(
+                          text: "85/100",
+                          style: TextStyle(color: AppColor.mainColor)),
                     ],
                     style: AppTextStyle.text12W400,
                   ),
@@ -95,7 +98,8 @@ class _ExamAssessmentDetailsPageState extends State<ExamAssessmentDetailsPage> {
                             pieTouchData: PieTouchData(enabled: false),
                           ),
 
-                          swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                          swapAnimationDuration:
+                              Duration(milliseconds: 150), // Optional
                           swapAnimationCurve: Curves.linear, // Optional
                         ),
                       ),

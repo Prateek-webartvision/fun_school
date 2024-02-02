@@ -3,7 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
 import 'package:citycloud_school/ui/exam_study_plan_details_page/exam_study_plan_details_page.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -11,7 +11,7 @@ import 'package:kd_utils/methods/timestemp.dart';
 
 import '../../repo/exams/exam_study_plan_repo.dart';
 import '../../utils/app_utils.dart';
-import '../../widegts/k_btn.dart';
+import '../../widgets/k_btn.dart';
 import '../exam_preparation_page/widgets/create_exam_sheet.dart';
 import 'widgets/exam_plan_tile.dart';
 

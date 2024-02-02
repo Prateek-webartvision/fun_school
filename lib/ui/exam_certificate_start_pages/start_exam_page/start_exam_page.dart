@@ -3,7 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/exam_certificate_start_pages/question_answer_page/question_answer_page.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -17,7 +17,8 @@ class StartExamPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.mainColor,
         foregroundColor: AppColor.white,
-        title: Text("Exam Preparation", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Exam Preparation",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: ListView(
@@ -35,18 +36,27 @@ class StartExamPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               child: Text(
                 "10 Question",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
               ),
             ),
           ),
           18.height,
           Text(
             "Basic Biology Concepts Summary",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: AppColor.white),
           ),
           Text(
             "Submit your assignment",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: AppColor.white),
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: AppColor.white),
           ),
           16.height,
           // Row(
@@ -84,20 +94,27 @@ class StartExamPage extends StatelessWidget {
             onClick: () {
               //
               // appRoutes.pushNamed(PagesName.questionAnswerPage);
-              rootNavigator.currentState!.pushReplacement(MaterialPageRoute(builder: (_) => QuestionAnswerPage()));
+              rootNavigator.currentState!.pushReplacement(
+                  MaterialPageRoute(builder: (_) => QuestionAnswerPage()));
             },
             text: "Start",
           ),
           16.height,
           Text(
             "Receive grade",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColor.white),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: AppColor.white),
           ),
           4.height,
           RichText(
             text: TextSpan(
               text: "TO PASS",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColor.white),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.white),
               children: [
                 TextSpan(text: " "),
                 TextSpan(
@@ -110,13 +127,19 @@ class StartExamPage extends StatelessWidget {
           16.height,
           Text(
             "Grad",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColor.white),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: AppColor.white),
           ),
           4.height,
           RichText(
             text: TextSpan(
               text: "_",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColor.white),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.white),
               children: [],
             ),
           ),

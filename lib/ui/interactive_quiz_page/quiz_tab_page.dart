@@ -9,7 +9,7 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:number_to_indian_words/number_to_indian_words.dart';
 
 import '../../style/color.dart';
-import '../../widegts/k_btn.dart';
+import '../../widgets/k_btn.dart';
 import 'controller/quiz_controller.dart';
 import '../start_quiz_pages/model/quiz_model.dart';
 

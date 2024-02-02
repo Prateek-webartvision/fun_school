@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/k_text_field.dart';
 import 'signup_page_state.dart';
 
 class SignupPageView extends StatefulWidget {
@@ -22,7 +22,9 @@ class _SignupPageViewState extends SignupPageState {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
-        title: Text("Welcome", style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Welcome",
+            style:
+                GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: ListView(

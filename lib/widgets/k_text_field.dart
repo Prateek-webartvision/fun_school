@@ -51,7 +51,8 @@ class _KTextFieldState extends State<KTextField> {
         TextField(
           maxLines: widget.maxLine,
           enabled: widget.enabled,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
           controller: widget.controller,
           obscureText: (widget.isPassword) ? passHide : widget.isPassword,
           textInputAction: widget.textInputAction,
@@ -74,7 +75,9 @@ class _KTextFieldState extends State<KTextField> {
                         onTap: () {
                           setState(() => passHide = !passHide);
                         },
-                        child: Icon((passHide) ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+                        child: Icon((passHide)
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined),
                       )
                     : null,
             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -140,7 +143,8 @@ class KSearchField extends StatelessWidget {
                 errorBorder: _border(),
                 hintText: "Search",
                 hintStyle: textStyle,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 isDense: true,
               ),
             ),

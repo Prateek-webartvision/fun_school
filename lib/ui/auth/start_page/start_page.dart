@@ -3,7 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widegts/k_btn.dart';
+import 'package:citycloud_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,7 +27,10 @@ class StartPage extends StatelessWidget {
                 // width: 301,
                 decoration: BoxDecoration(
                   color: Colors.pink,
-                  image: DecorationImage(image: AssetImage("assets/logo/start_page_image.jpg"), fit: BoxFit.cover, alignment: Alignment.topCenter),
+                  image: DecorationImage(
+                      image: AssetImage("assets/logo/start_page_image.jpg"),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter),
                 ),
               )),
           Align(
@@ -65,7 +68,7 @@ class StartPage extends StatelessWidget {
                 children: [
                   KBtn(
                     onClick: () {
-                      appRoutes.pushNamed(PagesName.signupPage);
+                      appRoutes.pushNamed(PagesName.signUpPage);
                     },
                     text: "Sign up for free",
                     width: double.maxFinite,

@@ -11,7 +11,7 @@ import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
 import '../../utils/app_utils.dart';
-import '../../widegts/k_text_field.dart';
+import '../../widgets/k_text_field.dart';
 import '../find_course_by_career_page/widgets/select_intreset.dart';
 import '../find_course_by_career_page/widgets/teg_selector.dart';
 import '../find_courses_by_school_page/widgets/subject_card.dart';

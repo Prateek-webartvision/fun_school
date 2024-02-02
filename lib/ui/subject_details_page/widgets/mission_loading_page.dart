@@ -74,10 +74,15 @@ class _KQuizLoadingPageState extends State<KQuizLoadingPage> {
           } else {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
               // nev to quiz
-              final data = {"controller": quizController, "courseId": widget.courseId, "subjectId": widget.subjectId};
+              final data = {
+                "controller": quizController,
+                "courseId": widget.courseId,
+                "subjectId": widget.subjectId
+              };
               // print(data);
               if (isShow != true) {
-                await appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
+                await appRoutes.pushNamed(PagesName.quizQuestionAnswerPage,
+                    extra: data);
               }
               setState(() {
                 isShow = true;

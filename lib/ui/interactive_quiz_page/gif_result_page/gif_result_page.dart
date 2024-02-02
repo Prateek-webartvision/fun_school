@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
+import '../../../widgets/k_btn.dart';
 import '../../start_quiz_pages/model/quiz_model.dart';
 
 class GifResultPage extends StatefulWidget {

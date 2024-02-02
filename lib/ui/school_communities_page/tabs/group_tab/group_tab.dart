@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/ui/school_communities_page/controllers/community_group_controller.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -43,7 +43,8 @@ class GroupsTab extends StatelessWidget {
           child: CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16).copyWith(top: 12, bottom: 10),
+                padding: EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(top: 12, bottom: 10),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -84,7 +85,8 @@ class GroupsTab extends StatelessWidget {
                       onItemClick: () {
                         rootNavigator.currentState!.push(
                           MaterialPageRoute(
-                            builder: (BuildContext context) => SchoolCommunitiesGroupInfoPage(),
+                            builder: (BuildContext context) =>
+                                SchoolCommunitiesGroupInfoPage(),
                           ),
                         );
                       },

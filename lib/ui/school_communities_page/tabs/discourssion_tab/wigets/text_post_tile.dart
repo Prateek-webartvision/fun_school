@@ -10,7 +10,7 @@ import '../../../../../models/community_discussion_model/community_discussion_mo
 import '../../../../../style/assets.dart';
 import '../../../../../style/color.dart';
 import '../../../../../utils/helper.dart';
-import '../../../../../widegts/overlaping_user_avtar.dart';
+import '../../../../../widgets/overlaping_user_avtar.dart';
 import '../../../../profile_page_other/controller/other_profile_controller.dart';
 
 class TextPostTile extends StatelessWidget {

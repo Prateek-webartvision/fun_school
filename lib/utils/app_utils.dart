@@ -33,8 +33,8 @@ class AppUtils {
 
   // snack bar
   static showSnack(String message) {
-    if (scaffoldMenagerKey.currentState != null) {
-      scaffoldMenagerKey.currentState!.showSnackBar(
+    if (scaffoldManagerKey.currentState != null) {
+      scaffoldManagerKey.currentState!.showSnackBar(
         SnackBar(
           content: Text(message),
           duration: const Duration(seconds: 2),

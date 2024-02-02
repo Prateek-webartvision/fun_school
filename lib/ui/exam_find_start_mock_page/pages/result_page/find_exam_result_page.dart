@@ -14,8 +14,8 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../style/color.dart';
-import '../../../../widegts/k_btn.dart';
-import '../../../../widegts/share_result_ss.dart';
+import '../../../../widgets/k_btn.dart';
+import '../../../../widgets/share_result_ss.dart';
 import '../../controller/question_answer_controller.dart';
 import 'widgets/ans_tile.dart';
 
@@ -35,7 +35,8 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
     ans = widget.controller.getResult();
     final examId = widget.controller.questions.first.examId!;
 
-    ExamsRepository.saveMultiChoiceExamScore(examId: examId, score: ans.grade.toString());
+    ExamsRepository.saveMultiChoiceExamScore(
+        examId: examId, score: ans.grade.toString());
 
     super.initState();
   }
@@ -81,7 +82,9 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          (ans.grade >= 75) ? "Congratulations! You passed!" : "Try again",
+                          (ans.grade >= 75)
+                              ? "Congratulations! You passed!"
+                              : "Try again",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -91,7 +94,10 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                         RichText(
                           text: TextSpan(
                             text: "TO PASS",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
                             children: [
                               TextSpan(text: " "),
                               TextSpan(
@@ -189,7 +195,10 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                           child: Text(
                             // "6",
                             ans.correctAns.toString(),
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff008000)),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff008000)),
                           ),
                         ),
                         4.height,
@@ -206,7 +215,10 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                           child: Text(
                             // "1",
                             ans.inCorrectAns.toString(),
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffFF0000)),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffFF0000)),
                           ),
                         ),
                       ],
@@ -219,7 +231,8 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                 GestureDetector(
                   onTap: () async {
                     // share
-                    Uint8List image = await ScreenshotController().captureFromWidget(
+                    Uint8List image =
+                        await ScreenshotController().captureFromWidget(
                       ShareResultSS(ans: ans),
                     );
 
@@ -249,7 +262,8 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
                         6.45.width,
                         Text(
                           "Share Result",
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -298,7 +312,9 @@ class _FindExamResultPageState extends State<FindExamResultPage> {
             Expanded(
               child: KBtn(
                 onClick: () {
-                  final reviewPage = MaterialPageRoute(builder: (_) => AsnwerReviewPage(questions: widget.controller.questions));
+                  final reviewPage = MaterialPageRoute(
+                      builder: (_) => AsnwerReviewPage(
+                          questions: widget.controller.questions));
                   rootNavigator.currentState!.push(reviewPage);
                 },
                 text: "Next",

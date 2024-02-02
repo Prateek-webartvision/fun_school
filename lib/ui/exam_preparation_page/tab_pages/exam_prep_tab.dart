@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
+import '../../../widgets/k_btn.dart';
 
 class ExamPrepTab extends StatelessWidget {
   const ExamPrepTab({

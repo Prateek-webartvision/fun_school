@@ -2,7 +2,7 @@ class PagesName {
   static String splashScreen = "SplashScreen";
   static String startPage = "StartPage";
   static String loginPage = "LoginPage";
-  static String signupPage = "SignupPage";
+  static String signUpPage = "SignUpPage";
   static String emailVerificationPage = "EmailVerificationPage";
   static String bottomNavBarPage = "BottomNavBarPage";
   static String homePage = "homePage";
@@ -27,7 +27,7 @@ class PagesName {
   static String resultPage = "resultPage";
 
   static String startQuizPage = "startQuizPage";
-  static String quizQustionAnswerPage = "quizQustionAnswerPage";
+  static String quizQuestionAnswerPage = "quizQuestionAnswerPage";
   static String quizResultPage = "quizResultPage";
 
   static String chatGptPage = "chatGptPage";

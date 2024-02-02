@@ -10,8 +10,8 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/exams/exam_study_plan_models/course_name_model.dart';
 import '../../../style/color.dart';
 import '../../../utils/app_utils.dart';
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/k_text_field.dart';
 
 class CreateExamSheet extends StatefulWidget {
   const CreateExamSheet(

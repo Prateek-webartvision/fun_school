@@ -7,8 +7,8 @@ import '../../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
 import '../../../utils/app_utils.dart';
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/k_text_field.dart';
 
 class AddStudyPlanSheet extends StatefulWidget {
   const AddStudyPlanSheet({

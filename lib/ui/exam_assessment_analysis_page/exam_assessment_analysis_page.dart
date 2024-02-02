@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/const.dart';
-import '../../widegts/amswers_tile.dart';
+import '../../widgets/amswers_tile.dart';
 import 'controller/analysis_chip_controller.dart';
 import 'widgets/analysis_chip_view.dart';
 
@@ -12,10 +12,12 @@ class ExamAssessmentAnalysisPage extends StatefulWidget {
   const ExamAssessmentAnalysisPage({super.key});
 
   @override
-  State<ExamAssessmentAnalysisPage> createState() => _ExamAssessmentAnalysisPageState();
+  State<ExamAssessmentAnalysisPage> createState() =>
+      _ExamAssessmentAnalysisPageState();
 }
 
-class _ExamAssessmentAnalysisPageState extends State<ExamAssessmentAnalysisPage> {
+class _ExamAssessmentAnalysisPageState
+    extends State<ExamAssessmentAnalysisPage> {
   late AnalysisChipController chipController;
   List<String> chips = [
     "Algebra",
@@ -56,7 +58,8 @@ class _ExamAssessmentAnalysisPageState extends State<ExamAssessmentAnalysisPage>
               AnswersTile(
                 currentQuestion: 1,
                 totalQuestions: 3,
-                question: "In a right triangle, if one leg measures 3 units and the hypotenuse measures 5 units, how long is the other leg?",
+                question:
+                    "In a right triangle, if one leg measures 3 units and the hypotenuse measures 5 units, how long is the other leg?",
                 otherText: "i6a: + 4",
                 isCorrect: true,
               ),
@@ -64,7 +67,8 @@ class _ExamAssessmentAnalysisPageState extends State<ExamAssessmentAnalysisPage>
               AnswersTile(
                 currentQuestion: 2,
                 totalQuestions: 3,
-                question: "If a shirt costs \$40 after a 20% discount, what was its original price?",
+                question:
+                    "If a shirt costs \$40 after a 20% discount, what was its original price?",
                 otherText: "Study Hours Required",
                 isCorrect: true,
               ),

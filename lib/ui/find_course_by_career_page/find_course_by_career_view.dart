@@ -2,7 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widegts/k_text_field.dart';
+import 'package:citycloud_school/widgets/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';

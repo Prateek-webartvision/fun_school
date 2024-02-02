@@ -11,8 +11,8 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/k_text_field.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/k_text_field.dart';
 import '../folder_page/folder_page.dart';
 import '../model/folder_model.dart';
 

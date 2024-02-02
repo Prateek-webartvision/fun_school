@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/point_chip.dart';
-import '../../../widegts/question_chip.dart';
+import '../../../widgets/point_chip.dart';
+import '../../../widgets/question_chip.dart';
 
 class QuestionViewTile extends StatelessWidget {
   const QuestionViewTile({

@@ -3,7 +3,7 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/question_view_page/question_view_page.dart';
 import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/submit_page/submit_theory_page.dart';
-import 'package:citycloud_school/widegts/error_page.dart';
+import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -44,7 +44,8 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
               return AppBar(
                 backgroundColor: AppColor.mainColor,
                 foregroundColor: AppColor.white,
-                titleTextStyle: AppTextStyle.appBarText.copyWith(color: AppColor.white),
+                titleTextStyle:
+                    AppTextStyle.appBarText.copyWith(color: AppColor.white),
                 // title: Text("Mathematics - Edition 1"),
                 title: Text("${controller.allExams!.examName}"),
                 elevation: 1,
@@ -87,8 +88,11 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
               children: [
                 GradeTile(
                   title: "Multichoice",
-                  time: Duration(minutes: int.parse(controller.allExams?.durationMultichoice ?? "0")),
-                  questions: controller.allExams?.multichoiceQuestions?.length ?? 0,
+                  time: Duration(
+                      minutes: int.parse(
+                          controller.allExams?.durationMultichoice ?? "0")),
+                  questions:
+                      controller.allExams?.multichoiceQuestions?.length ?? 0,
                   grade: controller.allExams?.multichoiceScore?.grade,
                   onStartClick: () {
                     final questionViewPage = MaterialPageRoute(
@@ -104,7 +108,9 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
                 GradeTile(
                   title: "Theory",
                   // time: "45 minutes",
-                  time: Duration(minutes: int.parse(controller.allExams?.durationTheory ?? "0")),
+                  time: Duration(
+                      minutes: int.parse(
+                          controller.allExams?.durationTheory ?? "0")),
                   questions: controller.allExams?.theoryQuestions?.length ?? 0,
                   grade: controller.allExams?.theoryScore?.grade,
                   onStartClick: () {

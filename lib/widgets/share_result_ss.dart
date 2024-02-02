@@ -40,7 +40,9 @@ class ShareResultSS extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      (ans.grade >= 75) ? "Congratulations! You passed!" : "Try again",
+                      (ans.grade >= 75)
+                          ? "Congratulations! You passed!"
+                          : "Try again",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -50,7 +52,10 @@ class ShareResultSS extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         text: "TO PASS",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
                         children: [
                           TextSpan(text: " "),
                           TextSpan(
@@ -149,7 +154,10 @@ class ShareResultSS extends StatelessWidget {
                       child: Text(
                         // "6",
                         ans.correctAns.toString(),
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff008000)),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff008000)),
                       ),
                     ),
                     4.height,
@@ -166,7 +174,10 @@ class ShareResultSS extends StatelessWidget {
                       child: Text(
                         // "1",
                         ans.inCorrectAns.toString(),
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffFF0000)),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffFF0000)),
                       ),
                     ),
                   ],

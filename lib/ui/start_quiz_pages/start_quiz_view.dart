@@ -9,7 +9,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../repo/quiz_repo/quiz_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
-import '../../widegts/k_btn.dart';
+import '../../widgets/k_btn.dart';
 import 'start_quiz_state.dart';
 
 class StartQuizView extends StatefulWidget {
@@ -144,7 +144,7 @@ class _StartQuizViewState extends StartQuizState {
                             "courseId": widget.courseId,
                             "subjectId": widget.subjectId
                           };
-                          appRoutes.pushNamed(PagesName.quizQustionAnswerPage,
+                          appRoutes.pushNamed(PagesName.quizQuestionAnswerPage,
                               extra: data);
                         }
                       },

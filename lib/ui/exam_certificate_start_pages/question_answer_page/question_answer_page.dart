@@ -6,9 +6,9 @@ import 'package:citycloud_school/ui/exam_certificate_start_pages/result_page/res
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
-import '../../../widegts/k_btn.dart';
-import '../../../widegts/point_chip.dart';
-import '../../../widegts/question_chip.dart';
+import '../../../widgets/k_btn.dart';
+import '../../../widgets/point_chip.dart';
+import '../../../widgets/question_chip.dart';
 
 class QuestionAnswerPage extends StatefulWidget {
   const QuestionAnswerPage({super.key});
@@ -31,7 +31,8 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
-        title: Text("Exam Preparation", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Exam Preparation",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: Column(
@@ -84,7 +85,9 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
                 return Container(
                   decoration: BoxDecoration(
                     color: AppColor.white,
-                    border: (seletedAns == questions[index]) ? Border.all(color: AppColor.pinkColor) : null,
+                    border: (seletedAns == questions[index])
+                        ? Border.all(color: AppColor.pinkColor)
+                        : null,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   padding: const EdgeInsets.only(right: 16, top: 4, bottom: 4),
@@ -138,7 +141,8 @@ class _QuestionAnswerPageState extends State<QuestionAnswerPage> {
                 child: KBtn(
               onClick: () {
                 // appRoutes.pushNamed(PagesName.resultPage);
-                rootNavigator.currentState!.pushReplacement(MaterialPageRoute(builder: (_) => ResultPage()));
+                rootNavigator.currentState!.pushReplacement(
+                    MaterialPageRoute(builder: (_) => ResultPage()));
               },
               text: "Next",
               height: 44,

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
-import '../../widegts/k_btn.dart';
-import '../../widegts/k_text_field.dart';
+import '../../widgets/k_btn.dart';
+import '../../widgets/k_text_field.dart';
 
 class PrepareForAnExamPage extends StatelessWidget {
   const PrepareForAnExamPage({super.key});

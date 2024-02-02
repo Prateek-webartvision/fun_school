@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../widegts/k_btn.dart';
+import '../../../widgets/k_btn.dart';
 import '../controller/my_study_plan_controller.dart';
 import '../widgets/study_plan_sheet.dart';
 
@@ -51,7 +51,8 @@ class MyStudyPlanTab extends StatelessWidget {
               SliverPadding(
                 padding: EdgeInsets.all(16).copyWith(bottom: 12),
                 sliver: SliverToBoxAdapter(
-                  child: CreateStudyPlanBtn(onTap: () => addStudyPlanBtn(context)),
+                  child:
+                      CreateStudyPlanBtn(onTap: () => addStudyPlanBtn(context)),
                 ),
               ),
               SliverPadding(
@@ -64,7 +65,8 @@ class MyStudyPlanTab extends StatelessWidget {
                       width: double.maxFinite,
                       decoration: BoxDecoration(
                         color: AppColor.white,
-                        border: Border.all(color: AppColor.textFeildBorderColor),
+                        border:
+                            Border.all(color: AppColor.textFeildBorderColor),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       padding: EdgeInsets.all(12),

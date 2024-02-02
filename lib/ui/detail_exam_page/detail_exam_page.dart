@@ -7,7 +7,7 @@ import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../style/color.dart';
-import '../../widegts/k_btn.dart';
+import '../../widgets/k_btn.dart';
 import '../exam_certificate_start_pages/start_exam_page/start_exam_page.dart';
 import 'controllers/year_controller.dart';
 import 'widgets/exam_details_tile.dart';
@@ -16,7 +16,8 @@ class DetailCertificateExamPage extends StatefulWidget {
   const DetailCertificateExamPage({super.key});
 
   @override
-  State<DetailCertificateExamPage> createState() => _DetailCertificateExamPageState();
+  State<DetailCertificateExamPage> createState() =>
+      _DetailCertificateExamPageState();
 }
 
 class _DetailCertificateExamPageState extends State<DetailCertificateExamPage> {
@@ -103,14 +104,19 @@ class _DetailCertificateExamPageState extends State<DetailCertificateExamPage> {
                         duration: Duration(milliseconds: 300),
                         height: double.maxFinite,
                         decoration: BoxDecoration(
-                          color: (controller.index == index) ? AppColor.mainColor : AppColor.white,
+                          color: (controller.index == index)
+                              ? AppColor.mainColor
+                              : AppColor.white,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 12),
                         alignment: Alignment.center,
                         child: Text(
                           years[index],
-                          style: TextStyle(color: (controller.index != index) ? AppColor.darkTextColor : AppColor.white),
+                          style: TextStyle(
+                              color: (controller.index != index)
+                                  ? AppColor.darkTextColor
+                                  : AppColor.white),
                         ),
                       ),
                     );
@@ -130,7 +136,8 @@ class _DetailCertificateExamPageState extends State<DetailCertificateExamPage> {
                 completeState: 1,
                 onClick: () {
                   // appRoutes.pushNamed(PagesName.startExamPage);
-                  rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
+                  rootNavigator.currentState!
+                      .push(MaterialPageRoute(builder: (_) => StartExamPage()));
                   // print("object ${appRoutes.location}");
                 },
               ),
