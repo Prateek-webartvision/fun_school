@@ -12,6 +12,7 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'controller/home_page_controller.dart';
+import 'controller/smooth_indicator_controller.dart';
 import 'widgets/course_slider_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   late HomePageTipController homePageTipController;
   late SmoothIndicatorController smoothIndicatorController;
   late SmoothIndicatorController smoothIndicatorTipController;
+
   List<CourseSliderTile> courseSliderData = [
     CourseSliderTile(
       assetImage: "assets/img/home_images/School.jpg",
@@ -105,7 +107,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 16.height,
-
                 CarouselSlider(
                   items: courseSliderData,
                   options: CarouselOptions(
@@ -139,188 +140,6 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: AppColor.white,
-                //     borderRadius: BorderRadius.circular(4),
-                //     border: Border.all(color: AppColor.softBorderColor),
-                //   ),
-                //   clipBehavior: Clip.hardEdge,
-                //   child: Column(
-                //     children: [
-                //       //Find courses by school
-                //       GestureDetector(
-                //         onTap: () {
-                //           appRoutes.pushNamed(PagesName.findCoursesBySchoolPage);
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(12),
-                //           child: Row(
-                //             children: [
-                //               CircleAvatar(
-                //                 radius: 20,
-                //                 backgroundColor: Color(0xff6519BA),
-                //                 child: Icon(
-                //                   Icons.apartment_rounded,
-                //                   color: AppColor.white,
-                //                 ),
-                //               ),
-                //               10.width,
-                //               Expanded(
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       "Find courses by school",
-                //                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                //                     ),
-                //                     Text(
-                //                       "search by primary, secondary or tertiary institutions",
-                //                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               10.width,
-                //               Icon(Icons.navigate_next_rounded)
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-
-                //       //Find course by career
-                //       GestureDetector(
-                //         onTap: () {
-                //           appRoutes.pushNamed(PagesName.findCourseByCareerPage);
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(12),
-                //           child: Row(
-                //             children: [
-                //               CircleAvatar(
-                //                   radius: 20,
-                //                   backgroundColor: Color(0xff6519BA),
-                //                   child: Icon(
-                //                     Icons.business_center_outlined,
-                //                     color: AppColor.white,
-                //                   )),
-                //               10.width,
-                //               Expanded(
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       "Find course by career",
-                //                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                //                     ),
-                //                     Text(
-                //                       "Search using your career aspirations",
-                //                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               10.width,
-                //               Icon(Icons.navigate_next_rounded)
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //       //Find Course by interest
-                //       GestureDetector(
-                //         onTap: () {
-                //           appRoutes.pushNamed(PagesName.findCourseByInterestPage);
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(12),
-                //           child: Row(
-                //             children: [
-                //               CircleAvatar(
-                //                   radius: 20,
-                //                   backgroundColor: Color(0xff6519BA),
-                //                   child: Icon(
-                //                     Icons.bolt_rounded,
-                //                     color: AppColor.white,
-                //                   )),
-                //               10.width,
-                //               Expanded(
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       "Find Course by interest",
-                //                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                //                     ),
-                //                     Text(
-                //                       "Find out how to code, design and lots more",
-                //                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               10.width,
-                //               Icon(Icons.navigate_next_rounded)
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // 16.height,
-
-                // //Prepare For An Exam Page
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: AppColor.white,
-                //     borderRadius: BorderRadius.circular(4),
-                //     border: Border.all(color: AppColor.softBorderColor),
-                //   ),
-                //   clipBehavior: Clip.hardEdge,
-                //   child: Column(
-                //     children: [
-                //       GestureDetector(
-                //         onTap: () {
-                //           appRoutes.pushNamed(PagesName.prepareForAnExamPage);
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(12),
-                //           child: Row(
-                //             children: [
-                //               CircleAvatar(
-                //                   radius: 20,
-                //                   backgroundColor: Color(0xff6519BA),
-                //                   child: Icon(
-                //                     Icons.design_services_rounded,
-                //                     color: AppColor.white,
-                //                   )),
-                //               10.width,
-                //               Expanded(
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       "Prepare for an Exam",
-                //                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                //                     ),
-                //                     Text(
-                //                       "Find popular exam questions and more",
-                //                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ),
-                //               10.width,
-                //               Icon(Icons.navigate_next_rounded)
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
                 (controller.tips!.isNotEmpty)
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,38 +228,6 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           ),
-                          // ListView.separated(
-                          //   shrinkWrap: true,
-                          //   physics: NeverScrollableScrollPhysics(),
-                          //   itemCount: controller.tips!.length,
-                          //   itemBuilder: (context, index) {
-                          //     final item = controller.tips![index];
-                          //     return Container(
-                          //       decoration: BoxDecoration(
-                          //         color: AppColor.white,
-                          //         borderRadius: BorderRadius.circular(4),
-                          //         border: Border.all(color: AppColor.softBorderColor),
-                          //       ),
-                          //       clipBehavior: Clip.hardEdge,
-                          //       padding: EdgeInsets.all(16),
-                          //       child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           Text(
-                          //             item.tipTitle ?? "",
-                          //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                          //           ),
-                          //           4.height,
-                          //           Text(
-                          //             item.tipContent ?? "",
-                          //             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          //   separatorBuilder: (context, index) => 6.height,
-                          // )
                         ],
                       )
                     : SizedBox()
@@ -450,15 +237,5 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-  }
-}
-
-class SmoothIndicatorController extends ChangeNotifier {
-  late int currentIndex;
-  SmoothIndicatorController(this.currentIndex);
-
-  changeIndex(int index) {
-    currentIndex = index;
-    notifyListeners();
   }
 }

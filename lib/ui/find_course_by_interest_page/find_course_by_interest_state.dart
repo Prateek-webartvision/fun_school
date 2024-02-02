@@ -1,17 +1,20 @@
-import 'package:citycloud_school/ui/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../home_page/controller/smooth_indicator_controller.dart';
 import 'controller/find_course_by_interest_controller.dart';
 import 'find_course_by_interest_view.dart';
 
-abstract class FindCourseByInterestState extends State<FindCourseByInterestView> {
+abstract class FindCourseByInterestState
+    extends State<FindCourseByInterestView> {
   late FindCourseByInterestController findCourseByInterestController;
   late SmoothIndicatorController smoothIndicatorController;
 
   onSearch(String s) => findCourseByInterestController.searchFilter(s);
-  onInterest(String? interest) => findCourseByInterestController.interestFilter(interest);
-  onLevel(String? level) => findCourseByInterestController.proficiencyFilter(level);
+  onInterest(String? interest) =>
+      findCourseByInterestController.interestFilter(interest);
+  onLevel(String? level) =>
+      findCourseByInterestController.proficiencyFilter(level);
 
   @override
   void initState() {

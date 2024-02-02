@@ -1,7 +1,7 @@
-import 'package:citycloud_school/ui/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../home_page/controller/smooth_indicator_controller.dart';
 import 'controller/find_course_by_career_controller.dart';
 import 'find_course_by_career_view.dart';
 

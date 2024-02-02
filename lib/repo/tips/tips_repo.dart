@@ -5,17 +5,14 @@ import '../../network/app_api.dart';
 class TipsRepository {
   static final _api = AppApi();
 
-  static Future<List<TipsModel>?> getTips() async {
-    return await _api.getApi(AppUrls.getTips).then((value) {
-      List<TipsModel> temp = [];
-      for (var element in value) {
-        final tip = TipsModel.fromJson(element);
-        temp.add(tip);
-      }
-      return temp;
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
+  static Future<List<TipsModel>> get getTips async {
+    final res = await _api.getApi(AppUrls.getTips);
+    List<TipsModel> temp = [];
+    for (var element in res) {
+      final tip = TipsModel.fromJson(element);
+      temp.add(tip);
+    }
+    return temp;
   }
 }
 
@@ -27,7 +24,7 @@ class TipsModel {
   String? datePosted;
 
   TipsModel.fromJson(Map<String, dynamic> json) {
-    tipId = json['tip_id'];
+    tipId = int.parse(json['tip_id'].toString());
     tipTitle = json['tip_title'];
     title = json['title'];
     tipContent = json['tip_content'];

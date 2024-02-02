@@ -20,29 +20,14 @@ class HomePageTipController extends GetxController {
   }
 
   void _loadTips() async {
-    await TipsRepository.getTips().then((value) {
-      tips = value;
+    try {
+      final res = await TipsRepository.getTips;
+      tips = res;
       apiState = ApiState.success;
-    }).onError((error, stackTrace) {
-      this.error = error.toString();
+    } catch (e) {
+      error = e.toString();
       apiState = ApiState.error;
-    });
+    }
     update();
   }
 }
-
-
-  // if (error is KInternetException || error is KRequestTimeOutException) {
-  //       print("object");
-  //       scaffoldMenagerKey.currentState
-  //         ?..removeCurrentMaterialBanner()
-  //         ..showMaterialBanner(MaterialBanner(content: Text(this.error.toString()), actions: [
-  //           GestureDetector(
-  //             onTap: () {
-  //               scaffoldMenagerKey.currentState?..removeCurrentMaterialBanner();
-  //               _loadTips();
-  //             },
-  //             child: Icon(Icons.replay_outlined),
-  //           )
-  //         ]));
-  //     }

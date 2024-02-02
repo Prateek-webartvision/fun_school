@@ -2,11 +2,12 @@
 
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/botton_nav_bar/controller/nav_page_controller.dart';
 import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
+
+import 'controller/nav_page_controller.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key, required this.child});
@@ -52,7 +53,6 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
               actions: [
                 IconButton(
                   onPressed: () {
-                    // AppNotficationServices.instance.showNotifaction();
                     AppUtils.showSnack("coming soon");
                   },
                   icon: Icon(Icons.notifications_outlined),
