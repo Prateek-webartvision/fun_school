@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/ui/interactive_quiz_page/quiz_tab_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../repo/quiz_repo/quiz_repo.dart';
@@ -44,7 +43,12 @@ class _GifResultPageState extends State<GifResultPage> {
     super.initState();
   }
 
-  _setQuizScore({required String title, required String drage, required String type, required String courseId, required String subjectId}) async {
+  _setQuizScore(
+      {required String title,
+      required String drage,
+      required String type,
+      required String courseId,
+      required String subjectId}) async {
     QuizRepository.addQuizScore(
       type: type,
       courseID: courseId,
@@ -87,58 +91,74 @@ class _GifResultPageState extends State<GifResultPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppColor.scaffoldBg,
-            title: Text("Result", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            leading: Text(""),
-            centerTitle: true,
-          ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                Container(),
-                Text(
-                  (ans.grade >= 100) ? "Mission Completed" : "Mission Fail",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.mainColor,
-                  ),
+        appBar: AppBar(
+          backgroundColor: AppColor.scaffoldBg,
+          title: Text("Result",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          leading: Text(""),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(),
+              Text(
+                (ans.grade >= 100) ? "Mission Completed" : "Mission Fail",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.mainColor,
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      (ans.grade >= 100)
-                          //success
-                          ? Flexible(child: KGifImage(url: "http://app.citycloudschool.co.ke/default/x/upload/success_quiz.gif"))
-                          : Flexible(child: KGifImage(url: "http://app.citycloudschool.co.ke/default/x/upload/fail_quiz.gif")),
-                    ],
-                  ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    (ans.grade >= 100)
+                        //success
+                        ? Flexible(
+                            child: Image.network(
+                                "http://app.citycloudschool.co.ke/default/x/upload/success_quiz.gif"),
+                            // child: KGifImage(
+                            //     url:
+                            //         "http://app.citycloudschool.co.ke/default/x/upload/success_quiz.gif"),
+                          )
+                        : Flexible(
+                            child: Image.network(
+                                "http://app.citycloudschool.co.ke/default/x/upload/fail_quiz.gif"),
+                            // child: KGifImage(
+                            //     url:
+                            //         "http://app.citycloudschool.co.ke/default/x/upload/fail_quiz.gif"),
+                          ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          bottomNavigationBar: Container(
-            padding: EdgeInsets.all(16),
-            child: KBtn(
-              onClick: () {
-                if (widget.isFromVideo) {
-                  rootNavigator.currentState!.pop();
-                  rootNavigator.currentState!.pop();
-                  if (ans.grade > 100) {
-                    rootNavigator.currentState!.pop();
-                  }
-                } else {
-                  rootNavigator.currentState!.pop();
+        ),
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.all(16),
+          child: KBtn(
+            onClick: () {
+              if (widget.isFromVideo) {
+                rootNavigator.currentState!.pop();
+                rootNavigator.currentState!.pop();
+                if (ans.grade > 100) {
                   rootNavigator.currentState!.pop();
                 }
-              },
-              text: (ans.grade >= 100) ? "Unlock new Content" : "better luck next time",
-              height: 44,
-            ),
-          ),),
+              } else {
+                rootNavigator.currentState!.pop();
+                rootNavigator.currentState!.pop();
+              }
+            },
+            text: (ans.grade >= 100)
+                ? "Unlock new Content"
+                : "better luck next time",
+            height: 44,
+          ),
+        ),
+      ),
     );
   }
 }

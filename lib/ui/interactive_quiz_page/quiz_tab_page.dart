@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ui' as ui;
-
 import 'package:citycloud_school/uitls/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gif/flutter_gif.dart';
+// import 'package:flutter_gif/flutter_gif.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:number_to_indian_words/number_to_indian_words.dart';
@@ -50,12 +48,16 @@ class _QuizTabPageState extends State<QuizTabPage> {
                   border: Border.all(color: AppColor.softBorderColor),
                   // borderRadius: BorderRadius.circular(4),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // bar
-                    LinearProgressIndicator(value: (controller.currentQuizIndex + 1) / controller.quizs!.length, minHeight: 6),
+                    LinearProgressIndicator(
+                        value: (controller.currentQuizIndex + 1) /
+                            controller.quizs!.length,
+                        minHeight: 6),
                     14.height,
                     Container(
                       width: double.maxFinite,
@@ -68,7 +70,8 @@ class _QuizTabPageState extends State<QuizTabPage> {
                       child: Column(
                         children: [
                           Text(
-                            "Mission ${NumToWords.convertNumberToIndianWords(controller.misstionIdex)}".capitalize!,
+                            "Mission ${NumToWords.convertNumberToIndianWords(controller.misstionIdex)}"
+                                .capitalize!,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -150,14 +153,17 @@ class _QuizTabPageState extends State<QuizTabPage> {
                   border: Border.all(color: AppColor.softBorderColor),
                   // borderRadius: BorderRadius.circular(4),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 margin: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(children: [
                   // Text(quiz.sideImage.runtimeType.toString()),
                   Expanded(
                       flex: 1,
                       child: (quiz.sideImage != null)
-                          ? KGifImage(url: quiz.sideImage!)
+                          ? Image.network(quiz.sideImage!)
+                          // KGifImage(url: quiz.sideImage!)
+
                           : Center(
                               child: Text("No Image"),
                             )),
@@ -199,7 +205,9 @@ class _QuizTabPageState extends State<QuizTabPage> {
                 itemBuilder: (context, index) {
                   return DragTarget<QuizData>(
                     onAccept: (data) {
-                      controller.changeAns(quizDataIndex: index, selectedAns: data.correctAnswer!);
+                      controller.changeAns(
+                          quizDataIndex: index,
+                          selectedAns: data.correctAnswer!);
                     },
                     builder: (context, candidateData, rejectedData) {
                       return Container(
@@ -215,10 +223,13 @@ class _QuizTabPageState extends State<QuizTabPage> {
                           text: TextSpan(
                             text: quiz.quizData![index].question,
                             style: TextStyle(color: Colors.black),
-                            children: (quiz.quizData![index].selectedAns != null)
+                            children: (quiz.quizData![index].selectedAns !=
+                                    null)
                                 ? [
                                     TextSpan(text: " "),
-                                    TextSpan(text: quiz.quizData![index].selectedAns!),
+                                    TextSpan(
+                                        text:
+                                            quiz.quizData![index].selectedAns!),
                                   ]
                                 : [
                                     TextSpan(text: " "),
@@ -303,10 +314,14 @@ class _QuizTabPageState extends State<QuizTabPage> {
                         child: KBtn(
                       onClick: () {
                         // check all answers are given
-                        var d = controller.quizs![controller.currentQuizIndex].quizData!.where((element) => element.selectedAns == null).toList();
+                        var d = controller
+                            .quizs![controller.currentQuizIndex].quizData!
+                            .where((element) => element.selectedAns == null)
+                            .toList();
                         if (d.isNotEmpty) {
                           AppUtils.showSnack("Fill All answers");
-                        } else if ((controller.quizs!.length - 1) > controller.currentQuizIndex) {
+                        } else if ((controller.quizs!.length - 1) >
+                            controller.currentQuizIndex) {
                           controller.goToNextQuitions();
                         } else {
                           // submit
@@ -360,61 +375,61 @@ class DragableTitle extends StatelessWidget {
   }
 }
 
-class KGifImage extends StatefulWidget {
-  const KGifImage({super.key, required this.url});
-  final String url;
+// class KGifImage extends StatefulWidget {
+//   const KGifImage({super.key, required this.url});
+//   final String url;
 
-  @override
-  State<KGifImage> createState() => _KGifImageState();
-}
+//   @override
+//   State<KGifImage> createState() => _KGifImageState();
+// }
 
-class _KGifImageState extends State<KGifImage> with SingleTickerProviderStateMixin {
-  late FlutterGifController gifController;
+// class _KGifImageState extends State<KGifImage> with SingleTickerProviderStateMixin {
+//   late FlutterGifController gifController;
 
-  @override
-  void initState() {
-    gifController = FlutterGifController(vsync: this);
+//   @override
+//   void initState() {
+//     gifController = FlutterGifController(vsync: this);
 
-    super.initState();
-  }
+//     super.initState();
+//   }
 
-  _loadFrame() async {
-    final url = Uri.parse(widget.url);
-    final ByteData data = await NetworkAssetBundle(url).load(url.path);
+//   _loadFrame() async {
+//     final url = Uri.parse(widget.url);
+//     final ByteData data = await NetworkAssetBundle(url).load(url.path);
 
-    await _extractGifFrames(data).then((e) {
-      gifController.repeat(min: 0, max: e.toDouble(), period: const Duration(seconds: 1));
-    });
-  }
+//     await _extractGifFrames(data).then((e) {
+//       gifController.repeat(min: 0, max: e.toDouble(), period: const Duration(seconds: 1));
+//     });
+//   }
 
-  // Function to extract gif image frames
-  Future<int> _extractGifFrames(ByteData data) async {
-    // Create a codec to decode the gif
-    final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+//   // Function to extract gif image frames
+//   Future<int> _extractGifFrames(ByteData data) async {
+//     // Create a codec to decode the gif
+//     final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
 
-    final int frameCount = codec.frameCount;
+//     final int frameCount = codec.frameCount;
 
-    return frameCount;
-  }
+//     return frameCount;
+//   }
 
-  @override
-  void dispose() {
-    gifController.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     gifController.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GifImage(
-      fit: BoxFit.cover,
-      image: NetworkImage(widget.url),
-      controller: gifController,
-      repeat: ImageRepeat.repeat,
-      onFetchCompleted: () {
-        gifController.value = 0;
-        gifController.stop();
-        _loadFrame();
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GifImage(
+//       fit: BoxFit.cover,
+//       image: NetworkImage(widget.url),
+//       controller: gifController,
+//       repeat: ImageRepeat.repeat,
+//       onFetchCompleted: () {
+//         gifController.value = 0;
+//         gifController.stop();
+//         _loadFrame();
+//       },
+//     );
+//   }
+// }
