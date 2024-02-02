@@ -8,7 +8,7 @@ import '../../../models/courses_dedails/flashcard.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
 import '../../../repo/study_plan_repo/study_plan_repo.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 import '../model/folder_model.dart';
 
 class MyCoursesController extends GetxController {
@@ -36,7 +36,7 @@ class MyCoursesController extends GetxController {
 
   //create new folder
   createFolder(String fName) {
-    AppUtils.showloadingOverlay(() async {
+    AppUtils.showLoadingOverlay(() async {
       await StudyPlanRepository.createNewFolder(fName).then((value) {
         _loadFolders();
         AppUtils.showSnack(value);
@@ -83,7 +83,8 @@ class MyCoursesController extends GetxController {
         if (courses.courseEnrollment != null) {
           for (var enroll in courses.courseEnrollment!) {
             // checking current user is enrolled or not
-            if (int.parse(enroll.userId!) == AppStorage.user.currentUser()!.userid) {
+            if (int.parse(enroll.userId!) ==
+                AppStorage.user.currentUser()!.userId) {
               temp.add(courses);
             }
           }
@@ -101,7 +102,7 @@ class MyCoursesController extends GetxController {
     // final cs = myCourses![index].courseEnrollment!;
     late CoursesEnrollment myRnroll;
     for (var element in item.courseEnrollment!) {
-      if (int.parse(element.userId!) == AppStorage.user.currentUser()!.userid) {
+      if (int.parse(element.userId!) == AppStorage.user.currentUser()!.userId) {
         myRnroll = element;
       }
     }

@@ -9,7 +9,7 @@ import '../../../../../models/community_discussion_model/community_discussion_mo
 
 import '../../../../../style/assets.dart';
 import '../../../../../style/color.dart';
-import '../../../../../uitls/helper.dart';
+import '../../../../../utils/helper.dart';
 import '../../../../../widegts/overlaping_user_avtar.dart';
 import '../../../../profile_page_other/controller/other_profile_controller.dart';
 
@@ -93,7 +93,9 @@ class TextPostTile extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                        Text(userName,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600)),
                         4.width,
                         if (isVerify == true)
                           Icon(
@@ -136,7 +138,8 @@ class TextPostTile extends StatelessWidget {
                           children: [
                             Text(
                               topic!,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w600),
                               // overflow: TextOverflow.ellipsis,
                               // maxLines: 2,
                             ),
@@ -151,7 +154,8 @@ class TextPostTile extends StatelessWidget {
                           children: [
                             Text(
                               message!,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
                             ),
                             4.height,
                           ],
@@ -175,15 +179,18 @@ class TextPostTile extends StatelessWidget {
                                         width: 140,
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade200,
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                           image: DecorationImage(
-                                            image: CachedNetworkImageProvider(media![index].src!),
+                                            image: CachedNetworkImageProvider(
+                                                media![index].src!),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
                                       );
                                     },
-                                    separatorBuilder: (context, index) => 6.width,
+                                    separatorBuilder: (context, index) =>
+                                        6.width,
                                   ),
                                 ),
                                 10.height,
@@ -196,8 +203,11 @@ class TextPostTile extends StatelessWidget {
                           InkWell(
                             onTap: onLikeClick,
                             child: Icon(
-                              (isLiked) ? Icons.thumb_up_alt_rounded : Icons.thumb_up_alt_outlined,
-                              color: (isLiked) ? AppColor.mainColor : Colors.black,
+                              (isLiked)
+                                  ? Icons.thumb_up_alt_rounded
+                                  : Icons.thumb_up_alt_outlined,
+                              color:
+                                  (isLiked) ? AppColor.mainColor : Colors.black,
                               size: 24,
                             ),
                           ),
@@ -238,7 +248,9 @@ class TextPostTile extends StatelessWidget {
                 child: (first2Likes!.isEmpty)
                     ? SizedBox()
                     : OverlapingUserAvtar(
-                        avtarUrls: first2Likes!.map((e) => e.userProfileImage!).toList(),
+                        avtarUrls: first2Likes!
+                            .map((e) => e.userProfileImage!)
+                            .toList(),
                         maxAvtatCount: 2,
                       ),
               ),

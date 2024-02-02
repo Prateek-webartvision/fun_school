@@ -7,9 +7,13 @@ class CommunityGroupRepository {
 
   // get group List
   static Future<List<CommunityGroupModel>> getGroups() async {
-    Map<String, String> perams = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+    Map<String, String> perams = {
+      "user_id": AppStorage.user.currentUser()!.userId!.toString()
+    };
 
-    return await _api.getApi(AppUrls.getcummuityGroups, params: perams).then((value) {
+    return await _api
+        .getApi(AppUrls.getcummuityGroups, params: perams)
+        .then((value) {
       List<CommunityGroupModel> groups = [];
       for (var element in value) {
         final gd = CommunityGroupModel.fromJson(element);

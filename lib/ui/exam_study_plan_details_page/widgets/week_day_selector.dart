@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../uitls/helper.dart';
+import '../../../utils/helper.dart';
 import '../controller/week_day_selector_controller.dart';
 
 class WeekDaySelector extends StatelessWidget {
@@ -47,7 +47,9 @@ class WeekDaySelector extends StatelessWidget {
                               vertical: 5,
                             ),
                             decoration: BoxDecoration(
-                              color: (cnt.currentIndex == i) ? AppColor.mainColor : AppColor.white,
+                              color: (cnt.currentIndex == i)
+                                  ? AppColor.mainColor
+                                  : AppColor.white,
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Text(
@@ -55,7 +57,9 @@ class WeekDaySelector extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
-                                color: (cnt.currentIndex == i) ? AppColor.white : Colors.black,
+                                color: (cnt.currentIndex == i)
+                                    ? AppColor.white
+                                    : Colors.black,
                               ),
                             )),
                       ),

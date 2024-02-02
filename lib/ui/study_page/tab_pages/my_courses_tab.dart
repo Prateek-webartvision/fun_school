@@ -3,7 +3,7 @@
 import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +33,8 @@ class MyCoursesTab extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (controller.apiState == ApiState.error) {
             return Center(child: Text(controller.error.toString()));
-          } else if (controller.myCourses == null || controller.myCourses!.isEmpty) {
+          } else if (controller.myCourses == null ||
+              controller.myCourses!.isEmpty) {
             return Center(child: Text("No Enrollment"));
           } else {
             return CustomScrollView(
@@ -72,7 +73,8 @@ class MyCoursesTab extends StatelessWidget {
                                   isScrollControlled: true,
                                   backgroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(16)),
                                   ),
                                   builder: (context) {
                                     return CreateFolderSheet(
@@ -88,12 +90,18 @@ class MyCoursesTab extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: context.theme.primaryColor),
+                                  border: Border.all(
+                                      color: context.theme.primaryColor),
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [Icon(Icons.add, color: context.theme.primaryColor), 6.width, Text("create folder".capitalize!)],
+                                  children: [
+                                    Icon(Icons.add,
+                                        color: context.theme.primaryColor),
+                                    6.width,
+                                    Text("create folder".capitalize!)
+                                  ],
                                 ),
                               ),
                             ),
@@ -112,9 +120,11 @@ class MyCoursesTab extends StatelessWidget {
                 ),
 
                 //folders
-                if (controller.myFolders != null && controller.myFolders!.isNotEmpty)
+                if (controller.myFolders != null &&
+                    controller.myFolders!.isNotEmpty)
                   SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16)
+                        .copyWith(bottom: 16),
                     sliver: SliverToBoxAdapter(
                       child: ListView.separated(
                         shrinkWrap: true,
@@ -125,8 +135,10 @@ class MyCoursesTab extends StatelessWidget {
                           return GestureDetector(
                             onTap: () async {
                               List<FolderCourseModel>? respond;
-                              await AppUtils.showloadingOverlay(() async {
-                                await StudyPlanRepository.getFolderCoursesByUser().then((res) {
+                              await AppUtils.showLoadingOverlay(() async {
+                                await StudyPlanRepository
+                                        .getFolderCoursesByUser()
+                                    .then((res) {
                                   respond = res;
                                 }).onError((error, stackTrace) {
                                   AppUtils.showSnack(error.toString());
@@ -134,10 +146,16 @@ class MyCoursesTab extends StatelessWidget {
                               });
 
                               if (respond != null && respond!.isNotEmpty) {
-                                List<FolderCourseModel> coursesByFolderId = respond!.where((element) => element.folderId == item.folderId.toString()).toList();
+                                List<FolderCourseModel> coursesByFolderId =
+                                    respond!
+                                        .where((element) =>
+                                            element.folderId ==
+                                            item.folderId.toString())
+                                        .toList();
 
                                 if (coursesByFolderId.isNotEmpty) {
-                                  var res = await rootNavigator.currentState!.push(
+                                  var res =
+                                      await rootNavigator.currentState!.push(
                                     MaterialPageRoute(
                                       builder: (context) => FolderPage(
                                         coursesByFolderId: coursesByFolderId,
@@ -168,7 +186,8 @@ class MyCoursesTab extends StatelessWidget {
                                       width: 80,
                                       decoration: BoxDecoration(
                                         color: context.theme.primaryColor,
-                                        borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(4)),
                                       ),
                                     ),
                                   ],
@@ -205,22 +224,29 @@ class MyCoursesTab extends StatelessWidget {
 
                 // list
                 SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
                   sliver: SliverList.separated(
                     itemCount: controller.myEnrollsOrInFolder!.length,
                     itemBuilder: (context, index) {
                       final itemTemp = controller.myEnrollsOrInFolder![index];
                       // final item = controller.myCourses![index];
-                      final item = controller.myCourses!.where((element) => itemTemp.courseId! == element.courseId!.toString()).first;
+                      final item = controller.myCourses!
+                          .where((element) =>
+                              itemTemp.courseId! ==
+                              element.courseId!.toString())
+                          .first;
 
                       // return Text("data ${item.courseName}");
                       return GestureDetector(
                         onTap: () {
                           // print("${controller.myCourses![index]}");
-                          appRoutes.pushNamed(PagesName.subjectDetailsPage, extra: item);
+                          appRoutes.pushNamed(PagesName.subjectDetailsPage,
+                              extra: item);
                         },
                         onLongPress: () {
-                          controller.enableSelectionMode(item.courseId!.toString());
+                          controller
+                              .enableSelectionMode(item.courseId!.toString());
                           // print("object");
                         },
                         child: Row(
@@ -233,7 +259,8 @@ class MyCoursesTab extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       //
-                                      controller.addCoursesAndRemove(item.courseId!.toString());
+                                      controller.addCoursesAndRemove(
+                                          item.courseId!.toString());
                                     },
                                     child: Container(
                                       height: 20,
@@ -241,8 +268,13 @@ class MyCoursesTab extends StatelessWidget {
                                       // color: Colors.white,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: (controller.selectedCourseIds.contains(item.courseId!.toString())) ? context.theme.primaryColor : Colors.white,
-                                        border: Border.all(color: context.theme.primaryColor),
+                                        color: (controller.selectedCourseIds
+                                                .contains(
+                                                    item.courseId!.toString()))
+                                            ? context.theme.primaryColor
+                                            : Colors.white,
+                                        border: Border.all(
+                                            color: context.theme.primaryColor),
                                       ),
                                     ),
                                   ),
@@ -254,7 +286,8 @@ class MyCoursesTab extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: AppColor.white,
-                                  border: Border.all(color: AppColor.softBorderColor),
+                                  border: Border.all(
+                                      color: AppColor.softBorderColor),
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Column(
@@ -263,14 +296,19 @@ class MyCoursesTab extends StatelessWidget {
                                       children: [
                                         //top
                                         Container(
-                                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 16),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   // Text(
@@ -283,7 +321,8 @@ class MyCoursesTab extends StatelessWidget {
                                                     item.courseName!,
                                                     style: GoogleFonts.inter(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   ),
                                                 ],
@@ -292,10 +331,15 @@ class MyCoursesTab extends StatelessWidget {
                                               Container(
                                                 decoration: BoxDecoration(
                                                   color: AppColor.scaffoldBg,
-                                                  borderRadius: BorderRadius.circular(100),
-                                                  border: Border.all(color: AppColor.textFeildBorderColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100),
+                                                  border: Border.all(
+                                                      color: AppColor
+                                                          .textFeildBorderColor),
                                                 ),
-                                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 2),
                                                 child: Text(
                                                   "1 hours",
                                                   style: GoogleFonts.inter(
@@ -311,7 +355,8 @@ class MyCoursesTab extends StatelessWidget {
                                         Container(
                                           // color: Colors.green,
                                           height: 38,
-                                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 16),
                                           child: Row(
                                             children: [
                                               Text(
@@ -325,9 +370,13 @@ class MyCoursesTab extends StatelessWidget {
                                               Expanded(
                                                 child: LinearProgressIndicator(
                                                   // value: 0.1,
-                                                  value: controller.getMyProgress(item) / 100,
-                                                  backgroundColor: AppColor.scaffoldBg,
-                                                  color: context.appTheme.colorScheme.primary,
+                                                  value: controller
+                                                          .getMyProgress(item) /
+                                                      100,
+                                                  backgroundColor:
+                                                      AppColor.scaffoldBg,
+                                                  color: context.appTheme
+                                                      .colorScheme.primary,
                                                   minHeight: 6,
                                                 ),
                                               ),
@@ -469,23 +518,28 @@ class MyCoursesTab extends StatelessWidget {
               child: KBtn(
                 width: double.maxFinite,
                 onClick: () async {
-                  if (controller.myFolders != null && controller.myFolders!.isNotEmpty) {
+                  if (controller.myFolders != null &&
+                      controller.myFolders!.isNotEmpty) {
                     AppFolderModel? res = await showModalBottomSheet(
                       context: context,
                       clipBehavior: Clip.hardEdge,
                       isScrollControlled: true,
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(16)),
                       ),
                       builder: (context) {
-                        return AddToFolderSheet(myFolders: controller.myFolders!);
+                        return AddToFolderSheet(
+                            myFolders: controller.myFolders!);
                       },
                     );
                     //
                     if (res != null) {
-                      AppUtils.showloadingOverlay(() async {
-                        await StudyPlanRepository.addToFolder(folderId: res.folderId!.toString(), selectedCourseIds: controller.selectedCourseIds);
+                      AppUtils.showLoadingOverlay(() async {
+                        await StudyPlanRepository.addToFolder(
+                            folderId: res.folderId!.toString(),
+                            selectedCourseIds: controller.selectedCourseIds);
                         // clear all selection and mode
                         controller.clearSelectionModeAndData();
                         // re load enrolls folders
@@ -569,7 +623,9 @@ class _AddToFolderSheetState extends State<AddToFolderSheet> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: (item.folderId == selectedFolder?.folderId) ? context.theme.primaryColor : Colors.grey.shade300,
+                  color: (item.folderId == selectedFolder?.folderId)
+                      ? context.theme.primaryColor
+                      : Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColor.mainColor),
                 ),
@@ -579,7 +635,9 @@ class _AddToFolderSheetState extends State<AddToFolderSheet> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: (item.folderId != selectedFolder?.folderId) ? Colors.black87 : Colors.grey.shade300,
+                    color: (item.folderId != selectedFolder?.folderId)
+                        ? Colors.black87
+                        : Colors.grey.shade300,
                   ),
                 ),
               ),
@@ -605,7 +663,11 @@ class _AddToFolderSheetState extends State<AddToFolderSheet> {
               borderRadius: BorderRadius.circular(8),
             ),
             margin: EdgeInsets.all(16),
-            child: Text("Add To", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+            child: Text("Add To",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16)),
           ),
         ),
       )

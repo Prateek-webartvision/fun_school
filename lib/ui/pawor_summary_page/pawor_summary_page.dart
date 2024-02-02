@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -24,7 +24,8 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
-        title: Text("Power Summary", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Power Summary",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
 
@@ -46,7 +47,10 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
             // print(controller.summarys);
             return Column(
               children: [
-                Visibility(visible: controller.loadingPrgress != 1, child: LinearProgressIndicator(value: controller.loadingPrgress)),
+                Visibility(
+                    visible: controller.loadingPrgress != 1,
+                    child: LinearProgressIndicator(
+                        value: controller.loadingPrgress)),
                 Expanded(
                   child: WebViewWidget(
                     controller: controller.webController,
@@ -133,8 +137,15 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
                             Icon(Icons.arrow_circle_left_outlined),
                             Text(
                               // "Overview and history algebra",
-                              (0 < controller.currentUrlIndex) ? controller.summarys![controller.currentUrlIndex - 1].subTitle ?? "" : "",
-                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                              (0 < controller.currentUrlIndex)
+                                  ? controller
+                                          .summarys![
+                                              controller.currentUrlIndex - 1]
+                                          .subTitle ??
+                                      ""
+                                  : "",
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
@@ -151,8 +162,16 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
                             Icon(Icons.arrow_circle_right),
                             Text(
                               // "Substitution and evaluating expressions",
-                              (controller.currentUrlIndex < controller.summarys!.length - 1) ? controller.summarys![controller.currentUrlIndex + 1].subTitle ?? "" : "",
-                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                              (controller.currentUrlIndex <
+                                      controller.summarys!.length - 1)
+                                  ? controller
+                                          .summarys![
+                                              controller.currentUrlIndex + 1]
+                                          .subTitle ??
+                                      ""
+                                  : "",
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),
                           ],

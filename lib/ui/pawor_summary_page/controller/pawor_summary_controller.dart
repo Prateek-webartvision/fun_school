@@ -1,4 +1,4 @@
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';

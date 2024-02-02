@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
-import '../../../uitls/helper.dart';
+import '../../../utils/helper.dart';
 
 class GroupTabTile extends StatelessWidget {
   const GroupTabTile({
@@ -61,7 +61,8 @@ class GroupTabTile extends StatelessWidget {
                       4.width,
                       Text(
                         totalMembers,
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
@@ -75,7 +76,8 @@ class GroupTabTile extends StatelessWidget {
                       Text(
                         // "Joined on May 20, 2023",
                         "Joined on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(datejoinedPoch))}",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),

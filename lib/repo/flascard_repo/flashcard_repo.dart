@@ -1,7 +1,7 @@
 import 'package:citycloud_school/models/courses_dedails/flashcard.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../network/app_api.dart';
@@ -9,8 +9,10 @@ import '../../network/app_api.dart';
 class FlashCardRepository {
   static final _api = AppApi();
 
-  static Future<List<FlashCardModel>?> getFlashCards({required int courseId}) async {
-    return await _api.postApi(AppUrls.getFlashcardByCourses, params: {"course_id": courseId.toString()}).then((value) async {
+  static Future<List<FlashCardModel>?> getFlashCards(
+      {required int courseId}) async {
+    return await _api.postApi(AppUrls.getFlashcardByCourses,
+        params: {"course_id": courseId.toString()}).then((value) async {
       if (value != null) {
         var res = await _getFlashcardResultbyUser();
 
@@ -20,7 +22,10 @@ class FlashCardRepository {
 
           for (var e1 in res) {
             if (flashCardModel.flashcardId.toString() == e1["flashcard_id"]) {
-              flashCardModel.copyWith(flashcardResult: (e1["flashcard_id"] != null) ? bool.parse(e1["flashcard_result"].toString()) : null);
+              flashCardModel.copyWith(
+                  flashcardResult: (e1["flashcard_id"] != null)
+                      ? bool.parse(e1["flashcard_result"].toString())
+                      : null);
             }
           }
 
@@ -38,9 +43,10 @@ class FlashCardRepository {
   }
 
   // add flash card
-  static updateFlashCardResult({required int flashCardId, required bool result}) async {
+  static updateFlashCardResult(
+      {required int flashCardId, required bool result}) async {
     var data = <String, String>{};
-    data["user_id"] = AppStorage.user.currentUser()!.userid!.toString();
+    data["user_id"] = AppStorage.user.currentUser()!.userId!.toString();
     data["flashcard_id"] = flashCardId.toString();
     data["flashcard_result"] = result.toString();
 
@@ -52,7 +58,9 @@ class FlashCardRepository {
   }
 
   static _getFlashcardResultbyUser() async {
-    return await _api.postApi(AppUrls.getFlashcardResultByUser, params: {"user_id": AppStorage.user.currentUser()!.userid!.toString()}).then((value) {
+    return await _api.postApi(AppUrls.getFlashcardResultByUser, params: {
+      "user_id": AppStorage.user.currentUser()!.userId!.toString()
+    }).then((value) {
       return value;
     }).onError((error, stackTrace) {
       debugPrint("dasda");

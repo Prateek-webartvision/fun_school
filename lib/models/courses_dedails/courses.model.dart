@@ -1,4 +1,4 @@
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 
 import 'subject.model.dart';
 
@@ -57,7 +57,8 @@ class CoursesModel {
         courseEnrollment.add(CoursesEnrollment.fromJson(element));
       }
       this.courseEnrollment = courseEnrollment;
-      isCourseEnrolled = AppUtils.isCourseEnroledByMe(enrolls: this.courseEnrollment!);
+      isCourseEnrolled =
+          AppUtils.isCourseEnroledByMe(enrolls: this.courseEnrollment!);
     }
 
     status = json['status'];

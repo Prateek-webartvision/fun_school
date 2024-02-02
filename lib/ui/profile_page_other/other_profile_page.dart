@@ -5,7 +5,7 @@ import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/controller/other_profile_controller.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,9 @@ class _OtherProfilePageState extends OtherProfilePageState {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             centerTitle: true,
-            actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))],
+            actions: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))
+            ],
           ),
           body: Column(
             children: [
@@ -80,7 +82,8 @@ class _OtherProfilePageState extends OtherProfilePageState {
                             border: Border.all(color: AppColor.softBorderColor),
                             image: (profile.data!.profileImage != null)
                                 ? DecorationImage(
-                                    image: CachedNetworkImageProvider(profile.data!.profileImage!),
+                                    image: CachedNetworkImageProvider(
+                                        profile.data!.profileImage!),
                                     // image: CachedNetworkImageProvider(url),
                                     fit: BoxFit.cover,
                                   )
@@ -105,9 +108,12 @@ class _OtherProfilePageState extends OtherProfilePageState {
                                 Text(
                                   // "Jerome Bell",
                                   profile.data!.username!,
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
                                 ),
-                                if (profile.data!.userType! == "Certified_Tutor")
+                                if (profile.data!.userType! ==
+                                    "Certified_Tutor")
                                   Column(
                                     children: [
                                       4.width,
@@ -119,7 +125,8 @@ class _OtherProfilePageState extends OtherProfilePageState {
                             Text(
                               "@${profile.data!.username}",
                               // "@Jerome Bell",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -136,7 +143,10 @@ class _OtherProfilePageState extends OtherProfilePageState {
                             padding: const EdgeInsets.only(left: 60),
                             child: Text(
                               profile.data!.about ?? "",
-                              style: TextStyle(fontSize: 13.3, fontWeight: FontWeight.w500, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 13.3,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             ),
                           ),
                         ],
@@ -150,7 +160,9 @@ class _OtherProfilePageState extends OtherProfilePageState {
                           width: 50,
                           height: 20,
                           child: OverlapingUserAvtar(
-                            avtarUrls: profile.data!.followersProfiles!.map((e) => e.userProfileImage!).toList(),
+                            avtarUrls: profile.data!.followersProfiles!
+                                .map((e) => e.userProfileImage!)
+                                .toList(),
                             // avtarUrls: [],
                             maxAvtatCount: 3,
                           ),
@@ -165,7 +177,8 @@ class _OtherProfilePageState extends OtherProfilePageState {
                     ),
                     // follow btn
                     Visibility(
-                      visible: profile.data!.userId! != AppStorage.user.currentUser()!.userid,
+                      visible: profile.data!.userId! !=
+                          AppStorage.user.currentUser()!.userId,
                       child: Column(
                         children: [
                           7.height,
@@ -174,7 +187,9 @@ class _OtherProfilePageState extends OtherProfilePageState {
                             onClick: () {
                               AppUtils.showSnack("Coming soon");
                             },
-                            text: (profile.data!.isFollowed) ? "Unfollow" : "Follow",
+                            text: (profile.data!.isFollowed)
+                                ? "Unfollow"
+                                : "Follow",
                           )
                         ],
                       ),

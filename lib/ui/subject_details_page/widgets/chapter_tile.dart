@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/ui/subject_video_list_page/subject_video_list_page.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -36,7 +36,10 @@ class ChapterTile extends StatelessWidget {
     List<ContentVideo> belowVideos = [];
 
     for (int i = detIndex; i < topicSet.length; i++) {
-      videos.where((element) => element.subTitle! == topicSet[i]).toList().forEach((e) {
+      videos
+          .where((element) => element.subTitle! == topicSet[i])
+          .toList()
+          .forEach((e) {
         belowVideos.add(e);
       });
     }

@@ -58,7 +58,7 @@ abstract class DiscussionModel {
       List<Likes> likes = [];
       for (var element in json['likes']) {
         final like = Likes.fromJson(element);
-        if (like.userId! == AppStorage.user.currentUser()!.userid!) {
+        if (like.userId! == AppStorage.user.currentUser()!.userId!) {
           isLiked = true;
         }
         likes.add(like);
@@ -119,7 +119,8 @@ class CommunityDiscussionUserModel extends DiscussionModel {
   String? followers;
   String? following;
 
-  CommunityDiscussionUserModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+  CommunityDiscussionUserModel.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
     posts = json['posts'];
     followers = json['followers'];
     following = json['following'];

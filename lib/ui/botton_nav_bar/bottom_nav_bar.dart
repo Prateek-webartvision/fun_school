@@ -3,7 +3,7 @@
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/botton_nav_bar/controller/nav_page_controller.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
@@ -44,7 +44,8 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
               title: (controller.currentIndex == 3)
                   ? Text(
                       "Communities",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     )
                   : null,
               centerTitle: true,
@@ -70,7 +71,11 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           return SnakeNavigationBar.color(
             selectedItemColor: Theme.of(context).colorScheme.primary,
             snakeViewColor: Theme.of(context).colorScheme.primary,
-            snakeShape: SnakeShape(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)), height: 3, centered: false),
+            snakeShape: SnakeShape(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2)),
+                height: 3,
+                centered: false),
             backgroundColor: AppColor.white,
             selectedLabelStyle: TextStyle(fontSize: 10),
             unselectedLabelStyle: TextStyle(fontSize: 10),
@@ -79,11 +84,26 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
             currentIndex: controller.currentIndex,
             onTap: (index) => controller.updatePage(index: index),
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home_rounded), label: "Home"),
-              BottomNavigationBarItem(icon: Icon(Icons.book_outlined), activeIcon: Icon(Icons.book_rounded), label: "Study"),
-              BottomNavigationBarItem(icon: Icon(Icons.edit_outlined), activeIcon: Icon(Icons.edit_rounded), label: "Exam"),
-              BottomNavigationBarItem(icon: Icon(Icons.group_outlined), activeIcon: Icon(Icons.group_rounded), label: "Community"),
-              BottomNavigationBarItem(icon: Icon(Icons.list_outlined), activeIcon: Icon(Icons.list_rounded), label: "Settings"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined),
+                  activeIcon: Icon(Icons.home_rounded),
+                  label: "Home"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.book_outlined),
+                  activeIcon: Icon(Icons.book_rounded),
+                  label: "Study"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.edit_outlined),
+                  activeIcon: Icon(Icons.edit_rounded),
+                  label: "Exam"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.group_outlined),
+                  activeIcon: Icon(Icons.group_rounded),
+                  label: "Community"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.list_outlined),
+                  activeIcon: Icon(Icons.list_rounded),
+                  label: "Settings"),
             ],
           );
         },

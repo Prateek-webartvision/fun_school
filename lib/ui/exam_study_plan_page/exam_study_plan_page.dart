@@ -10,7 +10,7 @@ import 'package:kd_utils/kd_utils.dart';
 import 'package:kd_utils/methods/timestemp.dart';
 
 import '../../repo/exams/exam_study_plan_repo.dart';
-import '../../uitls/app_utils.dart';
+import '../../utils/app_utils.dart';
 import '../../widegts/k_btn.dart';
 import '../exam_preparation_page/widgets/create_exam_sheet.dart';
 import 'widgets/exam_plan_tile.dart';
@@ -62,8 +62,9 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                     padding: sheetBottomSpace,
                     child: CreateExamSheet(
                       courses: widget.controller.courseslist,
-                      onCreate: (name, examDate, selectedCourses, studyHour, periods, reminderSteeing, reminderTime) {
-                        AppUtils.showloadingOverlay(() async {
+                      onCreate: (name, examDate, selectedCourses, studyHour,
+                          periods, reminderSteeing, reminderTime) {
+                        AppUtils.showLoadingOverlay(() async {
                           await ExamStudyPlanRepository.addStudyPlan(
                             examName: name,
                             examDate: examDate,
@@ -129,7 +130,9 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                 );
               }
               if (controller.state == ApiState.error) {
-                return ErrorPage(error: controller.error.toString(), onError: () => controller.initLoad());
+                return ErrorPage(
+                    error: controller.error.toString(),
+                    onError: () => controller.initLoad());
               }
 
               //success
@@ -146,7 +149,9 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                     progress: plan.progressPercentage!.toInt(),
                     examHour: int.parse(plan.progressHours ?? "0"),
                     onClick: () {
-                      final page = MaterialPageRoute(builder: (context) => ExamStudyPlanDetailsPage(studyPlan: plan));
+                      final page = MaterialPageRoute(
+                          builder: (context) =>
+                              ExamStudyPlanDetailsPage(studyPlan: plan));
                       rootNavigator.currentState!.push(page);
                     },
                   );

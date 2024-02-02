@@ -5,7 +5,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/courses_dedails/courses.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 
 class FindCourseByInterestController extends GetxController {
   ApiState apiState = ApiState.loading;
@@ -151,19 +151,31 @@ class FindCourseByInterestController extends GetxController {
 
     // search filter
     if (query.isNotEmpty) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseName!.toLowerCase().contains(query.toLowerCase().trim())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseName!
+              .toLowerCase()
+              .contains(query.toLowerCase().trim()))
+          .toList();
       careerfilteredData = tempList;
     }
 
     // interest filter
     if (interest != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseInterest!.toLowerCase().contains(interest.toLowerCase())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseInterest!
+              .toLowerCase()
+              .contains(interest.toLowerCase()))
+          .toList();
       careerfilteredData = tempList;
     }
 
     // proficiency level filter
     if (proficiencyLevel != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseProficiency!.toLowerCase().contains(proficiencyLevel.toLowerCase())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseProficiency!
+              .toLowerCase()
+              .contains(proficiencyLevel.toLowerCase()))
+          .toList();
       careerfilteredData = tempList;
       // print(tempList);
     }

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/result_page/quiz_result_state.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:path_provider/path_provider.dart';
@@ -38,7 +38,8 @@ class _QuizResultPageState extends QuizResultState {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.scaffoldBg,
-        title: Text("Result", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Result",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: Column(
@@ -50,7 +51,7 @@ class _QuizResultPageState extends QuizResultState {
             onShare: (widget) async {
               late File file;
 
-              await AppUtils.showloadingOverlay(() async {
+              await AppUtils.showLoadingOverlay(() async {
                 var ss = await screenshotController.captureFromWidget(widget);
                 final tempDir = await getTemporaryDirectory();
                 file = await File("${tempDir.path}/result.jpg").create();
@@ -88,7 +89,8 @@ class _QuizResultPageState extends QuizResultState {
                     itemBuilder: (context, index) {
                       QuizModel data = widget.quizWithAns[index];
                       // chacking correct ans
-                      var res = data.quizData!.where((element) => element.correctAnswer == element.selectedAns);
+                      var res = data.quizData!.where((element) =>
+                          element.correctAnswer == element.selectedAns);
 
                       return _AnsTile(
                         currentQuestions: index,
@@ -149,7 +151,10 @@ class ResultHead extends StatelessWidget {
                   children: [
                     Text(
                       "Fun School",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
                     8.height,
@@ -204,14 +209,20 @@ class ResultHead extends StatelessWidget {
                   children: [
                     Text(
                       (grade >= 75) ? passMessage : failMessage,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
                       // overflow: TextOverflow.ellipsis,
                     ),
                     4.height,
                     RichText(
                       text: TextSpan(
                         text: "TO PASS",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
                         children: [
                           TextSpan(text: " "),
                           TextSpan(
@@ -315,7 +326,10 @@ class ResultHead extends StatelessWidget {
                     child: Text(
                       // "6",
                       corretAns.toString(),
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff008000)),
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff008000)),
                     ),
                   ),
                   4.height,
@@ -331,7 +345,10 @@ class ResultHead extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       worngAns.toString(),
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffFF0000)),
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xffFF0000)),
                     ),
                   ),
                 ],

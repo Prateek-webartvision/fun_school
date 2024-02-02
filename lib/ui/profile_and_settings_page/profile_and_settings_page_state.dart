@@ -4,7 +4,7 @@ import 'package:citycloud_school/models/user/user.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/router/pages.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:citycloud_school/widegts/k_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ abstract class ProfileAndSettingsState extends State<ProfileAndSettingsView> {
 
   //logout user
   logOut() {
-    AppUtils.showloadingOverlay(
+    AppUtils.showLoadingOverlay(
       () async {
         AppStorage.user.removeUser();
         await Future.delayed(const Duration(seconds: 2));
@@ -114,11 +114,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     height: 44,
                     width: double.maxFinite,
                     onClick: () {
-                      if (oldPasswordText.text.isEmpty || newPasswordText.text.isEmpty || confirmPasswordText.text.isEmpty) {
+                      if (oldPasswordText.text.isEmpty ||
+                          newPasswordText.text.isEmpty ||
+                          confirmPasswordText.text.isEmpty) {
                         AppUtils.showSnack("Enter all Fields");
                       } else {
                         rootNavigator.currentState!.focusNode.unfocus();
-                        AppUtils.showloadingOverlay(() async {
+                        AppUtils.showLoadingOverlay(() async {
                           await AuthRepository.instance.changePassword(
                             oldPassword: oldPasswordText.text.trim(),
                             newPassword: newPasswordText.text.trim(),

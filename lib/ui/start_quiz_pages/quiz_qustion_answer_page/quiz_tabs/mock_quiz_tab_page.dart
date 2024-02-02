@@ -8,7 +8,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../../repo/quiz_repo/quiz_repo.dart';
 import '../../../../router/pages.dart';
 import '../../../../style/color.dart';
-import '../../../../uitls/app_utils.dart';
+import '../../../../utils/app_utils.dart';
 import '../../../../widegts/k_btn.dart';
 import '../../controller/mock_quiz_controller.dart';
 import '../../widgets/ans_option.dart';
@@ -39,12 +39,16 @@ class MockQuizTabPage extends StatelessWidget {
                   border: Border.all(color: AppColor.softBorderColor),
                   // borderRadius: BorderRadius.circular(4),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // bar
-                    LinearProgressIndicator(value: (controller.currentQuizIndex + 1) / controller.quizs!.length, minHeight: 6),
+                    LinearProgressIndicator(
+                        value: (controller.currentQuizIndex + 1) /
+                            controller.quizs!.length,
+                        minHeight: 6),
                     14.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +61,8 @@ class MockQuizTabPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(color: Colors.black),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           child: Text(
                             "Question ${controller.currentQuizIndex + 1}/${controller.quizs!.length}",
                             style: TextStyle(
@@ -70,9 +75,11 @@ class MockQuizTabPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: AppColor.scaffoldBg,
                             borderRadius: BorderRadius.circular(100),
-                            border: Border.all(color: AppColor.textFeildBorderColor),
+                            border: Border.all(
+                                color: AppColor.textFeildBorderColor),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           child: Text(
                             "1 point",
                             style: TextStyle(
@@ -99,10 +106,13 @@ class MockQuizTabPage extends StatelessWidget {
               ),
               // answer options
               AnsOptions(
-                seletedAns: controller.quizs![controller.currentQuizIndex].seletedAmswer,
-                options: controller.quizs![controller.currentQuizIndex].answersOptions!,
+                seletedAns: controller
+                    .quizs![controller.currentQuizIndex].seletedAmswer,
+                options: controller
+                    .quizs![controller.currentQuizIndex].answersOptions!,
                 onItemClick: (ans) {
-                  controller.setAns(controller.quizs![controller.currentQuizIndex], ans);
+                  controller.setAns(
+                      controller.quizs![controller.currentQuizIndex], ans);
                 },
               )
 
@@ -217,8 +227,11 @@ class MockQuizTabPage extends StatelessWidget {
                         child: KBtn(
                       onClick: () {
                         // print("object");
-                        if (controller.quizs![controller.currentQuizIndex].seletedAmswer != null) {
-                          if ((controller.quizs!.length - 1) > controller.currentQuizIndex) {
+                        if (controller.quizs![controller.currentQuizIndex]
+                                .seletedAmswer !=
+                            null) {
+                          if ((controller.quizs!.length - 1) >
+                              controller.currentQuizIndex) {
                             controller.goToNextQuitions();
                           } else {
                             // time to show result
@@ -233,7 +246,8 @@ class MockQuizTabPage extends StatelessWidget {
                             };
 
                             // appRoutes.pushNamed(PagesName.resultPage);
-                            appRoutes.pushNamed(PagesName.quizResultPage, extra: data);
+                            appRoutes.pushNamed(PagesName.quizResultPage,
+                                extra: data);
                           }
                         } else {
                           AppUtils.showSnack("Please select your answer first");

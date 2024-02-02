@@ -1,5 +1,5 @@
 import 'package:citycloud_school/repo/auth_repo/auth_repo.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../router/app_router.dart';
@@ -37,9 +37,10 @@ abstract class SignupPageState extends State<SignupPageView> {
     } else if (pass2Controller.text.isEmpty) {
       AppUtils.showSnack("Confirm Password");
     } else if (passController.text != pass2Controller.text) {
-      AppUtils.showSnack("The password and confirmation password do not match.");
+      AppUtils.showSnack(
+          "The password and confirmation password do not match.");
     } else {
-      await AppUtils.showloadingOverlay(() async {
+      await AppUtils.showLoadingOverlay(() async {
         var res = await AuthRepository.instance
             .createAccountWithEmailPassword(
           username: usernameController.text,

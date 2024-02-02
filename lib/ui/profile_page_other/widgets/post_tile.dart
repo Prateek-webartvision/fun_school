@@ -6,7 +6,7 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
-import '../../../uitls/helper.dart';
+import '../../../utils/helper.dart';
 
 class PostTile extends StatelessWidget {
   const PostTile({
@@ -66,7 +66,9 @@ class PostTile extends StatelessWidget {
                       ),
                     ),
                     12.width,
-                    Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    Text(userName,
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600)),
                     4.width,
                     if (isVerify == true)
                       Icon(
@@ -101,7 +103,9 @@ class PostTile extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       width: 4,
-                      decoration: BoxDecoration(color: AppColor.softBorderColor, borderRadius: BorderRadius.circular(4)),
+                      decoration: BoxDecoration(
+                          color: AppColor.softBorderColor,
+                          borderRadius: BorderRadius.circular(4)),
                     ),
                   ),
                   12.width,
@@ -118,7 +122,8 @@ class PostTile extends StatelessWidget {
                         // 4.height,
                         Text(
                           message,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w400),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),

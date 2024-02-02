@@ -11,7 +11,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
-import '../../uitls/app_utils.dart';
+import '../../utils/app_utils.dart';
 import '../find_courses_by_school_page/widgets/subject_card.dart';
 import 'find_course_by_career_state.dart';
 import 'widgets/teg_selector.dart';
@@ -107,33 +107,44 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                     );
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
                                     child: Column(
                                       children: [
                                         SubjectCard(
                                           // name: "Mathematics",
                                           currentItem: item,
                                           icon: Icons.book_rounded,
-                                          selectedSubject: controller.selectedSubject,
+                                          selectedSubject:
+                                              controller.selectedSubject,
 
                                           onEnroll: () async {
-                                            if (item.isCourseEnrolled == false) {
-                                              await AppUtils.showloadingOverlay(() async {
-                                                await EnrollCoursesRepository.enrollCourse(item.courseId).then((value) {
+                                            if (item.isCourseEnrolled ==
+                                                false) {
+                                              await AppUtils.showLoadingOverlay(
+                                                  () async {
+                                                await EnrollCoursesRepository
+                                                        .enrollCourse(
+                                                            item.courseId)
+                                                    .then((value) {
                                                   if (value == 200) {
-                                                    controller.updateEnrollers(item);
+                                                    controller
+                                                        .updateEnrollers(item);
                                                   }
                                                 });
                                               });
                                             } else {
-                                              AppUtils.showSnack("Already Enrolled");
+                                              AppUtils.showSnack(
+                                                  "Already Enrolled");
                                             }
                                           },
                                           onItemSelected: () {
                                             if (item.isCourseEnrolled) {
-                                              controller.changeCourseSelection(item);
+                                              controller
+                                                  .changeCourseSelection(item);
                                             } else {
-                                              AppUtils.showSnack("Enroll first");
+                                              AppUtils.showSnack(
+                                                  "Enroll first");
                                             }
                                           },
                                         ),
@@ -142,26 +153,33 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                           height: 420 - 93,
                                           decoration: BoxDecoration(
                                             color: AppColor.white,
-                                            border: Border.all(color: AppColor.softBorderColor),
-                                            borderRadius: BorderRadius.circular(4),
+                                            border: Border.all(
+                                                color:
+                                                    AppColor.softBorderColor),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
                                           clipBehavior: Clip.hardEdge,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               SizedBox(
                                                 // color: Colors.green,
                                                 width: double.maxFinite,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Text(
                                                     item.courseDescription!,
                                                     maxLines: 3,
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
                                                   ),
                                                 ),
@@ -171,7 +189,8 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                                 child: Image(
                                                   width: double.maxFinite,
                                                   // height: 250,
-                                                  image: NetworkImage(item.courseCoverImage!),
+                                                  image: NetworkImage(
+                                                      item.courseCoverImage!),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -207,9 +226,11 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
                                       dotHeight: 8,
                                       dotWidth: 8,
                                       activeDotColor: AppColor.mainColor,
-                                      dotColor: AppColor.mainColor.withOpacity(0.3),
+                                      dotColor:
+                                          AppColor.mainColor.withOpacity(0.3),
                                     ),
-                                    activeIndex: smoothIndicatorController.currentIndex,
+                                    activeIndex:
+                                        smoothIndicatorController.currentIndex,
                                     count: controller.filterList.length,
                                   ),
                                 );
@@ -300,7 +321,8 @@ class _FindCourseByCareerViewState extends FindCouresByCareerState {
         builder: (controller) {
           if (controller.apiState == ApiState.success) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+              padding:
+                  EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
               child: Text.rich(
                 TextSpan(
                   text: "Enrolled Courses are added to",

@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/repo/exams/exams_repo.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,8 @@ import '../../controller/theory_answer_controller.dart';
 import '../../widgets/head_question.dart';
 
 class TheorySumbmitPage extends StatefulWidget {
-  const TheorySumbmitPage({super.key, required this.questions, required this.title});
+  const TheorySumbmitPage(
+      {super.key, required this.questions, required this.title});
   final List<TheoryQuestionModel> questions;
   final String title;
 
@@ -48,7 +49,8 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
                 totalQ: controller.questions.length,
                 currentQ: controller.index + 1,
                 question: controller.questions[controller.index].question ?? "",
-                points: int.parse(controller.questions[controller.index].points ?? "0"),
+                points: int.parse(
+                    controller.questions[controller.index].points ?? "0"),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -58,7 +60,8 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
                       controller: answerText,
                       maxLines: 20,
                       minLines: 20,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
                         hintText: "Write the solution to the question here…",
                         filled: true,
@@ -102,7 +105,7 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
               onClick: () async {
                 if (answerText.text.isNotEmpty) {
                   final ans = controller.questions[controller.index];
-                  await AppUtils.showloadingOverlay(() async {
+                  await AppUtils.showLoadingOverlay(() async {
                     var vv = await ExamsRepository.submitTheoryExam(
                       examId: ans.examId!,
                       questionId: ans.questionId.toString(),
@@ -119,7 +122,9 @@ class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
                   AppUtils.showSnack("give you answer");
                 }
               },
-              text: (controller.index >= (controller.questions.length - 1)) ? "Submit" : "Next",
+              text: (controller.index >= (controller.questions.length - 1))
+                  ? "Submit"
+                  : "Next",
             );
           },
         ),

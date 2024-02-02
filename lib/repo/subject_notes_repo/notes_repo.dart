@@ -1,6 +1,6 @@
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 
 import '../../network/app_api.dart';
 import '../../network/url/app_urls.dart';
@@ -16,14 +16,16 @@ class NotesRepository {
     required String courseId,
   }) async {
     Map<String, dynamic> data = <String, dynamic>{};
-    data['user_id'] = AppStorage.user.currentUser()!.userid!.toString();
+    data['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
     data['subject_id'] = subjectId.toString();
     data["title"] = contentTitle;
     data["subtitle"] = subtitle;
     data['notes'] = note;
     data['course_id'] = courseId;
 
-    return await _api.postApi(AppUrls.addSubjectNotes, params: data).then((value) {
+    return await _api
+        .postApi(AppUrls.addSubjectNotes, params: data)
+        .then((value) {
       if (value["code"] == 200) {
         return value['message'];
       } else {
@@ -43,7 +45,8 @@ class NotesRepository {
         for (var element in value) {
           final note = NotesModel.fromJson(element);
           if (note.userId != null) {
-            if (int.parse(note.userId!) == AppStorage.user.currentUser()!.userid!) {
+            if (int.parse(note.userId!) ==
+                AppStorage.user.currentUser()!.userId!) {
               myNotes.add(note);
             }
           }

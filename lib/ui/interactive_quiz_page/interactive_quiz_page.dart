@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/ui/interactive_quiz_page/quiz_tab_page.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -82,7 +82,9 @@ class _InteractiveQuizPageState extends State<InteractiveQuizPage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: AppColor.scaffoldBg,
-                title: Text("Quiz", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                title: Text("Quiz",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 // leading: GestureDetector(
                 //   onTap: _pop,
                 //   child: Icon(Icons.arrow_back),
@@ -106,7 +108,8 @@ class _InteractiveQuizPageState extends State<InteractiveQuizPage> {
 
                   rootNavigator.currentState!.push(
                     MaterialPageRoute(
-                      builder: (context) => GifResultPage(data: data, isFromVideo: widget.isFromVideo),
+                      builder: (context) => GifResultPage(
+                          data: data, isFromVideo: widget.isFromVideo),
                     ),
                   );
                 },

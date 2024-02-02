@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../router/pages.dart';
 import '../../../style/color.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 
 class MoreMenuSheet extends StatefulWidget {
   const MoreMenuSheet({
@@ -75,7 +75,8 @@ class _MoreMenuSheetState extends State<MoreMenuSheet> {
                       widget.playerController.pause();
                     }
                     await rootNavigator.currentState!.push(MaterialPageRoute(
-                      builder: (context) => PaworSummaryPage(subjectId: widget.subjectId),
+                      builder: (context) =>
+                          PaworSummaryPage(subjectId: widget.subjectId),
                     ));
                     if (!widget.playerController.value.isPlaying) {
                       widget.playerController.play();

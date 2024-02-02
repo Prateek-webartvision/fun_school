@@ -23,12 +23,15 @@ class ExamsRepository {
   }
 
   // get exam by exam id
-  static Future<List<AllExamModel2>> getExamByExamId({required String examId}) async {
+  static Future<List<AllExamModel2>> getExamByExamId(
+      {required String examId}) async {
     Map<String, String> perams = {};
     perams['exam_id'] = examId;
-    perams["user_id"] = AppStorage.user.currentUser()?.userid.toString() ?? "";
+    perams["user_id"] = AppStorage.user.currentUser()?.userId.toString() ?? "";
 
-    return await _api.getApi(AppUrls.getExamsByExamId, params: perams).then((value) {
+    return await _api
+        .getApi(AppUrls.getExamsByExamId, params: perams)
+        .then((value) {
       List<AllExamModel2> exams = [];
       for (var element in value) {
         final exam = AllExamModel2.fromJson(element);
@@ -40,10 +43,11 @@ class ExamsRepository {
     });
   }
 
-  static saveMultiChoiceExamScore({required String examId, required String score}) async {
+  static saveMultiChoiceExamScore(
+      {required String examId, required String score}) async {
     // final url = AppUrls.saveMultiChoiceExamScore;
     Map<String, String> perams = {};
-    perams["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    perams["user_id"] = AppStorage.user.currentUser()!.userId.toString();
     perams["exam_id"] = examId;
     perams["score"] = score;
 
@@ -63,14 +67,16 @@ class ExamsRepository {
     required String answer,
   }) async {
     Map<String, String> perams = {};
-    perams["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    perams["user_id"] = AppStorage.user.currentUser()!.userId.toString();
     perams["exam_id"] = examId;
     perams["question_type"] = "theory";
     perams["question_id"] = questionId;
     perams["answer"] = answer;
 
     // print(perams);
-    return await _api.postApi(AppUrls.submitTheoryExam, params: perams).then((value) {
+    return await _api
+        .postApi(AppUrls.submitTheoryExam, params: perams)
+        .then((value) {
       // print(value);
       if (value['message'] != "Exam answer added successfully ") {
         throw value['message'];

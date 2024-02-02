@@ -5,7 +5,7 @@ import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 
 import '../../network/app_api.dart';
 
@@ -17,7 +17,8 @@ class QuizType {
 class QuizRepository {
   static final _api = AppApi();
 
-  static Future getQuiz({String? title, required String quizType, int? subjectId}) async {
+  static Future getQuiz(
+      {String? title, required String quizType, int? subjectId}) async {
     Map<String, String> data = {"type": quizType};
     if (title != null) {
       data["title"] = title;
@@ -61,7 +62,7 @@ class QuizRepository {
     required String courseID,
   }) async {
     Map<String, String> data = {};
-    data['user_id'] = AppStorage.user.currentUser()!.userid.toString();
+    data['user_id'] = AppStorage.user.currentUser()!.userId.toString();
     data['type'] = type;
     data['course_id'] = courseID;
     data['title'] = title;
@@ -78,10 +79,11 @@ class QuizRepository {
   }
 
   // hget quiz result
-  static Future<List<QuizResultModel>?> getAllQuizResults({required String title}) async {
+  static Future<List<QuizResultModel>?> getAllQuizResults(
+      {required String title}) async {
     List<QuizResultModel> res = [];
     await _api.postApi(AppUrls.fetchQuizScore, params: {
-      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "user_id": AppStorage.user.currentUser()!.userId!.toString(),
     }).then((value) {
       if (value != null) {
         for (var el in value) {
@@ -97,8 +99,10 @@ class QuizRepository {
     return res;
   }
 
-  static Future<List<InteractiveQuizModel>?> getIntractiveQuiz({required String title}) async {
-    return await _api.getApi(AppUrls.getInteractiveQuiz, params: {'title': title}).then((value) {
+  static Future<List<InteractiveQuizModel>?> getIntractiveQuiz(
+      {required String title}) async {
+    return await _api.getApi(AppUrls.getInteractiveQuiz,
+        params: {'title': title}).then((value) {
       List<InteractiveQuizModel> temp = [];
       for (var element in value) {
         final quiz = InteractiveQuizModel.fromJson(element);

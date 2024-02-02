@@ -7,7 +7,8 @@ class OthersProfileRepository {
   static final _api = AppApi();
 
   static Future<OtherProfileModel> getProfile({required String userId}) async {
-    return await _api.getApi(AppUrls.getOtherProfile, params: {"user_id": userId}).then((value) {
+    return await _api.getApi(AppUrls.getOtherProfile,
+        params: {"user_id": userId}).then((value) {
       final profile = OtherProfileModel.fromJson(value);
       return profile;
     }).onError((error, stackTrace) {
@@ -48,7 +49,7 @@ class OtherProfileModel {
       List<FollowingModel> followers = [];
       for (var element in json['followers_profiles']) {
         final follow = FollowingModel.fromJson(element);
-        if (follow.userId! == AppStorage.user.currentUser()!.userid) {
+        if (follow.userId! == AppStorage.user.currentUser()!.userId) {
           isFollowed = true;
         }
         followers.add(follow);

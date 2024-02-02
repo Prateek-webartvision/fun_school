@@ -1,67 +1,73 @@
 import 'package:citycloud_school/models/user/user.model.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 
-import 'a_auth_rapo.dart';
+import 'auth.dart';
 
-class AuthRepository extends AuthRepo {
+class AuthRepository extends Auth {
   static AuthRepository? _init;
   AuthRepository._();
   static AuthRepository get instance => _init ??= AuthRepository._();
 
   @override
-  Future createAccountWithEmailPassword({required String username, required String email, required String password}) async {
+  Future createAccountWithEmailPassword({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
     final userData = <String, String>{};
     userData["username"] = username;
     userData['email'] = email;
     userData['password'] = password;
 
-    return await api.postApi(AppUrls.registerUrl, params: userData).then((value) {
+    return await api
+        .postApi(AppUrls.registerUrl, params: userData)
+        .then((value) {
       if (value["code"] == 200) {
         return value["message"];
       } else {
         throw value["message"];
       }
-    }).onError((error, stackTrace) {
-      // AppUtils.showSnack("$error");
-      throw error!;
     });
-    // return userData;
   }
 
-  // sign in
+  //* sign in
   @override
-  Future<UserModel> signInWithEmailPassword({required String email, required String password}) async {
+  Future<UserModel> signInWithEmailPassword({
+    required String email,
+    required String password,
+  }) async {
     final userData = <String, String>{};
     userData['email'] = email;
     userData['password'] = password;
 
-    return await api.postApi(AppUrls.signInUrl, params: userData).then((value) {
-      if (value["code"] == 200) {
-        UserModel userModel = UserModel(
-          userid: value['user_id'],
-          userName: value['username'],
-          userEmail: value['email'],
-          about: value['about'],
-          userType: value['user_type'],
-          regDate: value['reg_date'],
-          status: value['status'],
-        );
-        return userModel;
-      } else {
-        throw value["message"];
-      }
-    }).onError((error, stackTrace) {
-      throw error.toString();
-    });
+    final res = await api.postApi(AppUrls.signInUrl, params: userData);
+
+    if (res["code"] == 200) {
+      UserModel userModel = UserModel(
+        userId: int.parse(res['user_id'].toString()),
+        userName: res['username'],
+        userEmail: res['email'],
+        about: res['about'],
+        userType: res['user_type'],
+        regDate: res['reg_date'],
+        status: res['status'],
+      );
+      return userModel;
+    } else {
+      throw res["message"];
+    }
   }
 
   @override
-  Future changePassword({required String oldPassword, required String newPassword, required String conformNewPassword}) async {
+  Future changePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String conformNewPassword}) async {
     final data = <String, String>{};
 
-    data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
     data["old_password"] = oldPassword;
     data["new_password"] = newPassword;
     data["new_password_repeat"] = conformNewPassword;

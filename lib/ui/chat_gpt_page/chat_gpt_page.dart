@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/chat_gpt_page/controller/chat_gpt_controller.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -50,11 +50,13 @@ class _ChatGptPageState extends State<ChatGptPage> {
                     Container(),
                     Text(
                       "Welcome!",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                     ),
                     Text(
                       "This is the beginning Of your BOT AI for your school!",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     )
                   ],
                 ),
@@ -72,7 +74,9 @@ class _ChatGptPageState extends State<ChatGptPage> {
                   separatorBuilder: (context, index) => 10.height,
                 ),
               ),
-              (controller.apiState == ApiState.loading) ? Text("Loading...") : 0.height,
+              (controller.apiState == ApiState.loading)
+                  ? Text("Loading...")
+                  : 0.height,
               Container(
                 // height: 100,
                 color: AppColor.scaffoldBg,
@@ -91,7 +95,8 @@ class _ChatGptPageState extends State<ChatGptPage> {
                           if (messageTextController.text.isEmpty) {
                             AppUtils.showSnack("write message");
                           } else {
-                            chatGptController.sendRequest(text: messageTextController.text);
+                            chatGptController.sendRequest(
+                                text: messageTextController.text);
                             messageTextController.clear();
                           }
                         },
@@ -127,10 +132,12 @@ class MessageBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: (chat.isAi) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+      crossAxisAlignment:
+          (chat.isAi) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
       children: [
         Container(
-          constraints: BoxConstraints(minHeight: 0, maxWidth: context.screenWidth * 0.7),
+          constraints:
+              BoxConstraints(minHeight: 0, maxWidth: context.screenWidth * 0.7),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(4),

@@ -1,5 +1,5 @@
 class UserModel {
-  int? userid;
+  int? userId;
   String? userName;
   String? userEmail;
   String? userProfile;
@@ -9,7 +9,7 @@ class UserModel {
   String? status;
 
   UserModel({
-    this.userid,
+    this.userId,
     this.userName,
     this.userEmail,
     this.about,
@@ -19,7 +19,7 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    userid = json["user_id"];
+    userId = json["user_id"];
     userName = json["username"];
     userEmail = json["email"];
     about = json["about"];
@@ -29,7 +29,7 @@ class UserModel {
   }
 
   // copy with
-  UserModel.copyWuth({
+  UserModel.copyWith({
     String? userName,
     String? about,
     String? userType,
@@ -44,7 +44,7 @@ class UserModel {
 
   toJson() {
     Map userData = <String, dynamic>{};
-    userData["user_id"] = userid;
+    userData["user_id"] = userId;
     userData["username"] = userName;
     userData["email"] = userEmail;
     userData["about"] = about;

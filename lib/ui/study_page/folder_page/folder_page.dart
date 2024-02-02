@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +14,8 @@ import '../../../router/pages.dart';
 import '../../../style/color.dart';
 
 class FolderPage extends StatefulWidget {
-  const FolderPage({super.key, required this.coursesByFolderId, required this.allcourses});
+  const FolderPage(
+      {super.key, required this.coursesByFolderId, required this.allcourses});
   final List<FolderCourseModel> coursesByFolderId;
   final List<CoursesModel> allcourses;
 
@@ -27,7 +28,8 @@ class _FolderPageState extends State<FolderPage> {
 
   @override
   void initState() {
-    folderPageController = FolderPageController(coursesByFolderId: widget.coursesByFolderId);
+    folderPageController =
+        FolderPageController(coursesByFolderId: widget.coursesByFolderId);
 
     super.initState();
   }
@@ -42,7 +44,9 @@ class _FolderPageState extends State<FolderPage> {
     return WillPopScope(
       onWillPop: onPop,
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.coursesByFolderId.first.folderName!), centerTitle: true),
+        appBar: AppBar(
+            title: Text(widget.coursesByFolderId.first.folderName!),
+            centerTitle: true),
         body: GetBuilder(
           init: folderPageController,
           builder: (controller) {
@@ -60,12 +64,16 @@ class _FolderPageState extends State<FolderPage> {
               itemBuilder: (context, index) {
                 final itemTemp = controller.coursesByFolderId[index];
 
-                final item = widget.allcourses.where((element) => "${element.courseId}" == itemTemp.courseId!).first;
+                final item = widget.allcourses
+                    .where((element) =>
+                        "${element.courseId}" == itemTemp.courseId!)
+                    .first;
 
                 // return Text("data ${itemTemp.courseName} ${course.courseName}");
                 return GestureDetector(
                   onTap: () {
-                    appRoutes.pushNamed(PagesName.subjectDetailsPage, extra: item);
+                    appRoutes.pushNamed(PagesName.subjectDetailsPage,
+                        extra: item);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -77,7 +85,8 @@ class _FolderPageState extends State<FolderPage> {
                       children: [
                         //top
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 16),
                           child: Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +113,11 @@ class _FolderPageState extends State<FolderPage> {
                                 decoration: BoxDecoration(
                                   color: AppColor.scaffoldBg,
                                   borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(color: AppColor.textFeildBorderColor),
+                                  border: Border.all(
+                                      color: AppColor.textFeildBorderColor),
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
                                 child: Text(
                                   "1 hours",
                                   style: GoogleFonts.inter(
@@ -123,13 +134,20 @@ class _FolderPageState extends State<FolderPage> {
                                     PopupMenuItem(
                                       child: Text("Remove"),
                                       onTap: () {
-                                        AppUtils.showloadingOverlay(() async {
-                                          await StudyPlanRepository.removeCourseFromfolder(courseId: itemTemp.courseId!, folderId: itemTemp.folderId!).then((value) {
+                                        AppUtils.showLoadingOverlay(() async {
+                                          await StudyPlanRepository
+                                                  .removeCourseFromfolder(
+                                                      courseId:
+                                                          itemTemp.courseId!,
+                                                      folderId:
+                                                          itemTemp.folderId!)
+                                              .then((value) {
                                             if (value != null) {
                                               controller.removeItem(itemTemp);
                                             }
                                           }).onError((error, stackTrace) {
-                                            AppUtils.showSnack(error.toString());
+                                            AppUtils.showSnack(
+                                                error.toString());
                                           });
                                         });
                                       },
@@ -144,7 +162,8 @@ class _FolderPageState extends State<FolderPage> {
                         Container(
                           // color: Colors.green,
                           height: 38,
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 16),
                           child: Row(
                             children: [
                               Text(
@@ -158,7 +177,10 @@ class _FolderPageState extends State<FolderPage> {
                               Expanded(
                                 child: LinearProgressIndicator(
                                   // value: 0.1,
-                                  value: double.parse(getMyEnrollment(item.courseEnrollment!).progress!) / 100,
+                                  value: double.parse(getMyEnrollment(
+                                              item.courseEnrollment!)
+                                          .progress!) /
+                                      100,
                                   backgroundColor: AppColor.scaffoldBg,
                                   color: context.appTheme.colorScheme.primary,
                                   minHeight: 6,
@@ -191,7 +213,10 @@ class _FolderPageState extends State<FolderPage> {
   }
 
   CoursesEnrollment getMyEnrollment(List<CoursesEnrollment> enrollments) {
-    final myEnrol = enrollments.where((element) => element.userId == AppStorage.user.currentUser()?.userid.toString()).first;
+    final myEnrol = enrollments
+        .where((element) =>
+            element.userId == AppStorage.user.currentUser()?.userId.toString())
+        .first;
 
     return myEnrol;
   }

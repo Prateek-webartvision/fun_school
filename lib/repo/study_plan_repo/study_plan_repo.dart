@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:citycloud_school/network/app_api.dart';
 import 'package:citycloud_school/network/data/app_storage.dart';
 import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 
 import '../../ui/study_page/model/folder_model.dart';
 import '../../ui/study_page/model/study_plan_model.dart';
@@ -11,15 +11,18 @@ import '../../ui/study_page/model/study_plan_model.dart';
 class StudyPlanRepository {
   static final _api = AppApi();
 
-  static buyStudyPlan({required List<String> courseTitle, required String studyPlan}) async {
+  static buyStudyPlan(
+      {required List<String> courseTitle, required String studyPlan}) async {
     Map<String, String> data = {};
-    data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
     data["course"] = jsonEncode(courseTitle);
     data["plan"] = studyPlan;
 
     // print(data);
     //todo
-    await _api.postApi(AppUrls.addStudyPlanByContent, params: data).then((value) {
+    await _api
+        .postApi(AppUrls.addStudyPlanByContent, params: data)
+        .then((value) {
       // print("$value");
       // success
       AppUtils.showSnack(value["message"]);
@@ -31,7 +34,7 @@ class StudyPlanRepository {
   // fatch my study play
   static Future<List<StudyPlanModel>> getStudyPlans() async {
     Map<String, String> data = {};
-    data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
 
     return await _api.getApi(AppUrls.getStudyPlans, params: data).then((value) {
       var temp = <StudyPlanModel>[];
@@ -52,7 +55,7 @@ class StudyPlanRepository {
     required String description,
   }) async {
     Map<String, String> data = {};
-    data["user_id"] = AppStorage.user.currentUser()!.userid.toString();
+    data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
     data["title"] = title;
     data["description"] = description;
 
@@ -66,7 +69,7 @@ class StudyPlanRepository {
   // create new folder
   static Future createNewFolder(String folderName) async {
     Map<String, String> data = {
-      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "user_id": AppStorage.user.currentUser()!.userId!.toString(),
       "folder_title": folderName,
     };
     return await _api.postApi(AppUrls.createFolder, params: data).then((value) {
@@ -82,14 +85,19 @@ class StudyPlanRepository {
 
   // fatch all folders
   static Future<List<AppFolderModel>?> getCourseFolders() async {
-    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userId!.toString()
+    };
 
-    return await _api.postApi(AppUrls.myCourseFolders, params: data).then((value) {
+    return await _api
+        .postApi(AppUrls.myCourseFolders, params: data)
+        .then((value) {
       if (value != null) {
         List<AppFolderModel> myList = [];
         for (var element in value) {
           final dir = AppFolderModel.fromJson(element);
-          if (int.parse(dir.userId!) == AppStorage.user.currentUser()!.userid!) {
+          if (int.parse(dir.userId!) ==
+              AppStorage.user.currentUser()!.userId!) {
             myList.add(dir);
           }
         }
@@ -101,9 +109,11 @@ class StudyPlanRepository {
   }
 
   // add to folder api
-  static addToFolder({required String folderId, required List<String> selectedCourseIds}) async {
+  static addToFolder(
+      {required String folderId,
+      required List<String> selectedCourseIds}) async {
     Map<String, String> data = {
-      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "user_id": AppStorage.user.currentUser()!.userId!.toString(),
       "folder_id": folderId,
       "course_id": jsonEncode(selectedCourseIds),
     };
@@ -118,9 +128,13 @@ class StudyPlanRepository {
 
   // get folder courses by user
   static Future<List<FolderCourseModel>?> getFolderCoursesByUser() async {
-    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userId!.toString()
+    };
 
-    return await _api.postApi(AppUrls.getCourseInUserFolder, params: data).then((value) {
+    return await _api
+        .postApi(AppUrls.getCourseInUserFolder, params: data)
+        .then((value) {
       List<FolderCourseModel> temp = [];
       if (value != null) {
         for (var element in value) {
@@ -135,10 +149,15 @@ class StudyPlanRepository {
   }
 
   // get my enrolled course with folder
-  static Future<List<EnrolledCoursesFolder>?> getMyEnrolledCorseAndFolders() async {
-    Map<String, String> data = {"user_id": AppStorage.user.currentUser()!.userid!.toString()};
+  static Future<List<EnrolledCoursesFolder>?>
+      getMyEnrolledCorseAndFolders() async {
+    Map<String, String> data = {
+      "user_id": AppStorage.user.currentUser()!.userId!.toString()
+    };
 
-    return await _api.postApi(AppUrls.getMyEnrolledCoursesAndFolder, params: data).then((value) {
+    return await _api
+        .postApi(AppUrls.getMyEnrolledCoursesAndFolder, params: data)
+        .then((value) {
       List<EnrolledCoursesFolder> temp = [];
       if (value != null) {
         for (var element in value) {
@@ -153,14 +172,17 @@ class StudyPlanRepository {
   }
 
   // remove course From folder
-  static Future removeCourseFromfolder({required String courseId, required String folderId}) async {
+  static Future removeCourseFromfolder(
+      {required String courseId, required String folderId}) async {
     Map<String, String> data = {
-      "user_id": AppStorage.user.currentUser()!.userid!.toString(),
+      "user_id": AppStorage.user.currentUser()!.userId!.toString(),
       "folder_id": folderId,
       "course_id": courseId,
     };
 
-    return await _api.postApi(AppUrls.removeCourseFromFolder, params: data).then((value) {
+    return await _api
+        .postApi(AppUrls.removeCourseFromFolder, params: data)
+        .then((value) {
       if (value['code'] == 200) {
         return value['message'];
       } else {

@@ -9,12 +9,13 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../models/exams/exam_study_plan_models/course_name_model.dart';
 import '../../../style/color.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
 
 class CreateExamSheet extends StatefulWidget {
-  const CreateExamSheet({super.key, required this.onCreate, required this.courses});
+  const CreateExamSheet(
+      {super.key, required this.onCreate, required this.courses});
   final Function(
     String name,
     DateTime examDate,
@@ -60,7 +61,9 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (MediaQuery.of(rootNavigator.currentContext!).viewInsets.bottom != 0) rootNavigator.currentContext!.viewPadding.top.height,
+          if (MediaQuery.of(rootNavigator.currentContext!).viewInsets.bottom !=
+              0)
+            rootNavigator.currentContext!.viewPadding.top.height,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SizedBox(
@@ -80,7 +83,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                     alignment: Alignment.center,
                     child: Text(
                       "Create New Study Plan",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -88,7 +92,12 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
             ),
           ),
           SizedBox(
-            height: (MediaQuery.of(rootNavigator.currentContext!).viewInsets.bottom == 0) ? null : 497,
+            height: (MediaQuery.of(rootNavigator.currentContext!)
+                        .viewInsets
+                        .bottom ==
+                    0)
+                ? null
+                : 497,
             child: ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -123,13 +132,15 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                         if (date != null) {
                           setState(() {
                             dateOfExam = date;
-                            dateTextFeild.text = DateFormat("MMMM d, yyyy").format(dateOfExam!);
+                            dateTextFeild.text =
+                                DateFormat("MMMM d, yyyy").format(dateOfExam!);
                           });
                         }
                       },
                       child: KTextField(
                         enabled: false,
-                        suffixIcon: SvgPicture.asset(AppAssets.svg.calendarline2Icon),
+                        suffixIcon:
+                            SvgPicture.asset(AppAssets.svg.calendarline2Icon),
                         hint: "Date of the exam",
                         controller: dateTextFeild,
                       ),
@@ -158,7 +169,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                                 width: 0.5,
                               ),
                             ),
-                            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 8),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -177,21 +189,28 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 // color: Colors.green,
-                                                borderRadius: BorderRadius.circular(100),
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
                                                 border: Border.all(
-                                                  color: AppColor.textFeildBorderColor,
+                                                  color: AppColor
+                                                      .textFeildBorderColor,
                                                   width: 0.5,
                                                 ),
                                               ),
-                                              padding: EdgeInsets.symmetric(horizontal: 9, vertical: 2),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 9, vertical: 2),
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
                                                     // "Mathematics",
                                                     e.name ?? "",
-                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
                                                   ),
                                                   1.width,
                                                   Icon(Icons.close, size: 12),
@@ -204,7 +223,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                                   ),
                                 ),
                                 10.width,
-                                Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
+                                Icon(Icons.arrow_drop_down,
+                                    color: Colors.black, size: 24),
                               ],
                             ),
                           ),
@@ -241,7 +261,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                     PopupMenuButton(
                       child: KTextField(
                         enabled: false,
-                        suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
+                        suffixIcon: Icon(Icons.arrow_drop_down,
+                            color: Colors.black, size: 24),
                         hint: "Preferred study periods",
                         controller: periodsTextFeild,
                       ),
@@ -274,7 +295,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                           child: PopupMenuButton(
                             child: KTextField(
                               enabled: false,
-                              suffixIcon: Icon(Icons.arrow_drop_down, color: Colors.black, size: 24),
+                              suffixIcon: Icon(Icons.arrow_drop_down,
+                                  color: Colors.black, size: 24),
                               hint: "Reminder settings",
                               controller: reminderTextFeild,
                             ),
@@ -298,7 +320,9 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                           flex: 3,
                           child: GestureDetector(
                             onTap: () async {
-                              TimeOfDay? time = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+                              TimeOfDay? time = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now());
                               if (time != null) {
                                 setState(() {
                                   selectedTime = time;
@@ -333,7 +357,8 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                           text: "Cancel",
                           bgColor: AppColor.white,
                           fbColor: Colors.black,
-                          borderSide: BorderSide(color: AppColor.softBorderColor),
+                          borderSide:
+                              BorderSide(color: AppColor.softBorderColor),
                         ),
                       ),
                       12.width,

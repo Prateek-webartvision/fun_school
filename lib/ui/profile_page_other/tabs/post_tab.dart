@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../repo/community/community_discussion_repo.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 
 class PostTab extends StatelessWidget {
   const PostTab({
@@ -28,7 +28,9 @@ class PostTab extends StatelessWidget {
             return TextPostTile(
               profileUrl: cnt.data!.profileImage,
               userName: cnt.data!.username!,
-              time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toString(),
+              time: DateTime.fromMicrosecondsSinceEpoch(
+                      int.parse(item.time!) * 1000000)
+                  .toString(),
               type: item.type!,
               userType: cnt.data!.userType!,
               isVerify: cnt.data!.userType == "Certified_Tutor",
@@ -41,8 +43,9 @@ class PostTab extends StatelessWidget {
               isLiked: item.isLiked,
               onLikeClick: () {
                 // call like api
-                AppUtils.showloadingOverlay(() async {
-                  await CommunityDiscussionRepostory.likeDislikeDiscussion(discussionId: item.discussionId.toString());
+                AppUtils.showLoadingOverlay(() async {
+                  await CommunityDiscussionRepostory.likeDislikeDiscussion(
+                      discussionId: item.discussionId.toString());
                   cnt.setLikeDisLike(discussion: item);
                 });
               },

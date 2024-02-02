@@ -10,7 +10,7 @@ import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../../style/assets.dart';
 import '../../../../../style/color.dart';
-import '../../../../../uitls/helper.dart';
+import '../../../../../utils/helper.dart';
 
 class ImagePostTile extends StatelessWidget {
   const ImagePostTile({
@@ -69,7 +69,9 @@ class ImagePostTile extends StatelessWidget {
                       ),
                     ),
                     12.width,
-                    Text(userName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    Text(userName,
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600)),
                     4.width,
                     if (isVerify == true)
                       Icon(
@@ -102,7 +104,9 @@ class ImagePostTile extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       width: 4,
-                      decoration: BoxDecoration(color: AppColor.softBorderColor, borderRadius: BorderRadius.circular(4)),
+                      decoration: BoxDecoration(
+                          color: AppColor.softBorderColor,
+                          borderRadius: BorderRadius.circular(4)),
                     ),
                   ),
                   12.width,
@@ -112,14 +116,16 @@ class ImagePostTile extends StatelessWidget {
                       children: [
                         Text(
                           topic,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
                         4.height,
                         Text(
                           message,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w400),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 6,
                         ),
@@ -131,8 +137,8 @@ class ImagePostTile extends StatelessWidget {
                               color: AppColor.softBorderColor,
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
-                                image:
-                                    NetworkImage("https://media.istockphoto.com/id/1316805164/photo/woman-play-3d-vr-game.webp?b=1&s=170667a&w=0&k=20&c=Ok1otO3uZLZE3RTQXW8ZjfItZz3G43X1dr_916D9Gl4="),
+                                image: NetworkImage(
+                                    "https://media.istockphoto.com/id/1316805164/photo/woman-play-3d-vr-game.webp?b=1&s=170667a&w=0&k=20&c=Ok1otO3uZLZE3RTQXW8ZjfItZz3G43X1dr_916D9Gl4="),
                                 fit: BoxFit.cover,
                               )),
                         ),

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/style/const.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/answer_indicator.dart';
 import 'package:citycloud_school/widegts/point_chip.dart';
 import 'package:citycloud_school/widegts/question_chip.dart';
@@ -60,14 +60,19 @@ class _AsnwerReviewPageState extends State<AsnwerReviewPage> {
                   // answer
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    color: (item.correctAnswer == item.selectedAnswer) ? AppColor.green.withOpacity(0.10) : AppColor.red.withOpacity(0.10),
-                    child: AnswerIndicator(isCurrect: (item.correctAnswer == item.selectedAnswer)),
+                    color: (item.correctAnswer == item.selectedAnswer)
+                        ? AppColor.green.withOpacity(0.10)
+                        : AppColor.red.withOpacity(0.10),
+                    child: AnswerIndicator(
+                        isCurrect: (item.correctAnswer == item.selectedAnswer)),
                   ),
                   // question
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14).copyWith(bottom: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14)
+                        .copyWith(bottom: 10),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       width: double.maxFinite,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -79,7 +84,9 @@ class _AsnwerReviewPageState extends State<AsnwerReviewPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              QuestionChip(totalQuestions: controller.questions.length, currentQuestion: index + 1),
+                              QuestionChip(
+                                  totalQuestions: controller.questions.length,
+                                  currentQuestion: index + 1),
                               PointChip(
                                 point: int.parse(item.points ?? "0"),
                               )
@@ -88,7 +95,8 @@ class _AsnwerReviewPageState extends State<AsnwerReviewPage> {
                           12.height,
                           Text(
                             item.question ?? "",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),

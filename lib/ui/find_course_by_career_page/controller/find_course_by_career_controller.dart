@@ -5,7 +5,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../models/courses_dedails/courses.model.dart';
 import '../../../network/exception/k_exceptions.dart';
 import '../../../repo/courses_and_details_repo/courses_and_details_repo.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 
 class FindCourseByCareerController extends GetxController {
   ApiState apiState = ApiState.loading;
@@ -217,27 +217,43 @@ class FindCourseByCareerController extends GetxController {
     List<CoursesModel> careerfilteredData = data;
 
     if (careerTag != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseCareer == careerTag).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseCareer == careerTag)
+          .toList();
       careerfilteredData = tempList;
     }
 
     if (proficiency != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseProficiency == proficiency).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseProficiency == proficiency)
+          .toList();
       careerfilteredData = tempList;
     }
 
     if (query.isNotEmpty) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseName!.toLowerCase().contains(query.toLowerCase().trim())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseName!
+              .toLowerCase()
+              .contains(query.toLowerCase().trim()))
+          .toList();
       careerfilteredData = tempList;
     }
 
     if (interest != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseInterest!.toLowerCase().contains(interest.toLowerCase())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseInterest!
+              .toLowerCase()
+              .contains(interest.toLowerCase()))
+          .toList();
       careerfilteredData = tempList;
     }
 
     if (schoolLevel != null) {
-      List<CoursesModel> tempList = careerfilteredData.where((element) => element.courseSchool!.toLowerCase().contains(schoolLevel!.toLowerCase())).toList();
+      List<CoursesModel> tempList = careerfilteredData
+          .where((element) => element.courseSchool!
+              .toLowerCase()
+              .contains(schoolLevel!.toLowerCase()))
+          .toList();
       careerfilteredData = tempList;
     }
 

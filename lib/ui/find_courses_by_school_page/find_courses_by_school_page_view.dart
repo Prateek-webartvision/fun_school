@@ -11,7 +11,7 @@ import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
 import '../../router/app_router.dart';
 import '../../router/pages.dart';
 import '../../style/color.dart';
-import '../../uitls/app_utils.dart';
+import '../../utils/app_utils.dart';
 import '../../widegts/k_text_field.dart';
 import '../find_course_by_career_page/widgets/teg_selector.dart';
 import 'find_courses_by_school_page_state.dart';
@@ -22,7 +22,8 @@ class FindCoursesBySchoolPageView extends StatefulWidget {
   const FindCoursesBySchoolPageView({super.key});
 
   @override
-  State<FindCoursesBySchoolPageView> createState() => _FindCoursesBySchoolPageViewState();
+  State<FindCoursesBySchoolPageView> createState() =>
+      _FindCoursesBySchoolPageViewState();
 }
 
 class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
@@ -30,7 +31,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Courses by School", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Courses by School",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
         backgroundColor: AppColor.scaffoldBg,
       ),
@@ -241,24 +243,31 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                       // name: "Mathematics",
                                       currentItem: item,
                                       icon: Icons.book_rounded,
-                                      selectedSubject: controller.selectedSubject,
+                                      selectedSubject:
+                                          controller.selectedSubject,
 
                                       onEnroll: () async {
                                         if (item.isCourseEnrolled == false) {
-                                          await AppUtils.showloadingOverlay(() async {
-                                            await EnrollCoursesRepository.enrollCourse(item.courseId).then((value) {
+                                          await AppUtils.showLoadingOverlay(
+                                              () async {
+                                            await EnrollCoursesRepository
+                                                    .enrollCourse(item.courseId)
+                                                .then((value) {
                                               if (value == 200) {
-                                                controller.updateEnrollers(item);
+                                                controller
+                                                    .updateEnrollers(item);
                                               }
                                             });
                                           });
                                         } else {
-                                          AppUtils.showSnack("Already Enrolled");
+                                          AppUtils.showSnack(
+                                              "Already Enrolled");
                                         }
                                       },
                                       onItemSelected: () {
                                         if (item.isCourseEnrolled) {
-                                          controller.changeCourseSelection(item);
+                                          controller
+                                              .changeCourseSelection(item);
                                         } else {
                                           AppUtils.showSnack("Enroll first");
                                         }
@@ -269,26 +278,31 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                       height: 420 - 93,
                                       decoration: BoxDecoration(
                                         color: AppColor.white,
-                                        border: Border.all(color: AppColor.softBorderColor),
+                                        border: Border.all(
+                                            color: AppColor.softBorderColor),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       clipBehavior: Clip.hardEdge,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           SizedBox(
                                             // color: Colors.green,
                                             width: double.maxFinite,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Text(
                                                 item.courseDescription!,
                                                 maxLines: 3,
                                                 style: TextStyle(
                                                   fontSize: 12,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ),
@@ -298,7 +312,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                             child: Image(
                                               width: double.maxFinite,
                                               // height: 250,
-                                              image: NetworkImage(item.courseCoverImage!),
+                                              image: NetworkImage(
+                                                  item.courseCoverImage!),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -333,9 +348,11 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                                     dotHeight: 8,
                                     dotWidth: 8,
                                     activeDotColor: AppColor.mainColor,
-                                    dotColor: AppColor.mainColor.withOpacity(0.3),
+                                    dotColor:
+                                        AppColor.mainColor.withOpacity(0.3),
                                   ),
-                                  activeIndex: smoothIndicatorTipController.currentIndex,
+                                  activeIndex:
+                                      smoothIndicatorTipController.currentIndex,
                                   count: controller.coursesBySearch!.length,
                                 ),
                               );
@@ -353,7 +370,8 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
         builder: (controller) {
           if (controller.apiState == ApiState.success) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30).copyWith(bottom: 20),
+              padding:
+                  EdgeInsets.symmetric(horizontal: 30).copyWith(bottom: 20),
               child: Text.rich(
                 TextSpan(
                   text: "Enrolled Courses are added to",

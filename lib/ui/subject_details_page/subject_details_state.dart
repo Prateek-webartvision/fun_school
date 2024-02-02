@@ -4,17 +4,19 @@ import 'package:get/get.dart';
 import '../../models/courses_dedails/courses.model.dart';
 import '../../models/courses_dedails/subject.model.dart';
 import '../../repo/enroll_courses_repo/enroll_course_repo.dart';
-import '../../uitls/app_utils.dart';
+import '../../utils/app_utils.dart';
 import 'subject_details_view.dart';
 
-abstract class SubjectDetailsState extends State<SubjectDetailsView> with TickerProviderStateMixin {
+abstract class SubjectDetailsState extends State<SubjectDetailsView>
+    with TickerProviderStateMixin {
   late SubjectDetailsPageController subjectDetailsPageController;
   late List<CoursesSubject> subjects;
   late TabController pageTabController;
 
   @override
   void initState() {
-    subjectDetailsPageController = SubjectDetailsPageController(courseData: widget.courseData);
+    subjectDetailsPageController =
+        SubjectDetailsPageController(courseData: widget.courseData);
 
     if (subjectDetailsPageController.courseData != null) {
       subjects = subjectDetailsPageController.courseData!.courseSubjects!;
@@ -29,8 +31,9 @@ abstract class SubjectDetailsState extends State<SubjectDetailsView> with Ticker
   onEnrollClick(bool isEnrolled) async {
     // print(widget.courseData!.isCourseEnrolled.toString());
     if (isEnrolled == false) {
-      await AppUtils.showloadingOverlay(() async {
-        await EnrollCoursesRepository.enrollCourse(widget.courseData!.courseId).then((value) {
+      await AppUtils.showLoadingOverlay(() async {
+        await EnrollCoursesRepository.enrollCourse(widget.courseData!.courseId)
+            .then((value) {
           if (value == 200) {
             subjectDetailsPageController.enroll(!isEnrolled);
           }

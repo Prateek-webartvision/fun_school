@@ -3,7 +3,7 @@
 import 'package:citycloud_school/repo/community/community_discussion_repo.dart';
 import 'package:citycloud_school/style/color.dart';
 import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,7 +88,8 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                             final item = controller.trendingHastags![index];
                             return TrendingHashtagChip(
                               text: item.hashtag!,
-                              isSelected: item.hashtag == controller.selectedTag,
+                              isSelected:
+                                  item.hashtag == controller.selectedTag,
                               onTap: () {
                                 controller.setSelectTag = item.hashtag!;
                               },
@@ -209,11 +210,15 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                       onProfileClick: () {
                         // soon it will change
                         // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => OtherProfilePage()));
-                        AppUtils.slidePush(page: OtherProfilePage(userId: item.userId!));
+                        AppUtils.slidePush(
+                            page: OtherProfilePage(userId: item.userId!));
                       },
                       likes: item.likesCount,
                       replies: item.replysCount,
-                      time: DateTime.fromMicrosecondsSinceEpoch(int.parse(item.time!) * 1000000).toUtc().toString(),
+                      time: DateTime.fromMicrosecondsSinceEpoch(
+                              int.parse(item.time!) * 1000000)
+                          .toUtc()
+                          .toString(),
                       type: item.type!,
                       userType: item.userType!,
                       isVerify: item.userType == "Certified_Tutor",
@@ -223,8 +228,10 @@ class _DiscourssionTabState extends State<DiscourssionTab> {
                       first2Likes: item.likes,
                       isLiked: item.isLiked,
                       onLikeClick: () {
-                        AppUtils.showloadingOverlay(() async {
-                          await CommunityDiscussionRepostory.likeDislikeDiscussion(discussionId: item.discussionId.toString());
+                        AppUtils.showLoadingOverlay(() async {
+                          await CommunityDiscussionRepostory
+                              .likeDislikeDiscussion(
+                                  discussionId: item.discussionId.toString());
                           controller.setLikeDisLike(discussion: item);
                         });
                       },

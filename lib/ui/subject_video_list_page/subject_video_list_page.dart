@@ -2,7 +2,7 @@
 
 import 'package:citycloud_school/models/courses_dedails/subject.model.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -40,7 +40,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
 
   @override
   void initState() {
-    subjectVideoListPageController = SubjectVideoListPageController(videos: widget.videos);
+    subjectVideoListPageController =
+        SubjectVideoListPageController(videos: widget.videos);
     WakelockPlus.enable();
     super.initState();
   }
@@ -88,7 +89,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
       appBar: AppBar(
         backgroundColor: Colors.black.withOpacity(0.2),
         foregroundColor: Colors.white,
-        title: Text("Introduction to variables", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        title: Text("Introduction to variables",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: GetBuilder(
@@ -134,7 +136,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                         child: Row(
                                           children: [
                                             Icon(
-                                              Icons.keyboard_double_arrow_left_rounded,
+                                              Icons
+                                                  .keyboard_double_arrow_left_rounded,
                                               color: Colors.white,
                                               size: 40,
                                             ),
@@ -156,7 +159,10 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                           controller.playPouse();
                                         },
                                         child: Icon(
-                                          (!controller.isplaying) ? Icons.play_circle_fill_rounded : Icons.pause_circle_filled_rounded,
+                                          (!controller.isplaying)
+                                              ? Icons.play_circle_fill_rounded
+                                              : Icons
+                                                  .pause_circle_filled_rounded,
                                           color: Colors.white,
                                           size: 40,
                                         ),
@@ -179,7 +185,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                             ),
                                             4.width,
                                             Icon(
-                                              Icons.keyboard_double_arrow_right_rounded,
+                                              Icons
+                                                  .keyboard_double_arrow_right_rounded,
                                               color: Colors.white,
                                               size: 40,
                                             ),
@@ -198,16 +205,25 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              (!subjectVideoListPageController.videoPlayerController.value.isInitialized)
+                              (!subjectVideoListPageController
+                                      .videoPlayerController
+                                      .value
+                                      .isInitialized)
                                   ? SizedBox()
                                   : Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 14),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           // more option widget
                                           GestureDetector(
-                                            onTap: () => onMoreOptionClick(subTitle: controller.videos[controller.currentVideo].subTitle!),
+                                            onTap: () => onMoreOptionClick(
+                                                subTitle: controller
+                                                    .videos[
+                                                        controller.currentVideo]
+                                                    .subTitle!),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -216,15 +232,24 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                                   width: 32,
                                                   decoration: BoxDecoration(
                                                     color: AppColor.white,
-                                                    borderRadius: BorderRadius.circular(32),
-                                                    border: Border.all(color: AppColor.softBorderColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            32),
+                                                    border: Border.all(
+                                                        color: AppColor
+                                                            .softBorderColor),
                                                   ),
-                                                  child: Icon(Icons.more_horiz_rounded),
+                                                  child: Icon(
+                                                      Icons.more_horiz_rounded),
                                                 ),
                                                 4.height,
                                                 Text(
                                                   "Menu",
-                                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: AppColor.white),
                                                 ),
                                               ],
                                             ),
@@ -240,7 +265,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                                   allowScrubbing: true,
                                   colors: VideoProgressColors(
                                     playedColor: AppColor.mainColor,
-                                    backgroundColor: AppColor.white.withOpacity(0.8),
+                                    backgroundColor:
+                                        AppColor.white.withOpacity(0.8),
                                   ),
                                 ),
                               ),
@@ -261,7 +287,8 @@ class _SubjectVideoListPageState extends State<SubjectVideoListPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("${controller.videos[controller.currentVideo].subTitle}"),
+                    Text(
+                        "${controller.videos[controller.currentVideo].subTitle}"),
                     GestureDetector(
                       onTap: () async {
                         controller.onNextVideo(

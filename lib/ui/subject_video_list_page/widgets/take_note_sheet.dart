@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 
 class TakeNoteSheet extends StatefulWidget {
   const TakeNoteSheet({
@@ -46,7 +46,7 @@ class _TakeNoteSheetState extends State<TakeNoteSheet> {
     if (noteText.text.isEmpty) {
       AppUtils.showSnack("Enter Note Text");
     } else {
-      AppUtils.showloadingOverlay(() async {
+      AppUtils.showLoadingOverlay(() async {
         rootNavigator.currentState!.focusNode.unfocus();
         var res = await NotesRepository.addNote(
           courseId: widget.courseId,

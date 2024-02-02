@@ -6,7 +6,7 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../repo/study_plan_repo/study_plan_repo.dart';
 import '../../../router/app_router.dart';
 import '../../../style/color.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 import '../../../widegts/k_btn.dart';
 import '../../../widegts/k_text_field.dart';
 
@@ -111,12 +111,16 @@ class _AddStudyPlanSheetState extends State<AddStudyPlanSheet> {
                 width: 165,
                 height: 44,
                 onClick: () {
-                  if (titleTextController.text.isEmpty || desTextController.text.isEmpty) {
+                  if (titleTextController.text.isEmpty ||
+                      desTextController.text.isEmpty) {
                     AppUtils.showSnack("Enter Title and Description");
                   } else {
                     rootNavigator.currentState!.focusNode.unfocus();
-                    AppUtils.showloadingOverlay(() async {
-                      await StudyPlanRepository.addStudyPlan(title: titleTextController.text, description: desTextController.text).then((value) {
+                    AppUtils.showLoadingOverlay(() async {
+                      await StudyPlanRepository.addStudyPlan(
+                              title: titleTextController.text,
+                              description: desTextController.text)
+                          .then((value) {
                         if (value['code'] == 200) {
                           Navigator.of(context).pop("yes");
                           AppUtils.showSnack(value['message']);

@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:citycloud_school/widegts/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -20,7 +20,8 @@ class ExamStudyPlanDetailsPage extends StatefulWidget {
   const ExamStudyPlanDetailsPage({super.key, required this.studyPlan});
   final ExamStudyPlanModel studyPlan;
   @override
-  State<ExamStudyPlanDetailsPage> createState() => _ExamStudyPlanDetailsPageState();
+  State<ExamStudyPlanDetailsPage> createState() =>
+      _ExamStudyPlanDetailsPageState();
 }
 
 class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
@@ -28,7 +29,8 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
 
   @override
   void initState() {
-    studyPlanDetailsController = ExamStudyPlanDetailsController(studyPlan: widget.studyPlan);
+    studyPlanDetailsController =
+        ExamStudyPlanDetailsController(studyPlan: widget.studyPlan);
     super.initState();
   }
 
@@ -40,7 +42,10 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
         // title: const Text("JAMB 2023"),
         title: Text(widget.studyPlan.examName ?? ""),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded))],
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded))
+        ],
       ),
       body: GetBuilder(
         init: studyPlanDetailsController,
@@ -50,14 +55,17 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
             children: [
               PlanHeadTile(
                 title: controller.studyPlan.examName ?? "",
-                date: getDateTimeFromTimeStamp(timeStamp: controller.studyPlan.dateOfExam),
-                progressHour: int.parse(controller.studyPlan.progressHours ?? "0"),
+                date: getDateTimeFromTimeStamp(
+                    timeStamp: controller.studyPlan.dateOfExam),
+                progressHour:
+                    int.parse(controller.studyPlan.progressHours ?? "0"),
                 progress: controller.studyPlan.progressPercentage?.toInt() ?? 0,
               ),
               12.height,
 
               // Courses in exam
-              if (controller.studyPlan.examStudyPlanCourses != null && controller.studyPlan.examStudyPlanCourses!.isNotEmpty)
+              if (controller.studyPlan.examStudyPlanCourses != null &&
+                  controller.studyPlan.examStudyPlanCourses!.isNotEmpty)
                 Container(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -69,15 +77,18 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Courses in the Exam", style: AppTextStyle.text12W400),
+                      Text("Courses in the Exam",
+                          style: AppTextStyle.text12W400),
                       5.height,
                       Wrap(
                         spacing: 8,
                         children: controller.studyPlan.examStudyPlanCourses!
                             .map(
                               (e) => Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                child: Text(e.name ?? "N/A", style: AppTextStyle.text12W400),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                child: Text(e.name ?? "N/A",
+                                    style: AppTextStyle.text12W400),
                               ),
                             )
                             .toList(),
@@ -85,7 +96,9 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                     ],
                   ),
                 ),
-              if (controller.studyPlan.examStudyPlanCourses != null && controller.studyPlan.examStudyPlanCourses!.isNotEmpty) 12.height,
+              if (controller.studyPlan.examStudyPlanCourses != null &&
+                  controller.studyPlan.examStudyPlanCourses!.isNotEmpty)
+                12.height,
               //
               Container(
                 padding: EdgeInsets.all(12),
@@ -111,7 +124,8 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                         PlanStudyScheduleTile(
                           title: "Study Hours Completed",
                           // subTitle: "24 hours",
-                          subTitle: "${controller.studyPlan.progressHours} hours",
+                          subTitle:
+                              "${controller.studyPlan.progressHours} hours",
                         ),
                         5.height,
                         PlanStudyScheduleTile(
@@ -123,7 +137,8 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                         PlanStudyScheduleTile.edit(
                           title: "Preferred Study Periods",
                           // subTitle: "Daily at 7:00 pm",
-                          subTitle: controller.studyPlan.reminderSettings ?? "N/A",
+                          subTitle:
+                              controller.studyPlan.reminderSettings ?? "N/A",
                           onEdit: () {
                             AppUtils.showSnack("Coming soon");
                           },
@@ -151,10 +166,14 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                     DropdownButtonFormField(
                       value: controller.selectedWeek,
                       hint: Text("week day"),
-                      style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
                         isCollapsed: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                         border: studyPlanDropBorder,
                         enabledBorder: studyPlanDropBorder,
                         focusedBorder: studyPlanDropBorder,
@@ -202,7 +221,8 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                 ),
               ),
 
-              if (controller.studyPlan.examStudyPlanResources != null && controller.studyPlan.examStudyPlanResources!.isNotEmpty)
+              if (controller.studyPlan.examStudyPlanResources != null &&
+                  controller.studyPlan.examStudyPlanResources!.isNotEmpty)
                 Column(
                   children: [
                     12.height,
@@ -222,9 +242,11 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                           ListView.separated(
                             shrinkWrap: true,
                             primary: false,
-                            itemCount: controller.studyPlan.examStudyPlanResources!.length,
+                            itemCount: controller
+                                .studyPlan.examStudyPlanResources!.length,
                             itemBuilder: (context, index) {
-                              final src = controller.studyPlan.examStudyPlanResources![index];
+                              final src = controller
+                                  .studyPlan.examStudyPlanResources![index];
                               return StudyResourseTile(
                                 title: src.title ?? "",
                                 url: src.link ?? "",

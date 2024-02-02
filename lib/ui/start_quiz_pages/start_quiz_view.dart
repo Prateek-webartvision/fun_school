@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -40,12 +40,16 @@ class _StartQuizViewState extends StartQuizState {
           init: mockQuizController,
           builder: (controller) {
             if (controller.apiState == ApiState.loading) {
-              return Center(child: CircularProgressIndicator(color: AppColor.white));
+              return Center(
+                  child: CircularProgressIndicator(color: AppColor.white));
             } else if (controller.apiState == ApiState.error) {
               return Center(
                 child: Text(
                   controller.error,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.white),
                 ),
               );
             } else {
@@ -60,24 +64,34 @@ class _StartQuizViewState extends StartQuizState {
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     child: Text(
                       "${controller.quizs!.length} Question",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white),
                     ),
                   ),
                   20.height,
                   Text(
                     "Ready to practice?",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.white),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.white),
                   ),
                   Text(
                     "Okay. show us what you can do!",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.white),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.white),
                   ),
                   100.height,
 
                   // lost Result
 
                   FutureBuilder(
-                    future: QuizRepository.getAllQuizResults(title: widget.title!),
+                    future:
+                        QuizRepository.getAllQuizResults(title: widget.title!),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
                         return SizedBox();
@@ -85,11 +99,15 @@ class _StartQuizViewState extends StartQuizState {
                         return ListView.separated(
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            if (snapshot.data![index].quizType! == QuizType.quiz) {
+                            if (snapshot.data![index].quizType! ==
+                                QuizType.quiz) {
                               return Center(
                                 child: Text(
                                   "Last Quiz score: ${snapshot.data![index].quizScore}%",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.white),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.white),
                                 ),
                               );
                             } else {
@@ -121,8 +139,13 @@ class _StartQuizViewState extends StartQuizState {
                         if (controller.quizs!.isEmpty) {
                           AppUtils.showSnack("No quiz show");
                         } else {
-                          final data = {"controller": controller, "courseId": widget.courseId, "subjectId": widget.subjectId};
-                          appRoutes.pushNamed(PagesName.quizQustionAnswerPage, extra: data);
+                          final data = {
+                            "controller": controller,
+                            "courseId": widget.courseId,
+                            "subjectId": widget.subjectId
+                          };
+                          appRoutes.pushNamed(PagesName.quizQustionAnswerPage,
+                              extra: data);
                         }
                       },
                       text: "Start Mock Test",

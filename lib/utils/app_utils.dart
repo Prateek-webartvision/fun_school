@@ -44,14 +44,16 @@ class AppUtils {
   }
 
   // loading overlay
-  static showloadingOverlay(Future Function() futureFun) async {
+  static showLoadingOverlay(Future Function() futureFun) async {
     final OverlayEntry entry = OverlayEntry(
       builder: (context) {
         return Material(
           color: Colors.black26,
           child: Center(
             child: Container(
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(100)),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100)),
               padding: EdgeInsets.all(4),
               child: CircularProgressIndicator(),
             ),
@@ -67,7 +69,8 @@ class AppUtils {
 
   static bool isCourseEnroledByMe({required List<CoursesEnrollment> enrolls}) {
     // print()
-    var isEnrolled = enrolls.where((element) => int.parse(element.userId!) == AppStorage.user.currentUser()!.userid!);
+    var isEnrolled = enrolls.where((element) =>
+        int.parse(element.userId!) == AppStorage.user.currentUser()!.userId!);
     if (isEnrolled.isEmpty) {
       return false;
     } else {
@@ -78,10 +81,12 @@ class AppUtils {
   static slidePush({required Widget page}) {
     rootNavigator.currentState!.push(
       PageRouteBuilder(
-        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
           animation = CurvedAnimation(curve: Curves.easeIn, parent: animation);
           final slide = SlideTransition(
-            position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+            position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+                .animate(animation),
             child: page,
           );
 
@@ -97,7 +102,8 @@ class AppUtils {
     int hur = (duration.inHours % 60);
     int min = (duration.inMinutes % 60);
 
-    final time = "${(hur >= 1) ? "$hur hours" : ""} ${(min >= 1) ? "$min minutes" : ""}";
+    final time =
+        "${(hur >= 1) ? "$hur hours" : ""} ${(min >= 1) ? "$min minutes" : ""}";
     return time;
   }
 }
@@ -105,9 +111,12 @@ class AppUtils {
 class MyDialog<T> extends RawDialogRoute<T> {
   MyDialog()
       : super(
-          pageBuilder: (BuildContext context, Animation<double> anim, Animation<double> anim2) {
-            Tween<Offset> tw = Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
-            final animation = CurvedAnimation(curve: Curves.easeIn, parent: anim);
+          pageBuilder: (BuildContext context, Animation<double> anim,
+              Animation<double> anim2) {
+            Tween<Offset> tw =
+                Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+            final animation =
+                CurvedAnimation(curve: Curves.easeIn, parent: anim);
             final slid = SlideTransition(
               position: tw.animate(animation),
               child: Center(child: Material(child: Text("data"))),

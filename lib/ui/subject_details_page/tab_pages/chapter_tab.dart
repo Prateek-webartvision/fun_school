@@ -11,7 +11,7 @@ import '../../../repo/flascard_repo/flashcard_repo.dart';
 import '../../../router/app_router.dart';
 import '../../../router/pages.dart';
 import '../../../style/color.dart';
-import '../../../uitls/app_utils.dart';
+import '../../../utils/app_utils.dart';
 import '../../flash_card_page/flash_card_view.dart';
 import '../../interactive_quiz_page/interactive_quiz_page.dart';
 import '../../subject_video_list_page/subject_video_list_page.dart';
@@ -38,7 +38,8 @@ class _ChaptersTabState extends State<ChaptersTab> {
 
   @override
   void initState() {
-    chapterTabController = ChapterTabController(index: widget.index, courseData: widget.courseData);
+    chapterTabController = ChapterTabController(
+        index: widget.index, courseData: widget.courseData);
     super.initState();
   }
 
@@ -63,13 +64,18 @@ class _ChaptersTabState extends State<ChaptersTab> {
                     if (chapterTabController.courseData.isCourseEnrolled) {
                       if (state == SubjectState.flashcard) {
                         // flashcard
-                        AppUtils.showloadingOverlay(() async {
-                          final flashcard = await FlashCardRepository.getFlashCards(courseId: int.parse(chapterTabController.courseData.courseId!.toString()));
+                        AppUtils.showLoadingOverlay(() async {
+                          final flashcard =
+                              await FlashCardRepository.getFlashCards(
+                                  courseId: int.parse(chapterTabController
+                                      .courseData.courseId!
+                                      .toString()));
                           if (flashcard != null && flashcard.isNotEmpty) {
                             // print(flashcard.length);
                             rootNavigator.currentState!.push(
                               MaterialPageRoute(
-                                builder: (context) => FlashCardView(flashCards: flashcard),
+                                builder: (context) =>
+                                    FlashCardView(flashCards: flashcard),
                               ),
                             );
                           } else {
@@ -83,7 +89,9 @@ class _ChaptersTabState extends State<ChaptersTab> {
                           queryParameters: {"title": ""},
                           extra: {
                             "subjectId": chapterTabController.subject.subjectId,
-                            "courseId": chapterTabController.courseData.courseId!.toString(),
+                            "courseId": chapterTabController
+                                .courseData.courseId!
+                                .toString(),
                           },
                         );
                       }
@@ -104,11 +112,13 @@ class _ChaptersTabState extends State<ChaptersTab> {
               children: [
                 ChapterTile(
                   isEnrolled: chapterTabController.courseData.isCourseEnrolled,
-                  courseId: chapterTabController.courseData.courseId!.toString(),
+                  courseId:
+                      chapterTabController.courseData.courseId!.toString(),
                   subjectId: chapterTabController.subject.subjectId,
                   title: chapterTabController.listVideo![index].first.title!,
                   videos: chapterTabController.listVideo![index],
-                  enrollmentData: chapterTabController.courseData.courseEnrollment,
+                  enrollmentData:
+                      chapterTabController.courseData.courseEnrollment,
                   missionIndex: index + 1,
                 ),
                 //
@@ -120,9 +130,11 @@ class _ChaptersTabState extends State<ChaptersTab> {
                       await rootNavigator.currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => InteractiveQuizPage(
-                            title: chapterTabController.listVideo![index].first.title!,
+                            title: chapterTabController
+                                .listVideo![index].first.title!,
                             subjectId: chapterTabController.subject.subjectId!,
-                            courseId: chapterTabController.courseData.courseId!.toString(),
+                            courseId: chapterTabController.courseData.courseId!
+                                .toString(),
                             misstionIdex: index + 1,
                           ),
                         ),
@@ -146,7 +158,8 @@ class _ChaptersTabState extends State<ChaptersTab> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Mission ${NumToWords.convertNumberToIndianWords(index + 1)}".capitalize!,
+                          "Mission ${NumToWords.convertNumberToIndianWords(index + 1)}"
+                              .capitalize!,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -298,7 +311,10 @@ class ChapterTile extends StatelessWidget {
     List<ContentVideo> belowVideos = [];
 
     for (int i = detIndex; i < topicSet.length; i++) {
-      videos.where((element) => element.subTitle! == topicSet[i]).toList().forEach((e) {
+      videos
+          .where((element) => element.subTitle! == topicSet[i])
+          .toList()
+          .forEach((e) {
         belowVideos.add(e);
       });
     }

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/uitls/app_utils.dart';
+import 'package:citycloud_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -12,7 +12,8 @@ import '../exam_preparation_page/controller/find_exam_crontroller.dart';
 import 'widgets/subject_tile.dart';
 
 class ExamFindEditions extends StatefulWidget {
-  const ExamFindEditions({super.key, required this.exam, required this.crontroller});
+  const ExamFindEditions(
+      {super.key, required this.exam, required this.crontroller});
   final List<AllExamModel> exam;
   final FindExamCrontroller crontroller;
 
@@ -70,11 +71,13 @@ class _ExamFindEditionsState extends State<ExamFindEditions> {
                   onClick: () {
                     // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
                     // check question befor open exam
-                    if (item.multichoiceQuestionsCount! <= 0 && item.theoryQuestionsCount! <= 0) {
+                    if (item.multichoiceQuestionsCount! <= 0 &&
+                        item.theoryQuestionsCount! <= 0) {
                       AppUtils.showSnack("No Question to show");
                     } else {
                       final examStatPage = MaterialPageRoute(
-                        builder: (_) => ExamFindStartMockPage(examId: item.examId.toString()),
+                        builder: (_) => ExamFindStartMockPage(
+                            examId: item.examId.toString()),
                       );
                       rootNavigator.currentState!.push(examStatPage);
                     }
