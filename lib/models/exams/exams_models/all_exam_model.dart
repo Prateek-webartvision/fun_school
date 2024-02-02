@@ -75,20 +75,20 @@ class AllExamModel extends _ExamModel {
 }
 
 class AllExamModel2 extends _ExamModel {
-  String? durationMultichoice;
+  String? durationMultiChoice;
   String? durationTheory;
-  ScoreModel? multichoiceScore;
+  ScoreModel? multiChoiceScore;
   ScoreModel? theoryScore;
   List<TheoryQuestionModel>? theoryQuestions;
-  List<MultiChoiceQuestion>? multichoiceQuestions;
+  List<MultiChoiceQuestion>? multiChoiceQuestions;
 
   AllExamModel2.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    durationMultichoice = json['duration_multichoice'];
+    durationMultiChoice = json['duration_multichoice'];
     durationTheory = json['duration_theory'];
     //Scrore
     if (json['multichoice_score'] != null &&
         json['multichoice_score'].isNotEmpty) {
-      multichoiceScore = ScoreModel.fromJson(json['multichoice_score']);
+      multiChoiceScore = ScoreModel.fromJson(json['multichoice_score']);
       // multichoiceScore!.grade = "b";
       // print(multichoiceScore?.grade.toString());
     }
@@ -102,7 +102,7 @@ class AllExamModel2 extends _ExamModel {
         final mcq = MultiChoiceQuestion.fromJson(element);
         mcqs.add(mcq);
       }
-      multichoiceQuestions = mcqs;
+      multiChoiceQuestions = mcqs;
     }
     if (json['theory_questions'] != null) {
       List<TheoryQuestionModel> theoryquestions = [];
@@ -117,7 +117,7 @@ class AllExamModel2 extends _ExamModel {
   @override
   Map<String, dynamic> get toJson {
     Map<String, dynamic> json = super.toJson;
-    json['duration_multichoice'] = durationMultichoice;
+    json['duration_multichoice'] = durationMultiChoice;
     json['duration_theory'] = durationTheory;
     return json;
   }

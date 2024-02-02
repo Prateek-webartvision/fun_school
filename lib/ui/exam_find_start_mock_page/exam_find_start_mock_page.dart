@@ -14,7 +14,10 @@ import 'controller/find_exam_start_controller.dart';
 import 'widgets/grade_tile.dart';
 
 class ExamFindStartMockPage extends StatefulWidget {
-  const ExamFindStartMockPage({super.key, required this.examId});
+  const ExamFindStartMockPage({
+    super.key,
+    required this.examId,
+  });
   final String examId;
 
   @override
@@ -71,6 +74,7 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
           }
           if (controller.state == ApiState.error) {
             return ErrorPage(
+              textColor: AppColor.white,
               error: controller.error.toString(),
               onError: () {
                 controller.initLoad();
@@ -87,18 +91,18 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
               padding: EdgeInsets.all(16),
               children: [
                 GradeTile(
-                  title: "Multichoice",
+                  title: "MultiChoice",
                   time: Duration(
                       minutes: int.parse(
-                          controller.allExams?.durationMultichoice ?? "0")),
+                          controller.allExams?.durationMultiChoice ?? "0")),
                   questions:
-                      controller.allExams?.multichoiceQuestions?.length ?? 0,
-                  grade: controller.allExams?.multichoiceScore?.grade,
+                      controller.allExams?.multiChoiceQuestions?.length ?? 0,
+                  grade: controller.allExams?.multiChoiceScore?.grade,
                   onStartClick: () {
                     final questionViewPage = MaterialPageRoute(
                       builder: (_) => QuestionViewPage(
                         title: controller.allExams!.examCourseName.toString(),
-                        questions: controller.allExams!.multichoiceQuestions!,
+                        questions: controller.allExams!.multiChoiceQuestions!,
                       ),
                     );
                     rootNavigator.currentState!.push(questionViewPage);
@@ -115,7 +119,7 @@ class _ExamFindStartMockPageState extends State<ExamFindStartMockPage> {
                   grade: controller.allExams?.theoryScore?.grade,
                   onStartClick: () {
                     final submitExamPage = MaterialPageRoute(
-                      builder: (_) => TheorySumbmitPage(
+                      builder: (_) => TheorySubmitPage(
                         title: controller.allExams!.examCourseName.toString(),
                         questions: controller.allExams!.theoryQuestions!,
                       ),

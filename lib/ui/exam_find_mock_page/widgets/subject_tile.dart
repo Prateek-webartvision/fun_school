@@ -9,12 +9,12 @@ class MockSubjectTile extends StatelessWidget {
     super.key,
     required this.title,
     this.onClick,
-    this.multiChioceQuestions = 0,
+    this.multiChoiceQuestions = 0,
     this.theoryQuestions = 0,
   });
   final String title;
   // final int questions;
-  final int multiChioceQuestions;
+  final int multiChoiceQuestions;
   final int theoryQuestions;
   final Function()? onClick;
 
@@ -49,7 +49,7 @@ class MockSubjectTile extends StatelessWidget {
             ),
             Text(
               // "$questions questions",
-              "$multiChioceQuestions Multichoice Questions • $theoryQuestions Theory Questions",
+              "$multiChoiceQuestions Multichoice Questions • $theoryQuestions Theory Questions",
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
             ),
           ],

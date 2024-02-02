@@ -25,13 +25,16 @@ class FindExamStartController extends GetxController {
   }
 
   _loadData() async {
-    await ExamsRepository.getExamByExamId(examId: examId).then((value) {
+    try {
+      final res = await ExamsRepository.getExamByExamId(examId: examId);
       state = ApiState.success;
-      allExams = value.first;
-    }).onError((error, stackTrace) {
+      if (res.isNotEmpty) {
+        allExams = res.first;
+      }
+    } catch (e) {
       state = ApiState.error;
-      this.error = error.toString();
-    });
+      error = e.toString();
+    }
     update();
   }
 }

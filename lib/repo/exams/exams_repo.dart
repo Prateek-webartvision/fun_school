@@ -27,18 +27,16 @@ class ExamsRepository {
     params['exam_id'] = examId;
     params["user_id"] = AppStorage.user.currentUser()?.userId.toString() ?? "";
 
-    return await _api
-        .getApi(AppUrls.getExamsByExamId, params: params)
-        .then((value) {
-      List<AllExamModel2> exams = [];
-      for (var element in value) {
+    final res = await _api.getApi(AppUrls.getExamsByExamId, params: params);
+
+    List<AllExamModel2> exams = [];
+    if (res != null) {
+      for (var element in res) {
         final exam = AllExamModel2.fromJson(element);
         exams.add(exam);
       }
-      return exams;
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
+    }
+    return exams;
   }
 
   static saveMultiChoiceExamScore(

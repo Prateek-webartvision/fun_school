@@ -6,7 +6,7 @@ class ResourcesModel {
   int? dateAdded;
 
   ResourcesModel.fromJson(Map<String, dynamic> json) {
-    resourceId = json['resource_id'];
+    resourceId = int.parse(json['resource_id']);
     studyPlanId = json['study_plan_id'];
     title = json['title'];
     link = json['link'];

@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 class ErrorPage extends StatelessWidget {
-  const ErrorPage({super.key, required this.error, required this.onError});
+  const ErrorPage(
+      {super.key, required this.error, required this.onError, this.textColor});
   final String error;
   final Function() onError;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,17 @@ class ErrorPage extends StatelessWidget {
                 height: 240,
               ),
               60.height,
-              Text("Oops...", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Oops...",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor)),
               3.height,
-              Text(error, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+              Text(error,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: textColor)),
               30.height,
               GestureDetector(
                   onTap: onError,
@@ -39,7 +49,11 @@ class ErrorPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     alignment: Alignment.center,
-                    child: Text("Try again", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                    child: Text("Try again",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white)),
                   )),
             ],
           ),

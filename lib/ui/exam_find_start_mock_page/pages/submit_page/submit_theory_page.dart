@@ -12,17 +12,17 @@ import '../../../../style/const.dart';
 import '../../controller/theory_answer_controller.dart';
 import '../../widgets/head_question.dart';
 
-class TheorySumbmitPage extends StatefulWidget {
-  const TheorySumbmitPage(
+class TheorySubmitPage extends StatefulWidget {
+  const TheorySubmitPage(
       {super.key, required this.questions, required this.title});
   final List<TheoryQuestionModel> questions;
   final String title;
 
   @override
-  State<TheorySumbmitPage> createState() => _TheorySumbmitPageState();
+  State<TheorySubmitPage> createState() => _TheorySubmitPageState();
 }
 
-class _TheorySumbmitPageState extends State<TheorySumbmitPage> {
+class _TheorySubmitPageState extends State<TheorySubmitPage> {
   late TheoryAnswerController answerController;
   TextEditingController answerText = TextEditingController();
   @override

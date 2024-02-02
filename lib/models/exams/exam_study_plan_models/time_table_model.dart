@@ -8,7 +8,7 @@ class TimeTableModel {
   int? dateAdded;
 
   TimeTableModel.fromJson(Map<String, dynamic> json) {
-    timetableId = json['timetable_id'];
+    timetableId = int.tryParse(json['timetable_id']);
     studyPlanId = json['study_plan_id'];
     week = json['week'];
     day = json['day'];

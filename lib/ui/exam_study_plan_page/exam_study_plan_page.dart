@@ -7,7 +7,6 @@ import 'package:citycloud_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
-import 'package:kd_utils/methods/timestemp.dart';
 
 import '../../repo/exams/exam_study_plan_repo.dart';
 import '../../utils/app_utils.dart';
@@ -61,7 +60,7 @@ class _ExamStudyPlanState extends State<ExamStudyPlan> {
                   return Padding(
                     padding: sheetBottomSpace,
                     child: CreateExamSheet(
-                      courses: widget.controller.courseslist,
+                      courses: widget.controller.coursesList,
                       onCreate: (name, examDate, selectedCourses, studyHour,
                           periods, reminderSteeing, reminderTime) {
                         AppUtils.showLoadingOverlay(() async {

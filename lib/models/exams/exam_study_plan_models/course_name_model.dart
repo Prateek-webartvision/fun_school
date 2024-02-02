@@ -5,7 +5,7 @@ class CoursesName {
   CoursesName({this.id, this.name});
 
   CoursesName.fromJson(Map<String, dynamic> json) {
-    id = json['course_id'];
+    id = int.parse(json['course_id'].toString());
     name = json['course_name'];
   }
 

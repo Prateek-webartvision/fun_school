@@ -34,7 +34,7 @@ class ExamStudyPlanModel {
   });
 
   ExamStudyPlanModel.fromJson(Map<String, dynamic> json) {
-    examStudyPlanId = json['exam_study_plan_id'];
+    examStudyPlanId = int.tryParse(json['exam_study_plan_id']);
     examName = json['exam_name'];
     dateOfExam = json['date_of_exam'];
     examCourses = json['exam_courses'];
@@ -63,8 +63,8 @@ class ExamStudyPlanModel {
     if (json['exam_study_plan_resources'] != null) {
       List<ResourcesModel> temp = [];
       for (var element in json['exam_study_plan_resources']) {
-        final resorce = ResourcesModel.fromJson(element);
-        temp.add(resorce);
+        final resource = ResourcesModel.fromJson(element);
+        temp.add(resource);
       }
       examStudyPlanResources = temp;
     }

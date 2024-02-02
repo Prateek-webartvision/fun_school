@@ -12,10 +12,13 @@ import '../exam_preparation_page/controller/find_exam_controller.dart';
 import 'widgets/subject_tile.dart';
 
 class ExamFindEditions extends StatefulWidget {
-  const ExamFindEditions(
-      {super.key, required this.exam, required this.crontroller});
+  const ExamFindEditions({
+    super.key,
+    required this.exam,
+    required this.controller,
+  });
   final List<AllExamModel> exam;
-  final FindExamController crontroller;
+  final FindExamController controller;
 
   @override
   State<ExamFindEditions> createState() => _ExamFindEditionsState();
@@ -66,11 +69,10 @@ class _ExamFindEditionsState extends State<ExamFindEditions> {
               final item = widget.exam[index];
               return MockSubjectTile(
                   title: item.examName!,
-                  multiChioceQuestions: item.multiChoiceQuestionsCount ?? 0,
+                  multiChoiceQuestions: item.multiChoiceQuestionsCount ?? 0,
                   theoryQuestions: item.theoryQuestionsCount ?? 0,
                   onClick: () {
-                    // rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => StartExamPage()));
-                    // check question befor open exam
+                    // check question before open exam
                     if (item.multiChoiceQuestionsCount! <= 0 &&
                         item.theoryQuestionsCount! <= 0) {
                       AppUtils.showSnack("No Question to show");

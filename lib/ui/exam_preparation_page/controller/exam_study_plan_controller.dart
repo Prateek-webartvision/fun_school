@@ -9,7 +9,7 @@ class ExamStudyPlanController extends GetxController {
   late ApiState state;
   String? error;
   List<ExamStudyPlanModel>? studyPlans;
-  List<CoursesName> courseslist = [];
+  List<CoursesName> coursesList = [];
 
   ExamStudyPlanController() {
     initLoad();
@@ -27,8 +27,8 @@ class ExamStudyPlanController extends GetxController {
 
   _loadData() async {
     // courses list and id
-    await ExamStudyPlanRepository.getSudyPlanCoursesList().then((value) {
-      courseslist = value;
+    await ExamStudyPlanRepository.getStudyPlanCoursesList().then((value) {
+      coursesList = value;
     }).onError((error, stackTrace) {
       print(error);
     });

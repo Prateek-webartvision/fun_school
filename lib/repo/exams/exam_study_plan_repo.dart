@@ -23,7 +23,7 @@ class ExamStudyPlanRepository {
     });
   }
 
-  static Future<List<CoursesName>> getSudyPlanCoursesList() async {
+  static Future<List<CoursesName>> getStudyPlanCoursesList() async {
     return await _api.getApi(AppUrls.getExamCoursesList).then((value) {
       List<CoursesName> temp = [];
       for (var element in value) {
@@ -52,9 +52,12 @@ class ExamStudyPlanRepository {
     prms['exam_course'] = courses.map((e) => e.id).toList().toString();
     prms['study_hours'] = studyHour;
     prms['study_periods'] = periods;
-    prms['reminder_settings'] = "$reminder at ${reminderTime.format(rootNavigator.currentContext!)}";
+    prms['reminder_settings'] =
+        "$reminder at ${reminderTime.format(rootNavigator.currentContext!)}";
 
-    return await _api.postApi(AppUrls.examAddStudyPlan, params: prms).then((value) {
+    return await _api
+        .postApi(AppUrls.examAddStudyPlan, params: prms)
+        .then((value) {
       if (value['code'] == 200) {
         return value['message'];
       } else {

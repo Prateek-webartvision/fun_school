@@ -12,13 +12,14 @@ import '../exam_preparation_page/controller/find_exam_controller.dart';
 import 'tabs/certificate_exam_tab.dart';
 
 class FindExamPage extends StatefulWidget {
-  const FindExamPage(
-      {super.key,
-      required this.allExams,
-      required this.crontroller,
-      required this.title});
+  const FindExamPage({
+    super.key,
+    required this.allExams,
+    required this.controller,
+    required this.title,
+  });
   final List<AllExamModel> allExams;
-  final FindExamController crontroller;
+  final FindExamController controller;
   final String title;
 
   @override
@@ -35,7 +36,7 @@ class _FindExamPageState extends State<FindExamPage>
     catBtnSet =
         widget.allExams.map((e) => e.examSubCategoryName).toSet().toList();
     tabController = TabController(length: catBtnSet.length, vsync: this);
-    widget.crontroller
+    widget.controller
         .groupAllExamByName(catBtnSet: catBtnSet, allExams: widget.allExams);
 
     super.initState();
@@ -46,7 +47,6 @@ class _FindExamPageState extends State<FindExamPage>
     return Scaffold(
       appBar: AppBar(
         titleTextStyle: AppTextStyle.appBarText,
-        // title: const Text("Find Exams"),
         title: Text(widget.title),
         centerTitle: true,
         actions: [
@@ -55,7 +55,7 @@ class _FindExamPageState extends State<FindExamPage>
         ],
       ),
       body: GetBuilder(
-        init: widget.crontroller,
+        init: widget.controller,
         builder: (cnt) {
           return Column(
             //       // padding: EdgeInsets.all(16),
@@ -102,13 +102,13 @@ class _FindExamPageState extends State<FindExamPage>
                   controller: tabController,
                   physics: NeverScrollableScrollPhysics(),
                   children: catBtnSet.map((e) {
-                    // flilter exams
+                    // filter exams
                     final filterExams = cnt.getExamsBySubCategories(
                         allExam: cnt.sortedAllExam!, subCat: e!);
 
                     return PastQuestionsTab(
                       allExams: filterExams,
-                      crontroller: widget.crontroller,
+                      controller: widget.controller,
                     );
                   }).toList(),
                 ),
