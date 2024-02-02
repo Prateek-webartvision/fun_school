@@ -34,7 +34,7 @@ class OtherProfileModel {
   List<CommunityDiscussionModel>? discussions;
 
   OtherProfileModel.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
+    userId = int.tryParse(json['user_id']);
     username = json['username'];
     email = json['email'];
     about = json['about'];
@@ -98,7 +98,7 @@ class FollowingModel {
   String? userType;
 
   FollowingModel.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
+    userId = int.tryParse(json['user_id']);
     username = json['username'];
     aboutUser = json['About_user'];
     userProfileImage = json['user_profile_image'];

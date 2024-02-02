@@ -1,5 +1,4 @@
-//
-import 'package:citycloud_school/network/data/app_storage.dart';
+import '../../network/data/app_storage.dart';
 
 abstract class DiscussionModel {
   int? discussionId;
@@ -11,8 +10,8 @@ abstract class DiscussionModel {
   String? topic;
   String? text;
   String? type;
-  int? replysCount;
-  int? repostsCount;
+  int? replyCount;
+  int? rePostCount;
   int? likesCount;
   String? status;
   int? threadId;
@@ -26,8 +25,8 @@ abstract class DiscussionModel {
   List<Hashtags>? hashtags;
 
   DiscussionModel.fromJson(Map<String, dynamic> json) {
-    discussionId = json['discussion_id'];
-    userId = json["user_id"];
+    discussionId = int.tryParse(json['discussion_id']);
+    userId = int.tryParse(json["user_id"]);
     username = json['username'];
     aboutUser = json['About_user'];
     userProfileImage = json['user_profile_image'];
@@ -35,11 +34,11 @@ abstract class DiscussionModel {
     topic = json['topic'];
     text = json['text'];
     type = json['type'];
-    replysCount = json['replys_count'];
-    repostsCount = json['reposts_count'];
-    likesCount = json['likes_count'];
+    replyCount = int.tryParse(json['replys_count']);
+    rePostCount = int.tryParse(json['reposts_count']);
+    likesCount = int.tryParse(json['likes_count']);
     status = json['status'];
-    threadId = json['thread_id'];
+    threadId = int.tryParse(json['thread_id']);
     target = json['target'];
     ogData = json['og_data'];
     time = json['time'];
@@ -89,8 +88,8 @@ abstract class DiscussionModel {
     json['topic'] = topic;
     json['text'] = text;
     json['type'] = type;
-    json['replys_count'] = replysCount;
-    json['reposts_count'] = repostsCount;
+    json['replys_count'] = replyCount;
+    json['reposts_count'] = rePostCount;
     json['likes_count'] = likesCount;
     json['status'] = status;
     json['thread_id'] = threadId;
@@ -152,8 +151,8 @@ class Likes {
   String? time;
 
   Likes.fromJson(Map<String, dynamic> json) {
-    likeId = json['like_id'];
-    userId = json['user_id'];
+    likeId = int.tryParse(json['like_id']);
+    userId = int.tryParse(json['user_id']);
     username = json['username'];
     aboutUser = json['About_user'];
     userProfileImage = json['user_profile_image'];
@@ -188,8 +187,8 @@ class Media {
   String? time;
 
   Media.fromJson(Map<String, dynamic> json) {
-    mediaId = json['media_id'];
-    pubId = json['pub_id'];
+    mediaId = int.tryParse(json['media_id']);
+    pubId = int.tryParse(json['pub_id']);
     type = json['type'];
     src = json['src'];
     time = json['time'];
@@ -218,7 +217,7 @@ class Hashtags {
   String? time;
 
   Hashtags.fromJson(Map<String, dynamic> json) {
-    hashtagId = json['hashtag_id'];
+    hashtagId = int.tryParse(json['hashtag_id']);
     pubId = json['pub_id'];
     hashtag = json['hashtag'];
     time = json['time'];
@@ -240,18 +239,18 @@ class Hashtags {
   }
 }
 
-class TrandingHashtags {
-  int? hashtageId;
+class TrendingHashTags {
+  int? hashTagId;
   String? hashtag;
 
-  TrandingHashtags.fromJson(Map<String, dynamic> json) {
-    hashtageId = json["hashtage_id"];
+  TrendingHashTags.fromJson(Map<String, dynamic> json) {
+    hashTagId = int.tryParse(json["hashtage_id"]);
     hashtag = json["hashtag"];
   }
 
   Map<String, dynamic> get toJson {
     Map<String, dynamic> json = {};
-    json["hashtage_id"] = hashtageId;
+    json["hashtage_id"] = hashTagId;
     json["hashtag"] = hashtag;
     return json;
   }

@@ -3,15 +3,15 @@
 import 'package:citycloud_school/router/app_router.dart';
 import 'package:citycloud_school/style/assets.dart';
 import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/school_communities_page/controllers/community_group_controller.dart';
-import 'package:citycloud_school/ui/school_communities_page/tabs/discourssion_tab/discourssion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'controllers/communities_tab_controller.dart';
 import 'controllers/community_discussion_controller.dart';
+import 'controllers/community_group_controller.dart';
 import 'tabs/chat_tab/chat_tab.dart';
+import 'tabs/discussion_tab/discussion_tab.dart';
 import 'tabs/group_tab/group_tab.dart';
 import 'widgets/communities_tab.dart';
 import 'widgets/communities_tab_view.dart';
@@ -31,7 +31,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
 
   @override
   void initState() {
-    communitiesTabController = CommunitiesTabController(initIntex: 0);
+    communitiesTabController = CommunitiesTabController(initIndex: 0);
     discussionController = CommunityDiscussionController();
     groupController = CommunityGroupController();
     super.initState();
@@ -47,7 +47,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
             child: CommunitiesTabView(
               controller: communitiesTabController,
               children: [
-                DiscourssionTab(controller: discussionController),
+                DiscussionTab(controller: discussionController),
                 GroupsTab(controller: groupController),
                 ChatTab(),
               ],
@@ -68,7 +68,9 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 side: BorderSide(color: AppColor.white, width: 2),
               ),
               backgroundColor: AppColor.mainColor,
-              child: SvgPicture.asset((controller.currentIndex == 2) ? AppAssets.svg.groupFillIcon : AppAssets.svg.pencilFillIcon),
+              child: SvgPicture.asset((controller.currentIndex == 2)
+                  ? AppAssets.svg.groupFillIcon
+                  : AppAssets.svg.pencilFillIcon),
               onPressed: () {
                 if (controller.currentIndex == 0) {
                   // post bottom sheet

@@ -20,7 +20,8 @@ class OtherProfileController extends GetxController {
   // load profile
   _iniLoadProfile() async {
     // CommunityDiscussionRepostory
-    await OthersProfileRepository.getProfile(userId: userId.toString()).then((value) {
+    await OthersProfileRepository.getProfile(userId: userId.toString())
+        .then((value) {
       data = value;
       state = ApiState.success;
     }).onError((error, stackTrace) {
@@ -28,15 +29,10 @@ class OtherProfileController extends GetxController {
       state = ApiState.error;
     });
     update();
-    // await CommunityDiscussionRepostory.filterDiscussionByUser(userId: userId.toString()).then((value) {
-    //   print(value);
-    // }).onError((error, stackTrace) {
-    //   print(error);
-    // });
   }
 
   // reload profile
-  reLoadProfil() async {
+  reLoadProfile() async {
     await _iniLoadProfile();
   }
 
@@ -51,8 +47,7 @@ class OtherProfileController extends GetxController {
   }
 }
 
-SvgPicture? getProfileBages(String userType) {
-  // String normaluser = "Normal_User";
+SvgPicture? getProfileBadges(String userType) {
   switch (userType) {
     case "Normal_Tutor":
       return SvgPicture.asset(AppAssets.svg.normalTutor);

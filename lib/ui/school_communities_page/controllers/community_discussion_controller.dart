@@ -9,7 +9,7 @@ class CommunityDiscussionController extends GetxController {
   String? error;
   List<CommunityDiscussionModel>? _discussions;
   List<CommunityDiscussionModel>? discussions;
-  List<TrandingHashtags>? trendingHastags;
+  List<TrendingHashTags>? trendingHashTags;
   String? selectedTag;
 
   CommunityDiscussionController() {
@@ -36,7 +36,9 @@ class CommunityDiscussionController extends GetxController {
   _filter() async {
     state = ApiState.loading;
     update();
-    await CommunityDiscussionRepostory.filterDiscussionByHashtag(tag: selectedTag!).then((value) {
+    await CommunityDiscussionRepository.filterDiscussionByHashtag(
+            tag: selectedTag!)
+        .then((value) {
       state = ApiState.success;
       discussions = value;
     }).onError((error, stackTrace) {
@@ -56,13 +58,13 @@ class CommunityDiscussionController extends GetxController {
 
   _loadData() async {
     //
-    await CommunityDiscussionRepostory.getTandingHashTags().then((value) {
-      trendingHastags = value;
+    await CommunityDiscussionRepository.getTandingHashTags().then((value) {
+      trendingHashTags = value;
     }).onError((error, stackTrace) {
       this.error = error.toString();
     });
     //
-    await CommunityDiscussionRepostory.getDiscussionsPosts().then((value) {
+    await CommunityDiscussionRepository.getDiscussionsPosts().then((value) {
       state = ApiState.success;
       _discussions = value;
     }).onError((error, stackTrace) {

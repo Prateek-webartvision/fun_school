@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:citycloud_school/ui/profile_page_other/controller/other_profile_controller.dart';
-import 'package:citycloud_school/ui/school_communities_page/tabs/discourssion_tab/wigets/text_post_tile.dart';
+import 'package:citycloud_school/ui/school_communities_page/tabs/discussion_tab/widgets/text_post_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,12 +39,12 @@ class PostTab extends StatelessWidget {
               media: item.media,
               first2Likes: item.likes,
               likes: item.likesCount,
-              replies: item.replysCount,
+              replies: item.replyCount,
               isLiked: item.isLiked,
               onLikeClick: () {
                 // call like api
                 AppUtils.showLoadingOverlay(() async {
-                  await CommunityDiscussionRepostory.likeDislikeDiscussion(
+                  await CommunityDiscussionRepository.likeDislikeDiscussion(
                       discussionId: item.discussionId.toString());
                   cnt.setLikeDisLike(discussion: item);
                 });

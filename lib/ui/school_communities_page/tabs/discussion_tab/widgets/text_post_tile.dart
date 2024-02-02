@@ -83,7 +83,7 @@ class TextPostTile extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment(1.7, 1.7),
-                            child: getProfileBages(userType),
+                            child: getProfileBadges(userType),
                           )
                         ],
                       ),

@@ -42,7 +42,7 @@ class _OtherProfilePageState extends OtherProfilePageState {
             body: ErrorPage(
               error: profile.error!,
               onError: () {
-                profile.reLoadProfil();
+                profile.reLoadProfile();
               },
             ),
           );
@@ -93,13 +93,14 @@ class _OtherProfilePageState extends OtherProfilePageState {
                             children: [
                               Align(
                                 alignment: Alignment(1.3, 1.3),
-                                child: getProfileBages(profile.data!.userType!),
+                                child:
+                                    getProfileBadges(profile.data!.userType!),
                               )
                             ],
                           ),
                         ),
                         10.width,
-                        // user name and badg
+                        // user name and badge
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

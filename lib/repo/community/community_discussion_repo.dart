@@ -4,7 +4,7 @@ import 'package:citycloud_school/network/url/app_urls.dart';
 
 import '../../models/community_discussion_model/community_discussion_model.dart';
 
-class CommunityDiscussionRepostory {
+class CommunityDiscussionRepository {
   static final _api = AppApi();
 
   // get all discustions
@@ -23,8 +23,9 @@ class CommunityDiscussionRepostory {
   }
 
   // filter by hash tag
-  static Future<List<CommunityDiscussionModel>> filterDiscussionByHashtag(
-      {required String tag}) async {
+  static Future<List<CommunityDiscussionModel>> filterDiscussionByHashtag({
+    required String tag,
+  }) async {
     return await _api.getApi(AppUrls.getCommunityDiscussionPost,
         params: {"hashtag": tag}).then((value) {
       List<CommunityDiscussionModel> discussions = [];
@@ -57,11 +58,11 @@ class CommunityDiscussionRepostory {
   }
 
   // get hash tags
-  static Future<List<TrandingHashtags>> getTandingHashTags() async {
+  static Future<List<TrendingHashTags>> getTandingHashTags() async {
     return await _api.getApi(AppUrls.getTrendingHashtags).then((value) {
-      List<TrandingHashtags> tandingHashtags = [];
+      List<TrendingHashTags> tandingHashtags = [];
       for (var element in value) {
-        final tag = TrandingHashtags.fromJson(element);
+        final tag = TrendingHashTags.fromJson(element);
         tandingHashtags.add(tag);
       }
       return tandingHashtags;

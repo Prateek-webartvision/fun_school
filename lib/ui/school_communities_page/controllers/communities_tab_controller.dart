@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 class CommunitiesTabController extends GetxController {
   int currentIndex = 0;
 
-  CommunitiesTabController({int? initIntex}) {
-    if (initIntex != null) {
-      currentIndex = initIntex;
+  CommunitiesTabController({int? initIndex}) {
+    if (initIndex != null) {
+      currentIndex = initIndex;
     }
   }
 
