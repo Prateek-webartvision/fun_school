@@ -201,7 +201,7 @@ class _FindCoursesBySchoolPageViewState extends FindCoursesBySchoolPageState {
                         children: [
                           15.height,
                           TagSelector(
-                            currentIndex: controller.subScoolSelectionIndex,
+                            currentIndex: controller.subSchoolSelectionIndex,
                             tagSet: controller.subSchoolSet!,
                             onChanged: (index) {
                               controller.changeSubSchoolSet(index);

@@ -15,9 +15,9 @@ import '../../../style/color.dart';
 
 class FolderPage extends StatefulWidget {
   const FolderPage(
-      {super.key, required this.coursesByFolderId, required this.allcourses});
+      {super.key, required this.coursesByFolderId, required this.allCourses});
   final List<FolderCourseModel> coursesByFolderId;
-  final List<CoursesModel> allcourses;
+  final List<CoursesModel> allCourses;
 
   @override
   State<FolderPage> createState() => _FolderPageState();
@@ -64,7 +64,7 @@ class _FolderPageState extends State<FolderPage> {
               itemBuilder: (context, index) {
                 final itemTemp = controller.coursesByFolderId[index];
 
-                final item = widget.allcourses
+                final item = widget.allCourses
                     .where((element) =>
                         "${element.courseId}" == itemTemp.courseId!)
                     .first;

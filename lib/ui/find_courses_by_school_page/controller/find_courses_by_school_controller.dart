@@ -15,7 +15,7 @@ class FindCoursesBySchoolController extends GetxController {
   List<CoursesModel> selectedSubject = [];
 
   Set<String>? subSchoolSet;
-  int subScoolSelectionIndex = 0;
+  int subSchoolSelectionIndex = 0;
 
   late SchoolSelectorController schoolSelectorController;
 
@@ -45,7 +45,7 @@ class FindCoursesBySchoolController extends GetxController {
     await _getCourses();
 
     schoolSelectorController = SchoolSelectorController(
-        schoolSeletedIndex: 0, coursesList: _coursesList);
+        schoolSelectedIndex: 0, coursesList: _coursesList);
 
     coursesBySearch = _allSort(
       data: _coursesList,
@@ -69,7 +69,7 @@ class FindCoursesBySchoolController extends GetxController {
   }
 
   _setSubSchool() {
-    subScoolSelectionIndex = 0;
+    subSchoolSelectionIndex = 0;
     subSchoolSet =
         coursesBySearch!.map((e) => e.courseSchoolSubCategory!).toSet();
 
@@ -78,20 +78,20 @@ class FindCoursesBySchoolController extends GetxController {
     coursesBySearch = _allSort(
       data: _coursesList,
       sortBySchool: schoolSelectorController.selectionKey,
-      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByTag: subSchool[subSchoolSelectionIndex],
       sortByQuery: '',
     );
     update();
   }
 
   changeSubSchoolSet(int index) {
-    subScoolSelectionIndex = index;
+    subSchoolSelectionIndex = index;
     final subSchool = subSchoolSet!.toList();
 
     coursesBySearch = _allSort(
       data: _coursesList,
       sortBySchool: schoolSelectorController.selectionKey,
-      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByTag: subSchool[subSchoolSelectionIndex],
       sortByQuery: '',
     );
     update();
@@ -103,7 +103,7 @@ class FindCoursesBySchoolController extends GetxController {
     coursesBySearch = _allSort(
       data: _coursesList,
       sortBySchool: schoolSelectorController.selectionKey,
-      sortByTag: subSchool[subScoolSelectionIndex],
+      sortByTag: subSchool[subSchoolSelectionIndex],
       sortByQuery: value,
     );
 
@@ -154,17 +154,14 @@ class FindCoursesBySchoolController extends GetxController {
   }
 
   reloadWithLoading() async {
-    List<CoursesModel> data = [];
-    await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
+    await CoursesAndDetailsRepository.getCoursesAndDetails.then((v) {
       apiState = ApiState.success;
-      for (var element in v) {
-        data.add(CoursesModel.fromJson(element));
-      }
+
+      _coursesList = v;
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       this.error = error.toString();
     });
-    _coursesList = data;
     update();
   }
 

@@ -27,7 +27,7 @@ class SchoolSelector extends StatelessWidget {
               name: controller.schools[index].name,
               // icon: controller.schools[index].icon,
               icon: Icons.build,
-              isSelected: (controller.schoolSeletedIndex == index),
+              isSelected: (controller.schoolSelectedIndex == index),
               onSelect: () {
                 controller.changeSchool(index);
               },

@@ -7,7 +7,7 @@ class FlashCardModel {
   String? dateAdded;
 
   FlashCardModel.fromJson(Map<String, dynamic> json) {
-    flashcardId = json['flashcard_id'];
+    flashcardId = int.parse(json['flashcard_id'].toString());
     subTitle = json['sub_title'];
     flashcardImageLink = json['flashcard_image_link'];
     flashcardContent = json['flashcard_content'];

@@ -6,7 +6,7 @@ class StudyPlanModel {
   String? datePosted;
 
   StudyPlanModel.fromJson(Map<String, dynamic> json) {
-    studyPlanId = json['study_plan_id'];
+    studyPlanId = int.parse(json['study_plan_id'].toString());
     userId = json['user_id'];
     title = json['title'];
     description = json['description'];

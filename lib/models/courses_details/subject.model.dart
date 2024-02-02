@@ -11,7 +11,7 @@ class CoursesSubject {
 
 //working
   CoursesSubject.fromJson(Map<String, dynamic> json) {
-    subjectId = json['subject_id'];
+    subjectId = int.parse(json['subject_id'].toString());
     subjectName = json['subject_name'];
     dateAdded = json['date_added'];
     //usernmode
@@ -79,7 +79,7 @@ class SubjectContent {
   });
 
   SubjectContent.fromJson(Map<String, dynamic> json) {
-    id = json['subject_content_id'];
+    id = int.parse(json['subject_content_id'].toString());
     title = json['title'];
     subTitle = json['sub_title'];
     contentType = json['content_type'];
@@ -96,7 +96,7 @@ class ContentVideo {
   String? dateAdded;
 
   ContentVideo.fronJson(Map<String, dynamic> json) {
-    videoId = json['video_id'];
+    videoId = int.parse(json['video_id'].toString());
     title = json['title'];
     subTitle = json['sub_title'];
     videoLink = json['video_link'];

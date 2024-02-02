@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../models/courses_details/courses.model.dart';
 
 class SchoolSelectorController extends GetxController {
-  int schoolSeletedIndex;
+  int schoolSelectedIndex;
   late String selectionKey;
 
   late List<SchoolModel> schools = [
@@ -26,9 +26,9 @@ class SchoolSelectorController extends GetxController {
   ];
 
   SchoolSelectorController(
-      {this.schoolSeletedIndex = 0, required List<CoursesModel> coursesList}) {
+      {this.schoolSelectedIndex = 0, required List<CoursesModel> coursesList}) {
     _createSchoolList(coursesList);
-    selectionKey = schools[schoolSeletedIndex].key;
+    selectionKey = schools[schoolSelectedIndex].key;
   }
 
   _createSchoolList(List<CoursesModel> courses) {
@@ -44,9 +44,9 @@ class SchoolSelectorController extends GetxController {
   }
 
   changeSchool(int index) {
-    if (schoolSeletedIndex != index) {
-      schoolSeletedIndex = index;
-      selectionKey = schools[schoolSeletedIndex].key;
+    if (schoolSelectedIndex != index) {
+      schoolSelectedIndex = index;
+      selectionKey = schools[schoolSelectedIndex].key;
       update();
     }
   }

@@ -20,18 +20,20 @@ class MyNotesController extends GetxController {
 
     Set byCourse = _notes.map((e) => e.courseName).toSet();
     for (var courseName in byCourse) {
-      final course = _notes.where((element) => element.courseName! == courseName).toList();
+      final course =
+          _notes.where((element) => element.courseName! == courseName).toList();
 
       List<NotesBySubject> subjectList = [];
 
       Set bySubject = course.map((e) => e.subjectName).toSet();
       for (var subject in bySubject) {
-        final subj = course.where((element) => element.subjectName! == subject).toList();
+        final subj =
+            course.where((element) => element.subjectName! == subject).toList();
 
         List<NoteByTitle> titleList = [];
 
-        Set bytitle = subj.map((e) => e.title).toSet();
-        for (var title in bytitle) {
+        Set byTitle = subj.map((e) => e.title).toSet();
+        for (var title in byTitle) {
           final res = subj.where((element) => element.title! == title).toList();
 
           Set bySubTitle = res.map((e) => e.subtitle).toSet();
@@ -40,16 +42,18 @@ class MyNotesController extends GetxController {
           for (var subtitle in bySubTitle) {
             final note = res.where((ee) => ee.subtitle! == subtitle).toList();
 
-            subTitleList.add(NoteBySubTitle(data: note, subTitle: subtitle, isSubTitleVisbile: false));
+            subTitleList.add(NoteBySubTitle(
+                data: note, subTitle: subtitle, isSubTitleVisible: false));
           }
           // titleList.add({"title": title, "data": res});
 
-          titleList.add(NoteByTitle(title: title, isTitleVisbile: false, data: subTitleList));
+          titleList.add(NoteByTitle(
+              title: title, isTitleVisible: false, data: subTitleList));
         }
 
         subjectList.add(NotesBySubject(
           subjectName: subject,
-          isChaptersVisbile: false,
+          isChaptersVisible: false,
           data: titleList,
         ));
       }
@@ -72,17 +76,17 @@ class MyNotesController extends GetxController {
   }
 
   subjectVisiblity({required NotesBySubject item}) {
-    item.isChaptersVisbile = !item.isChaptersVisbile;
+    item.isChaptersVisible = !item.isChaptersVisible;
     update();
   }
 
   titleVisiblity({required NoteByTitle item}) {
-    item.isTitleVisbile = !item.isTitleVisbile;
+    item.isTitleVisible = !item.isTitleVisible;
     update();
   }
 
   subTitleVisiblity({required NoteBySubTitle item}) {
-    item.isSubTitleVisbile = !item.isSubTitleVisbile;
+    item.isSubTitleVisible = !item.isSubTitleVisible;
     update();
   }
 
@@ -105,38 +109,49 @@ class NestedNoteByCourse {
   int totalNotes;
   bool isCourseVisible;
 
-  NestedNoteByCourse({required this.courseName, required this.data, required this.totalNotes, required this.isCourseVisible});
+  NestedNoteByCourse(
+      {required this.courseName,
+      required this.data,
+      required this.totalNotes,
+      required this.isCourseVisible});
 }
 
 class NotesBySubject {
   String subjectName;
-  bool isChaptersVisbile;
+  bool isChaptersVisible;
   List<NoteByTitle> data;
 
-  NotesBySubject({required this.subjectName, required this.isChaptersVisbile, required this.data});
+  NotesBySubject(
+      {required this.subjectName,
+      required this.isChaptersVisible,
+      required this.data});
 }
 
 class NoteByTitle {
   String title;
-  bool isTitleVisbile;
+  bool isTitleVisible;
   List<NoteBySubTitle> data;
 
-  NoteByTitle({required this.data, required this.title, required this.isTitleVisbile});
+  NoteByTitle(
+      {required this.data, required this.title, required this.isTitleVisible});
 }
 
 class NoteBySubTitle {
   String subTitle;
-  bool isSubTitleVisbile;
+  bool isSubTitleVisible;
   List<NotesModel> data;
 
-  NoteBySubTitle({required this.data, required this.subTitle, required this.isSubTitleVisbile});
+  NoteBySubTitle(
+      {required this.data,
+      required this.subTitle,
+      required this.isSubTitleVisible});
 }
 
 class NotesModel {
   int? notesId;
   String? userId;
   String? username;
-  String? subjectid;
+  String? subjectId;
   String? subjectName;
   String? courseName;
   String? title;
@@ -145,10 +160,10 @@ class NotesModel {
   String? addedDate;
 
   NotesModel.fromJson(Map<String, dynamic> json) {
-    notesId = json['notes_id'];
+    notesId = int.parse(json['notes_id'].toString());
     userId = json['user_id'];
     username = json['username'];
-    subjectid = json['subject_id'];
+    subjectId = json['subject_id'];
     subjectName = json['subject_name'];
     courseName = json['course_name'];
     title = json['title'];

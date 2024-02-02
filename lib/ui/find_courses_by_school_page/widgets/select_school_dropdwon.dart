@@ -37,7 +37,8 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
           alignment: Alignment.center,
           child: DropdownButton<String>(
             // value: initInterest,
-            value: schoolSelectorController.schools[schoolSelectorController.schoolSeletedIndex].key,
+            value: schoolSelectorController
+                .schools[schoolSelectorController.schoolSelectedIndex].key,
             // hint: Text("Select Interest", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
             isExpanded: true,
             icon: Icon(Icons.arrow_drop_down),
@@ -54,7 +55,8 @@ class SelectSchoolLevelDropDown extends StatelessWidget {
             // onChanged: onItemClick,
             onChanged: (value) {
               if (value != null) {
-                final index = schoolSelectorController.schools.indexWhere((element) => element.key == value);
+                final index = schoolSelectorController.schools
+                    .indexWhere((element) => element.key == value);
                 onSelect(index);
               }
             },

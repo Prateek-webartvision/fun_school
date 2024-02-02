@@ -179,14 +179,14 @@ class FindCourseByCareerController extends GetxController {
   }
 
   loadWithLoading() async {
-    await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
+    await CoursesAndDetailsRepository.getCoursesAndDetails.then((v) {
       apiState = ApiState.success;
-      List<CoursesModel> data = [];
-      for (var element in v) {
-        data.add(CoursesModel.fromJson(element));
-      }
-      // print(v);
-      _coursesList = data;
+      // List<CoursesModel> data = [];
+      // for (var element in v) {
+      //   data.add(CoursesModel.fromJson(element));
+      // }
+      // // print(v);
+      _coursesList = v;
       error = null;
     }).onError((error, stackTrace) {
       apiState = ApiState.error;

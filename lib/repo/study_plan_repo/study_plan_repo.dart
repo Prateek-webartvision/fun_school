@@ -31,7 +31,7 @@ class StudyPlanRepository {
     });
   }
 
-  // fatch my study play
+  // fetch my study play
   static Future<List<StudyPlanModel>> getStudyPlans() async {
     Map<String, String> data = {};
     data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
@@ -83,29 +83,25 @@ class StudyPlanRepository {
     });
   }
 
-  // fatch all folders
-  static Future<List<AppFolderModel>?> getCourseFolders() async {
-    Map<String, String> data = {
-      "user_id": AppStorage.user.currentUser()!.userId!.toString()
-    };
+  //* fetch all folders
+  static Future<List<AppFolderModel>> get getCourseFolders async {
+    Map<String, String> params = {};
+    final user = AppStorage.user;
+    if (user.current != null) {
+      params['user_id'] = user.current!.userId?.toString() ?? "";
+    }
 
-    return await _api
-        .postApi(AppUrls.myCourseFolders, params: data)
-        .then((value) {
-      if (value != null) {
-        List<AppFolderModel> myList = [];
-        for (var element in value) {
-          final dir = AppFolderModel.fromJson(element);
-          if (int.parse(dir.userId!) ==
-              AppStorage.user.currentUser()!.userId!) {
-            myList.add(dir);
-          }
-        }
-        return myList;
+    final res = await _api.postApi(AppUrls.myCourseFolders, params: params);
+    List<AppFolderModel> myList = [];
+    if (res != null) {
+      for (var element in res) {
+        final dir = AppFolderModel.fromJson(element);
+        // if (int.parse(dir.userId!) == user.current?.userId) {
+        myList.add(dir);
+        // }
       }
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
+    }
+    return myList;
   }
 
   // add to folder api
@@ -126,26 +122,24 @@ class StudyPlanRepository {
     // print(data);
   }
 
-  // get folder courses by user
-  static Future<List<FolderCourseModel>?> getFolderCoursesByUser() async {
-    Map<String, String> data = {
-      "user_id": AppStorage.user.currentUser()!.userId!.toString()
-    };
+  //* get folder courses by user
+  static Future<List<FolderCourseModel>> get getFolderCoursesByUser async {
+    Map<String, String> params = {};
+    final user = AppStorage.user;
+    if (user.current != null) {
+      params['user_id'] = user.current!.userId?.toString() ?? "";
+    }
 
-    return await _api
-        .postApi(AppUrls.getCourseInUserFolder, params: data)
-        .then((value) {
-      List<FolderCourseModel> temp = [];
-      if (value != null) {
-        for (var element in value) {
-          final course = FolderCourseModel.fromJson(element);
-          temp.add(course);
-        }
+    final res =
+        await _api.postApi(AppUrls.getCourseInUserFolder, params: params);
+    List<FolderCourseModel> temp = [];
+    if (res != null) {
+      for (var element in res) {
+        final course = FolderCourseModel.fromJson(element);
+        temp.add(course);
       }
-      return temp;
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
+    }
+    return temp;
   }
 
   // get my enrolled course with folder
@@ -207,7 +201,7 @@ class EnrolledCoursesFolder {
   String? dateAdded;
 
   EnrolledCoursesFolder.fromJson(Map<String, dynamic> json) {
-    courseEnrollmentId = json['course_enrollment_id'];
+    courseEnrollmentId = int.parse(json['course_enrollment_id'].toString());
     userId = json['user_id'];
     username = json['username'];
     courseId = json['course_id'];
@@ -228,7 +222,7 @@ class FolderCourseModel {
   String? datePosted;
 
   FolderCourseModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = int.parse(json['id'].toString());
     userId = json['user_id'];
     folderId = json['folder_id'];
     folderName = json['folder_name'];

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
 import 'package:citycloud_school/repo/study_plan_repo/study_plan_repo.dart';
 import 'package:citycloud_school/router/pages.dart';
 import 'package:citycloud_school/ui/study_page/controller/my_courses_controller.dart';
@@ -78,8 +80,8 @@ class MyCoursesTab extends StatelessWidget {
                                   ),
                                   builder: (context) {
                                     return CreateFolderSheet(
-                                      onCreate: (fname) async {
-                                        controller.createFolder(fname);
+                                      onCreate: (fileName) async {
+                                        controller.createFolder(fileName);
                                       },
                                     );
                                   },
@@ -135,14 +137,14 @@ class MyCoursesTab extends StatelessWidget {
                           return GestureDetector(
                             onTap: () async {
                               List<FolderCourseModel>? respond;
+
                               await AppUtils.showLoadingOverlay(() async {
-                                await StudyPlanRepository
-                                        .getFolderCoursesByUser()
-                                    .then((res) {
-                                  respond = res;
-                                }).onError((error, stackTrace) {
-                                  AppUtils.showSnack(error.toString());
-                                });
+                                try {
+                                  respond = await StudyPlanRepository
+                                      .getFolderCoursesByUser;
+                                } catch (e) {
+                                  AppUtils.showSnack(e.toString());
+                                }
                               });
 
                               if (respond != null && respond!.isNotEmpty) {
@@ -159,13 +161,12 @@ class MyCoursesTab extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) => FolderPage(
                                         coursesByFolderId: coursesByFolderId,
-                                        allcourses: controller.myCourses!,
+                                        allCourses: controller.myCourses!,
                                       ),
                                     ),
                                   );
 
                                   if (res == true) {
-                                    // check if reutrn value is true then reload courses by new list
                                     controller.reloadEnrollsCourseByFolder();
                                   }
                                 } else {
@@ -177,7 +178,7 @@ class MyCoursesTab extends StatelessWidget {
                             },
                             child: Column(
                               children: [
-                                // folter top
+                                // filter top
                                 Row(
                                   children: [
                                     10.width,
@@ -222,284 +223,309 @@ class MyCoursesTab extends StatelessWidget {
                   SliverToBoxAdapter(),
                 //
 
-                // list
+                //* courses list
                 SliverPadding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
-                  sliver: SliverList.separated(
-                    itemCount: controller.myEnrollsOrInFolder!.length,
-                    itemBuilder: (context, index) {
-                      final itemTemp = controller.myEnrollsOrInFolder![index];
-                      // final item = controller.myCourses![index];
-                      final item = controller.myCourses!
-                          .where((element) =>
-                              itemTemp.courseId! ==
-                              element.courseId!.toString())
-                          .first;
+                  sliver: (controller.myEnrollsOrInFolder != null)
+                      ? SliverList.separated(
+                          itemCount: controller.myEnrollsOrInFolder!.length,
+                          itemBuilder: (context, index) {
+                            final itemTemp =
+                                controller.myEnrollsOrInFolder![index];
+                            // final item = controller.myCourses![index];
+                            final item = controller.myCourses!
+                                .where((element) =>
+                                    itemTemp.courseId! ==
+                                    element.courseId!.toString())
+                                .first;
 
-                      // return Text("data ${item.courseName}");
-                      return GestureDetector(
-                        onTap: () {
-                          // print("${controller.myCourses![index]}");
-                          appRoutes.pushNamed(PagesName.subjectDetailsPage,
-                              extra: item);
-                        },
-                        onLongPress: () {
-                          controller
-                              .enableSelectionMode(item.courseId!.toString());
-                          // print("object");
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Visibility(
-                              visible: controller.isSelectMode,
+                            // return Text("data ${item.courseName}");
+                            return GestureDetector(
+                              onTap: () {
+                                // print("${controller.myCourses![index]}");
+                                appRoutes.pushNamed(
+                                    PagesName.subjectDetailsPage,
+                                    extra: item);
+                              },
+                              onLongPress: () {
+                                controller.enableSelectionMode(
+                                    item.courseId!.toString());
+                                // print("object");
+                              },
                               child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      //
-                                      controller.addCoursesAndRemove(
-                                          item.courseId!.toString());
-                                    },
+                                  Visibility(
+                                    visible: controller.isSelectMode,
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            //
+                                            controller.addCoursesAndRemove(
+                                                item.courseId!.toString());
+                                          },
+                                          child: Container(
+                                            height: 20,
+                                            width: 20,
+                                            // color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: (controller
+                                                      .selectedCourseIds
+                                                      .contains(item.courseId!
+                                                          .toString()))
+                                                  ? context.theme.primaryColor
+                                                  : Colors.white,
+                                              border: Border.all(
+                                                  color: context
+                                                      .theme.primaryColor),
+                                            ),
+                                          ),
+                                        ),
+                                        10.width,
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
                                     child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      // color: Colors.white,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: (controller.selectedCourseIds
-                                                .contains(
-                                                    item.courseId!.toString()))
-                                            ? context.theme.primaryColor
-                                            : Colors.white,
+                                        color: AppColor.white,
                                         border: Border.all(
-                                            color: context.theme.primaryColor),
+                                            color: AppColor.softBorderColor),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              //top
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 16),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        // Text(
+                                                        //   "Up next for you",
+                                                        //   style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.appTheme.colorScheme.primary),
+                                                        // ),
+                                                        // 2.height,
+                                                        Text(
+                                                          // "Mathematics",
+                                                          item.courseName!,
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    // time
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            AppColor.scaffoldBg,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        border: Border.all(
+                                                            color: AppColor
+                                                                .textFeildBorderColor),
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8,
+                                                              vertical: 2),
+                                                      child: Text(
+                                                        "1 hours",
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              //progress bar
+                                              Container(
+                                                // color: Colors.green,
+                                                height: 38,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 16),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "Progress",
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                    16.width,
+                                                    Expanded(
+                                                      child:
+                                                          LinearProgressIndicator(
+                                                        // value: 0.1,
+                                                        value: controller
+                                                                .getMyProgress(
+                                                                    item) /
+                                                            100,
+                                                        backgroundColor:
+                                                            AppColor.scaffoldBg,
+                                                        color: context
+                                                            .appTheme
+                                                            .colorScheme
+                                                            .primary,
+                                                        minHeight: 6,
+                                                      ),
+                                                    ),
+                                                    16.width,
+                                                    Text(
+                                                      // "10%",
+                                                      // "${controller.getMyEnrollment(index).progress}%",
+                                                      "${controller.getMyProgress(item).round()}%",
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          // Divider(height: 0),
+                                          // // option btn
+                                          // Container(
+                                          //   // color: Colors.green,
+                                          //   height: 70,
+                                          //   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                                          //   child: Row(
+                                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          //     children: [
+                                          //       GestureDetector(
+                                          //         onTap: () {
+                                          //           AppUtils.showSnack("Coming soon");
+                                          //         },
+                                          //         child: SizedBox(
+                                          //           width: 103,
+                                          //           height: 70,
+                                          //           child: Column(
+                                          //             mainAxisAlignment: MainAxisAlignment.center,
+                                          //             children: [
+                                          //               Icon(Icons.home, size: 20),
+                                          //               Text(
+                                          //                 "Exam",
+                                          //                 style: GoogleFonts.inter(
+                                          //                   fontSize: 10,
+                                          //                   fontWeight: FontWeight.w400,
+                                          //                 ),
+                                          //               )
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //       ),
+
+                                          //       // flash cards
+                                          //       GestureDetector(
+                                          //         onTap: () {
+                                          //           AppUtils.showloadingOverlay(() async {
+                                          //             final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
+
+                                          //             if (flashcard != null && flashcard.isNotEmpty) {
+                                          //               // print(flashcard);
+                                          //               rootNavigator.currentState!.push(
+                                          //                 MaterialPageRoute(
+                                          //                   builder: (context) => FlashCardView(flashCards: flashcard),
+                                          //                 ),
+                                          //               );
+                                          //             } else {
+                                          //               AppUtils.showSnack("No FlashCards");
+                                          //             }
+                                          //           });
+                                          //         },
+                                          //         child: SizedBox(
+                                          //           width: 103,
+                                          //           height: 70,
+                                          //           child: Column(
+                                          //             mainAxisAlignment: MainAxisAlignment.center,
+                                          //             children: [
+                                          //               Icon(Icons.local_fire_department_rounded, size: 20),
+                                          //               Text(
+                                          //                 "Flash Card",
+                                          //                 style: GoogleFonts.inter(
+                                          //                   fontSize: 10,
+                                          //                   fontWeight: FontWeight.w400,
+                                          //                 ),
+                                          //               )
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       // quiz btn
+                                          //       SizedBox(
+                                          //         width: 103,
+                                          //         height: 70,
+                                          //         child: GestureDetector(
+                                          //           onTap: () {
+                                          //             appRoutes.pushNamed(PagesName.startQuizPage, extra: controller.myCourses![index].courseId!);
+                                          //           },
+                                          //           child: Column(
+                                          //             mainAxisAlignment: MainAxisAlignment.center,
+                                          //             children: [
+                                          //               Icon(Icons.quiz_outlined, size: 20),
+                                          //               Text(
+                                          //                 "Quiz",
+                                          //                 style: GoogleFonts.inter(
+                                          //                   fontSize: 10,
+                                          //                   fontWeight: FontWeight.w400,
+                                          //                 ),
+                                          //               )
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  10.width,
                                 ],
                               ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColor.white,
-                                  border: Border.all(
-                                      color: AppColor.softBorderColor),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        //top
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 16),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  // Text(
-                                                  //   "Up next for you",
-                                                  //   style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: context.appTheme.colorScheme.primary),
-                                                  // ),
-                                                  // 2.height,
-                                                  Text(
-                                                    // "Mathematics",
-                                                    item.courseName!,
-                                                    style: GoogleFonts.inter(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              // time
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: AppColor.scaffoldBg,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  border: Border.all(
-                                                      color: AppColor
-                                                          .textFeildBorderColor),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8, vertical: 2),
-                                                child: Text(
-                                                  "1 hours",
-                                                  style: GoogleFonts.inter(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        //progress bar
-                                        Container(
-                                          // color: Colors.green,
-                                          height: 38,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 16),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Progress",
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              16.width,
-                                              Expanded(
-                                                child: LinearProgressIndicator(
-                                                  // value: 0.1,
-                                                  value: controller
-                                                          .getMyProgress(item) /
-                                                      100,
-                                                  backgroundColor:
-                                                      AppColor.scaffoldBg,
-                                                  color: context.appTheme
-                                                      .colorScheme.primary,
-                                                  minHeight: 6,
-                                                ),
-                                              ),
-                                              16.width,
-                                              Text(
-                                                // "10%",
-                                                // "${controller.getMyEnrollment(index).progress}%",
-                                                "${controller.getMyProgress(item).round()}%",
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    // Divider(height: 0),
-                                    // // option btn
-                                    // Container(
-                                    //   // color: Colors.green,
-                                    //   height: 70,
-                                    //   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                                    //   child: Row(
-                                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    //     children: [
-                                    //       GestureDetector(
-                                    //         onTap: () {
-                                    //           AppUtils.showSnack("Coming soon");
-                                    //         },
-                                    //         child: SizedBox(
-                                    //           width: 103,
-                                    //           height: 70,
-                                    //           child: Column(
-                                    //             mainAxisAlignment: MainAxisAlignment.center,
-                                    //             children: [
-                                    //               Icon(Icons.home, size: 20),
-                                    //               Text(
-                                    //                 "Exam",
-                                    //                 style: GoogleFonts.inter(
-                                    //                   fontSize: 10,
-                                    //                   fontWeight: FontWeight.w400,
-                                    //                 ),
-                                    //               )
-                                    //             ],
-                                    //           ),
-                                    //         ),
-                                    //       ),
-
-                                    //       // flash cards
-                                    //       GestureDetector(
-                                    //         onTap: () {
-                                    //           AppUtils.showloadingOverlay(() async {
-                                    //             final flashcard = await FlashCardRepository.getFlashCards(courseId: controller.myCourses![index].courseId!);
-
-                                    //             if (flashcard != null && flashcard.isNotEmpty) {
-                                    //               // print(flashcard);
-                                    //               rootNavigator.currentState!.push(
-                                    //                 MaterialPageRoute(
-                                    //                   builder: (context) => FlashCardView(flashCards: flashcard),
-                                    //                 ),
-                                    //               );
-                                    //             } else {
-                                    //               AppUtils.showSnack("No FlashCards");
-                                    //             }
-                                    //           });
-                                    //         },
-                                    //         child: SizedBox(
-                                    //           width: 103,
-                                    //           height: 70,
-                                    //           child: Column(
-                                    //             mainAxisAlignment: MainAxisAlignment.center,
-                                    //             children: [
-                                    //               Icon(Icons.local_fire_department_rounded, size: 20),
-                                    //               Text(
-                                    //                 "Flash Card",
-                                    //                 style: GoogleFonts.inter(
-                                    //                   fontSize: 10,
-                                    //                   fontWeight: FontWeight.w400,
-                                    //                 ),
-                                    //               )
-                                    //             ],
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //       // quiz btn
-                                    //       SizedBox(
-                                    //         width: 103,
-                                    //         height: 70,
-                                    //         child: GestureDetector(
-                                    //           onTap: () {
-                                    //             appRoutes.pushNamed(PagesName.startQuizPage, extra: controller.myCourses![index].courseId!);
-                                    //           },
-                                    //           child: Column(
-                                    //             mainAxisAlignment: MainAxisAlignment.center,
-                                    //             children: [
-                                    //               Icon(Icons.quiz_outlined, size: 20),
-                                    //               Text(
-                                    //                 "Quiz",
-                                    //                 style: GoogleFonts.inter(
-                                    //                   fontSize: 10,
-                                    //                   fontWeight: FontWeight.w400,
-                                    //                 ),
-                                    //               )
-                                    //             ],
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => 12.height,
-                  ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => 12.height,
+                        )
+                      : SliverToBoxAdapter(),
                 ),
               ],
             );

@@ -80,7 +80,7 @@ final GoRouter appRoutes = GoRouter(
       ],
     ),
 
-    // bottom nav page
+    //* bottom nav page
     ShellRoute(
       navigatorKey: _shallNav,
       pageBuilder: (context, state, child) {
@@ -89,7 +89,7 @@ final GoRouter appRoutes = GoRouter(
         );
       },
       routes: [
-        // home page
+        //* home page
         GoRoute(
           parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.homePage),
@@ -136,7 +136,7 @@ final GoRouter appRoutes = GoRouter(
           ],
         ),
 
-        // study page
+        //* study page
         GoRoute(
           parentNavigatorKey: _shallNav,
           path: PagesName.getPath(PagesName.studyPage),

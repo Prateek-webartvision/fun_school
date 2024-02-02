@@ -8,7 +8,10 @@ class User {
 
   User(GetStorage box) {
     _userBox = box;
+    current = currentUser();
   }
+
+  UserModel? current;
 
   //read user
   UserModel? currentUser() {
@@ -20,13 +23,15 @@ class User {
     }
   }
 
-  //save user
+  //* Save user
   saveUser(UserModel user) {
     _userBox.write(_userKey, user.toJson());
+    current = currentUser();
   }
 
-  //remode user
+  //* Remove user
   removeUser() {
     _userBox.remove(_userKey);
+    current = currentUser();
   }
 }

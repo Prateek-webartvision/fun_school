@@ -126,14 +126,11 @@ class MyCoursesController extends GetxController {
 
   _loadAllCourses() async {
     apiState = ApiState.loading;
-    await CoursesAndDetailsRepository.getCoursesAndDetails().then((v) {
+    await CoursesAndDetailsRepository.getCoursesAndDetails.then((v) {
       // print(v);
       apiState = ApiState.success;
-      List<CoursesModel> data = [];
-      for (var element in v) {
-        data.add(CoursesModel.fromJson(element));
-      }
-      _allCourses = data;
+      print(_allCourses);
+      _allCourses = v;
     }).onError((error, stackTrace) {
       apiState = ApiState.error;
       if (error is KInternetException) {
@@ -141,7 +138,6 @@ class MyCoursesController extends GetxController {
         this.error = error.message.toString();
       }
       if (error is FlutterError) {
-        /// this error comw due to call api after disposing controller
         AppUtils.showSnack("gotcha");
       } else {
         AppUtils.showSnack(error.toString());
@@ -152,11 +148,13 @@ class MyCoursesController extends GetxController {
   }
 
   _loadFolders() async {
-    await StudyPlanRepository.getCourseFolders().then((value) {
-      myFolders = value;
-    }).onError((error, stackTrace) {
+    try {
+      final res = await StudyPlanRepository.getCourseFolders;
+      myFolders = res;
+    } catch (e) {
       AppUtils.showSnack(error.toString());
-    });
+    }
+
     update();
   }
 

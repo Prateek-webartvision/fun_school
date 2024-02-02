@@ -34,7 +34,7 @@ class CoursesModel {
   });
 
   CoursesModel.fromJson(Map<String, dynamic> json) {
-    courseId = json['course_id'];
+    courseId = int.parse(json['course_id'].toString());
     courseName = json['course_name'];
     courseDescription = json['course_description'];
     courseCoverImage = json['course_cover_image'];
@@ -74,7 +74,7 @@ class CoursesEnrollment {
   String? dateAdded;
 
   CoursesEnrollment.fromJson(Map<String, dynamic> json) {
-    courseEnrollmentId = json['course_enrollment_id'];
+    courseEnrollmentId = int.parse(json['course_enrollment_id'].toString());
     userId = json['user_id'];
     username = json['username'];
     progress = json['progress'];

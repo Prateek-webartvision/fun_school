@@ -167,7 +167,9 @@ class NoteTile extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Visibility(visible: item.isChaptersVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                            Visibility(
+                                visible: item.isChaptersVisible,
+                                child: Icon(Icons.keyboard_arrow_down_rounded))
                           ],
                         ),
                       ),
@@ -176,7 +178,7 @@ class NoteTile extends StatelessWidget {
                     // title
 
                     Visibility(
-                      visible: item.isChaptersVisbile,
+                      visible: item.isChaptersVisible,
                       // title
                       child: ListView.separated(
                         // padding: EdgeInsets.symmetric(horizontal: 16),
@@ -205,7 +207,10 @@ class NoteTile extends StatelessWidget {
                                           fontStyle: FontStyle.italic,
                                         ),
                                       ),
-                                      Visibility(visible: item2.isTitleVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                                      Visibility(
+                                          visible: item2.isTitleVisible,
+                                          child: Icon(Icons
+                                              .keyboard_arrow_down_rounded))
                                     ],
                                   ),
                                 ),
@@ -214,7 +219,7 @@ class NoteTile extends StatelessWidget {
                               3.height,
                               // sub title
                               Visibility(
-                                visible: item2.isTitleVisbile,
+                                visible: item2.isTitleVisible,
                                 child: ListView.separated(
                                   itemCount: item2.data.length,
                                   shrinkWrap: true,
@@ -222,10 +227,12 @@ class NoteTile extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final subTitle = item2.data[index];
                                     return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         GestureDetector(
-                                          onTap: () => onSubTitleClick(subTitle),
+                                          onTap: () =>
+                                              onSubTitleClick(subTitle),
                                           child: Container(
                                             width: double.maxFinite,
                                             color: Colors.white,
@@ -234,9 +241,18 @@ class NoteTile extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   subTitle.subTitle,
-                                                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+                                                  style: GoogleFonts.inter(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontStyle:
+                                                          FontStyle.italic),
                                                 ),
-                                                Visibility(visible: subTitle.isSubTitleVisbile, child: Icon(Icons.keyboard_arrow_down_rounded))
+                                                Visibility(
+                                                    visible: subTitle
+                                                        .isSubTitleVisible,
+                                                    child: Icon(Icons
+                                                        .keyboard_arrow_down_rounded))
                                               ],
                                             ),
                                           ),
@@ -244,7 +260,7 @@ class NoteTile extends StatelessWidget {
                                         4.height,
                                         // notes
                                         Visibility(
-                                          visible: subTitle.isSubTitleVisbile,
+                                          visible: subTitle.isSubTitleVisible,
                                           child: ListView.separated(
                                             shrinkWrap: true,
                                             primary: false,
@@ -256,23 +272,35 @@ class NoteTile extends StatelessWidget {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return NoteDailog(noteData: note);
+                                                      return NoteDailog(
+                                                          noteData: note);
                                                     },
                                                   );
                                                 },
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                     color: AppColor.white,
-                                                    border: Border.all(color: AppColor.softBorderColor),
-                                                    borderRadius: BorderRadius.circular(4),
+                                                    border: Border.all(
+                                                        color: AppColor
+                                                            .softBorderColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
                                                   ),
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 8),
                                                   child: Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Icon(
                                                         Icons.note_rounded,
-                                                        color: context.appTheme.colorScheme.primary,
+                                                        color: context
+                                                            .appTheme
+                                                            .colorScheme
+                                                            .primary,
                                                       ),
                                                       12.width,
                                                       Expanded(
@@ -280,12 +308,15 @@ class NoteTile extends StatelessWidget {
                                                           // "“Sample Note”",
                                                           // notes[index].notes!,
                                                           note.notes ?? "",
-                                                          style: GoogleFonts.inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.w400,
+                                                            fontWeight:
+                                                                FontWeight.w400,
                                                           ),
                                                           maxLines: 2,
-                                                          overflow: TextOverflow.ellipsis,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
                                                       ),
                                                       12.width,
@@ -297,13 +328,15 @@ class NoteTile extends StatelessWidget {
                                                 ),
                                               );
                                             },
-                                            separatorBuilder: (context, index) => 8.height,
+                                            separatorBuilder:
+                                                (context, index) => 8.height,
                                           ),
                                         ),
                                       ],
                                     );
                                   },
-                                  separatorBuilder: (context, index) => 2.height,
+                                  separatorBuilder: (context, index) =>
+                                      2.height,
                                 ),
                               ),
                             ],
