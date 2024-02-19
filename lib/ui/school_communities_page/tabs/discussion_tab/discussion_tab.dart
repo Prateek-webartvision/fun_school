@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:fun_school/ui/profile_page_other/other_profile_page.dart';

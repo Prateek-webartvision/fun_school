@@ -181,11 +181,14 @@ class DiscussionPostTile extends StatelessWidget {
                                           color: Colors.grey.shade200,
                                           borderRadius:
                                               BorderRadius.circular(4),
-                                          image: DecorationImage(
-                                            image: CachedNetworkImageProvider(
-                                                media![index].src!),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          image: (media![index].src != null)
+                                              ? DecorationImage(
+                                                  image:
+                                                      CachedNetworkImageProvider(
+                                                          media![index].src!),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : null,
                                         ),
                                       );
                                     },
@@ -197,7 +200,8 @@ class DiscussionPostTile extends StatelessWidget {
                               ],
                             )
                           : 0.height,
-                      // like, share, comment btns
+                      // like, share, comment btn
+
                       Row(
                         children: [
                           InkWell(
