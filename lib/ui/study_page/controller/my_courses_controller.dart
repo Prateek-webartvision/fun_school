@@ -1,5 +1,5 @@
-import 'package:citycloud_school/models/courses_details/courses.model.dart';
-import 'package:citycloud_school/network/data/app_storage.dart';
+import 'package:fun_school/models/courses_details/courses.model.dart';
+import 'package:fun_school/network/data/app_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';

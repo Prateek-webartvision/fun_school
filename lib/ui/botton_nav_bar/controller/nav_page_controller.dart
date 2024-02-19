@@ -1,5 +1,5 @@
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/router/pages.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/router/pages.dart';
 import 'package:get/get.dart';
 
 class NavPageController extends GetxController {

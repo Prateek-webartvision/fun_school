@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/network/data/app_storage.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

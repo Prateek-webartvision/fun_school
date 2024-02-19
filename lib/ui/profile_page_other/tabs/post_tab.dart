@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/profile_page_other/controller/other_profile_controller.dart';
-import 'package:citycloud_school/ui/school_communities_page/tabs/discussion_tab/widgets/text_post_tile.dart';
+import 'package:fun_school/ui/profile_page_other/controller/other_profile_controller.dart';
+import 'package:fun_school/ui/school_communities_page/tabs/discussion_tab/widgets/text_post_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

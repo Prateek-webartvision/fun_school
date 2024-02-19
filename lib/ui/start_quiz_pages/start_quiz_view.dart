@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';

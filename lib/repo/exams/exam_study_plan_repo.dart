@@ -1,7 +1,7 @@
-import 'package:citycloud_school/models/exams/exam_study_plan_models/course_name_model.dart';
-import 'package:citycloud_school/network/app_api.dart';
-import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/router/app_router.dart';
+import 'package:fun_school/models/exams/exam_study_plan_models/course_name_model.dart';
+import 'package:fun_school/network/app_api.dart';
+import 'package:fun_school/network/url/app_urls.dart';
+import 'package:fun_school/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

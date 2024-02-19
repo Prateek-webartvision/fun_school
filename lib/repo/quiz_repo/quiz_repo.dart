@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'package:citycloud_school/models/quiz/interactive_quiz.model.dart';
-import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/models/quiz/interactive_quiz.model.dart';
+import 'package:fun_school/network/data/app_storage.dart';
+import 'package:fun_school/network/url/app_urls.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:fun_school/utils/app_utils.dart';
 
 import '../../network/app_api.dart';
 

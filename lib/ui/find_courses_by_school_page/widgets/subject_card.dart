@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/models/courses_details/courses.model.dart';
+import 'package:fun_school/models/courses_details/courses.model.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 

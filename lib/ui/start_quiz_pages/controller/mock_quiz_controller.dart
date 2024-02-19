@@ -1,5 +1,5 @@
-import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
+import 'package:fun_school/repo/quiz_repo/quiz_repo.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/question_view_page/question_view_page.dart';
-import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/submit_page/submit_theory_page.dart';
-import 'package:citycloud_school/widgets/error_page.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/ui/exam_find_start_mock_page/pages/question_view_page/question_view_page.dart';
+import 'package:fun_school/ui/exam_find_start_mock_page/pages/submit_page/submit_theory_page.dart';
+import 'package:fun_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';

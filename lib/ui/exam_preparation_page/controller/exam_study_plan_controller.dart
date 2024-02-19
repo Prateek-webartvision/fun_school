@@ -1,4 +1,4 @@
-import 'package:citycloud_school/repo/exams/exam_study_plan_repo.dart';
+import 'package:fun_school/repo/exams/exam_study_plan_repo.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 

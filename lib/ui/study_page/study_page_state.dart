@@ -1,4 +1,4 @@
-import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
+import 'package:fun_school/ui/study_page/controller/my_notes_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'controller/my_courses_controller.dart';

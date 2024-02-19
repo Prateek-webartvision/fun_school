@@ -1,4 +1,4 @@
-import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 

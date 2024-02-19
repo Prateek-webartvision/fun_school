@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/theme.dart';
+import 'package:fun_school/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kd_utils/kd_utils.dart';

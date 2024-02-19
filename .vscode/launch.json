@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "citycloud_school",
+      "name": "fun_school",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "citycloud_school (profile mode)",
+      "name": "fun_school (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "citycloud_school (release mode)",
+      "name": "fun_school (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

@@ -1,6 +1,6 @@
-import 'package:citycloud_school/models/exams/exams_models/multi_choice_quetion_model.dart';
-import 'package:citycloud_school/models/exams/exams_models/scrore_model.dart';
-import 'package:citycloud_school/models/exams/exams_models/theory_question_model.dart';
+import 'package:fun_school/models/exams/exams_models/multi_choice_quetion_model.dart';
+import 'package:fun_school/models/exams/exams_models/scrore_model.dart';
+import 'package:fun_school/models/exams/exams_models/theory_question_model.dart';
 
 abstract class _ExamModel {
   int? examId;

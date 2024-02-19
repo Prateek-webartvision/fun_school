@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/school_communities_page/controllers/community_group_controller.dart';
-import 'package:citycloud_school/widgets/error_page.dart';
+import 'package:fun_school/ui/school_communities_page/controllers/community_group_controller.dart';
+import 'package:fun_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';

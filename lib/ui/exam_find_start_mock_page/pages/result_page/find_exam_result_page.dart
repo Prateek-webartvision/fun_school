@@ -3,9 +3,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:citycloud_school/repo/exams/exams_repo.dart';
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/ui/exam_find_start_mock_page/pages/answer_review_page/answer_review_page.dart';
+import 'package:fun_school/repo/exams/exams_repo.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/ui/exam_find_start_mock_page/pages/answer_review_page/answer_review_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';

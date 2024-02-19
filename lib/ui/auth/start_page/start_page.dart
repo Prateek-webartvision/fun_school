@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/router/pages.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widgets/k_btn.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/router/pages.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

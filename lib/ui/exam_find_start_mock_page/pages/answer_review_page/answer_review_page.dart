@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/const.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widgets/answer_indicator.dart';
-import 'package:citycloud_school/widgets/point_chip.dart';
-import 'package:citycloud_school/widgets/question_chip.dart';
+import 'package:fun_school/style/const.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/answer_indicator.dart';
+import 'package:fun_school/widgets/point_chip.dart';
+import 'package:fun_school/widgets/question_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';

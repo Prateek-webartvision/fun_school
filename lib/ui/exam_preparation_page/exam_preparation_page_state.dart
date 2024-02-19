@@ -1,4 +1,4 @@
-import 'package:citycloud_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
+import 'package:fun_school/ui/exam_preparation_page/controller/exam_study_plan_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'controller/find_exam_controller.dart';

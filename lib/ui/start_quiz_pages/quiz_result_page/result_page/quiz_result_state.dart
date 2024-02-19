@@ -1,6 +1,6 @@
-import 'package:citycloud_school/repo/quiz_repo/quiz_repo.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:fun_school/repo/quiz_repo/quiz_repo.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/quiz_model.dart';
 import 'package:flutter/material.dart';
 
 import 'quiz_result_page.dart';

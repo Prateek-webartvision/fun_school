@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/models/user/user.model.dart';
-import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/router/pages.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widgets/k_btn.dart';
-import 'package:citycloud_school/widgets/k_text_field.dart';
+import 'package:fun_school/models/user/user.model.dart';
+import 'package:fun_school/network/data/app_storage.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/router/pages.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/k_btn.dart';
+import 'package:fun_school/widgets/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 

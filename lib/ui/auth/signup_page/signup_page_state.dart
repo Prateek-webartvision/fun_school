@@ -1,5 +1,5 @@
-import 'package:citycloud_school/repo/auth_repo/auth_repo.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/repo/auth_repo/auth_repo.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../router/app_router.dart';

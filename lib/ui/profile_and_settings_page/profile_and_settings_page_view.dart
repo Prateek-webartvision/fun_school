@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/network/url/app_urls.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/network/url/app_urls.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:url_launcher/url_launcher.dart';

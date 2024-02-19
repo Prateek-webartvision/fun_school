@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/style/assets.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/profile_page_other/controller/other_profile_controller.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widgets/error_page.dart';
-import 'package:citycloud_school/widgets/k_btn.dart';
+import 'package:fun_school/network/data/app_storage.dart';
+import 'package:fun_school/style/assets.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/ui/profile_page_other/controller/other_profile_controller.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/error_page.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

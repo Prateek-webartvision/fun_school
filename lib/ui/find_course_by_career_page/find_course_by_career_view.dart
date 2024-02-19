@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/widgets/k_text_field.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/widgets/k_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';

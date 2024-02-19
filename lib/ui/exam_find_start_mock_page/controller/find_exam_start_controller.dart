@@ -1,4 +1,4 @@
-import 'package:citycloud_school/models/exams/exams_models/all_exam_model.dart';
+import 'package:fun_school/models/exams/exams_models/all_exam_model.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 

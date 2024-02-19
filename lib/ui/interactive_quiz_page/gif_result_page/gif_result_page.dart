@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
+import 'package:fun_school/router/app_router.dart';
 import 'package:flutter/material.dart';
 
 import '../../../repo/quiz_repo/quiz_repo.dart';

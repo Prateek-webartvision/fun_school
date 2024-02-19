@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/chat_gpt_page/controller/chat_gpt_controller.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/ui/chat_gpt_page/controller/chat_gpt_controller.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

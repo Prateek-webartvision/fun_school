@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/repo/exams/exams_repo.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widgets/k_btn.dart';
+import 'package:fun_school/repo/exams/exams_repo.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

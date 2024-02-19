@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/style/const.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/style/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';

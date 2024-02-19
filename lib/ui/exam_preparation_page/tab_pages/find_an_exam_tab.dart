@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/router/app_router.dart';
-import 'package:citycloud_school/ui/exam_find_page/find_exam_page.dart';
-import 'package:citycloud_school/widgets/error_page.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/ui/exam_find_page/find_exam_page.dart';
+import 'package:fun_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';

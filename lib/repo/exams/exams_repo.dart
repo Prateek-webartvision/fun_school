@@ -1,8 +1,8 @@
-import 'package:citycloud_school/models/exams/exams_models/all_exam_model.dart';
-import 'package:citycloud_school/models/exams/exams_models/pop_puler_exam_model.dart';
-import 'package:citycloud_school/network/app_api.dart';
-import 'package:citycloud_school/network/data/app_storage.dart';
-import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:fun_school/models/exams/exams_models/all_exam_model.dart';
+import 'package:fun_school/models/exams/exams_models/pop_puler_exam_model.dart';
+import 'package:fun_school/network/app_api.dart';
+import 'package:fun_school/network/data/app_storage.dart';
+import 'package:fun_school/network/url/app_urls.dart';
 import 'package:flutter/foundation.dart';
 
 class ExamsRepository {

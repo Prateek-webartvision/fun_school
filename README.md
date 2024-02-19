@@ -1,4 +1,4 @@
-# citycloud_school
+# fun_school
 
 A new Flutter project.
 

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/study_page/controller/my_notes_controller.dart';
+import 'package:fun_school/ui/study_page/controller/my_notes_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';

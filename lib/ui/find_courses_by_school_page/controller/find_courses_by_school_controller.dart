@@ -1,5 +1,5 @@
-import 'package:citycloud_school/models/courses_details/courses.model.dart';
-import 'package:citycloud_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
+import 'package:fun_school/models/courses_details/courses.model.dart';
+import 'package:fun_school/repo/courses_and_details_repo/courses_and_details_repo.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 

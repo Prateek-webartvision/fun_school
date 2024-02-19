@@ -1,4 +1,4 @@
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/utils/app_utils.dart';
 
 import 'subject.model.dart';
 

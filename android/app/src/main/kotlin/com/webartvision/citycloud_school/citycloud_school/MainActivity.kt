@@ -1,4 +1,4 @@
-package com.webartvision.citycloud_school.citycloud_school
+package com.webartvision.fun_school.fun_school
 
 import io.flutter.embedding.android.FlutterActivity
 

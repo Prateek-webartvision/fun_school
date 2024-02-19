@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/ui/subject_video_list_page/subject_video_list_page.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/ui/subject_video_list_page/subject_video_list_page.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 

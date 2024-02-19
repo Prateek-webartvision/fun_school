@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:citycloud_school/style/assets.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/style/assets.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';

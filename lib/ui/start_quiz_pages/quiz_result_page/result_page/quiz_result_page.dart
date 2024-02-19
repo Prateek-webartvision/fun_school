@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:citycloud_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/model/quiz_model.dart';
-import 'package:citycloud_school/ui/start_quiz_pages/quiz_result_page/result_page/quiz_result_state.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/mock_quiz_model.dart';
+import 'package:fun_school/ui/start_quiz_pages/model/quiz_model.dart';
+import 'package:fun_school/ui/start_quiz_pages/quiz_result_page/result_page/quiz_result_state.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:path_provider/path_provider.dart';

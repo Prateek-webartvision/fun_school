@@ -1,4 +1,4 @@
-import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:fun_school/network/url/app_urls.dart';
 
 import '../../network/app_api.dart';
 

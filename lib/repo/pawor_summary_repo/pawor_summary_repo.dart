@@ -1,5 +1,5 @@
-import 'package:citycloud_school/network/app_api.dart';
-import 'package:citycloud_school/network/url/app_urls.dart';
+import 'package:fun_school/network/app_api.dart';
+import 'package:fun_school/network/url/app_urls.dart';
 
 class PaworSummaryRepository {
   static final _api = AppApi();

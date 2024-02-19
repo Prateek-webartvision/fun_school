@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:citycloud_school/network/api_service.dart';
-import 'package:citycloud_school/network/exception/k_exceptions.dart';
+import 'package:fun_school/network/api_service.dart';
+import 'package:fun_school/network/exception/k_exceptions.dart';
 import 'package:http/http.dart' as http;
 
 class AppApi extends ApiService {

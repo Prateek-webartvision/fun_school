@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:citycloud_school/repo/community/community_discussion_repo.dart';
-import 'package:citycloud_school/style/color.dart';
-import 'package:citycloud_school/ui/profile_page_other/other_profile_page.dart';
-import 'package:citycloud_school/utils/app_utils.dart';
-import 'package:citycloud_school/widgets/error_page.dart';
+import 'package:fun_school/repo/community/community_discussion_repo.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/ui/profile_page_other/other_profile_page.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
