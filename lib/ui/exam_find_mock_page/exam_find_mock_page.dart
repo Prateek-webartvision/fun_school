@@ -55,7 +55,7 @@ class _ExamFindEditionsState extends State<ExamFindEditions> {
                 ),
               ),
               Text(
-                "${widget.exam.length} Edtition",
+                "${widget.exam.length} Edition",
                 style: TextStyle(fontSize: 14),
               ),
             ],
