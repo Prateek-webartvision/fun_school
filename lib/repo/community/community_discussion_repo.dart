@@ -1,9 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:fun_school/network/app_api.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/network/url/app_urls.dart';
-import 'package:fun_school/utils/app_utils.dart';
 
 import '../../models/community_discussion_model/community_discussion_model.dart';
 
@@ -30,6 +31,7 @@ class CommunityDiscussionRepository {
     required String topic,
     required String subject,
     List<String>? hashTag,
+    List<PlatformFile>? images,
   }) async {
     Map<String, dynamic> param = {};
 
@@ -38,11 +40,16 @@ class CommunityDiscussionRepository {
     param['text'] = subject;
     param['hashtag'] = hashTag?.join(" ");
 
+    Map<String, List<File>> files = {};
+    if (images != null && images.isNotEmpty) {
+      files['images'] = images.map((e) => File(e.path!)).toList();
+    }
+
     final res = await _api.postWithFiles(
       AppUrls.communityPostTimelines,
       params: param,
       body: null,
-      files: null,
+      files: files,
     );
     if (res['code'] == 200) {
       log(res['code'].toString());

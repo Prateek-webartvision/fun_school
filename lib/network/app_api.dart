@@ -89,7 +89,7 @@ class AppApi extends ApiService {
     String url, {
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
-    Map<String, File>? files,
+    Map<String, List<File>>? files,
   }) async {
     Uri uri = Uri.parse(url);
     late Uri finalUri;
@@ -114,9 +114,13 @@ class AppApi extends ApiService {
 
       if (files != null && files.isNotEmpty) {
         for (var element in files.entries) {
-          http.MultipartFile ff = await http.MultipartFile.fromPath(
-              element.key, element.value.path);
-          request.files.add(ff);
+          List<http.MultipartFile> mFiles = [];
+          for (var path in element.value) {
+            http.MultipartFile multipartFile =
+                await http.MultipartFile.fromPath(element.key, path.path);
+            mFiles.add(multipartFile);
+          }
+          request.files.addAll(mFiles);
         }
       }
 

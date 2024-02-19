@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:detectable_text_field/detectable_text_field.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/assets.dart';
@@ -37,11 +38,14 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   TextEditingController topic = TextEditingController();
   TextEditingController subject = TextEditingController();
   DetectableTextEditingController hashTagText = DetectableTextEditingController(
-      regExp: hashTagRegExp,
-      detectedStyle: TextStyle(
-        color: Colors.blue,
-        fontSize: 15,
-      ));
+    regExp: hashTagRegExp,
+    detectedStyle: TextStyle(
+      color: Colors.blue,
+      fontSize: 15,
+    ),
+  );
+  SelectedImagesController selectedImagesController =
+      SelectedImagesController();
 
   @override
   void initState() {
@@ -97,6 +101,17 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                         hashTag: hashTagText,
                         topic: topic,
                         subject: subject,
+                        imagesController: selectedImagesController,
+                        onFilePicker: () async {
+                          final images = await FilePicker.platform.pickFiles(
+                            type: FileType.image,
+                            allowMultiple: true,
+                            allowCompression: true,
+                          );
+                          if (images != null) {
+                            selectedImagesController.addImages(images.files);
+                          }
+                        },
                         onPostClick: () async {
                           final List<String> detections =
                               TextPatternDetector.extractDetections(
@@ -113,16 +128,18 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                                 hashTag: detections,
                                 topic: topic.text,
                                 subject: subject.text,
+                                images: selectedImagesController.selectedImages,
                               );
+                              discussionController.reload();
                             } catch (e) {
                               AppUtils.showSnack(e.toString());
                             }
                           });
 
-                          //* clear all text
-                          // hashTagText.clear();
-                          // topic.clear();
-                          // subject.clear();
+                          // * clear all text
+                          hashTagText.clear();
+                          topic.clear();
+                          subject.clear();
                         },
                       );
                     },
@@ -145,6 +162,31 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     topic.dispose();
     subject.dispose();
     hashTagText.dispose();
+    selectedImagesController.dispose();
     super.dispose();
+  }
+}
+
+class SelectedImagesController extends GetxController {
+  List<PlatformFile> selectedImages = [];
+
+  addImage(PlatformFile image) {
+    selectedImages.add(image);
+    update();
+  }
+
+  addImages(List<PlatformFile> images) {
+    selectedImages.addAll(images);
+    update();
+  }
+
+  remove(PlatformFile image) {
+    selectedImages.remove(image);
+    update();
+  }
+
+  clearImages() {
+    selectedImages.clear();
+    update();
   }
 }

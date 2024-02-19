@@ -47,6 +47,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   flutter_snake_navigationbar: ^0.6.1
   detectable_text_field: ^3.0.2
+  file_picker: ^6.1.1
   # flash card and video
   flutter_card_swiper: ^6.0.0
   wakelock_plus: ^1.1.1

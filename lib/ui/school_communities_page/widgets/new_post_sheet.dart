@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/utils.dart';
+import 'package:fun_school/ui/school_communities_page/school_communities_page.dart';
+import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
-
 import '../../../router/app_router.dart';
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
@@ -17,10 +19,14 @@ class NewPostSheet extends StatelessWidget {
     required this.topic,
     required this.subject,
     required this.hashTag,
+    this.onFilePicker,
+    required this.imagesController,
   });
   final TextEditingController topic, subject;
   final DetectableTextEditingController hashTag;
+  final SelectedImagesController imagesController;
   final Function()? onPostClick;
+  final Function()? onFilePicker;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +127,58 @@ class NewPostSheet extends StatelessWidget {
               ],
             ),
           ),
+          10.height,
+          GetBuilder(
+            init: imagesController,
+            builder: (controller) {
+              return SizedBox(
+                height: 100,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: controller.selectedImages.length,
+                  itemBuilder: (context, index) {
+                    final file = controller.selectedImages[index];
+                    return Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          image: FileImage(
+                            File(file.path!),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(8),
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          imagesController.remove(file);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(1, 1),
+                                color: Colors.black38,
+                              )
+                            ],
+                          ),
+                          child: Icon(Icons.close, size: 16),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => 10.width,
+                ),
+              );
+            },
+          ),
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -138,11 +196,14 @@ class NewPostSheet extends StatelessWidget {
                 //   alignment: Alignment.center,
                 //   child: SvgPicture.asset(AppAssets.svg.happyFaceIcon),
                 // ),
-                Container(
-                  height: 48,
-                  width: 48,
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(AppAssets.svg.attachmentIcon),
+                GestureDetector(
+                  onTap: onFilePicker,
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    alignment: Alignment.center,
+                    child: SvgPicture.asset(AppAssets.svg.attachmentIcon),
+                  ),
                 ),
                 // Container(
                 //   height: 48,
