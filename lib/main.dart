@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'Fun School',
       theme: AppTheme.light,
       routerConfig: appRoutes,
+      // f
     );
   }
 }
