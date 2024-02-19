@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:fun_school/router/app_router.dart';
-import 'package:fun_school/ui/pawor_summary_page/pawor_summary_page.dart';
+import 'package:fun_school/ui/power_summary_page/power_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:video_player/video_player.dart';
@@ -76,7 +76,7 @@ class _MoreMenuSheetState extends State<MoreMenuSheet> {
                     }
                     await rootNavigator.currentState!.push(MaterialPageRoute(
                       builder: (context) =>
-                          PaworSummaryPage(subjectId: widget.subjectId),
+                          PawerSummaryPage(subjectId: widget.subjectId),
                     ));
                     if (!widget.playerController.value.isPlaying) {
                       widget.playerController.play();

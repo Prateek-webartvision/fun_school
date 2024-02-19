@@ -8,17 +8,17 @@ import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'pawor_summary_page_state.dart';
+import 'power_summary_page_state.dart';
 
-class PaworSummaryPage extends StatefulWidget {
-  const PaworSummaryPage({super.key, required this.subjectId});
+class PawerSummaryPage extends StatefulWidget {
+  const PawerSummaryPage({super.key, required this.subjectId});
   final String subjectId;
 
   @override
-  State<PaworSummaryPage> createState() => _PaworSummaryPageState();
+  State<PawerSummaryPage> createState() => _PawerSummaryPageState();
 }
 
-class _PaworSummaryPageState extends PaworSummaryPageState {
+class _PawerSummaryPageState extends PowerSummaryPageState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
       ),
 
       body: GetBuilder(
-        init: paworSummaryController,
+        init: powerSummaryController,
         builder: (controller) {
           if (controller.apiState == ApiState.loading) {
             return Center(child: CircularProgressIndicator());
@@ -116,7 +116,7 @@ class _PaworSummaryPageState extends PaworSummaryPageState {
 //       ),
 
       bottomNavigationBar: GetBuilder(
-          init: paworSummaryController,
+          init: powerSummaryController,
           builder: (controller) {
             if (controller.apiState == ApiState.success) {
               return Container(

@@ -3,18 +3,18 @@ import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../repo/pawor_summary_repo/pawor_summary_repo.dart';
+import '../../../repo/power_summary_repo/power_summary_repo.dart';
 
-class PaworSummaryController extends GetxController {
+class PawerSummaryController extends GetxController {
   late WebViewController webController;
   String? error;
   late ApiState apiState;
-  List<PaworSummaryModel>? summarys;
+  List<PowerSummaryModel>? summarys;
 
   late int currentUrlIndex = 0;
   double loadingPrgress = 0;
 
-  PaworSummaryController({required String subjectId}) {
+  PawerSummaryController({required String subjectId}) {
     apiState = ApiState.loading;
     webController = WebViewController();
     webController.setJavaScriptMode(JavaScriptMode.unrestricted);
@@ -54,7 +54,7 @@ class PaworSummaryController extends GetxController {
   }
 
   _loadSummary(String subjectId) async {
-    await PaworSummaryRepository.getSummary(subjectId).then((value) {
+    await PowerSummaryRepository.getSummary(subjectId).then((value) {
       summarys = value;
       apiState = ApiState.success;
     }).onError((error, stackTrace) {

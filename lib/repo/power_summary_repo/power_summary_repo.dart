@@ -1,20 +1,20 @@
 import 'package:fun_school/network/app_api.dart';
 import 'package:fun_school/network/url/app_urls.dart';
 
-class PaworSummaryRepository {
+class PowerSummaryRepository {
   static final _api = AppApi();
 
-  static Future<List<PaworSummaryModel>?> getSummary(String subjectid) async {
-    return await _api.getApi(AppUrls.getPaworSummary).then((value) {
+  static Future<List<PowerSummaryModel>?> getSummary(String subjectId) async {
+    return await _api.getApi(AppUrls.getPowerSummary).then((value) {
       if (value != null) {
-        List<PaworSummaryModel> summarys = [];
+        List<PowerSummaryModel> summaries = [];
         for (var element in value) {
-          final summary = PaworSummaryModel.fromJson(element);
-          if (summary.subjectId == subjectid) {
-            summarys.add(summary);
+          final summary = PowerSummaryModel.fromJson(element);
+          if (summary.subjectId == subjectId) {
+            summaries.add(summary);
           }
         }
-        return summarys;
+        return summaries;
       }
     }).onError((error, stackTrace) {
       throw error!;
@@ -22,7 +22,7 @@ class PaworSummaryRepository {
   }
 }
 
-class PaworSummaryModel {
+class PowerSummaryModel {
   int? powerSummaryId;
   String? subjectName;
   String? subjectId;
@@ -31,8 +31,8 @@ class PaworSummaryModel {
   String? uRL;
   String? datePosted;
 
-  PaworSummaryModel.fromJson(Map<String, dynamic> json) {
-    powerSummaryId = json['power_summary_id'];
+  PowerSummaryModel.fromJson(Map<String, dynamic> json) {
+    powerSummaryId = int.tryParse(json['power_summary_id']);
     subjectName = json['subject_name'];
     subjectId = json['subject_id'];
     title = json['title'];
