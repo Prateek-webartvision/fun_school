@@ -112,10 +112,11 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   itemBuilder: (context, index) {
                     final item = controller.discussions![index];
 
-                    return TextPostTile(
+                    return DiscussionPostTile(
                       profileUrl: item.userProfileImage!,
                       userName: item.username!,
                       onProfileClick: () {
+                        //* others profile page
                         AppUtils.slidePush(
                             page: OtherProfilePage(userId: item.userId!));
                       },

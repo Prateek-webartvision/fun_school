@@ -12,7 +12,7 @@ class CommunityGroupRepository {
     };
 
     return await _api
-        .getApi(AppUrls.getcummuityGroups, params: perams)
+        .getApi(AppUrls.getCommunityGroups, params: perams)
         .then((value) {
       List<CommunityGroupModel> groups = [];
       for (var element in value) {

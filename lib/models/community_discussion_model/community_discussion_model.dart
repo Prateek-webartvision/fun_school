@@ -16,7 +16,7 @@ abstract class DiscussionModel {
   String? status;
   int? threadId;
   String? target;
-  dynamic ogData;
+  String? ogData;
   String? time;
   String? edited;
   List<Media>? media;
@@ -26,7 +26,7 @@ abstract class DiscussionModel {
 
   DiscussionModel.fromJson(Map<String, dynamic> json) {
     discussionId = int.tryParse(json['discussion_id']);
-    userId = int.tryParse(json["user_id"]);
+    userId = (json["user_id"] != null) ? int.tryParse(json["user_id"]) : null;
     username = json['username'];
     aboutUser = json['About_user'];
     userProfileImage = json['user_profile_image'];

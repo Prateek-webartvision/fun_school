@@ -3,7 +3,8 @@ class AppUrls {
   static const String _apis = "$domain/api_docs/apis";
 
   // static String chatGPTKey = "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";
-  static String chatGPTKey = "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";
+  static String chatGPTKey =
+      "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";
 
   static const String helpCenter = "$domain/help.php";
   static const String about = "$domain/about.php";
@@ -27,39 +28,50 @@ class AppUrls {
   static const String createFolder = "$_apis/add_course_folder.php";
   static const String myCourseFolders = "$_apis/fetch_course_folder.php";
   static const String addToFolders = "$_apis/add_course_folder_content.php";
-  static const String getCourseInUserFolder = "$_apis/fetch_course_per_folder.php";
-  static const String getMyEnrolledCoursesAndFolder = "$_apis/fetch_course_enrollment.php";
-  static const String removeCourseFromFolder = "$_apis/remove_course_from_folder.php";
+  static const String getCourseInUserFolder =
+      "$_apis/fetch_course_per_folder.php";
+  static const String getMyEnrolledCoursesAndFolder =
+      "$_apis/fetch_course_enrollment.php";
+  static const String removeCourseFromFolder =
+      "$_apis/remove_course_from_folder.php";
 
-  static const String addStudyPlanByContent = "$_apis/add_study_plan_content.php";
+  static const String addStudyPlanByContent =
+      "$_apis/add_study_plan_content.php";
 
   static const String enrollCourse = "$_apis/enroll_for_course.php";
 
-  static const String getFlashcardByCourses = "$_apis/fetch_flashcard_per_course.php";
+  static const String getFlashcardByCourses =
+      "$_apis/fetch_flashcard_per_course.php";
   static const String addFlashcardResult = "$_apis/add_flashcard_result.php";
-  static const String getFlashcardResultByUser = "$_apis/fetch_flashcard_result.php";
+  static const String getFlashcardResultByUser =
+      "$_apis/fetch_flashcard_result.php";
 
   static const String getTips = "$_apis/fetch_tips.php";
 
   static const String getPaworSummary = "$_apis/fetch_power_summary.php";
   static const String getInteractiveQuiz = "$_apis/fetch_interactive_quiz.php";
 
-  // part 2
-  static const String getCommunityDiscussionPost = "$_apis/community_fetch_timelines.php";
+  // community
+  static const String getCommunityDiscussionPost =
+      "$_apis/community_fetch_timelines.php";
+  static const String communityPostTimelines =
+      "$_apis/community_post_timelines.php";
   static const String getTrendingHashtags = "$_apis/trending_hashtags.php";
   static const String discussionLikeDislike = "$_apis/like_discussion.php";
   static const String discussionComment = "$_apis/comment_discussion.php";
   static const String getOtherProfile = "$_apis/profile.php";
-  static const String getcummuityGroups = "$_apis/groups.php";
+  static const String getCommunityGroups = "$_apis/groups.php";
 
   // exam
   static const String getExams = "$_apis/exams.php";
   static const String getExamsByExamId = "$_apis/exams_questions.php";
-  static const String saveMultiChoiceExamScore = "$_apis/exam_save_multichoice_result.php";
+  static const String saveMultiChoiceExamScore =
+      "$_apis/exam_save_multichoice_result.php";
   static const String submitTheoryExam = "$_apis/exam_record_answers.php";
 
   //study plan
   static const String examStudyPlans = "$_apis/exam_study_plan.php";
   static const String examAddStudyPlan = "$_apis/exam_add_study_plan.php";
-  static const String getExamCoursesList = "$_apis/exam_add_study_plan_courses.php";
+  static const String getExamCoursesList =
+      "$_apis/exam_add_study_plan_courses.php";
 }

@@ -13,8 +13,8 @@ import '../../../../../utils/helper.dart';
 import '../../../../../widgets/overlaping_user_avtar.dart';
 import '../../../../profile_page_other/controller/other_profile_controller.dart';
 
-class TextPostTile extends StatelessWidget {
-  const TextPostTile({
+class DiscussionPostTile extends StatelessWidget {
+  const DiscussionPostTile({
     super.key,
     this.profileUrl,
     required this.userName,

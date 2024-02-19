@@ -17,17 +17,19 @@ class OtherProfileController extends GetxController {
     _iniLoadProfile();
   }
 
-  // load profile
+  //* load profile
   _iniLoadProfile() async {
-    // CommunityDiscussionRepostory
-    await OthersProfileRepository.getProfile(userId: userId.toString())
-        .then((value) {
-      data = value;
+    // Community Discussion Repository
+    try {
+      final res =
+          await OthersProfileRepository.getProfile(userId: userId.toString());
+      data = res;
       state = ApiState.success;
-    }).onError((error, stackTrace) {
-      this.error = error.toString();
+    } catch (e) {
+      error = e.toString();
       state = ApiState.error;
-    });
+    }
+
     update();
   }
 

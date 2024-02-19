@@ -1,13 +1,16 @@
+import 'dart:developer';
+
 import 'package:fun_school/network/app_api.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/network/url/app_urls.dart';
+import 'package:fun_school/utils/app_utils.dart';
 
 import '../../models/community_discussion_model/community_discussion_model.dart';
 
 class CommunityDiscussionRepository {
   static final _api = AppApi();
 
-  // get all discustions
+  //* get all Discussion
   static Future<List<CommunityDiscussionModel>> getDiscussionsPosts() async {
     return await _api.getApi(AppUrls.getCommunityDiscussionPost).then((value) {
       List<CommunityDiscussionModel> discussions = [];
@@ -20,6 +23,32 @@ class CommunityDiscussionRepository {
     }).onError((error, stackTrace) {
       throw error!;
     });
+  }
+
+  //* post timeLine discussion
+  static Future<void> postTimeLineDiscussion({
+    required String topic,
+    required String subject,
+    List<String>? hashTag,
+  }) async {
+    Map<String, dynamic> param = {};
+
+    param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    param['topic'] = topic;
+    param['text'] = subject;
+    param['hashtag'] = hashTag?.join(" ");
+
+    final res = await _api.postWithFiles(
+      AppUrls.communityPostTimelines,
+      params: param,
+      body: null,
+      files: null,
+    );
+    if (res['code'] == 200) {
+      log(res['code'].toString());
+    } else {
+      throw res['message'].toString();
+    }
   }
 
   // filter by hash tag

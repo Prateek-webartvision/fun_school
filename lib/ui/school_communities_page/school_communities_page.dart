@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
+import 'package:detectable_text_field/detectable_text_field.dart';
+import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/assets.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:get/get.dart';
 
 import 'controllers/communities_tab_controller.dart';
@@ -28,6 +33,15 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   late CommunitiesTabController communitiesTabController;
   late CommunityDiscussionController discussionController;
   late CommunityGroupController groupController;
+
+  TextEditingController topic = TextEditingController();
+  TextEditingController subject = TextEditingController();
+  DetectableTextEditingController hashTagText = DetectableTextEditingController(
+      regExp: hashTagRegExp,
+      detectedStyle: TextStyle(
+        color: Colors.blue,
+        fontSize: 15,
+      ));
 
   @override
   void initState() {
@@ -78,9 +92,39 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                     context: rootNavigator.currentContext!,
                     isScrollControlled: true,
                     builder: (context) {
+                      //* Post bottom sheet
                       return NewPostSheet(
-                          // onPostClick: () {},
+                        hashTag: hashTagText,
+                        topic: topic,
+                        subject: subject,
+                        onPostClick: () async {
+                          final List<String> detections =
+                              TextPatternDetector.extractDetections(
+                            hashTagText.text,
+                            hashTagRegExp,
                           );
+
+                          rootNavigator.currentState!.pop();
+
+                          AppUtils.showLoadingOverlay(() async {
+                            try {
+                              await CommunityDiscussionRepository
+                                  .postTimeLineDiscussion(
+                                hashTag: detections,
+                                topic: topic.text,
+                                subject: subject.text,
+                              );
+                            } catch (e) {
+                              AppUtils.showSnack(e.toString());
+                            }
+                          });
+
+                          //* clear all text
+                          // hashTagText.clear();
+                          // topic.clear();
+                          // subject.clear();
+                        },
+                      );
                     },
                   );
                 }
@@ -94,5 +138,13 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    topic.dispose();
+    subject.dispose();
+    hashTagText.dispose();
+    super.dispose();
   }
 }

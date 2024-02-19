@@ -25,7 +25,7 @@ class PostTab extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = cnt.data!.discussions![index];
 
-            return TextPostTile(
+            return DiscussionPostTile(
               profileUrl: cnt.data!.profileImage,
               userName: cnt.data!.username!,
               time: DateTime.fromMicrosecondsSinceEpoch(

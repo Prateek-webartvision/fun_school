@@ -17,7 +17,11 @@ class AppApi extends ApiService {
     late Uri finalUri;
 
     if (params != null) {
-      finalUri = Uri(scheme: uri.scheme, host: uri.host, path: uri.path, queryParameters: params);
+      finalUri = Uri(
+          scheme: uri.scheme,
+          host: uri.host,
+          path: uri.path,
+          queryParameters: params);
     } else {
       finalUri = uri;
     }
@@ -25,7 +29,8 @@ class AppApi extends ApiService {
     http.MultipartRequest request = http.MultipartRequest(_get, finalUri);
 
     try {
-      http.StreamedResponse response = await request.send().timeout(timeOutDuretion);
+      http.StreamedResponse response =
+          await request.send().timeout(timeOutDuration);
 
       if (response.statusCode == 200) {
         return json.decode(await response.stream.bytesToString());
@@ -41,13 +46,21 @@ class AppApi extends ApiService {
     }
   }
 
-  // post Mehod
+  // post Method
   @override
-  Future postApi(String url, {Map<String, dynamic>? params, Map<String, dynamic>? body}) async {
+  Future postApi(
+    String url, {
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  }) async {
     Uri uri = Uri.parse(url);
     late Uri finalUri;
     if (params != null) {
-      finalUri = Uri(scheme: uri.scheme, host: uri.host, path: uri.path, queryParameters: params);
+      finalUri = Uri(
+          scheme: uri.scheme,
+          host: uri.host,
+          path: uri.path,
+          queryParameters: params);
     } else {
       finalUri = uri;
     }
@@ -55,7 +68,60 @@ class AppApi extends ApiService {
     http.MultipartRequest request = http.MultipartRequest(_post, finalUri);
 
     try {
-      http.StreamedResponse response = await request.send().timeout(timeOutDuretion);
+      http.StreamedResponse response =
+          await request.send().timeout(timeOutDuration);
+
+      if (response.statusCode == 200) {
+        return json.decode(await response.stream.bytesToString());
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } on SocketException {
+      throw KInternetException();
+    } on TimeoutException {
+      throw KRequestTimeOutException();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future postWithFiles(
+    String url, {
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+    Map<String, File>? files,
+  }) async {
+    Uri uri = Uri.parse(url);
+    late Uri finalUri;
+    if (params != null) {
+      finalUri = Uri(
+          scheme: uri.scheme,
+          host: uri.host,
+          path: uri.path,
+          queryParameters: params);
+    } else {
+      finalUri = uri;
+    }
+
+    http.MultipartRequest request = http.MultipartRequest(_post, finalUri);
+
+    try {
+      if (body != null && body.isNotEmpty) {
+        Map<String, String> fields =
+            body.map((key, value) => MapEntry(key, value.toString()));
+        request.fields.addAll(fields);
+      }
+
+      if (files != null && files.isNotEmpty) {
+        for (var element in files.entries) {
+          http.MultipartFile ff = await http.MultipartFile.fromPath(
+              element.key, element.value.path);
+          request.files.add(ff);
+        }
+      }
+
+      http.StreamedResponse response =
+          await request.send().timeout(timeOutDuration);
 
       if (response.statusCode == 200) {
         return json.decode(await response.stream.bytesToString());

@@ -7,13 +7,11 @@ class OthersProfileRepository {
   static final _api = AppApi();
 
   static Future<OtherProfileModel> getProfile({required String userId}) async {
-    return await _api.getApi(AppUrls.getOtherProfile,
-        params: {"user_id": userId}).then((value) {
-      final profile = OtherProfileModel.fromJson(value);
-      return profile;
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
+    final res =
+        await _api.getApi(AppUrls.getOtherProfile, params: {"user_id": userId});
+
+    final profile = OtherProfileModel.fromJson(res);
+    return profile;
   }
 }
 
