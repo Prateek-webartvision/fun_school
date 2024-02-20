@@ -61,10 +61,11 @@ class AuthRepository extends Auth {
   }
 
   @override
-  Future changePassword(
-      {required String oldPassword,
-      required String newPassword,
-      required String conformNewPassword}) async {
+  Future changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String conformNewPassword,
+  }) async {
     final data = <String, String>{};
 
     data["user_id"] = AppStorage.user.currentUser()!.userId.toString();
@@ -81,5 +82,50 @@ class AuthRepository extends Auth {
     }).onError((error, stackTrace) {
       AppUtils.showSnack(error.toString());
     });
+  }
+
+  //* send forgot otp
+  Future<String> sendForgotOtp(String email) async {
+    Map<String, String> param = {};
+    param['email'] = email;
+
+    final res = await api.getApi(AppUrls.forgotPassword, params: param);
+    if (res['code'] == 200) {
+      return "done";
+    } else {
+      throw res['message'];
+    }
+  }
+
+  //* send forgot otp
+  Future<String> verifyOtp(String email, String otp) async {
+    Map<String, String> param = {};
+    param['email'] = email;
+    param['otp'] = otp;
+
+    final res = await api.getApi(AppUrls.forgotPasswordOtp, params: param);
+
+    if (res['code'] == 200) {
+      return "done";
+    } else {
+      throw res['message'];
+    }
+  }
+
+  //* send forgot otp
+  Future<String> changeForgotPassword(
+      String email, String password, String confirmPassword) async {
+    Map<String, String> param = {};
+    param['email'] = email;
+    param['new_password'] = password;
+    param['new_password_repeat'] = confirmPassword;
+
+    final res = await api.getApi(AppUrls.forgotPasswordChange, params: param);
+
+    if (res['code'] == 200) {
+      return "done";
+    } else {
+      throw res['message'];
+    }
   }
 }

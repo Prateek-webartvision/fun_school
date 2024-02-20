@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/router/pages.dart';
+import 'package:get/utils.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
@@ -74,6 +78,33 @@ class _LoginPageViewState extends LoginPageSate {
             textInputType: TextInputType.emailAddress,
             isPassword: true,
             textInputAction: TextInputAction.next,
+          ),
+          10.height,
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text.rich(
+              TextSpan(
+                text: "Forgot",
+                children: [
+                  TextSpan(text: " "),
+                  TextSpan(
+                    text: "Password!",
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        appRoutes.pushNamed(PagesName.sendForgotMailPage);
+                      },
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: context.theme.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54),
+            ),
           ),
         ],
       ),

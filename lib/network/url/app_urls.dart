@@ -12,6 +12,10 @@ class AppUrls {
   static const String registerUrl = "$_apis/register.php";
   static const String signInUrl = "$_apis/login.php";
   static const String changePassword = "$_apis/change_password.php";
+  static const String forgotPassword = "$_apis/forgot_password.php";
+  static const String forgotPasswordOtp = "$_apis/forgot_password_otp.php";
+  static const String forgotPasswordChange =
+      "$_apis/forgot_password_change.php";
 
   static const String coursesAndDetailsUrl = "$_apis/course_details.php";
 

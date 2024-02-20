@@ -4,6 +4,9 @@ class PagesName {
   static String loginPage = "LoginPage";
   static String signUpPage = "SignUpPage";
   static String emailVerificationPage = "EmailVerificationPage";
+  static String sendForgotMailPage = "SendForgotMailPage";
+  static String forgetChangePasswordPage = "ForgetChangePasswordPage";
+
   static String bottomNavBarPage = "BottomNavBarPage";
   static String homePage = "homePage";
   static String studyPage = "StudyPage";
