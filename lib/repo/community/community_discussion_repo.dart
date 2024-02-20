@@ -122,15 +122,21 @@ class CommunityDiscussionRepository {
     });
   }
 
-  // discustion Comment
+  // discussion Comment
   static Future commentDiscussion({
     required String discussionId,
     required String comment,
-    String? image,
   }) async {
-    Map<String, String> perams = {};
-    perams['pub_id'] = discussionId;
-    perams['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
-    perams['text'] = comment;
+    Map<String, String> params = {};
+    params['pub_id'] = discussionId;
+    params['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
+    params['text'] = comment;
+
+    final res = await _api.postApi(AppUrls.discussionComment, params: params);
+    if (res['code'] == 200) {
+      log(res.toString());
+    } else {
+      throw res['message'];
+    }
   }
 }

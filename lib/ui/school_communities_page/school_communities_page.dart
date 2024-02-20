@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'controllers/communities_tab_controller.dart';
 import 'controllers/community_discussion_controller.dart';
 import 'controllers/community_group_controller.dart';
+import 'controllers/selected_image_controller.dart';
 import 'tabs/chat_tab/chat_tab.dart';
 import 'tabs/discussion_tab/discussion_tab.dart';
 import 'tabs/group_tab/group_tab.dart';
@@ -164,29 +165,5 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     hashTagText.dispose();
     selectedImagesController.dispose();
     super.dispose();
-  }
-}
-
-class SelectedImagesController extends GetxController {
-  List<PlatformFile> selectedImages = [];
-
-  addImage(PlatformFile image) {
-    selectedImages.add(image);
-    update();
-  }
-
-  addImages(List<PlatformFile> images) {
-    selectedImages.addAll(images);
-    update();
-  }
-
-  remove(PlatformFile image) {
-    selectedImages.remove(image);
-    update();
-  }
-
-  clearImages() {
-    selectedImages.clear();
-    update();
   }
 }

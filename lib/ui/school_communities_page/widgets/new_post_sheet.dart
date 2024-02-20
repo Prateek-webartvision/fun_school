@@ -5,12 +5,12 @@ import 'dart:io';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fun_school/ui/school_communities_page/school_communities_page.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 import '../../../router/app_router.dart';
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
+import '../controllers/selected_image_controller.dart';
 
 class NewPostSheet extends StatelessWidget {
   const NewPostSheet({

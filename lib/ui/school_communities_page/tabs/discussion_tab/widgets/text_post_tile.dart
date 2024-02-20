@@ -31,6 +31,7 @@ class DiscussionPostTile extends StatelessWidget {
     this.onProfileClick,
     this.onLikeClick,
     required this.userType,
+    this.onComment,
   });
   final String? profileUrl;
   final String userName;
@@ -47,6 +48,7 @@ class DiscussionPostTile extends StatelessWidget {
   final int? replies;
   final Function()? onProfileClick;
   final Function()? onLikeClick;
+  final Function()? onComment;
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +202,8 @@ class DiscussionPostTile extends StatelessWidget {
                               ],
                             )
                           : 0.height,
-                      // like, share, comment btn
 
+                      //* like, share, comment btn
                       Row(
                         children: [
                           InkWell(
@@ -216,10 +218,13 @@ class DiscussionPostTile extends StatelessWidget {
                             ),
                           ),
                           12.width,
-                          SvgPicture.asset(
-                            AppAssets.svg.messageIcon,
-                            height: 24,
-                            width: 24,
+                          GestureDetector(
+                            onTap: onComment,
+                            child: SvgPicture.asset(
+                              AppAssets.svg.messageIcon,
+                              height: 24,
+                              width: 24,
+                            ),
                           ),
                           12.width,
                           SvgPicture.asset(

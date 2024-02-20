@@ -3,11 +3,13 @@
 import 'dart:developer';
 
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
+import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:fun_school/ui/profile_page_other/other_profile_page.dart';
 import 'package:fun_school/utils/app_utils.dart';
 import 'package:fun_school/widgets/error_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -42,7 +44,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
           return ErrorPage(
               error: controller.error.toString(),
               onError: () {
-                controller.iniLoad();
+                controller.initLoad();
               });
         }
 
@@ -113,7 +115,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   itemCount: controller.discussions!.length,
                   itemBuilder: (context, index) {
                     final item = controller.discussions![index];
-
+//
                     return DiscussionPostTile(
                       profileUrl: item.userProfileImage!,
                       userName: item.username!,
@@ -124,6 +126,27 @@ class _DiscussionTabState extends State<DiscussionTab> {
                       },
                       likes: item.likesCount,
                       replies: item.replyCount,
+                      onComment: () async {
+                        final res = await AppUtils.showModelSheet(
+                            child: CommentSheet(), isScrolled: true);
+                        if (res == null || res.toString().isEmpty) {
+                          log(res.toString(), name: "comment");
+                        } else {
+                          AppUtils.showLoadingOverlay(() async {
+                            try {
+                              await CommunityDiscussionRepository
+                                  .commentDiscussion(
+                                      discussionId:
+                                          item.discussionId.toString(),
+                                      comment: res);
+                              await controller.reload();
+                            } catch (e) {
+                              log(e.toString(), name: "comment");
+                            }
+                          });
+                          // log("done", name: "comment");
+                        }
+                      },
                       time: DateTime.fromMicrosecondsSinceEpoch(
                               int.parse(item.time!) * 1000000)
                           .toUtc()
@@ -148,6 +171,71 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   },
                   separatorBuilder: (context, index) => Divider(height: 0),
                 )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CommentSheet extends StatefulWidget {
+  const CommentSheet({
+    super.key,
+  });
+
+  @override
+  State<CommentSheet> createState() => _CommentSheetState();
+}
+
+class _CommentSheetState extends State<CommentSheet> {
+  TextEditingController comment = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: double.maxFinite),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Text(
+                      "Comment",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    //
+                    10.height,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        controller: comment,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                          hintText: "Write Comment",
+                        ),
+                        minLines: 1,
+                        maxLines: 4,
+                      ),
+                    ),
+                    10.height,
+                    KBtn(
+                        onClick: () {
+                          appRoutes.pop(comment.text);
+                        },
+                        text: "Send")
+                  ],
+                ),
+              ),
             ],
           ),
         );

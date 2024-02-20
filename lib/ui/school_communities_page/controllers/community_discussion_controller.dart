@@ -13,7 +13,7 @@ class CommunityDiscussionController extends GetxController {
   String? selectedTag;
 
   CommunityDiscussionController() {
-    iniLoad();
+    initLoad();
   }
 
   set setSelectTag(String tag) {
@@ -48,9 +48,16 @@ class CommunityDiscussionController extends GetxController {
     update();
   }
 
-  iniLoad() async {
+  Future<void> initLoad() async {
     state = ApiState.loading;
     update();
+    await _loadData();
+    discussions = _discussions;
+    update();
+  }
+
+  Future<void> reload() async {
+    selectedTag = null;
     await _loadData();
     discussions = _discussions;
     update();
@@ -73,33 +80,4 @@ class CommunityDiscussionController extends GetxController {
     });
     update();
   }
-
-  Future<void> reload() async {
-    selectedTag = null;
-    await _loadData();
-    discussions = _discussions;
-    update();
-  }
 }
-
-// sort discussions
-// List<CommunityDiscussionModel> _filterDiscussion(List<CommunityDiscussionModel> data, {String? byHashTag}) {
-//   List<CommunityDiscussionModel> tempData = [];
-
-//   if (byHashTag != null) {
-//     for (var element in data) {
-//       bool isContain = false;
-//       for (var e in element.hashtags!) {
-//         if (e.hashtag == byHashTag) {
-//           isContain = true;
-//         }
-//       }
-
-//       if (isContain == true) {
-//         tempData.add(element);
-//       }
-//     }
-//   }
-
-//   return tempData;
-// }
