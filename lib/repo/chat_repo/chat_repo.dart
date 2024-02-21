@@ -12,7 +12,7 @@ class ChatRepository {
   //   params['']
   // }
 
-  // chat User List
+  //* chat User List
   static Future chatUserList() async {
     Map<String, String> params = {};
     params['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
