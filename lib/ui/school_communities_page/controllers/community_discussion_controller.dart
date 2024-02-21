@@ -65,7 +65,7 @@ class CommunityDiscussionController extends GetxController {
 
   _loadData() async {
     //
-    await CommunityDiscussionRepository.getTandingHashTags().then((value) {
+    await CommunityDiscussionRepository.getTrendingHashTags().then((value) {
       trendingHashTags = value;
     }).onError((error, stackTrace) {
       this.error = error.toString();

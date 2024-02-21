@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fun_school/models/exams/exams_models/all_exam_model.dart';
 import 'package:fun_school/models/exams/exams_models/pop_puler_exam_model.dart';
 import 'package:fun_school/network/app_api.dart';
@@ -30,7 +28,7 @@ class ExamsRepository {
     params["user_id"] = AppStorage.user.currentUser()?.userId.toString() ?? "";
 
     // log(params.toString());
-    //TODO
+    //TODO error
 
     final res = await _api.getApi(AppUrls.getExamsByExamId, params: params);
 

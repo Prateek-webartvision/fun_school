@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../network/data/app_storage.dart';
 
 abstract class DiscussionModel {
@@ -23,6 +25,7 @@ abstract class DiscussionModel {
   List<Likes>? likes;
   bool isLiked = false;
   List<Hashtags>? hashtags;
+  List<ReplyModel>? replies;
 
   DiscussionModel.fromJson(Map<String, dynamic> json) {
     discussionId = int.tryParse(json['discussion_id']);
@@ -73,6 +76,16 @@ abstract class DiscussionModel {
         hashtags.add(tag);
       }
       this.hashtags = hashtags;
+    }
+
+    // replys
+    if (json['replys'] != null) {
+      List<ReplyModel> reply = [];
+      for (var element in json['replys']) {
+        final rp = ReplyModel.fromJson(element);
+        reply.add(rp);
+      }
+      replies = reply;
     }
   }
 
@@ -258,5 +271,41 @@ class TrendingHashTags {
   @override
   String toString() {
     return toJson.toString();
+  }
+}
+
+class ReplyModel {
+  String? discussionId;
+  String? userId;
+  String? userName;
+  String? aboutUser;
+  String? userProfileImage;
+  String? userType;
+  String? text;
+  String? type;
+  String? likesCount;
+  String? status;
+  String? threadId;
+  String? target;
+  String? ogData;
+  String? time;
+  String? edited;
+
+  ReplyModel.fromJson(json) {
+    discussionId = json["discussion_id"];
+    userId = json["user_id"];
+    userName = json["username"];
+    aboutUser = json["About_user"];
+    userProfileImage = json["user_profile_image"];
+    userType = json["user_type"];
+    text = json["text"];
+    type = json["type"];
+    likesCount = json["likes_count"];
+    status = json["status"];
+    threadId = json["thread_id"];
+    target = json["target"];
+    ogData = json["og_data"];
+    time = json["time"];
+    edited = json["edited"];
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
@@ -15,12 +16,26 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<ChatMessageModel> chatMessage = [
-    ChatMessageModel(message: "Thank you, I'll take a look now.", time: DateTime.now(), isMyMessage: true),
-    ChatMessageModel(message: "Great to hear. Also, I've sent you the notes on quantum physics. Let me know if you have questions!", time: DateTime.now(), isMyMessage: false),
-    ChatMessageModel(message: "Absolutely! I've prepped my questions.", time: DateTime.now(), isMyMessage: true),
-    ChatMessageModel(message: "Hope you're doing well. Ready for our session tomorrow? User: Absolutely! I've prepped my questions.", time: DateTime.now(), isMyMessage: false),
-  ];
+  // List<ChatMessageModel> chatMessage = [
+  //   ChatMessageModel(
+  //       message: "Thank you, I'll take a look now.",
+  //       time: DateTime.now(),
+  //       isMyMessage: true),
+  //   ChatMessageModel(
+  //       message:
+  //           "Great to hear. Also, I've sent you the notes on quantum physics. Let me know if you have questions!",
+  //       time: DateTime.now(),
+  //       isMyMessage: false),
+  //   ChatMessageModel(
+  //       message: "Absolutely! I've prepped my questions.",
+  //       time: DateTime.now(),
+  //       isMyMessage: true),
+  //   ChatMessageModel(
+  //       message:
+  //           "Hope you're doing well. Ready for our session tomorrow? User: Absolutely! I've prepped my questions.",
+  //       time: DateTime.now(),
+  //       isMyMessage: false),
+  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +46,9 @@ class _ChatPageState extends State<ChatPage> {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))],
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))
+        ],
       ),
       body: Column(
         children: [
@@ -39,12 +56,13 @@ class _ChatPageState extends State<ChatPage> {
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               reverse: true,
-              itemCount: chatMessage.length,
+              itemCount: 10,
               itemBuilder: (context, index) {
-                return ChatTile(
-                  message: chatMessage[index].message,
-                  isMyMessage: chatMessage[index].isMyMessage,
-                );
+                return Text("data");
+                // return ChatTile(
+                //   message: chatMessage[index].message,
+                //   isMyMessage: chatMessage[index].isMyMessage,
+                // );
               },
               separatorBuilder: (_, __) => 10.height,
             ),
@@ -65,7 +83,8 @@ class _ChatPageState extends State<ChatPage> {
                     decoration: InputDecoration(
                       hintText: "Message",
                       isCollapsed: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                     ),
                     onSubmitted: (value) {
@@ -85,13 +104,20 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 class ChatMessageModel {
-  final String message;
-  final DateTime time;
-  final bool isMyMessage;
+  String? chatId;
+  String? sendBy;
+  String? sendTo;
+  String? lastMessage;
+  int? time;
+  bool? newMessage;
+
   ChatMessageModel({
-    required this.message,
-    required this.time,
-    required this.isMyMessage,
+    this.chatId,
+    this.sendBy,
+    this.sendTo,
+    this.lastMessage,
+    this.time,
+    this.newMessage,
   });
 }
 

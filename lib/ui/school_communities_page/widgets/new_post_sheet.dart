@@ -131,52 +131,56 @@ class NewPostSheet extends StatelessWidget {
           GetBuilder(
             init: imagesController,
             builder: (controller) {
-              return SizedBox(
-                height: 100,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  itemCount: controller.selectedImages.length,
-                  itemBuilder: (context, index) {
-                    final file = controller.selectedImages[index];
-                    return Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: FileImage(
-                            File(file.path!),
+              if (controller.selectedImages.isNotEmpty) {
+                return SizedBox(
+                  height: 100,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    itemCount: controller.selectedImages.length,
+                    itemBuilder: (context, index) {
+                      final file = controller.selectedImages[index];
+                      return Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(8),
+                          image: DecorationImage(
+                            image: FileImage(
+                              File(file.path!),
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
                         ),
-                      ),
-                      padding: EdgeInsets.all(8),
-                      alignment: Alignment.topRight,
-                      child: GestureDetector(
-                        onTap: () {
-                          imagesController.remove(file);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(1, 1),
-                                color: Colors.black38,
-                              )
-                            ],
+                        padding: EdgeInsets.all(8),
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            imagesController.remove(file);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(1, 1),
+                                  color: Colors.black38,
+                                )
+                              ],
+                            ),
+                            child: Icon(Icons.close, size: 16),
                           ),
-                          child: Icon(Icons.close, size: 16),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => 10.width,
-                ),
-              );
+                      );
+                    },
+                    separatorBuilder: (context, index) => 10.width,
+                  ),
+                );
+              } else {
+                return 0.height;
+              }
             },
           ),
 

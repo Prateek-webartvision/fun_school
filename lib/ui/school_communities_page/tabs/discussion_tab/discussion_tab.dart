@@ -2,6 +2,9 @@
 
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fun_school/main.dart';
+import 'package:fun_school/network/url/app_urls.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/color.dart';
@@ -14,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../../models/community_discussion_model/community_discussion_model.dart';
 import '../../controllers/community_discussion_controller.dart';
 import 'widgets/text_post_tile.dart';
 
@@ -115,7 +119,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   itemCount: controller.discussions!.length,
                   itemBuilder: (context, index) {
                     final item = controller.discussions![index];
-//
+
                     return DiscussionPostTile(
                       profileUrl: item.userProfileImage!,
                       userName: item.username!,
@@ -127,25 +131,41 @@ class _DiscussionTabState extends State<DiscussionTab> {
                       likes: item.likesCount,
                       replies: item.replyCount,
                       onComment: () async {
-                        final res = await AppUtils.showModelSheet(
-                            child: CommentSheet(), isScrolled: true);
-                        if (res == null || res.toString().isEmpty) {
-                          log(res.toString(), name: "comment");
-                        } else {
-                          AppUtils.showLoadingOverlay(() async {
-                            try {
-                              await CommunityDiscussionRepository
-                                  .commentDiscussion(
-                                      discussionId:
-                                          item.discussionId.toString(),
-                                      comment: res);
-                              await controller.reload();
-                            } catch (e) {
-                              log(e.toString(), name: "comment");
-                            }
-                          });
-                          // log("done", name: "comment");
-                        }
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            isDismissible: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                            ),
+                            builder: (context) {
+                              return CommentSheet(
+                                controller: controller,
+                                discussion: item,
+                              );
+                            });
+
+                        // final res = await AppUtils.showModelSheet(
+                        //     child: CommentSheet(), isScrolled: true);
+                        // if (res == null || res.toString().isEmpty) {
+                        //   log(res.toString(), name: "comment");
+                        // } else {
+                        //   AppUtils.showLoadingOverlay(() async {
+                        //     try {
+                        //       await CommunityDiscussionRepository
+                        //           .commentDiscussion(
+                        //         discussionId: item.discussionId.toString(),
+                        //         comment: res,
+                        //       );
+                        //       await controller.reload();
+                        //       AppUtils.showSnack("Reply added successfully");
+                        //     } catch (e) {
+                        //       log(e.toString(), name: "comment");
+                        //     }
+                        //   });
+                        // }
                       },
                       time: DateTime.fromMicrosecondsSinceEpoch(
                               int.parse(item.time!) * 1000000)
@@ -163,7 +183,8 @@ class _DiscussionTabState extends State<DiscussionTab> {
                         AppUtils.showLoadingOverlay(() async {
                           await CommunityDiscussionRepository
                               .likeDislikeDiscussion(
-                                  discussionId: item.discussionId.toString());
+                            discussionId: item.discussionId.toString(),
+                          );
                           controller.setLikeDisLike(discussion: item);
                         });
                       },
@@ -182,7 +203,11 @@ class _DiscussionTabState extends State<DiscussionTab> {
 class CommentSheet extends StatefulWidget {
   const CommentSheet({
     super.key,
+    required this.controller,
+    required this.discussion,
   });
+  final CommunityDiscussionController controller;
+  final CommunityDiscussionModel discussion;
 
   @override
   State<CommentSheet> createState() => _CommentSheetState();
@@ -190,52 +215,147 @@ class CommentSheet extends StatefulWidget {
 
 class _CommentSheetState extends State<CommentSheet> {
   TextEditingController comment = TextEditingController();
+  late CommunityDiscussionModel discussion;
+
+  @override
+  void initState() {
+    _updateDis();
+    super.initState();
+  }
+
+  _updateDis() {
+    discussion = widget.controller.discussions!
+        .where((element) =>
+            element.discussionId! == widget.discussion.discussionId!)
+        .first;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    return GetBuilder(
+      init: widget.controller,
+      builder: (controller) {
+        return DraggableScrollableSheet(
+          initialChildSize: 1,
+          minChildSize: 0.5,
+          maxChildSize: 1,
+          expand: false,
+          snap: true,
+          shouldCloseOnMinExtent: false,
+          snapSizes: [0.5, 1],
+          builder: (_, scrollController) => Column(
             children: [
-              SizedBox(width: double.maxFinite),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(
-                      "Comment",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+              Icon(
+                Icons.remove,
+                color: Colors.grey[600],
+              ),
+              Text(
+                "Comment ${(discussion.replyCount! > 0) ? discussion.replyCount : ""}",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                  controller: scrollController,
+                  itemCount: discussion.replies?.length ?? 0,
+                  itemBuilder: (_, index) {
+                    final reply = discussion.replies![index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.grey[300],
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                    reply.userProfileImage!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          6.width,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  // "Name",
+                                  reply.userName ?? "",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  // "Comments",
+                                  reply.text ?? "",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    //
-                    10.height,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                ),
+              ),
+              Container(
+                // height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Expanded(
                       child: TextField(
                         controller: comment,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          isDense: true,
-                          hintText: "Write Comment",
+                          border: InputBorder.none,
+                          hintText: "Comment",
+                          hintStyle: TextStyle(color: Colors.black45),
                         ),
-                        minLines: 1,
-                        maxLines: 4,
                       ),
                     ),
-                    10.height,
-                    KBtn(
-                        onClick: () {
-                          appRoutes.pop(comment.text);
+                    GestureDetector(
+                        onTap: () {
+                          // AppUtils.showSnack("message");
+                          AppUtils.showLoadingOverlay(() async {
+                            try {
+                              await CommunityDiscussionRepository
+                                  .commentDiscussion(
+                                discussionId:
+                                    discussion.discussionId.toString(),
+                                comment: comment.text.trim(),
+                              );
+
+                              await controller.reload();
+                              setState(() {
+                                _updateDis();
+                                comment.clear();
+                              });
+                              // appRoutes.pop();
+                              AppUtils.showSnack("Reply added successfully");
+                            } catch (e) {
+                              log(e.toString(), name: "comment");
+                            }
+                          });
                         },
-                        text: "Send")
+                        child: Icon(Icons.send))
                   ],
                 ),
-              ),
+              )
             ],
           ),
         );

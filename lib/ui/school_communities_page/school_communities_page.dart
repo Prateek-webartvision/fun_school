@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:developer';
-
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
@@ -92,7 +90,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                   : AppAssets.svg.pencilFillIcon),
               onPressed: () {
                 if (controller.currentIndex == 0) {
-                  // post bottom sheet
+                  //* post bottom sheet
                   showModalBottomSheet(
                     context: rootNavigator.currentContext!,
                     isScrollControlled: true,
@@ -132,6 +130,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                                 images: selectedImagesController.selectedImages,
                               );
                               discussionController.reload();
+                              AppUtils.showSnack("Post added successfully");
                             } catch (e) {
                               AppUtils.showSnack(e.toString());
                             }

@@ -9,10 +9,10 @@ class ChatController extends GetxController {
   late Timer timer;
 
   ChatController() {
-    log("message");
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _LoopLoadData();
-    });
+    // log("message");
+    // timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   _LoopLoadData();
+    // });
   }
 
   _LoopLoadData() {

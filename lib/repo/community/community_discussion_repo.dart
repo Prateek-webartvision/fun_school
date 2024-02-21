@@ -58,7 +58,7 @@ class CommunityDiscussionRepository {
     }
   }
 
-  // filter by hash tag
+  //* filter by hash tag
   static Future<List<CommunityDiscussionModel>> filterDiscussionByHashtag({
     required String tag,
   }) async {
@@ -76,7 +76,7 @@ class CommunityDiscussionRepository {
     });
   }
 
-  // filter by User id
+  //* filter by User id
   static Future<List<CommunityDiscussionUserModel>> filterDiscussionByUser(
       {required String userId}) async {
     return await _api.getApi(AppUrls.getCommunityDiscussionPost,
@@ -93,28 +93,28 @@ class CommunityDiscussionRepository {
     });
   }
 
-  // get hash tags
-  static Future<List<TrendingHashTags>> getTandingHashTags() async {
+  //* get hash tags
+  static Future<List<TrendingHashTags>> getTrendingHashTags() async {
     return await _api.getApi(AppUrls.getTrendingHashtags).then((value) {
-      List<TrendingHashTags> tandingHashtags = [];
+      List<TrendingHashTags> trendingHashtags = [];
       for (var element in value) {
         final tag = TrendingHashTags.fromJson(element);
-        tandingHashtags.add(tag);
+        trendingHashtags.add(tag);
       }
-      return tandingHashtags;
+      return trendingHashtags;
     }).onError((error, stackTrace) {
       throw error!;
     });
   }
 
-  // like and dislike discussion
+  //* like and dislike discussion
   static Future likeDislikeDiscussion({required String discussionId}) async {
-    Map<String, String> perams = {};
-    perams['discussion_id'] = discussionId;
-    perams['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
+    Map<String, String> params = {};
+    params['discussion_id'] = discussionId;
+    params['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
 
     return await _api
-        .getApi(AppUrls.discussionLikeDislike, params: perams)
+        .getApi(AppUrls.discussionLikeDislike, params: params)
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
@@ -122,7 +122,7 @@ class CommunityDiscussionRepository {
     });
   }
 
-  // discussion Comment
+  //* discussion Comment
   static Future commentDiscussion({
     required String discussionId,
     required String comment,

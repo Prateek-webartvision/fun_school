@@ -66,6 +66,9 @@ class AppUrls {
   static const String getOtherProfile = "$_apis/profile.php";
   static const String getCommunityGroups = "$_apis/groups.php";
 
+  //chat
+  static const String chatUsers = "$_apis/chat_user_list.php";
+
   // exam
   static const String getExams = "$_apis/exams.php";
   static const String getExamsByExamId = "$_apis/exams_questions.php";
