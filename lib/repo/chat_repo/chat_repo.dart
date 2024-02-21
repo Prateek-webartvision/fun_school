@@ -16,10 +16,10 @@ class ChatRepository {
   static Future chatUserList() async {
     Map<String, String> params = {};
     params['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
-
+    log(params.toString(), name: "api");
     //
     final res = await _api.getApi(AppUrls.chatUsers, params: params);
 
-    log(res);
+    log(res.toString());
   }
 }

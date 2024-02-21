@@ -8,6 +8,7 @@ import 'package:fun_school/style/assets.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fun_school/ui/school_communities_page/controllers/chat_user_controller.dart';
 import 'package:fun_school/utils/app_utils.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   late CommunitiesTabController communitiesTabController;
   late CommunityDiscussionController discussionController;
   late CommunityGroupController groupController;
+  late ChatUserController chatUserController;
 
   TextEditingController topic = TextEditingController();
   TextEditingController subject = TextEditingController();
@@ -51,6 +53,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     communitiesTabController = CommunitiesTabController(initIndex: 0);
     discussionController = CommunityDiscussionController();
     groupController = CommunityGroupController();
+    chatUserController = ChatUserController();
     super.initState();
   }
 
@@ -66,7 +69,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
               children: [
                 DiscussionTab(controller: discussionController),
                 GroupsTab(controller: groupController),
-                ChatTab(),
+                ChatTab(controller: chatUserController),
               ],
             ),
           ),

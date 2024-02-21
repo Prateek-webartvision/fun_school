@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fun_school/ui/school_communities_page/controllers/chat_user_controller.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../router/app_router.dart';
@@ -13,7 +14,10 @@ import '../../widgets/chat_user_tile.dart';
 class ChatTab extends StatelessWidget {
   const ChatTab({
     super.key,
+    required this.controller,
   });
+
+  final ChatUserController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,8 @@ class ChatTab extends StatelessWidget {
             return ChatUserTile(
               onTap: () {
                 // print("object");
-                rootNavigator.currentState!.push(MaterialPageRoute(builder: (_) => ChatPage()));
+                rootNavigator.currentState!
+                    .push(MaterialPageRoute(builder: (_) => ChatPage()));
                 // Get.to(() => ChatPage());
               },
             );
