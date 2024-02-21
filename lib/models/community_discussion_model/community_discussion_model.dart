@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../network/data/app_storage.dart';
 
 abstract class DiscussionModel {
