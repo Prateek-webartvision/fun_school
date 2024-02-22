@@ -2,47 +2,53 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../repo/chat_repo/chat_repo.dart';
 import '../../style/assets.dart';
 import '../../style/color.dart';
+import '../../widgets/error_page.dart';
+import 'controller/chat_users_controller.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  const ChatPage({
+    super.key,
+    required this.receiverID,
+    required this.profileUrl,
+    required this.userName,
+  });
+  final String receiverID;
+  final String? profileUrl;
+  final String userName;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  // List<ChatMessageModel> chatMessage = [
-  //   ChatMessageModel(
-  //       message: "Thank you, I'll take a look now.",
-  //       time: DateTime.now(),
-  //       isMyMessage: true),
-  //   ChatMessageModel(
-  //       message:
-  //           "Great to hear. Also, I've sent you the notes on quantum physics. Let me know if you have questions!",
-  //       time: DateTime.now(),
-  //       isMyMessage: false),
-  //   ChatMessageModel(
-  //       message: "Absolutely! I've prepped my questions.",
-  //       time: DateTime.now(),
-  //       isMyMessage: true),
-  //   ChatMessageModel(
-  //       message:
-  //           "Hope you're doing well. Ready for our session tomorrow? User: Absolutely! I've prepped my questions.",
-  //       time: DateTime.now(),
-  //       isMyMessage: false),
-  // ];
+  late MessagesByUserController messagesByUserController;
+  TextEditingController myMessage = TextEditingController();
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    messagesByUserController =
+        MessagesByUserController(receiverID: widget.receiverID);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
         title: Text(
-          "@TutorTina",
+          // "@TutorTina",
+          widget.userName,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -50,75 +56,151 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded))
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              reverse: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Text("data");
-                // return ChatTile(
-                //   message: chatMessage[index].message,
-                //   isMyMessage: chatMessage[index].isMyMessage,
-                // );
+      body: GetBuilder(
+        init: messagesByUserController,
+        builder: (controller) {
+          if (controller.state == ApiState.loading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          // on error
+          if (controller.state == ApiState.error) {
+            return ErrorPage(
+              error: controller.error,
+              onError: () {
+                controller.initLoad();
               },
-              separatorBuilder: (_, __) => 10.height,
-            ),
-          ), // bottom
-          Divider(color: AppColor.softBorderColor, height: 0),
-          Container(
-            height: 72,
-            decoration: BoxDecoration(color: AppColor.white),
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                SvgPicture.asset(AppAssets.svg.happyFaceIcon),
-                4.width,
-                Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.send,
-                    decoration: InputDecoration(
-                      hintText: "Message",
-                      isCollapsed: true,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
-                    ),
-                    onSubmitted: (value) {
-                      debugPrint(value);
-                    },
-                  ),
+            );
+          }
+          // on success
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  reverse: true,
+                  itemCount: controller.messages.length,
+                  itemBuilder: (context, index) {
+                    final message = controller
+                        .messages[(controller.messages.length - 1) - index];
+                    // return Text("data ${message.message}");
+                    return ChatTile(
+                      message: message.message ?? "",
+                      isMyMessage: (message.sendBy != widget.receiverID),
+                      time: message.time,
+                    );
+                  },
+                  separatorBuilder: (_, __) => 10.height,
                 ),
-                4.width,
-                SvgPicture.asset(AppAssets.svg.attachmentIcon),
-              ],
-            ),
-          ),
-        ],
+              ),
+              //* bottom
+              Divider(color: AppColor.softBorderColor, height: 0),
+              //* message box
+              Container(
+                decoration: BoxDecoration(color: AppColor.white),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // SvgPicture.asset(AppAssets.svg.happyFaceIcon),
+
+                    SvgPicture.asset(AppAssets.svg.attachmentIcon),
+                    4.width,
+                    Expanded(
+                      child: TextField(
+                        controller: myMessage,
+                        keyboardType: TextInputType.multiline,
+                        // textInputAction: TextInputAction.newline,
+                        minLines: 1,
+                        maxLines: 4,
+                        style: TextStyle(
+                          height: 0.95,
+                        ),
+
+                        decoration: InputDecoration(
+                          hintText: "Message",
+                          isCollapsed: true,
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                          border:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                        ),
+                        // onSubmitted: (value) async {},
+                      ),
+                    ),
+                    // 4.width,
+                    GestureDetector(
+                      onTap: () async {
+                        // send text message
+                        if (myMessage.text.isNotEmpty) {
+                          await ChatRepository.sendMessage(
+                            receiverID: widget.receiverID,
+                            message: myMessage.text.trim(),
+                          );
+                          myMessage.clear();
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColor.mainColor,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        // padding:
+                        //     EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 6,
+                            left: 5,
+                            right: 5,
+                            bottom: 3,
+                          ),
+                          child: SvgPicture.asset(
+                            AppAssets.svg.sendIcon,
+                            height: 28,
+                            width: 28,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    messagesByUserController.dispose();
+    scrollController.dispose();
+    super.dispose();
   }
 }
 
 class ChatMessageModel {
-  String? chatId;
+  String? messageID;
   String? sendBy;
   String? sendTo;
-  String? lastMessage;
+  String? message;
   int? time;
-  bool? newMessage;
 
   ChatMessageModel({
-    this.chatId,
+    this.messageID,
     this.sendBy,
     this.sendTo,
-    this.lastMessage,
+    this.message,
     this.time,
-    this.newMessage,
   });
+  ChatMessageModel.fromJson(json) {
+    messageID = json['message_id'];
+    sendBy = json['sender_id'];
+    sendTo = json['receiver_id'];
+    message = json['message'];
+    time = json['time'];
+  }
 }
 
 class ChatTile extends StatelessWidget {
@@ -129,7 +211,7 @@ class ChatTile extends StatelessWidget {
     this.isMyMessage = false,
   });
   final String message;
-  final DateTime? time;
+  final int? time;
   final bool isMyMessage;
 
   @override
@@ -161,7 +243,8 @@ class ChatTile extends StatelessWidget {
 
             //time
             Text(
-              "10:05 PM",
+              // "10:05 PM",
+              timeago.format(getDateTimeFromTimeStamp(timeStamp: time!)),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,

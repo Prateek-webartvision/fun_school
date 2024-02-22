@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 class ErrorPage extends StatelessWidget {
-  const ErrorPage(
-      {super.key, required this.error, required this.onError, this.textColor});
-  final String error;
+  const ErrorPage({
+    super.key,
+    this.error,
+    required this.onError,
+    this.textColor,
+  });
+
+  final String? error;
   final Function() onError;
   final Color? textColor;
 
@@ -33,7 +38,7 @@ class ErrorPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: textColor)),
               3.height,
-              Text(error,
+              Text(error ?? "Got some error",
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,

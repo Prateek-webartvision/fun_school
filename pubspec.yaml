@@ -54,6 +54,7 @@ dependencies:
   share_plus: ^7.1.0
   screenshot: ^2.1.0
   path_provider: ^2.0.15
+  timeago: ^3.6.1
   # local notification
   flutter_local_notifications: ^15.1.0+1
   # firebase
