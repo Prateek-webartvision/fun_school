@@ -236,6 +236,7 @@ class DiscussionPostTile extends StatelessWidget {
                           //   width: 24,
                           // ),
                           12.width,
+
                           GestureDetector(
                             onTap: onOpenChat,
                             child: SvgPicture.asset(

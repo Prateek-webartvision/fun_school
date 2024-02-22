@@ -12,8 +12,15 @@ class CommunityDiscussionRepository {
   static final _api = AppApi();
 
   //* get all Discussion
-  static Future<List<CommunityDiscussionModel>> getDiscussionsPosts() async {
-    return await _api.getApi(AppUrls.getCommunityDiscussionPost).then((value) {
+  static Future<List<CommunityDiscussionModel>> getDiscussionsPosts(
+    String userId,
+  ) async {
+    Map<String, String> param = {};
+    param['current_user_id'] = userId;
+
+    return await _api
+        .getApi(AppUrls.getCommunityDiscussionPost, params: param)
+        .then((value) {
       List<CommunityDiscussionModel> discussions = [];
       for (var element in value) {
         final CommunityDiscussionModel discussion =
@@ -94,8 +101,15 @@ class CommunityDiscussionRepository {
   }
 
   //* get hash tags
-  static Future<List<TrendingHashTags>> getTrendingHashTags() async {
-    return await _api.getApi(AppUrls.getTrendingHashtags).then((value) {
+  static Future<List<TrendingHashTags>> getTrendingHashTags(
+    String userId,
+  ) async {
+    Map<String, String> param = {};
+    param['current_user_id'] = userId;
+
+    return await _api
+        .getApi(AppUrls.getTrendingHashtags, params: param)
+        .then((value) {
       List<TrendingHashTags> trendingHashtags = [];
       for (var element in value) {
         final tag = TrendingHashTags.fromJson(element);

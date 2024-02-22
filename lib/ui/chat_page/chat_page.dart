@@ -102,7 +102,7 @@ class _ChatPageState extends State<ChatPage> {
                   children: [
                     // SvgPicture.asset(AppAssets.svg.happyFaceIcon),
 
-                    SvgPicture.asset(AppAssets.svg.attachmentIcon),
+                    // SvgPicture.asset(AppAssets.svg.attachmentIcon),
                     4.width,
                     Expanded(
                       child: TextField(
@@ -127,7 +127,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ),
                     // 4.width,
-                    GestureDetector(
+                    InkWell(
                       onTap: () async {
                         // send text message
                         if (myMessage.text.isNotEmpty) {

@@ -1,3 +1,4 @@
+import 'package:fun_school/network/data/app_storage.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -64,14 +65,17 @@ class CommunityDiscussionController extends GetxController {
   }
 
   _loadData() async {
+    final userId = AppStorage.user.current?.userId?.toString() ?? "";
     //
-    await CommunityDiscussionRepository.getTrendingHashTags().then((value) {
+    await CommunityDiscussionRepository.getTrendingHashTags(userId)
+        .then((value) {
       trendingHashTags = value;
     }).onError((error, stackTrace) {
       this.error = error.toString();
     });
     //
-    await CommunityDiscussionRepository.getDiscussionsPosts().then((value) {
+    await CommunityDiscussionRepository.getDiscussionsPosts(userId)
+        .then((value) {
       state = ApiState.success;
       _discussions = value;
     }).onError((error, stackTrace) {

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:developer';
-
+import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:fun_school/ui/profile_page_other/other_profile_page.dart';
@@ -169,15 +168,20 @@ class _DiscussionTabState extends State<DiscussionTab> {
                       },
                       onOpenChat: () {
                         // open chat page with user name and profile
-                        rootNavigator.currentState!.push(
-                          MaterialPageRoute(
-                            builder: (_) => ChatPage(
-                              profileUrl: item.userProfileImage,
-                              receiverID: item.userId!.toString(),
-                              userName: item.username ?? "",
+                        if (item.userId! == AppStorage.user.current!.userId) {
+                          AppUtils.showSnack(
+                              "You can't send message to yourself");
+                        } else {
+                          rootNavigator.currentState!.push(
+                            MaterialPageRoute(
+                              builder: (_) => ChatPage(
+                                profileUrl: item.userProfileImage,
+                                receiverID: item.userId!.toString(),
+                                userName: item.username ?? "",
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       },
                     );
                   },
