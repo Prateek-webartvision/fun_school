@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fun_school/repo/chat_repo/chat_repo.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/assets.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fun_school/ui/school_communities_page/controllers/chat_user_controller.dart';
 import 'package:fun_school/utils/app_utils.dart';
 import 'package:get/get.dart';
+import 'package:kd_utils/kd_utils.dart';
 
 import 'controllers/communities_tab_controller.dart';
 import 'controllers/community_discussion_controller.dart';
@@ -159,7 +161,19 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 }
 
                 if (controller.currentIndex == 2) {
-                  debugPrint("chat");
+                  //
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.white,
+                    showDragHandle: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    builder: (context) {
+                      return UsersBottomSheet();
+                    },
+                  );
                 }
               },
             ),
@@ -177,5 +191,64 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     selectedImagesController.dispose();
     timer.cancel();
     super.dispose();
+  }
+}
+
+class UsersBottomSheet extends StatefulWidget {
+  const UsersBottomSheet({
+    super.key,
+  });
+
+  @override
+  State<UsersBottomSheet> createState() => _UsersBottomSheetState();
+}
+
+class _UsersBottomSheetState extends State<UsersBottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      expand: false,
+      maxChildSize: 1,
+      minChildSize: 0.5,
+      initialChildSize: 0.5,
+      snap: true,
+      shouldCloseOnMinExtent: false,
+      builder: (context, scrollController) {
+        return CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            // SliverPersistentHeader(
+            //   delegate: SliverPinedHeader(),
+            //   pinned: true,
+            // ),
+            SliverList.separated(
+              itemBuilder: (context, index) {
+                return Text("data ${scrollController.offset}");
+              },
+              separatorBuilder: (context, index) => 10.height,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class SliverPinedHeader extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Text("search bar");
+  }
+
+  @override
+  double get maxExtent => 40;
+
+  @override
+  double get minExtent => 40;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

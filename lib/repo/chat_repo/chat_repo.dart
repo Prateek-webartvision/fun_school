@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fun_school/network/app_api.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/network/url/app_urls.dart';
@@ -5,11 +7,6 @@ import 'package:fun_school/ui/chat_page/chat_page.dart';
 
 class ChatRepository {
   static final _api = AppApi();
-  // get all Users Chat
-  // static allChatsByUsers({required String otherUser}) async {
-  //   Map<String, String> params = {};
-  //   params['']
-  // }
 
   //* chat User List
   static Future<List<ChatUsersModel>> chatUserList() async {
@@ -54,6 +51,7 @@ class ChatRepository {
     }
   }
 
+  // * send message
   static Future sendMessage({
     required String receiverID,
     required String message,
@@ -64,6 +62,15 @@ class ChatRepository {
     param['message'] = message;
 
     await _api.postApi(AppUrls.sendMessage, params: param);
+  }
+
+  // * user List to start new chat
+  static Future getUsersList() async {
+    Map<String, String> param = {};
+    param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+
+    final res = await _api.getApi(AppUrls.allUsersById, params: param);
+    log(res.toString());
   }
 }
 
@@ -88,5 +95,45 @@ class ChatUsersModel {
     profileImage = json['profile_image'];
     newMessage = json['new_message'];
     time = json['time'];
+  }
+}
+
+//users
+class User {
+  String? userId;
+  String? username;
+  String? userProfileImage;
+  String? email;
+  String? about;
+  String? userType;
+  String? posts;
+  String? followers;
+  String? following;
+  int? regDate;
+
+  User({
+    this.userId,
+    this.username,
+    this.userProfileImage,
+    this.email,
+    this.about,
+    this.userType,
+    this.posts,
+    this.followers,
+    this.following,
+    this.regDate,
+  });
+
+  User.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    username = json['username'];
+    userProfileImage = json['user_profile_image'];
+    email = json['email'];
+    about = json['about'];
+    userType = json['user_type'];
+    posts = json['posts'];
+    followers = json['followers'];
+    following = json['following'];
+    regDate = json['reg_date'];
   }
 }

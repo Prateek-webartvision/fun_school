@@ -70,6 +70,7 @@ class AppUrls {
   static const String chatUsers = "$_apis/chat_user_list.php";
   static const String allChatsByUser = "$_apis/chat_all_by_users.php";
   static const String sendMessage = "$_apis/chat_send.php";
+  static const String allUsersById = "$_apis/community_user_list.php";
 
   // exam
   static const String getExams = "$_apis/exams.php";
