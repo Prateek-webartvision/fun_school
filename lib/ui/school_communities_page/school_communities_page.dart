@@ -56,11 +56,11 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     discussionController = CommunityDiscussionController();
     groupController = CommunityGroupController();
     chatUserController = ChatUserController();
-    _tiker();
+    _taker();
     super.initState();
   }
 
-  _tiker() {
+  _taker() {
     timer = Timer.periodic(Duration(seconds: 5), (timer) {
       chatUserController.reLoad();
     });

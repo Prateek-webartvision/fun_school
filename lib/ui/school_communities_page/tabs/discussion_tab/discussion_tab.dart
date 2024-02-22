@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:fun_school/ui/profile_page_other/other_profile_page.dart';
@@ -10,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../../router/app_router.dart';
+import '../../../chat_page/chat_page.dart';
 import '../../controllers/community_discussion_controller.dart';
 import 'widgets/comment_sheet.dart';
 import 'widgets/text_post_tile.dart';
@@ -112,7 +116,11 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   itemCount: controller.discussions!.length,
                   itemBuilder: (context, index) {
                     final item = controller.discussions![index];
-
+                    // log(item.time.toString());
+                    // log(DateTime.fromMicrosecondsSinceEpoch(
+                    //         int.parse(item.time!) * 1000000)
+                    //     .toUtc()
+                    //     .toString());
                     return DiscussionPostTile(
                       profileUrl: item.userProfileImage!,
                       userName: item.username!,
@@ -140,9 +148,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                               );
                             });
                       },
-                      time: DateTime.fromMicrosecondsSinceEpoch(
-                              int.parse(item.time!) * 1000000)
-                          .toUtc()
+                      time: getDateTimeFromTimeStamp(timeStamp: item.time!)
                           .toString(),
                       type: item.type!,
                       userType: item.userType!,
@@ -160,6 +166,18 @@ class _DiscussionTabState extends State<DiscussionTab> {
                           );
                           controller.setLikeDisLike(discussion: item);
                         });
+                      },
+                      onOpenChat: () {
+                        // open chat page with user name and profile
+                        rootNavigator.currentState!.push(
+                          MaterialPageRoute(
+                            builder: (_) => ChatPage(
+                              profileUrl: item.userProfileImage,
+                              receiverID: item.userId!.toString(),
+                              userName: item.username ?? "",
+                            ),
+                          ),
+                        );
                       },
                     );
                   },

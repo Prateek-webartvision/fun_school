@@ -32,7 +32,9 @@ class DiscussionPostTile extends StatelessWidget {
     this.onLikeClick,
     required this.userType,
     this.onComment,
+    this.onOpenChat,
   });
+
   final String? profileUrl;
   final String userName;
   final bool isVerify;
@@ -49,6 +51,7 @@ class DiscussionPostTile extends StatelessWidget {
   final Function()? onProfileClick;
   final Function()? onLikeClick;
   final Function()? onComment;
+  final Function()? onOpenChat;
 
   @override
   Widget build(BuildContext context) {
@@ -226,17 +229,20 @@ class DiscussionPostTile extends StatelessWidget {
                               width: 24,
                             ),
                           ),
+                          // 12.width,
+                          // SvgPicture.asset(
+                          //   AppAssets.svg.rePostIcon,
+                          //   height: 24,
+                          //   width: 24,
+                          // ),
                           12.width,
-                          SvgPicture.asset(
-                            AppAssets.svg.rePostIcon,
-                            height: 24,
-                            width: 24,
-                          ),
-                          12.width,
-                          SvgPicture.asset(
-                            AppAssets.svg.sendIcon,
-                            height: 24,
-                            width: 24,
+                          GestureDetector(
+                            onTap: onOpenChat,
+                            child: SvgPicture.asset(
+                              AppAssets.svg.sendIcon,
+                              height: 24,
+                              width: 24,
+                            ),
                           )
                         ],
                       )
