@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fun_school/repo/chat_repo/chat_repo.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';

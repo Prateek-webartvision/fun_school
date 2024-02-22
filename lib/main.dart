@@ -6,13 +6,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'controller/chat_controller.dart';
 import 'network/firebase_options.dart';
 import 'network/notification_services/notification_services.dart';
 import 'router/app_router.dart';
 import 'style/theme.dart';
 
-late ChatController controller;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -30,9 +28,6 @@ void main() async {
   FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(firebaseBGMessages);
   FirebaseMessaging.onMessage.listen(firebaseFGnotification);
-
-  // init chat Controller
-  controller = ChatController();
 
   runApp(const MyApp());
 }

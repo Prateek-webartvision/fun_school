@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
+
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fun_school/repo/community/community_discussion_repo.dart';
@@ -47,14 +49,21 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   );
   SelectedImagesController selectedImagesController =
       SelectedImagesController();
-
+  late Timer timer;
   @override
   void initState() {
     communitiesTabController = CommunitiesTabController(initIndex: 0);
     discussionController = CommunityDiscussionController();
     groupController = CommunityGroupController();
     chatUserController = ChatUserController();
+    _tiker();
     super.initState();
+  }
+
+  _tiker() {
+    timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      chatUserController.reLoad();
+    });
   }
 
   @override
@@ -166,6 +175,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     subject.dispose();
     hashTagText.dispose();
     selectedImagesController.dispose();
+    timer.cancel();
     super.dispose();
   }
 }

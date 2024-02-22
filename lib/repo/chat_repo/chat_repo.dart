@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fun_school/network/app_api.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/network/url/app_urls.dart';
@@ -17,9 +15,8 @@ class ChatRepository {
   static Future<List<ChatUsersModel>> chatUserList() async {
     Map<String, String> params = {};
     params['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
-    // params['user_id'] = "9";
-    log(params.toString(), name: "api");
-    //
+
+    // log(params.toString(), name: "api");
     final res = await _api.getApi(AppUrls.chatUsers, params: params);
 
     if (res != null) {

@@ -2,7 +2,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -12,7 +11,7 @@ import '../../repo/chat_repo/chat_repo.dart';
 import '../../style/assets.dart';
 import '../../style/color.dart';
 import '../../widgets/error_page.dart';
-import 'controller/chat_users_controller.dart';
+import 'controller/messages_by_user_controller.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
