@@ -131,6 +131,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                       likes: item.likesCount,
                       replies: item.replyCount,
                       onComment: () async {
+                        //* comments
                         showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,

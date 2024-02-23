@@ -49,7 +49,7 @@ class CommunityDiscussionRepository {
 
     Map<String, List<File>> files = {};
     if (images != null && images.isNotEmpty) {
-      files['images'] = images.map((e) => File(e.path!)).toList();
+      files['images[]'] = images.map((e) => File(e.path!)).toList();
     }
 
     final res = await _api.postWithFiles(
@@ -139,14 +139,24 @@ class CommunityDiscussionRepository {
   //* discussion Comment
   static Future commentDiscussion({
     required String discussionId,
-    required String comment,
+    String? comment,
+    PlatformFile? image,
   }) async {
     Map<String, String> params = {};
     params['pub_id'] = discussionId;
     params['user_id'] = AppStorage.user.currentUser()!.userId!.toString();
-    params['text'] = comment;
+    if (comment != null) {
+      params['text'] = comment;
+    }
 
-    final res = await _api.postApi(AppUrls.discussionComment, params: params);
+    List<File> img = [];
+    if (image != null) {
+      img.add(File(image.path!));
+    }
+
+    final res = await _api.postWithFiles(AppUrls.discussionComment,
+        params: params, files: {"images": img});
+
     if (res['code'] == 200) {
       log(res.toString());
     } else {

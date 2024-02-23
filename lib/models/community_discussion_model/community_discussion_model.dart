@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../network/data/app_storage.dart';
 
 abstract class DiscussionModel {
@@ -288,6 +290,7 @@ class ReplyModel {
   String? ogData;
   String? time;
   String? edited;
+  List<Media>? medias;
 
   ReplyModel.fromJson(json) {
     discussionId = json["discussion_id"];
@@ -305,5 +308,13 @@ class ReplyModel {
     ogData = json["og_data"];
     time = json["time"];
     edited = json["edited"];
+    if (json['media'] != null) {
+      List<Media> temp = [];
+      for (var element in json['media']) {
+        final md = Media.fromJson(element);
+        temp.add(md);
+      }
+      medias = temp;
+    }
   }
 }

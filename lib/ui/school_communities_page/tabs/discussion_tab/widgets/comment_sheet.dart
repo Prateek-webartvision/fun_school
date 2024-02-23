@@ -77,53 +77,69 @@ class _CommentSheetState extends State<CommentSheet> {
               // comments List
               Expanded(
                 child: ListView.separated(
+                  // reverse: true,
                   controller: scrollController,
                   itemCount: discussion.replies?.length ?? 0,
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   itemBuilder: (_, index) {
                     final reply = discussion.replies![index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.grey[300],
-                              image: DecorationImage(
-                                image: CachedNetworkImageProvider(
-                                    reply.userProfileImage!),
-                                fit: BoxFit.cover,
-                              ),
+
+                    // log(reply.medias.toString());
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.grey[300],
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                  reply.userProfileImage!),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          6.width,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  // "Name",
-                                  reply.userName ?? "",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        ),
+                        6.width,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                // "Name",
+                                reply.userName ?? "",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                              ),
+                              if (reply.text != null && reply.text!.isNotEmpty)
                                 Text(
                                   // "Comments",
-                                  reply.text ?? "",
+                                  reply.text ?? "f",
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                              if (reply.medias?.first.src != null) 4.height,
+                              if (reply.medias?.first.src != null)
+                                Container(
+                                  height: 140,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Image(
+                                    image: CachedNetworkImageProvider(
+                                        reply.medias!.first.src!),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        )
+                      ],
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),
@@ -190,11 +206,13 @@ class _CommentSheetState extends State<CommentSheet> {
                                   discussionId:
                                       discussion.discussionId.toString(),
                                   comment: comment.text.trim(),
+                                  image: selectedImage,
                                 );
 
                                 await controller.reload();
                                 setState(() {
                                   _updateDis();
+                                  selectedImage = null;
                                   comment.clear();
                                 });
                                 // appRoutes.pop();
