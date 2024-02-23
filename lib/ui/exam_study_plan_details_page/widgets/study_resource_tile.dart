@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../style/color.dart';
 import '../../../style/const.dart';
 
-class StudyResourseTile extends StatelessWidget {
-  const StudyResourseTile({
+class StudyResourceTile extends StatelessWidget {
+  const StudyResourceTile({
     super.key,
     required this.title,
     required this.url,

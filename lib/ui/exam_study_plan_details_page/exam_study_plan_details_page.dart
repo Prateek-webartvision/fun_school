@@ -4,7 +4,6 @@ import 'package:fun_school/widgets/k_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:kd_utils/kd_utils.dart';
-import 'package:kd_utils/methods/timestemp.dart';
 
 import '../../models/exams/exam_study_plan_models/exam_study_plan_model.dart';
 import '../../style/color.dart';
@@ -13,7 +12,7 @@ import '../../style/theme.dart';
 import 'controller/exam_study_plan_details_controller.dart';
 import 'widgets/plan_head.dart';
 import 'widgets/plan_study_schedule_tile.dart';
-import 'widgets/study_resourse_tile.dart';
+import 'widgets/study_resource_tile.dart';
 import 'widgets/week_day_selector.dart';
 
 class ExamStudyPlanDetailsPage extends StatefulWidget {
@@ -247,7 +246,7 @@ class _ExamStudyPlanDetailsPageState extends State<ExamStudyPlanDetailsPage> {
                             itemBuilder: (context, index) {
                               final src = controller
                                   .studyPlan.examStudyPlanResources![index];
-                              return StudyResourseTile(
+                              return StudyResourceTile(
                                 title: src.title ?? "",
                                 url: src.link ?? "",
                               );
