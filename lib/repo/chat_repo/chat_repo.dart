@@ -65,12 +65,18 @@ class ChatRepository {
   }
 
   // * user List to start new chat
-  static Future getUsersList() async {
+  static Future<List<User>> getUsersList() async {
     Map<String, String> param = {};
     param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
 
     final res = await _api.getApi(AppUrls.allUsersById, params: param);
-    log(res.toString());
+
+    List<User> temp = [];
+    for (var element in res) {
+      final User user = User.fromJson(element);
+      temp.add(user);
+    }
+    return temp;
   }
 }
 
@@ -104,24 +110,24 @@ class User {
   String? username;
   String? userProfileImage;
   String? email;
-  String? about;
-  String? userType;
-  String? posts;
-  String? followers;
-  String? following;
-  int? regDate;
+  // String? about;
+  // String? userType;
+  // String? posts;
+  // String? followers;
+  // String? following;
+  // int? regDate;
 
   User({
     this.userId,
     this.username,
     this.userProfileImage,
     this.email,
-    this.about,
-    this.userType,
-    this.posts,
-    this.followers,
-    this.following,
-    this.regDate,
+    // this.about,
+    // this.userType,
+    // this.posts,
+    // this.followers,
+    // this.following,
+    // this.regDate,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -129,11 +135,11 @@ class User {
     username = json['username'];
     userProfileImage = json['user_profile_image'];
     email = json['email'];
-    about = json['about'];
-    userType = json['user_type'];
-    posts = json['posts'];
-    followers = json['followers'];
-    following = json['following'];
-    regDate = json['reg_date'];
+    // about = json['about'];
+    // userType = json['user_type'];
+    // posts = json['posts'];
+    // followers = json['followers'];
+    // following = json['following'];
+    // regDate = json['reg_date'];
   }
 }

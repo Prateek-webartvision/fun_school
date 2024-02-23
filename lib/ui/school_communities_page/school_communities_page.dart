@@ -1,21 +1,26 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:fun_school/repo/chat_repo/chat_repo.dart';
-import 'package:fun_school/repo/community/community_discussion_repo.dart';
-import 'package:fun_school/router/app_router.dart';
-import 'package:fun_school/style/assets.dart';
-import 'package:fun_school/style/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fun_school/ui/school_communities_page/controllers/chat_user_controller.dart';
-import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/repo/chat_repo/chat_repo.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../repo/community/community_discussion_repo.dart';
+import '../../router/app_router.dart';
+import '../../style/assets.dart';
+import '../../style/color.dart';
+import '../../utils/app_utils.dart';
+import '../chat_page/chat_page.dart';
+import 'controllers/chat_user_controller.dart';
 import 'controllers/communities_tab_controller.dart';
 import 'controllers/community_discussion_controller.dart';
 import 'controllers/community_group_controller.dart';
@@ -204,6 +209,17 @@ class UsersBottomSheet extends StatefulWidget {
 }
 
 class _UsersBottomSheetState extends State<UsersBottomSheet> {
+  late AllUsersController allUsersController;
+  DraggableScrollableController draggableScrollableController =
+      DraggableScrollableController();
+
+  @override
+  void initState() {
+    allUsersController = AllUsersController();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -213,39 +229,191 @@ class _UsersBottomSheetState extends State<UsersBottomSheet> {
       initialChildSize: 0.5,
       snap: true,
       shouldCloseOnMinExtent: false,
+      controller: draggableScrollableController,
       builder: (context, scrollController) {
-        return CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            // SliverPersistentHeader(
-            //   delegate: SliverPinedHeader(),
-            //   pinned: true,
-            // ),
-            SliverList.separated(
-              itemBuilder: (context, index) {
-                return Text("data ${scrollController.offset}");
-              },
-              separatorBuilder: (context, index) => 10.height,
-            ),
-          ],
-        );
+        return GetBuilder(
+            init: allUsersController,
+            builder: (controller) {
+              if (controller.state == ApiState.loading) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (controller.state == ApiState.error) {
+                rootNavigator.currentState?.pop();
+                AppUtils.showSnack(controller.error!);
+                return SizedBox();
+              }
+              // on success
+              return CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  //* search bar
+                  SliverPersistentHeader(
+                    delegate: SliverSearchDelegate(
+                      minHeight: 50,
+                      maxHeight: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              Icon(Icons.search),
+                              2.width,
+                              Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "search",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  //
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    sliver: SliverList.separated(
+                      itemCount: controller.users.length,
+                      itemBuilder: (context, index) {
+                        final user = controller.users[index];
+                        return GestureDetector(
+                          onTap: () {
+                            // log(user.toString());
+                            // * send to chat page
+                            rootNavigator.currentState!.push(
+                              MaterialPageRoute(
+                                builder: (_) => ChatPage(
+                                  profileUrl: user.userProfileImage,
+                                  receiverID: user.userId!,
+                                  userName: user.username ?? "",
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8)),
+                            padding: EdgeInsets.all(8),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 48,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(100),
+                                    image: (user.userProfileImage != null)
+                                        ? DecorationImage(
+                                            image: CachedNetworkImageProvider(
+                                                user.userProfileImage!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                                  ),
+                                  child: (user.userProfileImage != null)
+                                      ? null
+                                      : Icon(
+                                          Icons.person,
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                6.width,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      user.username ?? "",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      user.email ?? "",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => 10.height,
+                    ),
+                  ),
+                ],
+              );
+            });
       },
     );
   }
 }
 
-class SliverPinedHeader extends SliverPersistentHeaderDelegate {
+class AllUsersController extends GetxController {
+  ApiState? state;
+  String? error;
+  List<User> users = [];
+  AllUsersController() {
+    initLoad();
+  }
+
+  Future<void> initLoad() async {
+    state = ApiState.loading;
+    update();
+    await _load();
+  }
+
+  Future<void> reLoad() async {
+    await _load();
+  }
+
+  _load() async {
+    try {
+      users = await ChatRepository.getUsersList();
+      state = ApiState.success;
+    } catch (e) {
+      error = e.toString();
+      state = ApiState.error;
+    }
+    update();
+  }
+}
+
+class SliverSearchDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double? minHeight;
+  final double? maxHeight;
+
+  SliverSearchDelegate({
+    required this.child,
+    this.minHeight = 40,
+    this.maxHeight = 40,
+  }) : assert(maxHeight! >= minHeight!);
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Text("search bar");
+    return child;
   }
 
   @override
-  double get maxExtent => 40;
+  double get maxExtent => minHeight!;
 
   @override
-  double get minExtent => 40;
+  double get minExtent => maxHeight!;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
