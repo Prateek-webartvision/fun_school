@@ -13,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../repo/community/community_discussion_repo.dart';
 import '../../widgets/overlaping_user_avtar.dart';
 import 'other_profile_page_state.dart';
 import 'tabs/post_tab.dart';
@@ -72,7 +73,7 @@ class _OtherProfilePageState extends OtherProfilePageState {
                   children: [
                     Row(
                       children: [
-                        // avtar
+                        // Avatar
                         Container(
                           height: 50,
                           width: 50,
@@ -154,18 +155,17 @@ class _OtherProfilePageState extends OtherProfilePageState {
                       ),
                     ),
                     12.height,
-                    // follers
+                    // followers
                     Row(
                       children: [
                         SizedBox(
                           width: 50,
                           height: 20,
-                          child: OverlapingUserAvtar(
-                            avtarUrls: profile.data!.followersProfiles!
+                          child: OverlayUserAvatar(
+                            avatarUrls: profile.data!.followersProfiles!
                                 .map((e) => e.userProfileImage!)
                                 .toList(),
-                            // avtarUrls: [],
-                            maxAvtatCount: 3,
+                            maxAvatarCount: 3,
                           ),
                         ),
                         4.width,
@@ -186,10 +186,20 @@ class _OtherProfilePageState extends OtherProfilePageState {
                           KBtn(
                             width: double.maxFinite,
                             onClick: () {
-                              AppUtils.showSnack("Coming soon");
+                              final followID =
+                                  profile.data?.userId?.toString() ?? "";
+                              AppUtils.showLoadingOverlay(() async {
+                                try {
+                                  await CommunityDiscussionRepository
+                                      .followUnFollow(followID);
+                                  await profile.reLoadProfile();
+                                } catch (e) {
+                                  AppUtils.showSnack(e.toString());
+                                }
+                              });
                             },
                             text: (profile.data!.isFollowed)
-                                ? "Unfollow"
+                                ? "UnFollow"
                                 : "Follow",
                           )
                         ],

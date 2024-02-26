@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:fun_school/main.dart';
+import 'package:fun_school/network/data/app_storage.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -12,15 +16,36 @@ class CommunityGroupController extends GetxController {
     initLoad();
   }
 
+  CommunityGroupModel? getDataByID(String id) {
+    if (groups != null) {
+      final gg = groups!.where((element) => element.groupId == id);
+      return gg.first;
+    } else {
+      return null;
+    }
+  }
+
+  bool canIJoined(CommunityGroupModel data) {
+    final gg = data.groupMembers?.where((element) =>
+        element.memberId! == AppStorage.user.current!.userId!.toString());
+    if (gg!.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // load Data
   Future _loadData() async {
-    await CommunityGroupRepository.getGroups().then((value) {
-      groups = value;
+    try {
+      // final myGroups = await CommunityGroupRepository.myGroups;
+      final myGroups = await CommunityGroupRepository.allOtherGroups;
+      groups = myGroups;
       state = ApiState.success;
-    }).onError((error, stackTrace) {
-      this.error = error.toString();
+    } catch (e) {
+      error = e.toString();
       state = ApiState.error;
-    });
+    }
     update();
   }
 

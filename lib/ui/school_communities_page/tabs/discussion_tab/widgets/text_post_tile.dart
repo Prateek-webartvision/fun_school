@@ -263,11 +263,11 @@ class DiscussionPostTile extends StatelessWidget {
                 height: 16,
                 child: (first2Likes!.isEmpty)
                     ? SizedBox()
-                    : OverlapingUserAvtar(
-                        avtarUrls: first2Likes!
+                    : OverlayUserAvatar(
+                        avatarUrls: first2Likes!
                             .map((e) => e.userProfileImage!)
                             .toList(),
-                        maxAvtatCount: 2,
+                        maxAvatarCount: 2,
                       ),
               ),
               12.width,

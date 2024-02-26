@@ -17,12 +17,12 @@ class GroupTabTile extends StatelessWidget {
     required this.title,
     required this.description,
     required this.totalMembers,
-    required this.datejoinedPoch,
+    required this.dateJoined,
   });
   final String title;
   final String description;
   final String totalMembers;
-  final String datejoinedPoch;
+  final String dateJoined;
   final Function()? onItemClick;
 
   @override
@@ -75,7 +75,7 @@ class GroupTabTile extends StatelessWidget {
                       4.width,
                       Text(
                         // "Joined on May 20, 2023",
-                        "Joined on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(datejoinedPoch))}",
+                        "Joined on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(dateJoined))}",
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w400),
                       ),

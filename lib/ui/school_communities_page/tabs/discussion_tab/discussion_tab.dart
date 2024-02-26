@@ -115,11 +115,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                   itemCount: controller.discussions!.length,
                   itemBuilder: (context, index) {
                     final item = controller.discussions![index];
-                    // log(item.time.toString());
-                    // log(DateTime.fromMicrosecondsSinceEpoch(
-                    //         int.parse(item.time!) * 1000000)
-                    //     .toUtc()
-                    //     .toString());
+
                     return DiscussionPostTile(
                       profileUrl: item.userProfileImage!,
                       userName: item.username!,
@@ -148,8 +144,7 @@ class _DiscussionTabState extends State<DiscussionTab> {
                               );
                             });
                       },
-                      time: getDateTimeFromTimeStamp(timeStamp: item.time!)
-                          .toString(),
+                      time: timeStampToDateTime(item.time!).toString(),
                       type: item.type!,
                       userType: item.userType!,
                       isVerify: item.userType == "Certified_Tutor",

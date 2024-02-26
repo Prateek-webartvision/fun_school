@@ -65,6 +65,9 @@ class AppUrls {
   static const String discussionComment = "$_apis/comment_discussion.php";
   static const String getOtherProfile = "$_apis/profile.php";
   static const String getCommunityGroups = "$_apis/groups.php";
+  static const String getCommunityAllGroups = "$_apis/community_all_groups.php";
+  static const String followUnFollow = "$_apis/community_follow.php";
+  static const String createNewGroup = "$_apis/community_add_group.php";
 
   //chat
   static const String chatUsers = "$_apis/chat_user_list.php";

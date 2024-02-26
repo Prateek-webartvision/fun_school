@@ -1,16 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fun_school/repo/chat_repo/chat_repo.dart';
+import 'package:fun_school/repo/community/community_group_repo.dart';
+import 'package:fun_school/widgets/k_btn.dart';
+import 'package:fun_school/widgets/k_text_field.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -96,7 +96,8 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
         init: communitiesTabController,
         builder: (controller) {
           return Visibility(
-            visible: controller.currentIndex != 1,
+            // visible: controller.currentIndex != 1,
+            visible: true,
             child: FloatingActionButton(
               mini: true,
               shape: RoundedRectangleBorder(
@@ -104,10 +105,13 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 side: BorderSide(color: AppColor.white, width: 2),
               ),
               backgroundColor: AppColor.mainColor,
-              child: SvgPicture.asset((controller.currentIndex == 2)
-                  ? AppAssets.svg.groupFillIcon
-                  : AppAssets.svg.pencilFillIcon),
-              onPressed: () {
+              child: SvgPicture.asset(
+                (controller.currentIndex == 2)
+                    ? AppAssets.svg.groupFillIcon
+                    : AppAssets.svg.pencilFillIcon,
+              ),
+              onPressed: () async {
+                // * Discussion Tap
                 if (controller.currentIndex == 0) {
                   //* post bottom sheet
                   showModalBottomSheet(
@@ -165,6 +169,24 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                   );
                 }
 
+                // * Group Tap
+                if (controller.currentIndex == 1) {
+                  await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.white,
+                    // showDragHandle: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    builder: (context) {
+                      return CreateCroupBottomSheet();
+                    },
+                  );
+                  groupController.reLoad();
+                }
+
+                //* Message Tap
                 if (controller.currentIndex == 2) {
                   //
                   showModalBottomSheet(
@@ -196,6 +218,73 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     selectedImagesController.dispose();
     timer.cancel();
     super.dispose();
+  }
+}
+
+class CreateCroupBottomSheet extends StatefulWidget {
+  const CreateCroupBottomSheet({
+    super.key,
+  });
+
+  @override
+  State<CreateCroupBottomSheet> createState() => _CreateCroupBottomSheetState();
+}
+
+class _CreateCroupBottomSheetState extends State<CreateCroupBottomSheet> {
+  TextEditingController groupName = TextEditingController();
+  TextEditingController description = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(color: Colors.white),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Create New Group",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          20.height,
+          KTextField(
+            controller: groupName,
+            hint: "Group Name",
+          ),
+          10.height,
+          KTextField(
+            controller: description,
+            hint: "Description",
+          ),
+          10.height,
+          KBtn(
+            width: double.maxFinite,
+            onClick: () {
+              if (groupName.text.isEmpty || description.text.isEmpty) {
+                AppUtils.showSnack("Fill all details");
+              } else {
+                // create new Group
+                AppUtils.showLoadingOverlay(() async {
+                  try {
+                    await CommunityGroupRepository.createNewGroup(
+                        name: groupName.text.trim(),
+                        des: description.text.trim());
+                    appRoutes.pop();
+                  } catch (e) {
+                    AppUtils.showSnack("Fill all details");
+                  }
+                });
+              }
+            },
+            text: "Create",
+          )
+        ],
+      ),
+    );
   }
 }
 

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 
 import '../style/color.dart';
 
-class OverlapingUserAvtar extends StatelessWidget {
-  const OverlapingUserAvtar({
+class OverlayUserAvatar extends StatelessWidget {
+  const OverlayUserAvatar({
     super.key,
-    required this.avtarUrls,
+    required this.avatarUrls,
     this.radius = 16,
-    this.maxAvtatCount = 0,
+    this.maxAvatarCount = 0,
   });
 
-  final List<String> avtarUrls;
+  final List<String> avatarUrls;
   final double radius;
-  final int maxAvtatCount;
+  final int maxAvatarCount;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,9 @@ class OverlapingUserAvtar extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        (avtarUrls.length > maxAvtatCount) ? maxAvtatCount : avtarUrls.length,
+        (avatarUrls.length > maxAvatarCount)
+            ? maxAvatarCount
+            : avatarUrls.length,
         (index) {
           return Align(
             widthFactor: 0.6,
@@ -32,7 +34,7 @@ class OverlapingUserAvtar extends StatelessWidget {
                 color: AppColor.softBorderColor,
                 border: Border.all(color: AppColor.white),
                 image: DecorationImage(
-                  image: CachedNetworkImageProvider(avtarUrls[index]),
+                  image: CachedNetworkImageProvider(avatarUrls[index]),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(radius),

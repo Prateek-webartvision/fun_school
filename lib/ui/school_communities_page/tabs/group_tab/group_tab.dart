@@ -71,22 +71,25 @@ class GroupsTab extends StatelessWidget {
               ),
               // group list
               SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 sliver: SliverList.separated(
                   itemCount: cnt.groups!.length,
                   itemBuilder: (context, index) {
                     final item = cnt.groups![index];
                     return GroupTabTile(
-                      title: item.groupDetails?.groupName ?? "N/A",
-                      // description: "Dive into the world of physics, from quantum mechanics to classical dynamics.",
-                      description: item.groupDetails?.description ?? "N/A",
-                      totalMembers: item.groupDetails?.totalMembers ?? "0",
-                      datejoinedPoch: item.dateJoined!,
+                      title: item.groupName ?? "N/A",
+                      description: item.description ?? "N/A",
+                      totalMembers: item.totalMembers ?? "0",
+                      dateJoined: item.dateCreated!.toString(),
                       onItemClick: () {
+                        // Group page
                         rootNavigator.currentState!.push(
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                SchoolCommunitiesGroupInfoPage(),
+                                SchoolCommunitiesGroupInfoPage(
+                              controller: cnt,
+                              groupModel: item,
+                            ),
                           ),
                         );
                       },
@@ -94,7 +97,8 @@ class GroupsTab extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) => 10.height,
                 ),
-              )
+              ),
+              SliverToBoxAdapter(child: 60.height)
             ],
           ),
         );

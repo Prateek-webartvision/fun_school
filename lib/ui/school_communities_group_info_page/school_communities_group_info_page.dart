@@ -4,27 +4,41 @@ import 'package:fun_school/style/color.dart';
 import 'package:fun_school/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../repo/community/community_group_repo.dart';
 import '../../style/assets.dart';
+import '../school_communities_page/controllers/community_group_controller.dart';
 import 'tabs/files_tab.dart';
 import 'tabs/group_chat_tab.dart';
 import 'tabs/meeting_tab.dart';
 
 class SchoolCommunitiesGroupInfoPage extends StatefulWidget {
-  const SchoolCommunitiesGroupInfoPage({super.key});
+  const SchoolCommunitiesGroupInfoPage({
+    super.key,
+    required this.groupModel,
+    required this.controller,
+  });
+  final CommunityGroupModel groupModel;
+  final CommunityGroupController controller;
 
   @override
-  State<SchoolCommunitiesGroupInfoPage> createState() => _SchoolCommunitiesGroupInfoPageState();
+  State<SchoolCommunitiesGroupInfoPage> createState() =>
+      _SchoolCommunitiesGroupInfoPageState();
 }
 
-class _SchoolCommunitiesGroupInfoPageState extends State<SchoolCommunitiesGroupInfoPage> with TickerProviderStateMixin {
+class _SchoolCommunitiesGroupInfoPageState
+    extends State<SchoolCommunitiesGroupInfoPage>
+    with TickerProviderStateMixin {
   late TabController tabController;
+  late CommunityGroupModel groupData;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+
     super.initState();
   }
 
@@ -40,130 +54,151 @@ class _SchoolCommunitiesGroupInfoPageState extends State<SchoolCommunitiesGroupI
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColor.white,
-              border: Border(
-                bottom: BorderSide(color: AppColor.softBorderColor),
-              ),
-            ),
-            padding: EdgeInsets.all(12),
-            clipBehavior: Clip.hardEdge,
-            child: Column(
+      body: GetBuilder(
+          init: widget.controller,
+          builder: (controller) {
+            final date = controller.getDataByID(widget.groupModel.groupId!);
+
+            return Column(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://images.unsplash.com/photo-1692317787245-366c18a2ae2e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.white,
+                    border: Border(
+                      bottom: BorderSide(color: AppColor.softBorderColor),
                     ),
-                    12.width,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  padding: EdgeInsets.all(12),
+                  clipBehavior: Clip.hardEdge,
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          Text(
-                            "Physics Enthusiasts",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                          Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://images.unsplash.com/photo-1692317787245-366c18a2ae2e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          Text(
-                            "Dive into the world of physics, from quantum mechanics to classical dynamics.",
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                          ),
-                          4.height,
-                          Row(children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          12.width,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(AppAssets.svg.parentFillIcon),
-                                4.width,
                                 Text(
-                                  "1200",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                                  // "Physics Enthusiasts",
+                                  date?.groupName ?? "",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700),
                                 ),
+                                Text(
+                                  // "Dive into the world of physics, from quantum mechanics to classical dynamics.",
+                                  date?.description ?? "",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                4.height,
+                                Row(children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SvgPicture.asset(
+                                          AppAssets.svg.parentFillIcon),
+                                      4.width,
+                                      Text(
+                                        // "1200",
+                                        date?.totalMembers ?? "0",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  ),
+                                  10.width,
+                                  if (controller.canIJoined(date!))
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(
+                                            AppAssets.svg.calendarlineIcon),
+                                        4.width,
+                                        Text(
+                                          "Joined on  May 20, 2023",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ],
+                                    ),
+                                ]),
                               ],
                             ),
-                            10.width,
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(AppAssets.svg.calendarlineIcon),
-                                4.width,
-                                Text(
-                                  "Joined on May 20, 2023",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            ),
-                          ]),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                12.height,
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (_) {
-                        return MembersSheet();
-                      },
-                      isScrollControlled: true,
-                    );
-                  },
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: AppColor.softBorderColor),
-                      color: AppColor.white,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text("Joined"),
+                      12.height,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) {
+                              return MembersSheet();
+                            },
+                            isScrollControlled: true,
+                          );
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: AppColor.softBorderColor),
+                            color: AppColor.white,
+                          ),
+                          alignment: Alignment.center,
+                          child: Text("Joined"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                //
+                Container(
+                  color: AppColor.white,
+                  child: TabBar(
+                    controller: tabController,
+                    tabs: [
+                      Tab(text: "Chat Room"),
+                      Tab(text: "Meetings"),
+                      Tab(text: "Files"),
+                    ],
+                  ),
+                ),
+                // tab body
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: [
+                      GroupChatRoomTab(),
+                      MeetingsTab(),
+                      FilesTab(),
+                    ],
+                  ),
+                )
               ],
-            ),
-          ),
-          //
-          Container(
-            color: AppColor.white,
-            child: TabBar(
-              controller: tabController,
-              tabs: [
-                Tab(text: "Chat Room"),
-                Tab(text: "Meetings"),
-                Tab(text: "Files"),
-              ],
-            ),
-          ),
-          // tab body
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                GroupChatRoomTab(),
-                MeetingsTab(),
-                FilesTab(),
-              ],
-            ),
-          )
-        ],
-      ),
+            );
+          }),
     );
   }
 }
@@ -185,7 +220,10 @@ class MembersSheet extends StatelessWidget {
           Container(
             height: 48,
             padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: AppColor.softBorderColor))),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(color: AppColor.softBorderColor))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -225,7 +263,9 @@ class MembersSheet extends StatelessWidget {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: BoxDecoration(color: AppColor.mainColor, borderRadius: BorderRadius.circular(32)),
+                        decoration: BoxDecoration(
+                            color: AppColor.mainColor,
+                            borderRadius: BorderRadius.circular(32)),
                         child: Icon(
                           Icons.add,
                           size: 20,
@@ -233,7 +273,10 @@ class MembersSheet extends StatelessWidget {
                         ),
                       ),
                       10.width,
-                      Expanded(child: Text("Add people", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+                      Expanded(
+                          child: Text("Add people",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500))),
                       Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: 20,
@@ -255,7 +298,9 @@ class MembersSheet extends StatelessWidget {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: BoxDecoration(color: AppColor.pinkColor, borderRadius: BorderRadius.circular(32)),
+                        decoration: BoxDecoration(
+                            color: AppColor.pinkColor,
+                            borderRadius: BorderRadius.circular(32)),
                         child: Icon(
                           Icons.link,
                           size: 20,
@@ -263,7 +308,10 @@ class MembersSheet extends StatelessWidget {
                         ),
                       ),
                       10.width,
-                      Expanded(child: Text("Share a link", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+                      Expanded(
+                          child: Text("Share a link",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500))),
                       Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: 20,
@@ -297,25 +345,30 @@ class MembersSheet extends StatelessWidget {
                     ListTile(
                       dense: true,
                       leading: CircleAvatar(
-                        foregroundImage: NetworkImage("https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg"),
+                        foregroundImage: NetworkImage(
+                            "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg"),
                       ),
                       title: Text(
                         "Tanner Worthington",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
                         "Admin",
-                        style: TextStyle(fontSize: 12, color: AppColor.mainColor),
+                        style:
+                            TextStyle(fontSize: 12, color: AppColor.mainColor),
                       ),
                     ),
                     ListTile(
                       dense: true,
                       leading: CircleAvatar(
-                        foregroundImage: NetworkImage("https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"),
+                        foregroundImage: NetworkImage(
+                            "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"),
                       ),
                       title: Text(
                         "Devon Lane",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
                         "You",
@@ -328,11 +381,13 @@ class MembersSheet extends StatelessWidget {
                     ListTile(
                       dense: true,
                       leading: CircleAvatar(
-                        foregroundImage: NetworkImage("https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg"),
+                        foregroundImage: NetworkImage(
+                            "https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg"),
                       ),
                       title: Text(
                         "Leon Satterfield",
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                       subtitle: Text(
                         "@EcoWarrior",

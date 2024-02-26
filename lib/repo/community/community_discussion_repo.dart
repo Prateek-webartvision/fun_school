@@ -163,4 +163,13 @@ class CommunityDiscussionRepository {
       throw res['message'];
     }
   }
+
+  // * follow and un-follow
+  static Future followUnFollow(String followingID) async {
+    Map<String, String> param = {};
+    param['follower_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    param['following_id'] = followingID;
+
+    await _api.postApi(AppUrls.followUnFollow, params: param);
+  }
 }

@@ -13,12 +13,34 @@ class OtherProfileController extends GetxController {
   final int userId;
 
   OtherProfileController(this.userId) {
-    state = ApiState.loading;
-    _iniLoadProfile();
+    initProfile();
   }
 
   //* load profile
-  _iniLoadProfile() async {
+  initProfile() async {
+    state = ApiState.loading;
+    update();
+
+    await _load();
+    update();
+  }
+
+  // reload profile
+  reLoadProfile() async {
+    await _load();
+  }
+
+  setLikeDisLike({required CommunityDiscussionModel discussion}) {
+    discussion.isLiked = !discussion.isLiked;
+    if (discussion.isLiked) {
+      discussion.likesCount = discussion.likesCount! + 1;
+    } else {
+      discussion.likesCount = discussion.likesCount! - 1;
+    }
+    update();
+  }
+
+  _load() async {
     // Community Discussion Repository
     try {
       final res =
@@ -30,21 +52,6 @@ class OtherProfileController extends GetxController {
       state = ApiState.error;
     }
 
-    update();
-  }
-
-  // reload profile
-  reLoadProfile() async {
-    await _iniLoadProfile();
-  }
-
-  setLikeDisLike({required CommunityDiscussionModel discussion}) {
-    discussion.isLiked = !discussion.isLiked;
-    if (discussion.isLiked) {
-      discussion.likesCount = discussion.likesCount! + 1;
-    } else {
-      discussion.likesCount = discussion.likesCount! - 1;
-    }
     update();
   }
 }
