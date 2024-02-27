@@ -95,10 +95,11 @@ class AppApi extends ApiService {
     late Uri finalUri;
     if (params != null) {
       finalUri = Uri(
-          scheme: uri.scheme,
-          host: uri.host,
-          path: uri.path,
-          queryParameters: params);
+        scheme: uri.scheme,
+        host: uri.host,
+        path: uri.path,
+        queryParameters: params,
+      );
     } else {
       finalUri = uri;
     }
@@ -124,8 +125,7 @@ class AppApi extends ApiService {
         }
       }
 
-      http.StreamedResponse response =
-          await request.send().timeout(timeOutDuration);
+      http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         return json.decode(await response.stream.bytesToString());

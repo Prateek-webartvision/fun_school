@@ -105,11 +105,17 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 side: BorderSide(color: AppColor.white, width: 2),
               ),
               backgroundColor: AppColor.mainColor,
-              child: SvgPicture.asset(
-                (controller.currentIndex == 2)
-                    ? AppAssets.svg.groupFillIcon
-                    : AppAssets.svg.pencilFillIcon,
-              ),
+              child: (controller.currentIndex != 2)
+                  ? Icon(
+                      Icons.add_rounded,
+                      color: Colors.white,
+                    )
+                  : SvgPicture.asset(AppAssets.svg.groupFillIcon),
+              // child: SvgPicture.asset(
+              //   (controller.currentIndex == 2)
+              //       ? AppAssets.svg.groupFillIcon
+              //       : AppAssets.svg.pencilFillIcon,
+              // ),
               onPressed: () async {
                 // * Discussion Tap
                 if (controller.currentIndex == 0) {

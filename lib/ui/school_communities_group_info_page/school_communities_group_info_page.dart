@@ -1,28 +1,30 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
 import 'package:fun_school/style/color.dart';
-import 'package:fun_school/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/error_page.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../repo/community/community_group_repo.dart';
 import '../../style/assets.dart';
-import '../school_communities_page/controllers/community_group_controller.dart';
+import 'controller/group_messages.controller.dart';
+import 'controller/school_communities_group_info_page.controller.dart';
 import 'tabs/files_tab.dart';
 import 'tabs/group_chat_tab.dart';
 import 'tabs/meeting_tab.dart';
+import 'widgets/members_sheet.dart';
 
 class SchoolCommunitiesGroupInfoPage extends StatefulWidget {
   const SchoolCommunitiesGroupInfoPage({
     super.key,
-    required this.groupModel,
-    required this.controller,
+    required this.groupId,
   });
-  final CommunityGroupModel groupModel;
-  final CommunityGroupController controller;
+  final String groupId;
 
   @override
   State<SchoolCommunitiesGroupInfoPage> createState() =>
@@ -32,14 +34,33 @@ class SchoolCommunitiesGroupInfoPage extends StatefulWidget {
 class _SchoolCommunitiesGroupInfoPageState
     extends State<SchoolCommunitiesGroupInfoPage>
     with TickerProviderStateMixin {
+  //
   late TabController tabController;
-  late CommunityGroupModel groupData;
+  late SchoolCommunitiesGroupInfoPageController infoPageController;
+  late GroupMessageController groupMessageController;
+
+  Timer? timer;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-
+    infoPageController =
+        SchoolCommunitiesGroupInfoPageController(widget.groupId);
+    groupMessageController = GroupMessageController(widget.groupId);
+    _timeTicker();
     super.initState();
+  }
+
+  _timeTicker() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+      await groupMessageController.reLoad;
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -49,15 +70,41 @@ class _SchoolCommunitiesGroupInfoPageState
         backgroundColor: AppColor.white,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // add more members sheet
+              showModalBottomSheet(
+                context: context,
+                builder: (_) {
+                  return MembersSheet();
+                },
+                isScrollControlled: true,
+              );
+            },
             icon: Icon(Icons.more_horiz),
           ),
         ],
       ),
       body: GetBuilder(
-          init: widget.controller,
+          init: infoPageController,
           builder: (controller) {
-            final date = controller.getDataByID(widget.groupModel.groupId!);
+            // on loading
+            if (controller.state == ApiState.loading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            // on error
+            if (controller.state == ApiState.error) {
+              return ErrorPage(
+                error: controller.error,
+                onError: () {
+                  controller.initLoad;
+                },
+              );
+            }
+
+            // on success
+            GroupMember? canIMember =
+                controller.getMember(controller.groupInfo);
 
             return Column(
               children: [
@@ -94,14 +141,14 @@ class _SchoolCommunitiesGroupInfoPageState
                               children: [
                                 Text(
                                   // "Physics Enthusiasts",
-                                  date?.groupName ?? "",
+                                  controller.groupInfo?.groupName ?? "",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
                                   // "Dive into the world of physics, from quantum mechanics to classical dynamics.",
-                                  date?.description ?? "",
+                                  controller.groupInfo?.description ?? "",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400),
@@ -117,7 +164,8 @@ class _SchoolCommunitiesGroupInfoPageState
                                       4.width,
                                       Text(
                                         // "1200",
-                                        date?.totalMembers ?? "0",
+                                        controller.groupInfo?.totalMembers ??
+                                            "0",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400),
@@ -125,7 +173,7 @@ class _SchoolCommunitiesGroupInfoPageState
                                     ],
                                   ),
                                   10.width,
-                                  if (controller.canIJoined(date!))
+                                  if (canIMember != null)
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -135,7 +183,8 @@ class _SchoolCommunitiesGroupInfoPageState
                                             AppAssets.svg.calendarlineIcon),
                                         4.width,
                                         Text(
-                                          "Joined on  May 20, 2023",
+                                          // May 20, 2023
+                                          "Joined on ${DateFormat("MMM d, yyyy").format(timeStampToDateTime(canIMember.dateJoined))}",
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400),
@@ -149,262 +198,73 @@ class _SchoolCommunitiesGroupInfoPageState
                         ],
                       ),
                       12.height,
+                      // join / leave btn
                       GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (_) {
-                              return MembersSheet();
-                            },
-                            isScrollControlled: true,
-                          );
+                          // join and leave group
+                          AppUtils.showLoadingOverlay(() async {
+                            try {
+                              await CommunityGroupRepository.joinAndLeaveGroup(
+                                  controller.groupInfo!.groupId!);
+                              await controller.reLoad;
+                            } catch (e) {
+                              AppUtils.showSnack(e.toString());
+                            }
+                          });
                         },
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 500),
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: AppColor.softBorderColor),
+                            border: Border.all(
+                                color: (canIMember != null)
+                                    ? Colors.red
+                                    : AppColor.softBorderColor),
                             color: AppColor.white,
                           ),
                           alignment: Alignment.center,
-                          child: Text("Joined"),
+                          child: Text(
+                            (canIMember != null) ? "Leave Group" : "Join Group",
+                            style: TextStyle(
+                              color: (canIMember != null)
+                                  ? Colors.red
+                                  : Colors.black,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                //
-                Container(
-                  color: AppColor.white,
-                  child: TabBar(
-                    controller: tabController,
-                    tabs: [
-                      Tab(text: "Chat Room"),
-                      Tab(text: "Meetings"),
-                      Tab(text: "Files"),
-                    ],
+                // group chats
+                if (canIMember != null)
+                  Container(
+                    color: AppColor.white,
+                    child: TabBar(
+                      controller: tabController,
+                      tabs: [
+                        Tab(text: "Chat Room"),
+                        Tab(text: "Meetings"),
+                        Tab(text: "Files"),
+                      ],
+                    ),
                   ),
-                ),
                 // tab body
-                Expanded(
-                  child: TabBarView(
-                    controller: tabController,
-                    children: [
-                      GroupChatRoomTab(),
-                      MeetingsTab(),
-                      FilesTab(),
-                    ],
-                  ),
-                )
+                if (canIMember != null)
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        GroupChatRoomTab(controller: groupMessageController),
+                        MeetingsTab(),
+                        FilesTab(),
+                      ],
+                    ),
+                  )
               ],
             );
           }),
-    );
-  }
-}
-
-class MembersSheet extends StatelessWidget {
-  const MembersSheet({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      color: AppColor.white,
-      margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 48,
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                    bottom: BorderSide(color: AppColor.softBorderColor))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Members",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-                InkWell(
-                  onTap: () {
-                    // rootNavigator.currentState!.pop();
-                    context.pop();
-                  },
-                  child: Icon(Icons.close_rounded),
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                16.height,
-                Text("Ways to add people", style: TextStyle(fontSize: 14)),
-                10.height,
-                Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    borderRadius: BorderRadius.circular(4),
-                    boxShadow: AppShadow.mainShadow,
-                  ),
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                            color: AppColor.mainColor,
-                            borderRadius: BorderRadius.circular(32)),
-                        child: Icon(
-                          Icons.add,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      10.width,
-                      Expanded(
-                          child: Text("Add people",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500))),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 20,
-                      )
-                    ],
-                  ),
-                ),
-                8.height,
-                Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    borderRadius: BorderRadius.circular(4),
-                    boxShadow: AppShadow.mainShadow,
-                  ),
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                            color: AppColor.pinkColor,
-                            borderRadius: BorderRadius.circular(32)),
-                        child: Icon(
-                          Icons.link,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      10.width,
-                      Expanded(
-                          child: Text("Share a link",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500))),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 20,
-                      )
-                    ],
-                  ),
-                ),
-
-                //
-                10.height,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Members", style: TextStyle(fontSize: 14)),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person,
-                          color: AppColor.mainColor,
-                        ),
-                        4.width,
-                        Text("2", style: TextStyle(fontSize: 14)),
-                      ],
-                    ),
-                  ],
-                ),
-                10.height,
-                ListView(
-                  shrinkWrap: true,
-                  children: [
-                    ListTile(
-                      dense: true,
-                      leading: CircleAvatar(
-                        foregroundImage: NetworkImage(
-                            "https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg"),
-                      ),
-                      title: Text(
-                        "Tanner Worthington",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "Admin",
-                        style:
-                            TextStyle(fontSize: 12, color: AppColor.mainColor),
-                      ),
-                    ),
-                    ListTile(
-                      dense: true,
-                      leading: CircleAvatar(
-                        foregroundImage: NetworkImage(
-                            "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"),
-                      ),
-                      title: Text(
-                        "Devon Lane",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "You",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      trailing: Icon(Icons.more_horiz_rounded),
-                    ),
-                    ListTile(
-                      dense: true,
-                      leading: CircleAvatar(
-                        foregroundImage: NetworkImage(
-                            "https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg"),
-                      ),
-                      title: Text(
-                        "Leon Satterfield",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        "@EcoWarrior",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      trailing: Icon(Icons.more_horiz_rounded),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          20.height,
-        ],
-      ),
     );
   }
 }

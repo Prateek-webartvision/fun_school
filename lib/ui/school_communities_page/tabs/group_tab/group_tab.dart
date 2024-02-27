@@ -87,9 +87,7 @@ class GroupsTab extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 SchoolCommunitiesGroupInfoPage(
-                              controller: cnt,
-                              groupModel: item,
-                            ),
+                                    groupId: item.groupId!),
                           ),
                         );
                       },

@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:fun_school/main.dart';
-import 'package:fun_school/network/data/app_storage.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
+import '../../../network/data/app_storage.dart';
 import '../../../repo/community/community_group_repo.dart';
 
 class CommunityGroupController extends GetxController {
@@ -25,13 +22,14 @@ class CommunityGroupController extends GetxController {
     }
   }
 
-  bool canIJoined(CommunityGroupModel data) {
-    final gg = data.groupMembers?.where((element) =>
+  GroupMember? getMember(CommunityGroupModel? data) {
+    final gg = data?.groupMembers?.where((element) =>
         element.memberId! == AppStorage.user.current!.userId!.toString());
-    if (gg!.isNotEmpty) {
-      return true;
+
+    if (gg != null && gg.isNotEmpty) {
+      return gg.first;
     } else {
-      return false;
+      return null;
     }
   }
 
