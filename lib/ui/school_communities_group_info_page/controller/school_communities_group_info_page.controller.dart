@@ -4,14 +4,14 @@ import 'package:kd_utils/kd_utils.dart';
 import '../../../network/data/app_storage.dart';
 import '../../../repo/community/community_group_repo.dart';
 
-class SchoolCommunitiesGroupInfoPageController extends GetxController {
+class GroupInfoPageController extends GetxController {
   ApiState? state;
   String? error;
   CommunityGroupModel? groupInfo;
 
   final String groupID;
 
-  SchoolCommunitiesGroupInfoPageController(this.groupID) {
+  GroupInfoPageController(this.groupID) {
     initLoad;
   }
 

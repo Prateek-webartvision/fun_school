@@ -35,7 +35,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
     with TickerProviderStateMixin {
   //
   late TabController tabController;
-  late SchoolCommunitiesGroupInfoPageController infoPageController;
+  late GroupInfoPageController infoPageController;
   late GroupMessageController groupMessageController;
 
   Timer? timer;
@@ -43,8 +43,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-    infoPageController =
-        SchoolCommunitiesGroupInfoPageController(widget.groupId);
+    infoPageController = GroupInfoPageController(widget.groupId);
     groupMessageController = GroupMessageController(widget.groupId);
     _timeTicker();
     super.initState();
@@ -73,8 +72,11 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
               // add more members sheet
               showModalBottomSheet(
                 context: context,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                 builder: (_) {
-                  return MembersSheet();
+                  return MembersSheet(
+                    controller: infoPageController,
+                  );
                 },
                 isScrollControlled: true,
               );
