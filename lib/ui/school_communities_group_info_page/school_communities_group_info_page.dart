@@ -19,20 +19,19 @@ import 'tabs/group_chat_tab.dart';
 import 'tabs/meeting_tab.dart';
 import 'widgets/members_sheet.dart';
 
-class SchoolCommunitiesGroupInfoPage extends StatefulWidget {
-  const SchoolCommunitiesGroupInfoPage({
+class CommunitiesGroupInfoPage extends StatefulWidget {
+  const CommunitiesGroupInfoPage({
     super.key,
     required this.groupId,
   });
   final String groupId;
 
   @override
-  State<SchoolCommunitiesGroupInfoPage> createState() =>
-      _SchoolCommunitiesGroupInfoPageState();
+  State<CommunitiesGroupInfoPage> createState() =>
+      _CommunitiesGroupInfoPageState();
 }
 
-class _SchoolCommunitiesGroupInfoPageState
-    extends State<SchoolCommunitiesGroupInfoPage>
+class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
     with TickerProviderStateMixin {
   //
   late TabController tabController;

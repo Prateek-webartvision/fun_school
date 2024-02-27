@@ -86,7 +86,7 @@ class GroupsTab extends StatelessWidget {
                         rootNavigator.currentState!.push(
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                SchoolCommunitiesGroupInfoPage(
+                                CommunitiesGroupInfoPage(
                                     groupId: item.groupId!),
                           ),
                         );
