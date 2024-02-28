@@ -1,11 +1,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fun_school/utils/app_utils.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../style/color.dart';
 import 'package:timeago/timeago.dart' as ago;
+
+import '../../../widgets/url_text.dart';
+import '../school_communities_group_info_page.dart';
 
 class GroupChatMessageTile extends StatelessWidget {
   const GroupChatMessageTile({
@@ -72,10 +81,30 @@ class GroupChatMessageTile extends StatelessWidget {
                 6.height,
                 if (message.isNotEmpty)
                   Text(
-                    // "Just finished a productive day at work. How about you?",
                     message,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
+                // UrlText(
+                //   message: message,
+                //   onUrlClick: (uri) {
+                //     // log(uri.path.toString());
+                //     if (uri.host == "funschool.com") {
+                //       if (uri.path == '/group') {
+                //         // AppUtils.showSnack("open Group");
+                //         // context.pop();
+                //         final String groupId = uri.query.toString();
+                //         log(groupId);
+                //         AppUtils.slidePush(
+                //             page: CommunitiesGroupInfoPage(groupId: groupId));
+                //       }
+                //     } else {
+                //       AppUtils.showSnack("Can not open this url");
+                //     }
+                //   },
+                // ),
                 if (image != null)
                   Container(
                     constraints: BoxConstraints(

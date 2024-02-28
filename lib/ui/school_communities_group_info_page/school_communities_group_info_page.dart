@@ -43,8 +43,11 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-    infoPageController = GroupInfoPageController(widget.groupId);
-    groupMessageController = GroupMessageController(widget.groupId);
+    infoPageController = Get.put(GroupInfoPageController(widget.groupId),
+        tag: widget.groupId, permanent: true);
+
+    groupMessageController = Get.put(GroupMessageController(widget.groupId),
+        tag: widget.groupId, permanent: true);
     _timeTicker();
     super.initState();
   }

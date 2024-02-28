@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
@@ -188,40 +189,54 @@ class _MembersSheetState extends State<MembersSheet> {
                                   AppStorage.user.current?.userId?.toString())
                                 8.height,
                               // share link
-                              Container(
-                                height: 56,
-                                decoration: BoxDecoration(
-                                  color: AppColor.white,
-                                  borderRadius: BorderRadius.circular(4),
-                                  boxShadow: AppShadow.mainShadow,
-                                ),
-                                padding: EdgeInsets.all(12),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      height: 32,
-                                      width: 32,
-                                      decoration: BoxDecoration(
-                                          color: AppColor.pinkColor,
-                                          borderRadius:
-                                              BorderRadius.circular(32)),
-                                      child: Icon(
-                                        Icons.link,
-                                        size: 20,
-                                        color: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  final uri = Uri(
+                                    scheme: "https",
+                                    host: "funschool.com",
+                                    path: "group",
+                                    query: controller.groupInfo!.groupId!,
+                                  );
+
+                                  Clipboard.setData(
+                                      ClipboardData(text: uri.toString()));
+                                },
+                                child: Container(
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    borderRadius: BorderRadius.circular(4),
+                                    boxShadow: AppShadow.mainShadow,
+                                  ),
+                                  padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 32,
+                                        width: 32,
+                                        decoration: BoxDecoration(
+                                            color: AppColor.pinkColor,
+                                            borderRadius:
+                                                BorderRadius.circular(32)),
+                                        child: Icon(
+                                          Icons.link,
+                                          size: 20,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    10.width,
-                                    Expanded(
-                                        child: Text("Share a link",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500))),
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 20,
-                                    )
-                                  ],
+                                      10.width,
+                                      Expanded(
+                                          child: Text("Share a link",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight:
+                                                      FontWeight.w500))),
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 20,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

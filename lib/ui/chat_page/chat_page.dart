@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -10,7 +14,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../repo/chat_repo/chat_repo.dart';
 import '../../style/assets.dart';
 import '../../style/color.dart';
+import '../../utils/app_utils.dart';
 import '../../widgets/error_page.dart';
+import '../../widgets/url_text.dart';
+import '../school_communities_group_info_page/school_communities_group_info_page.dart';
+import '../school_communities_group_info_page/widgets/group_chat_tile.dart';
 import 'controller/messages_by_user_controller.dart';
 
 class ChatPage extends StatefulWidget {
@@ -82,6 +90,7 @@ class _ChatPageState extends State<ChatPage> {
                     final message = controller
                         .messages[(controller.messages.length - 1) - index];
                     // return Text("data ${message.message}");
+                    //
                     return ChatTile(
                       message: message.message ?? "",
                       isMyMessage: (message.sendBy != widget.receiverID),
@@ -231,14 +240,36 @@ class ChatTile extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment:
+              (isMyMessage) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            Text(message,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: (isMyMessage) ? AppColor.white : Colors.black,
-                )),
+            UrlText(
+              message: message,
+              color: (isMyMessage) ? Colors.white : Colors.black,
+              // color: Colors.green,
+              urlColor: Colors.grey,
+              onUrlClick: (uri) {
+                log(uri.path.toString());
+                if (uri.host == "funschool.com") {
+                  if (uri.path == '/group') {
+                    // AppUtils.showSnack("open Group");
+                    // context.pop();
+                    final String groupId = uri.query.toString();
+                    log(groupId);
+                    AppUtils.slidePush(
+                        page: CommunitiesGroupInfoPage(groupId: groupId));
+                  }
+                } else {
+                  AppUtils.showSnack("Can not open this url");
+                }
+              },
+            ),
+            // Text(message,
+            //     style: TextStyle(
+            //       fontSize: 15,
+            //       fontWeight: FontWeight.w500,
+            //       color: (isMyMessage) ? AppColor.white : Colors.black,
+            //     )),
 
             //time
             Text(
