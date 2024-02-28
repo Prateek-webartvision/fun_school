@@ -3,11 +3,13 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
 import 'package:fun_school/utils/app_utils.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kd_utils/kd_utils.dart';
@@ -117,70 +119,75 @@ class _MembersSheetState extends State<MembersSheet> {
                               ),
                               10.height,
                               // Add peoples
-                              GestureDetector(
-                                onTap: () async {
-                                  // add new member
-                                  UserForChat? member =
-                                      await showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.zero),
-                                    isScrollControlled: true,
-                                    useSafeArea: true,
-                                    builder: (context) {
-                                      return UsersList();
-                                    },
-                                  );
-                                  // if member is not null
-                                  // then add member
-                                  if (member != null) {
-                                    await CommunityGroupRepository
-                                        .joinAndLeaveGroup(controller.groupID,
-                                            userID: member.userId);
-                                    await widget.controller.reLoad;
-                                  }
-                                },
-                                child: Container(
-                                  height: 56,
-                                  decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(4),
-                                    boxShadow: AppShadow.mainShadow,
-                                  ),
-                                  padding: EdgeInsets.all(12),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 32,
-                                        width: 32,
-                                        decoration: BoxDecoration(
-                                            color: AppColor.mainColor,
-                                            borderRadius:
-                                                BorderRadius.circular(32)),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 20,
-                                          color: Colors.white,
+                              if (controller.groupInfo?.groupOwnerId ==
+                                  AppStorage.user.current?.userId?.toString())
+                                GestureDetector(
+                                  onTap: () async {
+                                    // add new member
+                                    UserForChat? member =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.zero),
+                                      isScrollControlled: true,
+                                      useSafeArea: true,
+                                      builder: (context) {
+                                        return UsersList();
+                                      },
+                                    );
+                                    // if member is not null
+                                    // then add member
+                                    if (member != null) {
+                                      await CommunityGroupRepository
+                                          .joinAndLeaveGroup(controller.groupID,
+                                              userID: member.userId);
+                                      await widget.controller.reLoad;
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 56,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                      boxShadow: AppShadow.mainShadow,
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 32,
+                                          width: 32,
+                                          decoration: BoxDecoration(
+                                              color: AppColor.mainColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32)),
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 20,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      10.width,
-                                      Expanded(
-                                          child: Text("Add people",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500))),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 20,
-                                      )
-                                    ],
+                                        10.width,
+                                        Expanded(
+                                            child: Text("Add people",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 20,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
+
+                              if (controller.groupInfo?.groupOwnerId ==
+                                  AppStorage.user.current?.userId?.toString())
+                                8.height,
                               // share link
-                              8.height,
                               Container(
                                 height: 56,
                                 decoration: BoxDecoration(
@@ -221,6 +228,7 @@ class _MembersSheetState extends State<MembersSheet> {
                           ),
                         ),
                       ),
+
                       // members
                       SliverToBoxAdapter(
                         child: Container(
@@ -438,40 +446,37 @@ class _UsersListState extends State<UsersList> {
                       itemCount: controller.users.length,
                       itemBuilder: (context, index) {
                         final user = controller.users[index];
-                        return GestureDetector(
-                          onTap: () {
-                            context.pop<UserForChat>(user);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8)),
-                            padding: EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 48,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    borderRadius: BorderRadius.circular(100),
-                                    image: (user.userProfileImage != null)
-                                        ? DecorationImage(
-                                            image: CachedNetworkImageProvider(
-                                                user.userProfileImage!),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : null,
-                                  ),
-                                  child: (user.userProfileImage != null)
-                                      ? null
-                                      : Icon(
-                                          Icons.person,
-                                          color: Colors.grey,
-                                        ),
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)),
+                          padding: EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  borderRadius: BorderRadius.circular(100),
+                                  image: (user.userProfileImage != null)
+                                      ? DecorationImage(
+                                          image: CachedNetworkImageProvider(
+                                              user.userProfileImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
                                 ),
-                                6.width,
-                                Column(
+                                child: (user.userProfileImage != null)
+                                    ? null
+                                    : Icon(
+                                        Icons.person,
+                                        color: Colors.grey,
+                                      ),
+                              ),
+                              6.width,
+                              Expanded(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -490,8 +495,14 @@ class _UsersListState extends State<UsersList> {
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              KBtn(
+                                  onClick: () {
+                                    context.pop<UserForChat>(user);
+                                  },
+                                  text: "Add"),
+                              // Text("data")
+                            ],
                           ),
                         );
                       },
@@ -505,3 +516,7 @@ class _UsersListState extends State<UsersList> {
     );
   }
 }
+
+  // onTap: () {
+  //                           context.pop<UserForChat>(user);
+  //                         },
