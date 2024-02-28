@@ -190,7 +190,7 @@ class _MembersSheetState extends State<MembersSheet> {
                                 8.height,
                               // share link
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   final uri = Uri(
                                     scheme: "https",
                                     host: "funschool.com",
@@ -198,8 +198,13 @@ class _MembersSheetState extends State<MembersSheet> {
                                     query: controller.groupInfo!.groupId!,
                                   );
 
-                                  Clipboard.setData(
-                                      ClipboardData(text: uri.toString()));
+                                  try {
+                                    await Clipboard.setData(
+                                        ClipboardData(text: uri.toString()));
+                                    AppUtils.showSnack("Link Copied");
+                                  } catch (e) {
+                                    AppUtils.showSnack(e.toString());
+                                  }
                                 },
                                 child: Container(
                                   height: 56,
