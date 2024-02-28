@@ -69,9 +69,9 @@ class CommunitiesTabSelector extends StatelessWidget {
   Color colorShifter({required int itemId}) {
 // controller Colors.black
     if (controller.currentIndex == itemId) {
-      return AppColor.mainColor;
+      return AppColor.darkScaffoldBg;
     } else {
-      return Colors.black;
+      return Colors.black54;
     }
   }
 
@@ -93,16 +93,15 @@ class CommunitiesTabSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Icon(
-                //   icon,
-                //   color: color,
-                //   size: 16,
-                // ),
-                SvgPicture.asset(svgIcon),
+                SvgPicture.asset(
+                  svgIcon,
+                  color: color,
+                ),
                 4.width,
                 Text(
                   title,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: color),
+                  style: TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w700, color: color),
                 ),
               ],
             ),

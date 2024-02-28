@@ -75,7 +75,7 @@ class GroupTabTile extends StatelessWidget {
                       4.width,
                       Text(
                         // "Joined on May 20, 2023",
-                        "Joined on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(dateJoined))}",
+                        "Created on ${DateFormat("MMM dd, yyyy").format(getDateFromTimestemp10(dateJoined))}",
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w400),
                       ),
