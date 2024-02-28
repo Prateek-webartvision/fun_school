@@ -73,6 +73,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
               showModalBottomSheet(
                 context: context,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                backgroundColor: Colors.white,
                 builder: (_) {
                   return MembersSheet(
                     controller: infoPageController,

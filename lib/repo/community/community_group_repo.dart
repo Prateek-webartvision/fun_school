@@ -52,10 +52,17 @@ class CommunityGroupRepository {
   }
 
   // * join and leave group
-  static Future<void> joinAndLeaveGroup(String groupID) async {
+  static Future<void> joinAndLeaveGroup(
+    String groupID, {
+    String? userID,
+  }) async {
     Map<String, String> param = {};
     param['group_id'] = groupID;
-    param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    if (userID != null) {
+      param['user_id'] = userID;
+    } else {
+      param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    }
 
     final res = await _api.postApi(AppUrls.joinLeaveGroup, params: param);
     if (res['code'] == 200) {
@@ -110,6 +117,24 @@ class CommunityGroupRepository {
       throw res['message'];
     }
   }
+
+  // * remove member
+  static Future<void> removeMember({
+    required String groupId,
+    required String memberId,
+  }) async {
+    Map<String, String> param = {};
+    param['group_id'] = groupId;
+    param['member_id'] = memberId;
+    param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+
+    final res = await _api.getApi(AppUrls.groupMemberRemove, params: param);
+    if (res['code'] == 200) {
+      log(res.toString());
+    } else {
+      throw res['message'];
+    }
+  }
 }
 
 class CommunityGroupModel {
@@ -146,12 +171,14 @@ class GroupMember {
   String? groupId;
   String? memberId;
   String? memberUsername;
+  String? profile;
   int? dateJoined;
 
   GroupMember.fromJson(Map json) {
     groupId = json['group_id'];
     memberId = json['member_id'];
     memberUsername = json['member_username'];
+    profile = json['profile'];
     dateJoined = json['date_joined'];
   }
 }

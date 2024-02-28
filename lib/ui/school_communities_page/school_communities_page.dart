@@ -7,7 +7,6 @@ import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fun_school/repo/chat_repo/chat_repo.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
 import 'package:fun_school/widgets/k_btn.dart';
 import 'package:fun_school/widgets/k_text_field.dart';
@@ -20,6 +19,7 @@ import '../../style/assets.dart';
 import '../../style/color.dart';
 import '../../utils/app_utils.dart';
 import '../chat_page/chat_page.dart';
+import '../school_communities_group_info_page/controller/all_user_controller.dart';
 import 'controllers/chat_user_controller.dart';
 import 'controllers/communities_tab_controller.dart';
 import 'controllers/community_discussion_controller.dart';
@@ -307,6 +307,7 @@ class _UsersBottomSheetState extends State<UsersBottomSheet> {
   late AllUsersController allUsersController;
   DraggableScrollableController draggableScrollableController =
       DraggableScrollableController();
+  TextEditingController search = TextEditingController();
 
   @override
   void initState() {
@@ -360,10 +361,14 @@ class _UsersBottomSheetState extends State<UsersBottomSheet> {
                               2.width,
                               Expanded(
                                 child: TextField(
+                                  controller: search,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: "search",
                                   ),
+                                  onChanged: (value) {
+                                    controller.search(value);
+                                  },
                                 ),
                               ),
                             ],
@@ -454,36 +459,6 @@ class _UsersBottomSheetState extends State<UsersBottomSheet> {
             });
       },
     );
-  }
-}
-
-class AllUsersController extends GetxController {
-  ApiState? state;
-  String? error;
-  List<User> users = [];
-  AllUsersController() {
-    initLoad();
-  }
-
-  Future<void> initLoad() async {
-    state = ApiState.loading;
-    update();
-    await _load();
-  }
-
-  Future<void> reLoad() async {
-    await _load();
-  }
-
-  _load() async {
-    try {
-      users = await ChatRepository.getUsersList();
-      state = ApiState.success;
-    } catch (e) {
-      error = e.toString();
-      state = ApiState.error;
-    }
-    update();
   }
 }
 
