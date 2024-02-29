@@ -124,7 +124,11 @@ class _MembersSheetState extends State<MembersSheet> {
                                   AppStorage.user.current?.userId?.toString())
                                 GestureDetector(
                                   onTap: () async {
-                                    // add new member
+                                    //* add new member sheet
+                                    final members =
+                                        controller.groupInfo?.groupMembers ??
+                                            [];
+                                    log(members.toString());
                                     UserForChat? member =
                                         await showModalBottomSheet(
                                       context: context,
@@ -134,7 +138,7 @@ class _MembersSheetState extends State<MembersSheet> {
                                       isScrollControlled: true,
                                       useSafeArea: true,
                                       builder: (context) {
-                                        return UsersList();
+                                        return UsersList(members: members);
                                       },
                                     );
                                     // if member is not null
@@ -378,7 +382,8 @@ class _MembersSheetState extends State<MembersSheet> {
 }
 
 class UsersList extends StatefulWidget {
-  const UsersList({super.key});
+  const UsersList({super.key, required this.members});
+  final List<GroupMember> members;
 
   @override
   State<UsersList> createState() => _UsersListState();
@@ -426,6 +431,8 @@ class _UsersListState extends State<UsersList> {
                   SliverToBoxAdapter(child: 10.height),
                   //* search bar
                   SliverPersistentHeader(
+                    floating: true,
+                    pinned: true,
                     delegate: SliverSearchDelegate(
                       minHeight: 50,
                       maxHeight: 50,
@@ -466,6 +473,9 @@ class _UsersListState extends State<UsersList> {
                       itemCount: controller.users.length,
                       itemBuilder: (context, index) {
                         final user = controller.users[index];
+                        final member = widget.members.where(
+                            (element) => element.memberId == user.userId);
+
                         return Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -516,11 +526,13 @@ class _UsersListState extends State<UsersList> {
                                   ],
                                 ),
                               ),
-                              KBtn(
+                              if (member.isEmpty)
+                                KBtn(
                                   onClick: () {
                                     context.pop<UserForChat>(user);
                                   },
-                                  text: "Add"),
+                                  text: "Add",
+                                ),
                               // Text("data")
                             ],
                           ),
