@@ -3,9 +3,9 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
 import 'package:fun_school/widgets/k_btn.dart';
@@ -39,7 +39,9 @@ class SchoolCommunitiesPage extends StatefulWidget {
   State<SchoolCommunitiesPage> createState() => _SchoolCommunitiesPageState();
 }
 
-class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
+class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage>
+    with TickerProviderStateMixin {
+  late TabController tabController;
   late CommunitiesTabController communitiesTabController;
   late CommunityDiscussionController discussionController;
   late CommunityGroupController groupController;
@@ -47,22 +49,18 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
 
   TextEditingController topic = TextEditingController();
   TextEditingController subject = TextEditingController();
-  DetectableTextEditingController hashTagText = DetectableTextEditingController(
-    regExp: hashTagRegExp,
-    detectedStyle: TextStyle(
-      color: Colors.blue,
-      fontSize: 15,
-    ),
-  );
+  TextEditingController hashTagText = TextEditingController();
   SelectedImagesController selectedImagesController =
       SelectedImagesController();
   late Timer timer;
   @override
   void initState() {
+    tabController = TabController(length: 3, vsync: this);
     communitiesTabController = CommunitiesTabController(initIndex: 0);
     discussionController = CommunityDiscussionController();
     groupController = CommunityGroupController();
     chatUserController = ChatUserController();
+
     _taker();
     super.initState();
   }
@@ -78,10 +76,16 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
     return Scaffold(
       body: Column(
         children: [
-          CommunitiesTabSelector(controller: communitiesTabController),
+          // tab bar pages
+          CommunitiesTabSelector(
+            controller: communitiesTabController,
+            tabController: tabController,
+          ),
+
           Expanded(
             child: CommunitiesTabView(
               controller: communitiesTabController,
+              tabController: tabController,
               children: [
                 DiscussionTab(controller: discussionController),
                 GroupsTab(controller: groupController),
@@ -92,9 +96,9 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: GetBuilder(
-        init: communitiesTabController,
-        builder: (controller) {
+      floatingActionButton: AnimatedBuilder(
+        animation: tabController,
+        builder: (_, child) {
           return Visibility(
             // visible: controller.currentIndex != 1,
             visible: true,
@@ -105,7 +109,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 side: BorderSide(color: AppColor.white, width: 2),
               ),
               backgroundColor: AppColor.mainColor,
-              child: (controller.currentIndex != 2)
+              child: (tabController.index != 2)
                   ? Icon(
                       Icons.add_rounded,
                       color: Colors.white,
@@ -118,7 +122,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
               // ),
               onPressed: () async {
                 // * Discussion Tap
-                if (controller.currentIndex == 0) {
+                if (tabController.index == 0) {
                   //* post bottom sheet
                   showModalBottomSheet(
                     context: rootNavigator.currentContext!,
@@ -141,34 +145,35 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                           }
                         },
                         onPostClick: () async {
-                          final List<String> detections =
-                              TextPatternDetector.extractDetections(
-                            hashTagText.text,
-                            hashTagRegExp,
-                          );
+                          if (hashTagText.text.isEmpty ||
+                              topic.text.isEmpty ||
+                              subject.text.isEmpty) {
+                            AppUtils.showSnack("Enter all Fields");
+                          } else {
+                            rootNavigator.currentState!.pop();
 
-                          rootNavigator.currentState!.pop();
+                            AppUtils.showLoadingOverlay(() async {
+                              try {
+                                await CommunityDiscussionRepository
+                                    .postTimeLineDiscussion(
+                                  hashTag: hashTagText.text,
+                                  topic: topic.text,
+                                  subject: subject.text,
+                                  images:
+                                      selectedImagesController.selectedImages,
+                                );
+                                discussionController.reload();
+                                AppUtils.showSnack("Post added successfully");
+                              } catch (e) {
+                                AppUtils.showSnack(e.toString());
+                              }
+                            });
 
-                          AppUtils.showLoadingOverlay(() async {
-                            try {
-                              await CommunityDiscussionRepository
-                                  .postTimeLineDiscussion(
-                                hashTag: detections,
-                                topic: topic.text,
-                                subject: subject.text,
-                                images: selectedImagesController.selectedImages,
-                              );
-                              discussionController.reload();
-                              AppUtils.showSnack("Post added successfully");
-                            } catch (e) {
-                              AppUtils.showSnack(e.toString());
-                            }
-                          });
-
-                          // * clear all text
-                          hashTagText.clear();
-                          topic.clear();
-                          subject.clear();
+                            // * clear all text
+                            hashTagText.clear();
+                            topic.clear();
+                            subject.clear();
+                          }
                         },
                       );
                     },
@@ -176,7 +181,7 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                 }
 
                 // * Group Tap
-                if (controller.currentIndex == 1) {
+                if (tabController.index == 1) {
                   await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -186,16 +191,17 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
                       borderRadius: BorderRadius.circular(0),
                     ),
                     builder: (context) {
-                      return CreateCroupBottomSheet();
+                      return CreateGroupBottomSheet();
                     },
                   );
                   groupController.reLoad();
                 }
 
                 //* Message Tap
-                if (controller.currentIndex == 2) {
+                if (tabController.index == 2) {
                   //
                   showModalBottomSheet(
+                    // ignore: use_build_context_synchronously
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: Colors.white,
@@ -227,16 +233,16 @@ class _SchoolCommunitiesPageState extends State<SchoolCommunitiesPage> {
   }
 }
 
-class CreateCroupBottomSheet extends StatefulWidget {
-  const CreateCroupBottomSheet({
+class CreateGroupBottomSheet extends StatefulWidget {
+  const CreateGroupBottomSheet({
     super.key,
   });
 
   @override
-  State<CreateCroupBottomSheet> createState() => _CreateCroupBottomSheetState();
+  State<CreateGroupBottomSheet> createState() => _CreateGroupBottomSheetState();
 }
 
-class _CreateCroupBottomSheetState extends State<CreateCroupBottomSheet> {
+class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
   TextEditingController groupName = TextEditingController();
   TextEditingController description = TextEditingController();
 

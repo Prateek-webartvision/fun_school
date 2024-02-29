@@ -135,6 +135,51 @@ class CommunityGroupRepository {
       throw res['message'];
     }
   }
+
+  // group meetings
+  static Future<List<GroupMeetingModel>> getGroupMeetings(
+      String groupID) async {
+    Map<String, String> param = {};
+    param['group_id'] = groupID;
+
+    final res = await _api.getApi(AppUrls.getGroupMeetings, params: param);
+    List<GroupMeetingModel> temp = [];
+    for (var element in res) {
+      final data = GroupMeetingModel.fromJson(element);
+      temp.add(data);
+    }
+    return temp;
+
+    //
+  }
+}
+
+class GroupMeetingModel {
+  String? meetingId;
+  String? groupId;
+  String? meetingTitle;
+  String? meetingDescription;
+  String? meetingDate;
+  String? meetingTime;
+  String? meetingDuration;
+  String? meetingHost;
+  String? meetingLink;
+  String? meetingStatus;
+  int? dateCreated;
+
+  GroupMeetingModel.fromJson(json) {
+    meetingId = json['meeting_id'];
+    groupId = json['group_id'];
+    meetingTitle = json['meeting_title'];
+    meetingDescription = json['meeting_description'];
+    meetingDate = json['meeting_date'];
+    meetingTime = json['meeting_time'];
+    meetingDuration = json['meeting_duration'];
+    meetingHost = json['meeting_host'];
+    meetingLink = json['meeting_link'];
+    meetingStatus = json['meeting_status'];
+    dateCreated = json['date_created'];
+  }
 }
 
 class CommunityGroupModel {

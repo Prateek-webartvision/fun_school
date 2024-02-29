@@ -1,11 +1,17 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/communities_tab_controller.dart';
 
 class CommunitiesTabView extends StatelessWidget {
-  const CommunitiesTabView({super.key, required this.controller, required this.children});
+  const CommunitiesTabView({
+    super.key,
+    required this.controller,
+    required this.children,
+    required this.tabController,
+  });
   final CommunitiesTabController controller;
+  final TabController tabController;
   final List<Widget> children;
 
   @override
@@ -13,7 +19,11 @@ class CommunitiesTabView extends StatelessWidget {
     return GetBuilder(
       init: controller,
       builder: (controller) {
-        return children[controller.currentIndex];
+        return TabBarView(
+          controller: tabController,
+          children: children,
+        );
+        // return children[controller.currentIndex];
       },
     );
   }

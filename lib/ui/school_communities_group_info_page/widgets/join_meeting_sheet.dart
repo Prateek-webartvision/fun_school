@@ -1,14 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../repo/community/community_group_repo.dart';
 import '../../../style/color.dart';
 
 class MeetingJoinBottomSheet extends StatelessWidget {
   const MeetingJoinBottomSheet({
     super.key,
+    required this.meeting,
   });
+  final GroupMeetingModel meeting;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,10 @@ class MeetingJoinBottomSheet extends StatelessWidget {
           Container(
             height: 48,
             padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: AppColor.softBorderColor))),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                    bottom: BorderSide(color: AppColor.softBorderColor))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -62,7 +70,9 @@ class MeetingJoinBottomSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "The Mysteries of Dark Matter",
+                      // "The Mysteries of Dark Matter",
+
+                      meeting.meetingTitle ?? "",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -84,7 +94,8 @@ class MeetingJoinBottomSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Aug 9, 2023 - 6:00 pm",
+                      // "Aug 9, 2023 - 6:00 pm",
+                      "${meeting.meetingDate} - ${meeting.meetingTime}",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -106,7 +117,8 @@ class MeetingJoinBottomSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "30 mins",
+                      // "30 mins",
+                      meeting.meetingDuration ?? "0",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -128,7 +140,8 @@ class MeetingJoinBottomSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "John Doe",
+                      // "John Doe",
+                      meeting.meetingHost ?? "",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -137,28 +150,28 @@ class MeetingJoinBottomSheet extends StatelessWidget {
                     )
                   ],
                 ),
-                Divider(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Tasks",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff1c1c1c),
-                      ),
-                    ),
-                    Text(
-                      "21 Tasks available",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff3C3C43).withOpacity(0.6),
-                      ),
-                    )
-                  ],
-                ),
+                // Divider(height: 14),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       "Tasks",
+                //       style: TextStyle(
+                //         fontSize: 17,
+                //         fontWeight: FontWeight.w400,
+                //         color: Color(0xff1c1c1c),
+                //       ),
+                //     ),
+                //     Text(
+                //       "21 Tasks available",
+                //       style: TextStyle(
+                //         fontSize: 17,
+                //         fontWeight: FontWeight.w400,
+                //         color: Color(0xff3C3C43).withOpacity(0.6),
+                //       ),
+                //     )
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -172,11 +185,22 @@ class MeetingJoinBottomSheet extends StatelessWidget {
               ),
               child: ElevatedButton(
                 style: ButtonStyle(
-                    fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 44)),
-                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
-                    backgroundColor: MaterialStatePropertyAll(AppColor.mainColor),
+                    fixedSize:
+                        MaterialStatePropertyAll(Size(double.maxFinite, 44)),
+                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4))),
+                    backgroundColor:
+                        MaterialStatePropertyAll(AppColor.mainColor),
                     foregroundColor: MaterialStatePropertyAll(AppColor.white)),
-                onPressed: () {},
+                onPressed: () {
+                  context.pop();
+                  if (meeting.meetingLink != null) {
+                    // AppUtils.showSnack(meeting.meetingLink ?? "");
+                    launchUrl(Uri.parse(meeting.meetingLink!));
+                  } else {
+                    AppUtils.showSnack("Join link not found");
+                  }
+                },
                 child: Text(
                   "Join meeting",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:fun_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,6 +38,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
   late TabController tabController;
   late GroupInfoPageController infoPageController;
   late GroupMessageController groupMessageController;
+  late GroupMeetingController groupMeetingController;
 
   Timer? timer;
 
@@ -47,6 +49,9 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
         tag: widget.groupId, permanent: true);
 
     groupMessageController = Get.put(GroupMessageController(widget.groupId),
+        tag: widget.groupId, permanent: true);
+
+    groupMeetingController = Get.put(GroupMeetingController(widget.groupId),
         tag: widget.groupId, permanent: true);
     _timeTicker();
     super.initState();
@@ -262,7 +267,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
                       controller: tabController,
                       children: [
                         GroupChatRoomTab(controller: groupMessageController),
-                        MeetingsTab(),
+                        MeetingsTab(controller: groupMeetingController),
                         FilesTab(),
                       ],
                     ),
@@ -271,5 +276,38 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
             );
           }),
     );
+  }
+}
+
+class GroupMeetingController extends GetxController {
+  ApiState? state;
+  String? error;
+  List<GroupMeetingModel> meetings = [];
+  String groupID;
+
+  GroupMeetingController(this.groupID) {
+    initLoad;
+  }
+
+  Future<void> get initLoad async {
+    state = ApiState.loading;
+    update();
+    await _load();
+  }
+
+  Future<void> get reLoad async {
+    await _load();
+  }
+
+  _load() async {
+    try {
+      meetings = await CommunityGroupRepository.getGroupMeetings(groupID);
+      state = ApiState.success;
+      // log(res.toString());
+    } catch (e) {
+      error = e.toString();
+      state = ApiState.error;
+    }
+    update();
   }
 }

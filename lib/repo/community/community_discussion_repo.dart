@@ -37,7 +37,7 @@ class CommunityDiscussionRepository {
   static Future<void> postTimeLineDiscussion({
     required String topic,
     required String subject,
-    List<String>? hashTag,
+    String? hashTag,
     List<PlatformFile>? images,
   }) async {
     Map<String, dynamic> param = {};
@@ -45,7 +45,7 @@ class CommunityDiscussionRepository {
     param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
     param['topic'] = topic;
     param['text'] = subject;
-    param['hashtag'] = hashTag?.join(" ");
+    param['hashtag'] = hashTag;
 
     Map<String, List<File>> files = {};
     if (images != null && images.isNotEmpty) {

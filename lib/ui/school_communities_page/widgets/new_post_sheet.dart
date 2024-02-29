@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/state_manager.dart';
@@ -11,6 +10,8 @@ import '../../../router/app_router.dart';
 import '../../../style/assets.dart';
 import '../../../style/color.dart';
 import '../controllers/selected_image_controller.dart';
+
+List<String> hashTags = ["Discussion", "Question", "Job"];
 
 class NewPostSheet extends StatelessWidget {
   const NewPostSheet({
@@ -23,7 +24,7 @@ class NewPostSheet extends StatelessWidget {
     required this.imagesController,
   });
   final TextEditingController topic, subject;
-  final DetectableTextEditingController hashTag;
+  final TextEditingController hashTag;
   final SelectedImagesController imagesController;
   final Function()? onPostClick;
   final Function()? onFilePicker;
@@ -48,7 +49,8 @@ class NewPostSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Post Discussion",
+                  // "Post Discussion",
+                  "Post discussion, question or job",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 InkWell(
@@ -95,21 +97,40 @@ class NewPostSheet extends StatelessWidget {
             child: Column(
               children: [
                 // * hash Tag text
-                DetectableTextField(
-                  controller: hashTag,
+                DropdownButtonFormField(
+                  value: (hashTag.text.isEmpty) ? null : hashTag.text,
                   decoration: InputDecoration(
+                    hintText: "Select category",
                     border: InputBorder.none,
-                    hintText: "Your HashTags",
                   ),
-                  // detectedStyle: ,
-                  // regExp: hashTagRegExp,
+                  items: List.generate(hashTags.length, (index) {
+                    final item = hashTags[index];
+                    return DropdownMenuItem(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }),
+                  onChanged: (value) {
+                    if (value != null) {
+                      hashTag.text = value;
+                    }
+                  },
                 ),
+                // DetectableTextField(
+                //   controller: hashTag,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: "Your HashTags",
+                //   ),
+                //   // detectedStyle: ,
+                //   // regExp: hashTagRegExp,
+                // ),
                 Divider(),
                 TextField(
                   controller: topic,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    hintText: "Write your topic or question",
+                    hintText: "Write your topic, question or job title",
                     border: InputBorder.none,
                   ),
                 ),
@@ -120,7 +141,8 @@ class NewPostSheet extends StatelessWidget {
                   maxLines: 5,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    hintText: "Elaborate on your topic ",
+                    hintText:
+                        "Elaborate on your discussion topic, question or job",
                     border: InputBorder.none,
                   ),
                 ),
