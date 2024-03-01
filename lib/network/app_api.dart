@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:fun_school/network/api_service.dart';
@@ -124,6 +125,10 @@ class AppApi extends ApiService {
           request.files.addAll(mFiles);
         }
       }
+
+      final total = request.contentLength;
+
+      log(total.toString());
 
       http.StreamedResponse response = await request.send();
 

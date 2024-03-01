@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fun_school/utils/app_utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../network/app_api.dart';
@@ -211,6 +212,25 @@ class CommunityGroupRepository {
     }
     // log(files.toString());
     return files;
+  }
+
+  static Future uploadGroupFile(String filePath, String groupID) async {
+    Map<String, String> param = {};
+    param['uploader_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    param['group_id'] = groupID;
+
+    final res = await _api.postWithFiles(
+      AppUrls.uploadGroupFile,
+      params: param,
+      files: {
+        "file_name[]": [File(filePath)]
+      },
+    );
+    if (res['code'] == 200) {
+      log(res.toString());
+    } else {
+      throw res['message'];
+    }
   }
 }
 

@@ -20,6 +20,11 @@ class ImagePickerController extends GetxController {
     update();
   }
 
+  set setImage(PlatformFile file) {
+    image = file;
+    update();
+  }
+
   clear() {
     image = null;
   }

@@ -1,13 +1,18 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:fun_school/style/assets.dart';
-import 'package:fun_school/style/color.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fun_school/ui/school_communities_group_info_page/school_communities_group_info_page.dart';
+import 'package:fun_school/repo/community/community_group_repo.dart';
+import 'package:fun_school/router/app_router.dart';
+import 'package:fun_school/style/color.dart';
+import 'package:fun_school/widgets/k_btn.dart';
 import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
-
 import '../../../widgets/error_page.dart';
+import '../controller/image_picker.controller.dart';
+import '../school_communities_group_info_page.dart';
 import '../widgets/file_tile.dart';
 
 class FilesTab extends StatelessWidget {
@@ -37,97 +42,255 @@ class FilesTab extends StatelessWidget {
 
           if (controller.files.isEmpty) {
             return Center(
-              child: Text("No Files"),
-            );
-          } else {
-            return ListView(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-              children: [
-                // folders
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return FileUploadDialog(
+                        groupID: controller.groupID,
+                      );
+                    },
+                  );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      // "Folders",
-                      "Files",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // print("click");
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.add, color: AppColor.mainColor),
-                          6.width,
-                          Text(
-                            "Upload Files",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColor.mainColor),
-                          )
-                        ],
-                      ),
-                    )
+                    Icon(Icons.add_rounded),
+                    Text("Add Files"),
                   ],
                 ),
-                // 16.height,
-                // folders
-                // ListView(
-                //   shrinkWrap: true,
-                //   primary: false,
-                //   children: [
-                //     FolderCardTile(name: "Main Archive"),
-                //     16.height,
-                //     FolderCardTile(name: "Office Pictures"),
-                //   ],
-                // ),
-                // 8.height,
-                // Text(
-                //   "Files",
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontWeight: FontWeight.w600,
-                //   ),
-                // ),
-                16.height,
-                // *  files List
-                GridView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: controller.files.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 10,
-                    mainAxisExtent: 208,
+              ),
+            );
+          } else {
+            return RefreshIndicator(
+              onRefresh: () async => await controller.reLoad,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+                children: [
+                  // folders
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        // "Folders",
+                        "Files",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // print("click");
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FileUploadDialog(
+                                groupID: controller.groupID,
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add, color: AppColor.mainColor),
+                            6.width,
+                            Text(
+                              "Upload Files",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.mainColor),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    final item = controller.files[index];
-                    // return Text(file.fileId.toString());
-                    return FileTile(
-                      fileName: item.fileName ?? "",
-                      fileURl: item.fileLink ?? "",
-                    );
-                  },
-                  // children: [
-                  //   FileTile(svgIcon: AppAssets.svg.zipIcon),
-                  //   FileTile(svgIcon: AppAssets.svg.jpg),
-                  //   FileTile(svgIcon: AppAssets.svg.jpg),
-                  //   FileTile(svgIcon: AppAssets.svg.zipIcon),
-                  //   FileTile(svgIcon: AppAssets.svg.zipIcon),
-                  //   FileTile(svgIcon: AppAssets.svg.zipIcon),
-                  // ],
-                )
-              ],
+                  // 16.height,
+                  // folders
+                  // ListView(
+                  //   shrinkWrap: true,
+                  //   primary: false,
+                  //   children: [
+                  //     FolderCardTile(name: "Main Archive"),
+                  //     16.height,
+                  //     FolderCardTile(name: "Office Pictures"),
+                  //   ],
+                  // ),
+                  // 8.height,
+                  // Text(
+                  //   "Files",
+                  //   style: TextStyle(
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  // ),
+                  16.height,
+                  // *  files List
+                  GridView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: controller.files.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 10,
+                      mainAxisExtent: 208,
+                    ),
+                    itemBuilder: (context, index) {
+                      final item = controller.files[index];
+                      // return Text(file.fileId.toString());
+                      return FileTile(
+                        fileName: item.fileName ?? "",
+                        fileURl: item.fileLink ?? "",
+                      );
+                    },
+                    // children: [
+                    //   FileTile(svgIcon: AppAssets.svg.zipIcon),
+                    //   FileTile(svgIcon: AppAssets.svg.jpg),
+                    //   FileTile(svgIcon: AppAssets.svg.jpg),
+                    //   FileTile(svgIcon: AppAssets.svg.zipIcon),
+                    //   FileTile(svgIcon: AppAssets.svg.zipIcon),
+                    //   FileTile(svgIcon: AppAssets.svg.zipIcon),
+                    // ],
+                  )
+                ],
+              ),
             );
           }
         });
+  }
+}
+
+class FileUploadDialog extends StatefulWidget {
+  const FileUploadDialog({
+    super.key,
+    required this.groupID,
+  });
+  final String groupID;
+
+  @override
+  State<FileUploadDialog> createState() => _FileUploadDialogState();
+}
+
+class _FileUploadDialogState extends State<FileUploadDialog> {
+  FilePicker filePicker = FilePicker.platform;
+  ImagePickerController fileController = ImagePickerController();
+  UploadFileController uploadFileController = UploadFileController();
+  RegExp imageReg = RegExp(r'.(png|jpg|jpeg)');
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GetBuilder(
+          init: uploadFileController,
+          builder: (uController) {
+            return GetBuilder(
+                init: fileController,
+                builder: (fcnt) {
+                  return Container(
+                    width: 360,
+                    color: Colors.white,
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Pick You File",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (fileController.image != null) 10.height,
+                        if (fileController.image != null)
+                          Column(children: [
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(8),
+                                  image: (imageReg.hasMatch(fcnt.image!.path!))
+                                      ? DecorationImage(
+                                          image: FileImage(
+                                            File(fcnt.image!.path!),
+                                          ),
+                                        )
+                                      : null),
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(16),
+                              child: (imageReg.hasMatch(fcnt.image!.path!))
+                                  ? null
+                                  : Text(
+                                      fileController.image!.path!
+                                          .split('/')
+                                          .last,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                            ),
+                          ]),
+                        20.height,
+                        if (uController.startUploading)
+                          LinearProgressIndicator()
+                        else
+                          KBtn(
+                              width: double.maxFinite,
+                              onClick: () async {
+                                if ((fcnt.image == null)) {
+                                  final res = await filePicker.pickFiles();
+                                  if (res?.files != null &&
+                                      res!.files.isNotEmpty) {
+                                    fileController.setImage = res.files.first;
+                                  }
+                                } else {
+                                  // uploadFile
+                                  uController.upload(
+                                    fcnt.image!.path!,
+                                    groupId: widget.groupID,
+                                  );
+                                }
+                              },
+                              text: (fcnt.image == null)
+                                  ? "Select File"
+                                  : "upload")
+                      ],
+                    ),
+                  );
+                });
+          }),
+    );
+  }
+}
+
+class UploadFileController extends GetxController {
+  bool startUploading = false;
+
+  Future upload(
+    String filePath, {
+    required String groupId,
+  }) async {
+    startUploading = true;
+    update();
+
+    try {
+      // upload file with dio
+      await CommunityGroupRepository.uploadGroupFile(filePath, groupId);
+      startUploading = false;
+      update();
+      appRoutes.pop();
+      Get.find<GroupFilesController>().reLoad;
+    } catch (e) {
+      startUploading = false;
+      update();
+    }
   }
 }

@@ -81,6 +81,8 @@ class AppUrls {
       "$_apis/community_chatroom_meetings_add.php";
   static const String getGroupFiles =
       "$_apis/community_chatroom_files_fetch.php";
+  static const String uploadGroupFile =
+      "$_apis/community_chatroom_files_add.php";
 
   //chat
   static const String chatUsers = "$_apis/chat_user_list.php";
