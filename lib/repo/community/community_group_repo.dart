@@ -214,7 +214,8 @@ class CommunityGroupRepository {
     return files;
   }
 
-  static Future uploadGroupFile(String filePath, String groupID) async {
+  // upload file
+  static Future<void> uploadGroupFile(String filePath, String groupID) async {
     Map<String, String> param = {};
     param['uploader_id'] = AppStorage.user.current?.userId?.toString() ?? "";
     param['group_id'] = groupID;
@@ -231,6 +232,16 @@ class CommunityGroupRepository {
     } else {
       throw res['message'];
     }
+  }
+
+  // remove file
+  static Future removeGroupFile({fileID}) async {
+    Map<String, String> param = {};
+    param['user_id'] = AppStorage.user.current?.userId?.toString() ?? "";
+    param['file_id'] = fileID;
+
+    final res = await _api.getApi(AppUrls.removeGroupFile, params: param);
+    log(res.toString());
   }
 }
 
