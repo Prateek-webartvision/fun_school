@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../../network/app_api.dart';
 import '../../network/data/app_storage.dart';
 import '../../network/url/app_urls.dart';
@@ -136,7 +139,7 @@ class CommunityGroupRepository {
     }
   }
 
-  // group meetings
+  //* group meetings list
   static Future<List<GroupMeetingModel>> getGroupMeetings(
       String groupID) async {
     Map<String, String> param = {};
@@ -149,8 +152,37 @@ class CommunityGroupRepository {
       temp.add(data);
     }
     return temp;
+  }
 
-    //
+  // * create meeting
+  static Future<void> createMeeting({
+    required String title,
+    required String des,
+    required DateTime meetingDate,
+    required TimeOfDay meetingTime,
+    required String duration,
+    required String hostName,
+    required String link,
+    required String groupID,
+  }) async {
+    Map<String, String> param = {};
+    final timeInDuration =
+        Duration(hours: meetingTime.hour, minutes: meetingTime.minute);
+    final date = DateTime(1).add(timeInDuration);
+    param['meeting_title'] = title;
+    param['meeting_description'] = des;
+    param['meeting_date'] = DateFormat("dd-MM-yyyy").format(meetingDate);
+    param['meeting_time'] = DateFormat("hh:mm a").format(date);
+    param['meeting_duration'] = duration;
+    param['meeting_host'] = hostName;
+    param['meeting_link'] = link;
+    param['group_id'] = groupID;
+
+    final res = await _api.postApi(AppUrls.createGroupMeeting, params: param);
+    if (res['code'] == 200) {
+    } else {
+      throw res['message'];
+    }
   }
 }
 

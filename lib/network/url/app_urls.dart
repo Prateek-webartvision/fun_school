@@ -77,6 +77,8 @@ class AppUrls {
       "$_apis/community_chatroom_remove_member.php";
   static const String getGroupMeetings =
       "$_apis/community_chatroom_meetings_fetch.php";
+  static const String createGroupMeeting =
+      "$_apis/community_chatroom_meetings_add.php";
 
   //chat
   static const String chatUsers = "$_apis/chat_user_list.php";

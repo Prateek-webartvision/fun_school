@@ -2,12 +2,18 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fun_school/utils/app_utils.dart';
 import 'package:fun_school/widgets/error_page.dart';
+import 'package:fun_school/widgets/k_btn.dart';
+import 'package:fun_school/widgets/k_text_field.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kd_utils/kd_utils.dart';
 
@@ -275,7 +281,231 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
               ],
             );
           }),
+      floatingActionButton: AnimatedBuilder(
+          animation: tabController,
+          builder: (context, child) {
+            // log(tabController.indexIsChanging.toString());
+
+            return Visibility(
+              visible: (tabController.index == 1),
+              child: FloatingActionButton(
+                mini: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                  side: BorderSide(color: AppColor.white, width: 2),
+                ),
+                backgroundColor: AppColor.mainColor,
+                child: Icon(
+                  Icons.add_rounded,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  AppUtils.showModelSheet(
+                    child: CreateMeetingSheet(groupID: widget.groupId),
+                    shape: BeveledRectangleBorder(),
+                    isScrolled: true,
+                  );
+                  // showBottomSheet(
+                  //   context: context,
+
+                  //   builder: (context) {
+                  //     return CreateMeetingSheet();
+                  //   },
+                  // );
+                  // showModalBottomSheet(
+                  //   context: context,
+                  //   isScrollControlled: true,
+                  //   builder: (context) {
+                  //     return CreateMeetingSheet();
+                  //   },
+                  // );
+                },
+              ),
+            );
+          }),
     );
+  }
+}
+
+class CreateMeetingSheet extends StatefulWidget {
+  const CreateMeetingSheet({
+    super.key,
+    required this.groupID,
+  });
+  final String groupID;
+
+  @override
+  State<CreateMeetingSheet> createState() => _CreateMeetingSheetState();
+}
+
+class _CreateMeetingSheetState extends State<CreateMeetingSheet> {
+  final TextEditingController title = TextEditingController();
+  final TextEditingController des = TextEditingController();
+  final TextEditingController link = TextEditingController();
+  final TextEditingController duration = TextEditingController();
+  final TextEditingController date = TextEditingController();
+  DateTime? selectedDate;
+  final TextEditingController time = TextEditingController();
+  TimeOfDay? selectedTime;
+  String errorMessage = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      return Container(
+        width: double.maxFinite,
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin:
+            EdgeInsets.only(bottom: (MediaQuery.of(context).viewInsets.bottom)),
+        child: ListView(
+          shrinkWrap: true,
+          // mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Create New Meeting",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => context.pop(),
+                  child: Icon(Icons.close),
+                )
+              ],
+            ),
+            //
+            20.height,
+            KTextField(
+              hint: "Title",
+              controller: title,
+            ),
+            10.height,
+            KTextField(
+              hint: "Description",
+              controller: des,
+            ),
+            10.height,
+            KTextField(
+              hint: "Meeting Link",
+              controller: link,
+            ),
+            10.height,
+            KTextField(
+              hint: "Duration in Min",
+              controller: duration,
+              textInputType: TextInputType.number,
+            ),
+            10.height,
+            InkWell(
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(
+                    Duration(days: 30),
+                  ),
+                );
+                if (date != null) {
+                  // log(date.toString());
+                  selectedDate = date;
+                  this.date.text =
+                      DateFormat("MMM dd, yyyy").format(selectedDate!);
+                }
+              },
+              child: KTextField(
+                hint: "Meeting Date",
+                enabled: false,
+                controller: date,
+              ),
+            ),
+            10.height,
+            InkWell(
+              onTap: () async {
+                selectedTime = await showTimePicker(
+                    context: context, initialTime: TimeOfDay.now());
+
+                time.text = TimeOfDay(
+                  hour: selectedTime!.hour,
+                  minute: selectedTime!.minute,
+                  // ignore: use_build_context_synchronously
+                ).format(context);
+              },
+              child: KTextField(
+                hint: "Meeting Time",
+                enabled: false,
+                controller: time,
+              ),
+            ),
+            if (errorMessage.isNotEmpty) 10.height,
+            if (errorMessage.isNotEmpty)
+              Text(
+                errorMessage,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.red,
+                ),
+              ),
+            20.height,
+            KBtn(
+              onClick: () async {
+                if (title.text.isEmpty ||
+                    des.text.isEmpty ||
+                    date.text.isEmpty ||
+                    time.text.isEmpty ||
+                    duration.text.isEmpty ||
+                    link.text.isEmpty) {
+                  setState(() {
+                    errorMessage = "Enter All Fields";
+                  });
+                  Future.delayed(
+                    Duration(seconds: 2),
+                    () {
+                      setState(() {
+                        errorMessage = "";
+                      });
+                    },
+                  );
+                } else {
+                  final String hostId =
+                      AppStorage.user.current?.userId?.toString() ?? "";
+
+                  AppUtils.showLoadingOverlay(() async {
+                    try {
+                      await CommunityGroupRepository.createMeeting(
+                        title: title.text.trim(),
+                        des: des.text.trim(),
+                        meetingDate: selectedDate!,
+                        meetingTime: selectedTime!,
+                        duration: duration.text.trim(),
+                        hostName: hostId,
+                        link: link.text.trim(),
+                        groupID: widget.groupID,
+                      );
+                      await Get.find<GroupMeetingController>().reLoad;
+                      // ignore: use_build_context_synchronously
+                      context.pop();
+                    } catch (e) {
+                      setState(() {
+                        errorMessage = e.toString();
+                      });
+                      // AppUtils.showSnack(e.toString());
+                    }
+                  });
+                }
+              },
+              text: "Create Meeting",
+            )
+          ],
+        ),
+      );
+    });
   }
 }
 
