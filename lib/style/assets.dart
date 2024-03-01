@@ -28,7 +28,8 @@ mixin class SvgAssets {
   final String messageIcon = "assets/svg_icons/icons/message.svg";
 
   final String weChatFillIcon = "assets/svg_icons/icons/wechat-fill.svg";
-  final String recordCircleIcon = "assets/svg_icons/icons/record-circle-line.svg";
+  final String recordCircleIcon =
+      "assets/svg_icons/icons/record-circle-line.svg";
   final String groupIcon = "assets/svg_icons/icons/Group.svg";
   final String groupFillIcon = "assets/svg_icons/icons/Group_fill.svg";
   final String pencilFillIcon = "assets/svg_icons/icons/pencil-fill.svg";
@@ -40,21 +41,23 @@ mixin class SvgAssets {
   final String attachmentIcon = "assets/svg_icons/icons/attachment-line.svg";
   final String attachment2Icon = "assets/svg_icons/icons/attachment-2.svg";
   final String parentFillIcon = "assets/svg_icons/icons/parent-fill.svg";
-  final String calendarlineIcon = "assets/svg_icons/icons/calendar-line.svg";
-  final String calendarline2Icon = "assets/svg_icons/icons/calendar-line2.svg";
-  final String openedFilderIcon = "assets/svg_icons/icons/opened.svg";
+  final String calendarLineIcon = "assets/svg_icons/icons/calendar-line.svg";
+  final String calendarLine2Icon = "assets/svg_icons/icons/calendar-line2.svg";
+  final String openedFolderIcon = "assets/svg_icons/icons/opened.svg";
   final String zipIcon = "assets/svg_icons/icons/zip.svg";
   final String jpg = "assets/svg_icons/icons/jpg.svg";
 
   final String verified = "assets/svg_icons/icons/verified.svg";
-  final String helpfullUser = "assets/svg_icons/icons/helpful_user.svg";
+  final String helpfulUser = "assets/svg_icons/icons/helpful_user.svg";
   final String scholar = "assets/svg_icons/icons/Scholar.svg";
   final String normalTutor = "assets/svg_icons/icons/normal_tutor.svg";
 
-  final String examAssessment = "assets/svg_icons/icons/exam_icons/assessment.svg";
+  final String examAssessment =
+      "assets/svg_icons/icons/exam_icons/assessment.svg";
   final String examSearch = "assets/svg_icons/icons/exam_icons/search.svg";
   final String examStudy = "assets/svg_icons/icons/exam_icons/study.svg";
-  final String examStudyPlanIcon = "assets/svg_icons/icons/exam_icons/study_plan_icon.svg";
+  final String examStudyPlanIcon =
+      "assets/svg_icons/icons/exam_icons/study_plan_icon.svg";
 
   final String uploadIcon = "assets/svg_icons/icons/upload-cloud.svg";
 

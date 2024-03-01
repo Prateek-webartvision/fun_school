@@ -10,9 +10,12 @@ import '../../../style/theme.dart';
 class FileTile extends StatelessWidget {
   const FileTile({
     super.key,
-    required this.svgIcon,
+    required this.fileURl,
+    required this.fileName,
   });
-  final String svgIcon;
+  // final String svgIcon;
+  final String fileURl;
+  final String fileName;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,10 @@ class FileTile extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-                Align(alignment: Alignment.center, child: SvgPicture.asset(svgIcon)),
+                Align(
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(fileSvg(fileName)),
+                ),
                 Positioned(
                   right: 16,
                   top: 16,
@@ -44,12 +50,27 @@ class FileTile extends StatelessWidget {
             width: double.maxFinite,
             alignment: Alignment.center,
             child: Text(
-              "StudyFile.${(svgIcon == AppAssets.svg.zipIcon) ? "zip" : "jpg"}",
+              // "StudyFile.${(svgIcon == AppAssets.svg.zipIcon) ? "zip" : "jpg"}",
+              fileName,
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
           )
         ],
       ),
     );
+  }
+
+  String fileSvg(String fileName) {
+    final fileType = fileName.split('.').last;
+    switch (fileType.toLowerCase()) {
+      case "zip":
+        return AppAssets.svg.zipIcon;
+
+      case "jpg":
+        return AppAssets.svg.jpg;
+
+      default:
+        return AppAssets.svg.openedFolderIcon;
+    }
   }
 }

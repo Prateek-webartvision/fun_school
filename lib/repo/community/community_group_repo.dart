@@ -155,7 +155,7 @@ class CommunityGroupRepository {
   }
 
   // * create meeting
-  static Future<void> createMeeting({
+  static Future<void> createGroupMeeting({
     required String title,
     required String des,
     required DateTime meetingDate,
@@ -183,6 +183,34 @@ class CommunityGroupRepository {
     } else {
       throw res['message'];
     }
+  }
+
+  // * update group meeting
+  Future<void> updateMeeting({
+    required String title,
+    required String des,
+    required DateTime meetingDate,
+    required TimeOfDay meetingTime,
+    required String duration,
+    required String link,
+    required String groupID,
+  }) async {}
+
+  // get all from from group
+  static Future<List<GroupFileModel>> getGroupFiles(String groupID) async {
+    Map<String, String> param = {};
+    param['group_id'] = groupID;
+
+    log(param.toString());
+    final res = await _api.getApi(AppUrls.getGroupFiles, params: param);
+
+    List<GroupFileModel> files = [];
+    for (var element in res) {
+      final f = GroupFileModel.fromJson(element);
+      files.add(f);
+    }
+    // log(files.toString());
+    return files;
   }
 }
 
@@ -257,5 +285,25 @@ class GroupMember {
     memberUsername = json['member_username'];
     profile = json['profile'];
     dateJoined = json['date_joined'];
+  }
+}
+
+class GroupFileModel {
+  String? fileId;
+  String? groupId;
+  String? fileLink;
+  String? fileName;
+  String? uploaderId;
+  String? uploaderUsername;
+  int? dateCreated;
+
+  GroupFileModel.fromJson(json) {
+    fileId = json['file_id'];
+    groupId = json['group_id'];
+    fileLink = json['file_link'];
+    fileName = json['file_name'];
+    uploaderId = json['uploader_id'];
+    uploaderUsername = json['uploader_username'];
+    dateCreated = json['date_created'];
   }
 }

@@ -71,7 +71,7 @@ class GroupTabTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(AppAssets.svg.calendarlineIcon),
+                      SvgPicture.asset(AppAssets.svg.calendarLineIcon),
                       4.width,
                       Text(
                         // "Joined on May 20, 2023",

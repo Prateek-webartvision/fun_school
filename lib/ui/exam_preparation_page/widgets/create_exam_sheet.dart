@@ -140,7 +140,7 @@ class _CreateExamSheetState extends State<CreateExamSheet> {
                       child: KTextField(
                         enabled: false,
                         suffixIcon:
-                            SvgPicture.asset(AppAssets.svg.calendarline2Icon),
+                            SvgPicture.asset(AppAssets.svg.calendarLine2Icon),
                         hint: "Date of the exam",
                         controller: dateTextFeild,
                       ),

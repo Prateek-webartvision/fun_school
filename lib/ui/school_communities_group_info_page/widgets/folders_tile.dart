@@ -27,7 +27,7 @@ class FolderCardTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          SvgPicture.asset(AppAssets.svg.openedFilderIcon),
+          SvgPicture.asset(AppAssets.svg.openedFolderIcon),
           12.width,
           Expanded(
               child: Text(

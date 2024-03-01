@@ -45,6 +45,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
   late GroupInfoPageController infoPageController;
   late GroupMessageController groupMessageController;
   late GroupMeetingController groupMeetingController;
+  late GroupFilesController groupFilesController;
 
   Timer? timer;
 
@@ -58,6 +59,9 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
         tag: widget.groupId, permanent: true);
 
     groupMeetingController = Get.put(GroupMeetingController(widget.groupId),
+        tag: widget.groupId, permanent: true);
+
+    groupFilesController = Get.put(GroupFilesController(widget.groupId),
         tag: widget.groupId, permanent: true);
     _timeTicker();
     super.initState();
@@ -196,7 +200,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
                                           MainAxisAlignment.start,
                                       children: [
                                         SvgPicture.asset(
-                                            AppAssets.svg.calendarlineIcon),
+                                            AppAssets.svg.calendarLineIcon),
                                         4.width,
                                         Text(
                                           // May 20, 2023
@@ -274,7 +278,7 @@ class _CommunitiesGroupInfoPageState extends State<CommunitiesGroupInfoPage>
                       children: [
                         GroupChatRoomTab(controller: groupMessageController),
                         MeetingsTab(controller: groupMeetingController),
-                        FilesTab(),
+                        FilesTab(controller: groupFilesController),
                       ],
                     ),
                   )
@@ -478,7 +482,7 @@ class _CreateMeetingSheetState extends State<CreateMeetingSheet> {
 
                   AppUtils.showLoadingOverlay(() async {
                     try {
-                      await CommunityGroupRepository.createMeeting(
+                      await CommunityGroupRepository.createGroupMeeting(
                         title: title.text.trim(),
                         des: des.text.trim(),
                         meetingDate: selectedDate!,
@@ -513,7 +517,7 @@ class GroupMeetingController extends GetxController {
   ApiState? state;
   String? error;
   List<GroupMeetingModel> meetings = [];
-  String groupID;
+  final String groupID;
 
   GroupMeetingController(this.groupID) {
     initLoad;
@@ -538,6 +542,40 @@ class GroupMeetingController extends GetxController {
       error = e.toString();
       state = ApiState.error;
     }
+    update();
+  }
+}
+
+class GroupFilesController extends GetxController {
+  ApiState? state;
+  String? error;
+  List<GroupFileModel> files = [];
+  final String groupID;
+
+  GroupFilesController(this.groupID) {
+    initLoad;
+  }
+  //
+
+  Future<void> get initLoad async {
+    state = ApiState.loading;
+    update();
+    await _load();
+  }
+
+  Future<void> get reLoad async {
+    await _load();
+  }
+
+  _load() async {
+    try {
+      files = await CommunityGroupRepository.getGroupFiles(groupID);
+      state = ApiState.success;
+    } catch (e) {
+      error = e.toString();
+      state = ApiState.error;
+    }
+
     update();
   }
 }
