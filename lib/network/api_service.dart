@@ -1,5 +1,5 @@
 abstract class ApiService {
-  final timeOutDuration = const Duration(seconds: 10);
+  final timeOutDuration = const Duration(seconds: 60);
   //get,
   Future<dynamic> getApi(
     String url, {

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_folder_picker/FolderPicker.dart';
@@ -86,20 +85,18 @@ class FileTile extends StatelessWidget {
                         );
                       }
                       if (value == "download") {
-                        // select folder
-
-                        // Directory directory = selectedDirectory;
-                        // if (directory == null) {
-                        //   directory = Directory(FolderPicker.ROOTPATH);
-                        // }
-
                         Directory? newDirectory = await FolderPicker.pick(
-                            allowFolderCreation: true,
-                            context: context,
-                            rootDirectory: Directory(FolderPicker.rootPath),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))));
+                          allowFolderCreation: false,
+                          backgroundColor: Colors.white,
+                          context: context,
+                          message: "Select Download Location",
+                          rootDirectory: Directory(FolderPicker.rootPath),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        );
 
                         if (newDirectory != null) {
                           final taskId = await FlutterDownloader.enqueue(
@@ -113,11 +110,6 @@ class FileTile extends StatelessWidget {
                             AppUtils.showSnack("Downloading started");
                           }
                         }
-                        // log(newDirectory.toString());
-                        // setState(() {
-                        //   // selectedDirectory = newDirectory;
-                        //   // print(selectedDirectory);
-                        // });
                       }
                     },
                   ),
@@ -129,10 +121,14 @@ class FileTile extends StatelessWidget {
             height: 54,
             width: double.maxFinite,
             alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               // "StudyFile.${(svgIcon == AppAssets.svg.zipIcon) ? "zip" : "jpg"}",
               fileName,
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
           )
         ],

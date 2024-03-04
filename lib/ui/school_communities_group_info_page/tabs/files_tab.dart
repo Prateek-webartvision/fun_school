@@ -5,11 +5,13 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
 import 'package:fun_school/router/app_router.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:fun_school/widgets/k_btn.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kd_utils/kd_utils.dart';
 import '../../../widgets/error_page.dart';
 import '../controller/image_picker.controller.dart';
@@ -87,6 +89,7 @@ class FilesTab extends StatelessWidget {
                           // print("click");
                           showDialog(
                             context: context,
+                            barrierDismissible: false,
                             builder: (context) {
                               return FileUploadDialog(
                                 groupID: controller.groupID,
@@ -204,12 +207,26 @@ class _FileUploadDialogState extends State<FileUploadDialog> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Pick You File",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              (uController.startUploading)
+                                  ? "Please wait, uploading in progress..."
+                                  : "Pick your file",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // log("message");
+                                context.pop();
+                              },
+                              icon: Icon(Icons.close),
+                            )
+                          ],
                         ),
                         if (fileController.image != null) 10.height,
                         if (fileController.image != null)

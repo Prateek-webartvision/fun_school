@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:kd_utils/kd_utils.dart';
 
 import '../../../../../models/community_discussion_model/community_discussion_model.dart';
@@ -33,6 +34,7 @@ class DiscussionPostTile extends StatelessWidget {
     required this.userType,
     this.onComment,
     this.onOpenChat,
+    this.hashTag,
   });
 
   final String? profileUrl;
@@ -52,6 +54,7 @@ class DiscussionPostTile extends StatelessWidget {
   final Function()? onLikeClick;
   final Function()? onComment;
   final Function()? onOpenChat;
+  final String? hashTag;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +117,7 @@ class DiscussionPostTile extends StatelessWidget {
                 ),
               ),
               Spacer(),
+              // Text("data"),
               Row(
                 children: [
                   Text(timeCheck(yourTime: DateTime.parse(time))),
@@ -179,21 +183,43 @@ class DiscussionPostTile extends StatelessWidget {
                                     shrinkWrap: true,
                                     itemCount: media!.length,
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        height: 100,
-                                        width: 140,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          image: (media![index].src != null)
-                                              ? DecorationImage(
-                                                  image:
-                                                      CachedNetworkImageProvider(
-                                                          media![index].src!),
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : null,
+                                      final item = media![index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Center(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                    image:
+                                                        CachedNetworkImageProvider(
+                                                            item.src!),
+                                                    fit: BoxFit.contain,
+                                                  )),
+                                                  // child: Text("dasd"),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 100,
+                                          width: 140,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.shade200,
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            image: (media![index].src != null)
+                                                ? DecorationImage(
+                                                    image:
+                                                        CachedNetworkImageProvider(
+                                                            media![index].src!),
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : null,
+                                          ),
                                         ),
                                       );
                                     },
@@ -256,37 +282,63 @@ class DiscussionPostTile extends StatelessWidget {
 
           // like and all
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                // color: Colors.green,
-                width: 32,
-                height: 16,
-                child: (first2Likes!.isEmpty)
-                    ? SizedBox()
-                    : OverlayUserAvatar(
-                        avatarUrls: first2Likes!
-                            .map((e) => e.userProfileImage!)
-                            .toList(),
-                        maxAvatarCount: 2,
-                      ),
+              Row(
+                children: [
+                  SizedBox(
+                    // color: Colors.green,
+                    width: 32,
+                    height: 16,
+                    child: (first2Likes!.isEmpty)
+                        ? SizedBox()
+                        : OverlayUserAvatar(
+                            avatarUrls: first2Likes!
+                                .map((e) => e.userProfileImage!)
+                                .toList(),
+                            maxAvatarCount: 2,
+                          ),
+                  ),
+                  12.width,
+                  Text(
+                    "$likes Likes",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.lightTextColor,
+                    ),
+                  ),
+                  Text(
+                    " • ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.lightTextColor,
+                    ),
+                  ),
+                  Text(
+                    "$replies replies ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.lightTextColor,
+                    ),
+                  ),
+                ],
               ),
-              12.width,
-              Text(
-                "$replies replies ",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.lightTextColor,
-                ),
-              ),
-              Text(
-                "• $likes Likes",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.lightTextColor,
-                ),
-              ),
+              //
+
+              if (hashTag == "Jobs")
+                Icon(
+                  Icons.business,
+                  color: context.theme.primaryColor,
+                ), // for  job
+              if (hashTag == "Discussions")
+                Icon(Icons.groups,
+                    color: context.theme.primaryColor), // for discuses
+              if (hashTag == "Questions")
+                Icon(Icons.contact_support,
+                    color: context.theme.primaryColor), // question
             ],
           ),
         ],

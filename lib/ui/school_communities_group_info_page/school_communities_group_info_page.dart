@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
-import 'dart:developer';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/style/color.dart';
 import 'package:flutter/material.dart';

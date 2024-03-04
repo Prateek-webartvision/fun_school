@@ -11,7 +11,7 @@ import '../../../style/assets.dart';
 import '../../../style/color.dart';
 import '../controllers/selected_image_controller.dart';
 
-List<String> hashTags = ["Discussion", "Question", "Job"];
+List<String> hashTags = ["Jobs", "Discussions", "Questions"];
 
 class NewPostSheet extends StatelessWidget {
   const NewPostSheet({
