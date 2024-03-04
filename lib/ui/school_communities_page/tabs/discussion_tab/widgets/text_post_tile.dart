@@ -188,17 +188,15 @@ class DiscussionPostTile extends StatelessWidget {
                                         onTap: () {
                                           showDialog(
                                             context: context,
+                                            barrierDismissible: true,
                                             builder: (context) {
                                               return Center(
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                    image:
-                                                        CachedNetworkImageProvider(
-                                                            item.src!),
-                                                    fit: BoxFit.contain,
-                                                  )),
-                                                  // child: Text("dasd"),
+                                                    color: Colors.white,
+                                                  ),
+                                                  child: CachedNetworkImage(
+                                                      imageUrl: item.src!),
                                                 ),
                                               );
                                             },

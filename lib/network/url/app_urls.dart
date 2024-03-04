@@ -79,6 +79,8 @@ class AppUrls {
       "$_apis/community_chatroom_meetings_fetch.php";
   static const String createGroupMeeting =
       "$_apis/community_chatroom_meetings_add.php";
+  static const String updateGroupMeeting =
+      "$_apis/community_chatroom_meetings_update.php";
   static const String getGroupFiles =
       "$_apis/community_chatroom_files_fetch.php";
   static const String uploadGroupFile =

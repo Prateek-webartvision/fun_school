@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fun_school/utils/app_utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../network/app_api.dart';
@@ -187,15 +186,34 @@ class CommunityGroupRepository {
   }
 
   // * update group meeting
-  Future<void> updateMeeting({
+  static Future<void> updateMeeting({
     required String title,
     required String des,
     required DateTime meetingDate,
     required TimeOfDay meetingTime,
     required String duration,
     required String link,
-    required String groupID,
-  }) async {}
+    required String meetingID,
+  }) async {
+    Map<String, String> param = {};
+    final timeInDuration =
+        Duration(hours: meetingTime.hour, minutes: meetingTime.minute);
+    final date = DateTime(1).add(timeInDuration);
+    param['meeting_title'] = title;
+    param['meeting_description'] = des;
+    param['meeting_date'] = DateFormat("dd-MM-yyyy").format(meetingDate);
+    param['meeting_time'] = DateFormat("hh:mm a").format(date);
+    param['meeting_duration'] = duration;
+    // param['meeting_host'] = hostName;
+    param['meeting_link'] = link;
+    param['meeting_id'] = meetingID;
+
+    final res = await _api.postApi(AppUrls.updateGroupMeeting, params: param);
+    if (res['code'] == 200) {
+    } else {
+      throw res['message'];
+    }
+  }
 
   // get all from from group
   static Future<List<GroupFileModel>> getGroupFiles(String groupID) async {
@@ -254,6 +272,7 @@ class GroupMeetingModel {
   String? meetingTime;
   String? meetingDuration;
   String? meetingHost;
+  String? meetingHostId;
   String? meetingLink;
   String? meetingStatus;
   int? dateCreated;
@@ -267,6 +286,7 @@ class GroupMeetingModel {
     meetingTime = json['meeting_time'];
     meetingDuration = json['meeting_duration'];
     meetingHost = json['meeting_host'];
+    meetingHostId = json['meeting_host_id'];
     meetingLink = json['meeting_link'];
     meetingStatus = json['meeting_status'];
     dateCreated = json['date_created'];

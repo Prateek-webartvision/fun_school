@@ -51,12 +51,8 @@ class MeetingsTab extends StatelessWidget {
                   final meeting = controller.meetings[index];
 
                   return MeetingsTile(
-                    // title: "The Mysteries of Dark Matter",
                     title: meeting.meetingTitle ?? "",
-                    // time: "Aug 9, 2023 - 6:00 pm",
                     time: "${meeting.meetingDate} - ${meeting.meetingTime}",
-                    // body:
-                    //     "An in-depth exploration of the unknown aspects of dark matter. Open Q&A at the end.",
                     body: meeting.meetingDescription ?? "",
                     count: "Status: ${meeting.meetingStatus}",
                     onItemClick: () {
@@ -64,8 +60,9 @@ class MeetingsTab extends StatelessWidget {
 
                       showModalBottomSheet(
                         context: currentContext,
-                        builder: (context) =>
-                            MeetingJoinBottomSheet(meeting: meeting),
+                        builder: (context) => MeetingJoinBottomSheet(
+                          meeting: meeting,
+                        ),
                       );
                     },
                   );
