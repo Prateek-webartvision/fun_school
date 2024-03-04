@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:easy_folder_picker/FolderPicker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fun_school/network/data/app_storage.dart';
 import 'package:fun_school/repo/community/community_group_repo.dart';
@@ -100,7 +101,19 @@ class FileTile extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))));
 
-                        log(newDirectory.toString());
+                        if (newDirectory != null) {
+                          final taskId = await FlutterDownloader.enqueue(
+                            url: fileURl,
+                            savedDir: newDirectory.path,
+                            showNotification: true,
+                            openFileFromNotification: true,
+                            saveInPublicStorage: true,
+                          );
+                          if (taskId != null) {
+                            AppUtils.showSnack("Downloading started");
+                          }
+                        }
+                        // log(newDirectory.toString());
                         // setState(() {
                         //   // selectedDirectory = newDirectory;
                         //   // print(selectedDirectory);

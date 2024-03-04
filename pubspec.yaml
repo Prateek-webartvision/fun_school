@@ -57,6 +57,7 @@ dependencies:
   timeago: ^3.6.1
   # local notification
   flutter_local_notifications: ^15.1.0+1
+  flutter_downloader: ^1.11.6
   # firebase
   firebase_core: ^2.14.0
   firebase_analytics: ^10.4.4
